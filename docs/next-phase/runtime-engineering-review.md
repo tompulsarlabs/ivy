@@ -1,3 +1,47 @@
+# Preparation failure and client cleanup review — 6 September 2026
+
+The system-only continuation fixes two concrete evidence gaps. A failed image
+inspection previously left a reservation unresolved even though no workload could
+have been submitted. Preparation now records its phase before each daemon mutation
+and persists a terminal failure outcome. Only failures before build submission can
+close on the basis of no submitted workload. An interrupted or failed build remains
+unconfirmed; after create submission, owned-container inspection is required.
+
+The final client wait previously added up to five seconds outside the shutdown
+grace and could throw before receipt/ledger persistence. It now uses the remaining
+shutdown grace and records client cleanup errors while retaining container shutdown
+evidence. This reduces one timing gap; filesystem work and daemon-side build
+lifetime still prevent a hard whole-lifecycle ceiling claim.
+
+The approved single completion probe is recorded as an additional one-use local
+authorization, separate from the consumed three-probe extension. Its prior ledger
+hash, start, 600-second window and one-attempt limit survive restart. Original
+start/limits, failed attempts and the earlier grant remain unchanged. This remains
+a trusted-operator assertion, not signed approval or provider billing control.
+
+Live result: `completion-20260906-1` failed during image inspection because the
+sandbox denied access to the dedicated Docker socket. No build/container was
+submitted. The new phase-aware failure path retained its error and consumed debit
+and safely closed the never-submitted workload. Five attempts and 290 reserved
+seconds remain; natural completion is still unverified. An additional reservation
+was refused without changing ledger bytes. A separate escalated read-only image
+inspection succeeded; another runtime attempt requires the pending explicit grant.
+
+Validation: 54 deterministic tests pass, including nine additional tests for the
+completion grant, preparation failure/interruption/lost-create response, and
+expired client cleanup. These are software controls; the live sandbox-denied
+preparation supplies distinct runtime evidence. No model-quality claim is made.
+No real agent or judge ran, and Milestone A remains not passed. Authentication and
+neutral-case model assessment are deferred during system development.
+
+Remaining: actual natural completion; interrupted daemon-side build shutdown;
+live post-submission preparation failures; hard end-to-end timing and measured
+builder network behavior. See the current runtime handoff, resource ledger and
+[evidence](evidence/runtime-completion-20260906.json). Production dispatch and
+Cockpit were not changed. PR #20 stays a stacked draft.
+
+## Previous engineering review — retained history
+
 # Runtime preparation engineering review
 
 ## Authorized extension review — current result

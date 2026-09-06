@@ -73,6 +73,13 @@ class DockerProbeAdapter:
         self.derived_image = None
         self.operation_deadline = None
         self.cleanup_deadline = None
+        self.preparation_phase = None
+
+    def _phase(self, phase):
+        # Persist before submitting a daemon operation: a lost client response is
+        # never evidence that Docker did not receive the request.
+        write_record(self.path / "preparation-phase.json", {"phase": phase, "observed_at": time.time()})
+        self.preparation_phase = phase
 
     def _remaining(self, maximum, *, cleanup=False):
         deadline = self.cleanup_deadline if cleanup else self.operation_deadline
@@ -113,6 +120,36 @@ class DockerProbeAdapter:
         return info
 
     def prepare(self, request):
+        if self.request is not None:
+            raise InvalidManifest("adapter already owns an attempt")
+        try:
+            return self._prepare(request)
+        except (Exception, KeyboardInterrupt) as exc:
+            if self.path is not None and self.preparation_phase is not None:
+                # Before build submission this adapter has issued only reads.
+                # During/after a failed build, no final container is insufficient
+                # to establish daemon-side shutdown, so keep the reservation open.
+                terminated = self.preparation_phase == "before_build"
+                stop = None
+                if self.preparation_phase in ("create_submitted", "created"):
+                    row = next(r for r in self.store.state["attempts"] if r["id"] == request.attempt_id)
+                    stop = self.cancel(WorkloadHandle(request.attempt_id, row["runtime_id"]))
+                    terminated = stop.terminated
+                state = (ExecutionState.CANCELED if isinstance(exc, KeyboardInterrupt) else
+                         ExecutionState.TIMED_OUT if isinstance(exc, subprocess.TimeoutExpired)
+                         else ExecutionState.EXECUTION_ERROR)
+                write_record(self.path / "preparation-failure.json", {
+                    "phase": self.preparation_phase, "error": type(exc).__name__ + ": " + str(exc),
+                    "execution_state": state.value, "termination_confirmed": terminated,
+                    "termination_basis": "no_workload_submitted" if self.preparation_phase == "before_build"
+                        else "container_inspection" if stop is not None else "daemon_build_unconfirmed",
+                    "stop_evidence": Path(stop.evidence_reference).name if stop else None,
+                    "evidence_kind": "infrastructure_preparation_failure_not_model_evaluation"})
+                row = next(r for r in self.store.state["attempts"] if r["id"] == request.attempt_id)
+                self.store.finish(request.attempt_id, row["runtime_id"], state.value, terminated=terminated)
+            raise
+
+    def _prepare(self, request):
         if (self.request is not None or request.comparison_sha256 != self.binding["plan_sha256"]
                 or request.worker_snapshot_sha256 != self.binding["fixture_sha256"]
                 or request.agent_version_sha256 != self.binding["agent_version_sha256"]):
@@ -126,6 +163,7 @@ class DockerProbeAdapter:
         self.request = request
         self.path = self.store.directory / request.attempt_id
         self.path.mkdir(mode=0o700)  # Existing evidence is never reused.
+        self._phase("before_build")
         write_record(self.path / "preparation.json", {
             "binding": self.binding, "runtime": self.describe(), "runtime_id": name,
             "visible_files": {k: hashlib.sha256(v).hexdigest() for k, v in sorted(self.files.items())},
@@ -143,9 +181,11 @@ class DockerProbeAdapter:
             "base_image": self.image, "base_id": base["Id"],
             "context_sha256": hashlib.sha256(context).hexdigest(),
             "dockerfile": "FROM " + base["Id"] + "\nCOPY worker/ /worker/\n"})
+        self._phase("build_submitted")
         built = self._cmd(["build", "--network", "none", "--pull=false", "--no-cache",
                            "--tag", name + ":probe", "-"], data=context, timeout=60,
                           env={**os.environ, "DOCKER_BUILDKIT": "0"})
+        self._phase("build_finished")
         derived = json.loads(self._cmd(["image", "inspect", name + ":probe"]).stdout)[0]
         self.derived_image = derived["Id"]
         if not re.fullmatch(r"sha256:[a-f0-9]{64}", self.derived_image):
@@ -155,6 +195,7 @@ class DockerProbeAdapter:
             "context_sha256": hashlib.sha256(context).hexdigest(),
             "stdout": built.stdout.decode(errors="replace"), "stderr": built.stderr.decode(errors="replace")})
         # Reservation already names the container, even if create's response is lost.
+        self._phase("create_submitted")
         self._cmd(["create", "--name", name, "--label", "ivy.attempt=" + request.attempt_id,
                    "--label", "ivy.binding=" + digest(self.binding), "--read-only",
                    "--network", "none", "--user", "65534:65534", "--cap-drop", "ALL",
@@ -164,6 +205,7 @@ class DockerProbeAdapter:
                    "--log-opt", "compress=false",
                    "--entrypoint", "python3", self.derived_image, "-I", "-B", "-u",
                    "/worker/probe.py", "wait" if self.wait else "complete"])
+        self._phase("created")
         info = self._inspect(handle)
         hc = info["HostConfig"]
         if (info["Image"] != self.derived_image or info["Mounts"] or not hc["ReadonlyRootfs"] or hc["NetworkMode"] != "none"
@@ -253,12 +295,20 @@ class DockerProbeAdapter:
                      ExecutionState.TIMED_OUT if isinstance(exc, subprocess.TimeoutExpired) else ExecutionState.EXECUTION_ERROR)
         finally:
             control = control or self.cancel(handle)
+            client_cleanup_error = None
             if process is not None:
-                if process.poll() is None:
-                    process.kill()  # Client cleanup never supplies termination evidence.
-                process.wait(timeout=5)
-                process.stdout.close()
-                process.stderr.close()
+                try:
+                    if process.poll() is None:
+                        process.kill()  # Client cleanup never supplies termination evidence.
+                        process.wait(timeout=self._remaining(5, cleanup=True))
+                except (OSError, subprocess.SubprocessError) as exc:
+                    client_cleanup_error = type(exc).__name__ + ": " + str(exc)
+                    complete = False
+                    if state == ExecutionState.COMPLETED:
+                        state = ExecutionState.EXECUTION_ERROR
+                finally:
+                    process.stdout.close()
+                    process.stderr.close()
             receipt = {"schema_version": 1, "evidence_kind": "infrastructure_probe_not_model_evaluation",
                        "binding": self.binding, "runtime": self.describe(), "attempt_id": handle.attempt_id,
                        "runtime_id": handle.runtime_id, "execution_state": state.value,
@@ -267,7 +317,8 @@ class DockerProbeAdapter:
                        "termination_confirmed": control.terminated,
                        "stop_evidence": Path(control.evidence_reference).name,
                        "requested_model": None, "observed_model": None,
-                       "observed_effort": None, "usage": None, "error": error}
+                       "observed_effort": None, "usage": None, "error": error,
+                       "client_cleanup_error": client_cleanup_error}
             receipt["artifact_sha256"] = {
                 name: file_sha256(self.path / name)
                 for name in ("preparation.json", "prepared.json", "image-input.json", "image-build.json",

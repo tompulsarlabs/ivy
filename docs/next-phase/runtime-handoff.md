@@ -1,3 +1,64 @@
+# System-only continuation: preparation failures recorded; completion still pending
+
+6 September 2026. Tom clarified that this is system development and approved
+continuing after the proposal to use the remaining 25 engineering minutes for one
+repair iteration and one completion probe. Authentication and paid API integration
+are deferred; no API key is required for this system work. This checkpoint
+supersedes the current status below while preserving all historical results.
+
+Repair iteration 3 records preparation phases before submitting daemon operations.
+Failures before build submission now retain an explicit failure record and close
+only the reservation for which no workload was submitted. Build failure, timeout
+or interruption retains an unresolved reservation because stopping a client does
+not confirm daemon-side shutdown. A lost create response triggers owned-container
+inspection/shutdown. Final Docker-client cleanup uses the existing shutdown grace;
+a cleanup timeout is retained in the receipt instead of preventing its persistence.
+
+The original runtime ledger received a separate one-use completion authorization:
+one fresh attempt in 600 seconds, preserving its original start, limits, first four
+attempts and earlier three-probe authorization. `completion-20260906-1` failed while
+inspecting the pinned local image: the tool sandbox denied Docker socket access.
+No image build or container was submitted. Its consumed 90-second reservation and
+failure remain recorded with `termination_basis: no_workload_submitted`; this is
+not inspected-container termination or completed-worker evidence. Five attempts
+and 290 reserved seconds are now retained; none is unresolved. No attempt ID was
+reused. A further CLI reservation was refused with byte-identical ledger and no
+new attempt directory.
+
+A separate explicitly escalated, read-only pinned-image inspection succeeded.
+This establishes the access path for a future probe, not a successful completion.
+An asynchronous request asks Tom to approve one additional fresh completion attempt
+within the same engineering allowance. No answer has been recorded at this
+checkpoint; do not treat the request or successful read-only inspection as a grant.
+Before any future reservation, verify read-only Docker access through the same
+approved tool permission boundary that will execute the probe.
+
+**54 deterministic tests pass.** New cases cover preserved authorization history,
+one-use/full-window/aggregate caps, missing-base failure, interrupted build
+uncertainty, lost create responses, and receipt retention when client cleanup
+expires. The actual sandbox-denied preparation independently exercised the new
+pre-build failure path. These tests do not establish live interrupted builder
+shutdown or a hard end-to-end wall ceiling. Filesystem operations and daemon build
+lifetime remain outside that claim. Natural completion remains unverified.
+
+Milestone A has **not passed**. No evaluated model or judge call occurred. Real-agent
+authentication, effective harness metadata and approved neutral-case semantic
+assessment are intentionally deferred, not prerequisites for ordinary system work.
+Keep the same draft PR #20 stacked on `codex/ivy-next-phase-design`, the existing
+worktree/branch, and Docker context `colima-ivy-acceptance`. Production dispatch,
+Cockpit and the unrelated checkout were not changed.
+
+Private originals remain in `/tmp/ivy-runtime-proof-20260905`, including the saved
+pre-continuation ledger, command/failure evidence and refusal control. The portable
+[completion report](evidence/runtime-completion-20260906.json) contains only
+allowlisted observations. The resource ledger preserves 8,400 prior debit seconds
+and allocates 900 seconds for this single-agent continuation and closeout through
+08:13:27 UTC; 600 seconds remain, not a new repair/probe grant. Work beyond that
+allocation must debit the same remaining allowance. No timestamps or runtime store
+were reset.
+
+## Prior checkpoint — retained history
+
 # Live cancellation and deadline verified; model integration still blocked
 
 Latest checkpoint, 5 September 2026, supersedes the historical sections below.

@@ -96,7 +96,8 @@ class AttemptStore:
     def _validate(self):
         s = self.state
         keys = {"schema_version", "binding", "limits", "started_at", "last_time", "attempts"}
-        if (type(s) is not dict or set(s) not in (keys, keys | {"authorization_extension"}) or type(s["schema_version"]) is not int
+        if (type(s) is not dict or set(s) not in (keys, keys | {"authorization_extension"},
+                keys | {"authorization_extension", "completion_authorization"}) or type(s["schema_version"]) is not int
                 or s["schema_version"] != 1 or s["binding"] != self.binding
                 or s["limits"] != asdict(self.limits) or type(s["attempts"]) is not list):
             raise InvalidManifest("ledger schema, comparison or limits changed")
@@ -137,9 +138,27 @@ class AttemptStore:
                     or type(ext["prior_attempt_count"]) is not int
                     or not 0 <= ext["prior_attempt_count"] <= len(s["attempts"])
                     or len(s["attempts"]) - ext["prior_attempt_count"] > ext["max_fresh_attempts"]
+                        + (1 if "completion_authorization" in s else 0)
                     or type(ext["prior_ledger_sha256"]) is not str
                     or not re.fullmatch(r"[a-f0-9]{64}", ext["prior_ledger_sha256"])):
                 raise InvalidManifest("invalid authorization extension")
+        if "completion_authorization" in s:
+            grant = s["completion_authorization"]
+            if (type(grant) is not dict or set(grant) != {"authorization_reference", "authority", "started_at",
+                    "window_seconds", "max_fresh_attempts", "prior_attempt_count", "prior_ledger_sha256"}
+                    or type(grant["authorization_reference"]) is not str
+                    or not grant["authorization_reference"].strip()
+                    or grant["authority"] != "trusted_local_supervisor_not_signed_authority"
+                    or type(grant["started_at"]) not in (int, float)
+                    or not ext["started_at"] <= grant["started_at"] <= s["last_time"]
+                    or type(grant["window_seconds"]) is not int or grant["window_seconds"] != 600
+                    or type(grant["max_fresh_attempts"]) is not int or grant["max_fresh_attempts"] != 1
+                    or type(grant["prior_attempt_count"]) is not int
+                    or grant["prior_attempt_count"] != ext["prior_attempt_count"] + ext["max_fresh_attempts"]
+                    or not grant["prior_attempt_count"] <= len(s["attempts"]) <= grant["prior_attempt_count"] + 1
+                    or type(grant["prior_ledger_sha256"]) is not str
+                    or not re.fullmatch(r"[a-f0-9]{64}", grant["prior_ledger_sha256"])):
+                raise InvalidManifest("invalid completion authorization")
 
     def authorize_extension(self, reference):
         """Record the one explicit local approval; preserve every original debit/cap.
@@ -169,6 +188,28 @@ class AttemptStore:
         self._validate()
         write_record(self.directory / "ledger.json", self.state)
 
+    def authorize_completion(self, reference):
+        """Append one explicitly approved completion probe; never renew prior grants."""
+        ext = self.state.get("authorization_extension")
+        if "completion_authorization" in self.state:
+            raise BudgetBlocked("completion authorization already recorded; no renewal")
+        if ext is None or len(self.state["attempts"]) != ext["prior_attempt_count"] + ext["max_fresh_attempts"]:
+            raise BudgetBlocked("the original three-probe extension must be consumed first")
+        if type(reference) is not str or not reference.strip() or len(reference) > 2000:
+            raise BudgetBlocked("explicit authorization reference required")
+        now = self._now()
+        if now < self.state["last_time"]:
+            raise BudgetBlocked("clock moved backwards; no authorization")
+        if any(not row["termination_confirmed"] for row in self.state["attempts"]):
+            raise BudgetBlocked("previous workload termination is unconfirmed; recover it first")
+        self.state["completion_authorization"] = {
+            "authorization_reference": reference, "authority": "trusted_local_supervisor_not_signed_authority",
+            "started_at": now, "window_seconds": 600, "max_fresh_attempts": 1,
+            "prior_attempt_count": len(self.state["attempts"]), "prior_ledger_sha256": digest(self.state)}
+        self.state["last_time"] = now
+        self._save()
+        return self.state["completion_authorization"]
+
     def reserve(self, attempt_id, runtime_id, seconds):
         safe_id(attempt_id)
         safe_id(runtime_id)
@@ -182,7 +223,7 @@ class AttemptStore:
             raise BudgetBlocked("attempt id already consumed")
         if type(seconds) is not int or not 0 < seconds <= self.limits.per_attempt_seconds:
             raise BudgetBlocked("invalid deadline")
-        ext = self.state.get("authorization_extension")
+        ext = self.state.get("completion_authorization", self.state.get("authorization_extension"))
         window_exhausted = (now - self.state["started_at"] + seconds > self.limits.total_seconds)
         if ext is not None:
             window_exhausted = (now - ext["started_at"] + seconds > ext["window_seconds"]

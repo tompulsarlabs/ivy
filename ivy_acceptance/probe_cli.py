@@ -35,6 +35,9 @@ def add_commands(sub):
     e = sub.add_parser("authorize-probe-extension", help="record explicit local approval for one 20-minute, three-probe extension")
     e.add_argument("--store", type=Path, required=True)
     e.add_argument("--authorization-reference", required=True)
+    c = sub.add_parser("authorize-completion-probe", help="append explicit approval for one completion probe in 10 minutes")
+    c.add_argument("--store", type=Path, required=True)
+    c.add_argument("--authorization-reference", required=True)
 
 
 def verify_probe(directory):
@@ -79,10 +82,14 @@ def verify_probe(directory):
 def run_command(args):
     if args.command == "verify-probe":
         return verify_probe(args.directory)
-    if args.command == "authorize-probe-extension":
+    if args.command in ("authorize-probe-extension", "authorize-completion-probe"):
         prior = read_record(args.store / "ledger.json")
         with AttemptStore(args.store, prior["binding"], Limits(**prior["limits"])) as store:
-            return {"authorization_extension": store.authorize_extension(args.authorization_reference),
+            grant = (store.authorize_completion(args.authorization_reference)
+                     if args.command == "authorize-completion-probe"
+                     else store.authorize_extension(args.authorization_reference))
+            key = "completion_authorization" if args.command == "authorize-completion-probe" else "authorization_extension"
+            return {key: grant,
                     "original_limits_preserved": True, "model_evaluation": False}
     if args.command == "recover-probe":
         from .storage import safe_id

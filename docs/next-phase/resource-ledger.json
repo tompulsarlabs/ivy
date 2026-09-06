@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "stage": "high_authorized_runtime_extension",
+  "stage": "high_system_only_completion_continuation",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-05T18:43:43+00:00",
+  "recorded_through": "2026-09-06T08:07:42.582562+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 8400,
-  "debit_method": "Prior 7200-second debit preserved. Added 1200-second aggregate stage allocation: Astra High 350 measured wall seconds plus primary review/authentication/tests/docs and closeout allowance of 850 seconds from 18:34:51 through at most 18:49:01 UTC. Parallel lane time is additive; not exactly measured active inference time. Further work after that closeout allowance must debit the remaining extension; no budget reset. Legacy tracked_wall_seconds is the original sample, not cumulative effort.",
+  "engineering_budget_debit_seconds": 9300,
+  "debit_method": "Prior 8400-second debit preserved. Added 900-second single-agent allocation from 2026-09-06T07:58:27Z through at most 08:13:27Z, including reading, implementation, tests, Docker diagnostics, evidence and PR/CI closeout. No parallel agents. This is conservative wall-time allocation, not measured active inference or provider billing. Further work beyond the allocation must debit the same remaining allowance.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -13,7 +13,7 @@
     "per_attempt_seconds": 90,
     "execution_wall_seconds": 3600
   },
-  "milestone_a_budget_remaining_at_checkpoint_seconds": 1500,
+  "milestone_a_budget_remaining_at_checkpoint_seconds": 600,
   "authorized_extensions": [
     {
       "recorded_at": "2026-09-05T18:34:51+00:00",
@@ -27,22 +27,35 @@
       "budget_reset": false,
       "api_spending_authorized": false,
       "status": "runtime_probe_allowance_consumed_implementation_iteration_complete"
+    },
+    {
+      "recorded_at": "2026-09-06T08:03:36.789819+00:00",
+      "authorization": "Tom: ok so let's go and just do what makes sense",
+      "responds_to": "Remaining 25 engineering minutes, one further repair iteration, one credential-free completion probe; real-agent authentication and paid integration deferred.",
+      "additional_aggregate_engineering_seconds": 0,
+      "previous_engineering_debit_seconds": 8400,
+      "additional_runtime_window_seconds": 600,
+      "additional_runtime_probes": 1,
+      "additional_repair_iterations": 1,
+      "budget_reset": false,
+      "api_spending_authorized": false,
+      "status": "one_completion_attempt_consumed_by_pre_build_sandbox_denial"
     }
   ],
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 8,
+    "participants": 9,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
-    "status": "Host CLI subscription login verified; no attempt-scoped isolated subscription authentication established. Pro upgrade is not API spending authorization. Dedicated local API key and enforceable request/cost plan remain unresolved; zero evaluated model/judge calls."
+    "status": "No paid API calls authorized or needed for current system development. Real-agent authentication and model/judge execution intentionally deferred; existing subscription credentials were not read or exposed."
   },
-  "stage_status": "45 deterministic tests pass; live build, cancellation, deadline shutdown, actual receipt-copy tamper rejection and fourth-attempt refusal verified. Natural completion and hard lifecycle bound remain unverified; isolated real-agent execution absent; milestone A not passed.",
+  "stage_status": "54 deterministic tests pass. Preparation phase/failure retention and client cleanup repaired. One real pre-build sandbox denial retained and safely closed without submitting a workload. Natural completion remains unverified. Milestone A not passed; authentication/model assessment deferred.",
   "continuation_rule": "Charge subsequent implementation/debugging and any later verification time to this same budget. Handoffs do not reset it.",
   "stage_debits": [
     {
@@ -71,18 +84,26 @@
       "primary_and_closeout_allocation_seconds": 850,
       "primary_closeout_allocation_ends_at": "2026-09-05T18:49:01+00:00",
       "accounting": "Conservative aggregate stage allocation includes final verification, commit, push and CI check; unused engineering extension is retained, not a new repair/probe grant."
+    },
+    {
+      "stage": "high_system_only_completion_continuation",
+      "started_at": "2026-09-06T07:58:27+00:00",
+      "seconds": 900,
+      "primary_closeout_allocation_ends_at": "2026-09-06T08:13:27+00:00",
+      "accounting": "One primary agent; includes all work and closeout within this allocation, not model-quality evaluation."
     }
   ],
-  "runtime_probe_attempts": 4,
+  "runtime_probe_attempts": 5,
   "runtime_probe_outcomes": {
     "preparation_failed_recovered": 1,
     "start_failed_logging_configuration": 1,
     "canceled": 1,
     "timed_out": 1,
-    "completed": 0
+    "completed": 0,
+    "pre_build_sandbox_denial_no_workload_submitted": 1
   },
-  "repair_iterations_used": 2,
-  "repair_iterations_limit": 2,
+  "repair_iterations_used": 3,
+  "repair_iterations_limit": 3,
   "runtime_debug_controls": {
     "copy_failure_reproduced": true,
     "recovery": "verified_stopped_reservation_closed",
@@ -94,8 +115,11 @@
     "ownership_rejection": "observed_real_docker_inspection",
     "actual_receipt_copy_tamper_controls_rejected": 4,
     "fourth_reservation_refusal": "observed_original_ledger_byte_identical",
-    "runtime_reserved_seconds_total": 200,
-    "running_containers_at_final_inventory": 0
+    "runtime_reserved_seconds_total": 290,
+    "running_containers_at_final_inventory": 0,
+    "completion_probe": "pre_build_sandbox_denial_consumed_attempt_no_workload_submitted",
+    "completion_grant_extra_reservation_refusal": "observed_cli_exit_2_original_ledger_byte_identical",
+    "client_cleanup_wait": "clamped_to_existing_shutdown_grace_receipt_survives_timeout_deterministic_only"
   },
   "followup_recovery": {
     "observed_at": "2026-09-05 18:02:35 UTC",
@@ -103,5 +127,6 @@
     "runtime_allowance_changed": false,
     "implementation_extension": "pending_user_response_45_minutes_3_probes_20_minute_window",
     "engineering_budget_reopened": false
-  }
+  },
+  "pending_completion_retry": "Asked explicit approval for one additional fresh credential-free completion attempt after sandbox denial; no reply recorded, no additional capacity granted."
 }
