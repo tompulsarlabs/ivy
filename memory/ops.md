@@ -1,7 +1,7 @@
 ---
 subject: Ivy's runtime environment
 type: ops
-updated: 2026-09-05
+updated: 2026-09-06
 ---
 
 # Ops: how the environment actually behaves
@@ -28,6 +28,19 @@ What does work: git push/pull to this repo via the credential proxy, and the
 built-in `mcp__github__*` tools, which are user-scoped rather than repo-scoped
 (`get_me`, `list_commits` here, `search_commits` / `search_issues` /
 `search_pull_requests` across the org).
+
+**Branch pushes work; tag pushes don't.** `git push origin main` succeeds
+through the credential proxy, but `git push origin <tag>` (annotated or
+lightweight, `refs/tags/*`) 403s every time — 4 retries with backoff, same
+result, confirmed 2026-09-06 during the retro's `git tag v7` step. The
+proxy's own guidance for a 403 is "organization policy denial, don't retry
+or route around it" [cite:ada1982], and no `mcp__github__*` tool creates a
+ref either (`list_tags`/`get_tag` are read-only). So a cloud routine can
+push commits to `main` but cannot publish a new version tag — the retro's
+`git tag v<N+1>` step needs a human (or a differently-scoped session) to
+run after the fact. `v1`/`v2` are the only tags that exist on the remote
+despite `CHANGELOG.md` documenting releases through `v7`
+[cite:2026-09-06].
 
 **The repo-scope block only inspects the dedicated `owner`/`repo` parameters,
 not free-text query content.** `pull_request_read` and `get_file_contents`
@@ -164,6 +177,9 @@ explicitly [cite:ada1982].
 
 ## Changelog
 
+- 2026-09-06 (retro) — recorded that cloud sessions can push commits to
+  `main` but get a 403 pushing any tag ref; the retro's version-tag step
+  needs a human to run.
 - 2026-09-05 — recorded that `search_code` reaches cross-repo the same way
   as the other `search_*` tools but only indexes default branches, so it
   cannot confirm a path that exists only on an open PR's branch; PR-body

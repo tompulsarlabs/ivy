@@ -44,15 +44,19 @@ pruning needed. Added the week's fleet-metrics row to `memory/models.md`
 both `tomgreen.ai` `build`) and recorded the lane-move decision there.
 `scripts/memory-lint.sh` clean.
 
-**Tag gap found, not backfilled.** `git tag -l` shows only `v1` and `v2`
-exist, though this file documents releases through `v6` — `v3`–`v6` were
-never tagged (a gap in the retro/release process itself, not caught until
-this run). Not backfilling those retroactively: the exact commit each
-should point to is a guess this far after the fact, and inventing historical
-tag placement is the same category of problem as backdating a commit. This
-entry tags `v7`, continuing this file's own version count, which is the
-durable record; the missing tags are a discrepancy for a human to decide
-whether to backfill.
+**Tag gap found, not backfilled — and this run couldn't close it either.**
+`git tag -l` shows only `v1` and `v2` exist, though this file documents
+releases through `v6` — `v3`–`v6` were never tagged (a gap in the
+retro/release process itself, not caught until this run). Not backfilling
+those retroactively: the exact commit each should point to is a guess this
+far after the fact, and inventing historical tag placement is the same
+category of problem as backdating a commit. This entry advances the count
+to `v7`, the durable record kept in this file — but `git push origin v7`
+403s from this cloud session every time (4 retries, `memory/ops.md`): the
+session can push commits to `main`, not tag refs. So `v7` exists here and
+in the local clone, not on the remote — the same backfill decision as
+`v3`–`v6`, now one entry longer, for a human to run `git tag v7 <sha> && git
+push origin v7` from a session that can.
 
 ## v6 — 2026-09-02
 
