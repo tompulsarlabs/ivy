@@ -1,13 +1,13 @@
 {
-  "streak": 14,
-  "last_green": "2026-09-05",
+  "streak": 15,
+  "last_green": "2026-09-06",
   "memory_last_synthesized": "2026-09-05",
   "days": {
     "2026-09-06": {
-      "green_by": "tompulsarlabs/tomgreen.ai PR #30 + #31 + #32 (merged, homepage grouping + ARR wording + CV role hierarchy) + tompulsarlabs/talent-radar PR #2 (opened, executive opportunity pilot) + tompulsarlabs/tompulsarlabs (1 commit, README)",
+      "green_by": "tompulsarlabs/tomgreen.ai PR #30 + #31 + #32 + #33 + #35 + #36 + #37 (merged, homepage grouping + ARR wording + CV role hierarchy + opening reassembly/order/motion/stagger) + PR #34 (opened, Calendly capitalization) + tompulsarlabs/talent-radar PR #2 (opened, executive opportunity pilot) + tompulsarlabs/tompulsarlabs (1 commit, README)",
       "method": "real-work",
-      "contributions": 5,
-      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date:2026-09-06/created:2026-09-06 (18:00 check; check.sh exit 2, no github.com egress in cloud sandbox) — all connected-author (tom@pulsarlabsai.com / tompulsarlabs login), default branch, non-fork",
+      "contributions": 10,
+      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date:2026-09-06/created:2026-09-06 (failsafe 22:30 re-check; check.sh exit 2, no github.com egress in cloud sandbox) — 18:00 check saw 5 events through PR #32; failsafe found continued real activity through 21:44 CEST: tomgreen.ai PR #33/#35/#36/#37 merged and PR #34 opened, all connected-author (tom@pulsarlabsai.com / tompulsarlabs login), default branch, non-fork, see journal ## Verification",
       "cite": "journal/2026-09-06.md",
       "nudge_sent": false,
       "nudge_converted": null,
