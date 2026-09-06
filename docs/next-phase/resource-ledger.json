@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "stage": "high_preflight_and_bounded_validation",
+  "stage": "ultra_offline_evidence_resource_design",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-06T08:21:33.673501+00:00",
+  "recorded_through": "2026-09-06T14:14:11.604577+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 9900,
-  "debit_method": "Prior 9300-second debit preserved. Remaining 600-second single-agent allocation begins after the prior closeout boundary, 2026-09-06T08:13:27Z through 08:23:27Z, including implementation, tests, runtime controls, evidence, push and CI. Initial reading at 08:12:18 belongs to the prior allocation and is not charged twice. Conservative wall-time allocation, not provider billing or measured active inference; no capacity reset.",
+  "engineering_budget_debit_seconds": 11700,
+  "debit_method": "Prior 9900-second debit preserved. This design iteration allocates 1800 aggregate seconds: conservative 15-minute window for primary reconciliation/review/closeout and the requested Ultra architecture lane, including idle overlap rather than claiming measured inference. Build debits append to the same total; prior runtime grants and milestone-A allowance do not reset.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -57,17 +57,17 @@
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 10,
+    "participants": 12,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
     "status": "No paid API calls authorized or needed for current system development. Real-agent authentication and model/judge execution intentionally deferred; existing subscription credentials were not read or exposed."
   },
-  "stage_status": "59 deterministic tests pass; real completion, cancellation and deadline shutdown verified with receipts. Real setup denial consumes no worker attempt. Eight attempts/480 reserved seconds retained; zero unresolved/running workloads. No evaluated model/judge calls; Milestone A not passed.",
+  "stage_status": "Ultra offline evidence/resource design completed against terminal head eaa9b36; High build pending. Prior 59-test/runtime evidence retained, not rerun by this documentation iteration. Model/semantic proof and milestone A remain incomplete.",
   "continuation_rule": "Charge subsequent implementation/debugging and any later verification time to this same budget. Handoffs do not reset it.",
   "stage_debits": [
     {
@@ -111,6 +111,15 @@
       "seconds": 600,
       "primary_closeout_allocation_ends_at": "2026-09-06T08:23:27+00:00",
       "accounting": "Single primary agent; initial 69 seconds covered by preceding stage allocation."
+    },
+    {
+      "stage": "ultra_offline_evidence_resource_design",
+      "started_at": "2026-09-06T14:00:11+00:00",
+      "recorded_through": "2026-09-06T14:14:11.604577+00:00",
+      "primary_closeout_allocation_ends_at": "2026-09-06T14:15:11+00:00",
+      "seconds": 1800,
+      "participants": 2,
+      "accounting": "Two-participant conservative wall-window allocation, not token usage, billing or measured active inference."
     }
   ],
   "runtime_probe_attempts": 8,
@@ -153,5 +162,20 @@
     "engineering_budget_reopened": false
   },
   "pending_completion_retry": "Superseded by explicit bounded-session approval; completion now verified. No outstanding per-attempt approval request.",
-  "repair_policy": "Prior iteration history retained; latest approval permits bounded session work rather than per-launch approval. One implementation iteration used in this session."
+  "repair_policy": "Prior iteration history retained; latest approval permits bounded session work rather than per-launch approval. One implementation iteration used in this session.",
+  "system_development_iterations": [
+    {
+      "id": "offline-evidence-resources-v1",
+      "authorization": "Tom: Ok design the architecture / system design iteration with ultra then hand off to the lower optimal effort tier to build",
+      "scope": "Astra Ultra architecture then one Astra High implementation lane; offline assessment and reporting from existing receipts; no evaluated model, judge, Docker launch or API integration. Terminal work read first as additionally requested.",
+      "design_allocation_seconds": 1800,
+      "build_checkpoint_seconds": 3600,
+      "checkpoint_origin": "Self-imposed engineering scope limit; Tom authorized the work but did not specify a new numeric cap. This is not an account usage limit.",
+      "build_debit_seconds": 0,
+      "status": "design_complete_build_handoff_ready",
+      "previous_milestone_a_budget_unchanged": true,
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false
+    }
+  ]
 }

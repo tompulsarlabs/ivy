@@ -1,95 +1,73 @@
-# Acceptance preview and runtime probe
+# Ivy acceptance planning and runtime evidence
 
-Extra High added a durable local attempt ledger, verified input materialization,
-bounded supervisor capture, a credential-free Docker probe, recovery commands and
-independent citation controls. **Real image preparation, running-worker cancellation
-and deadline shutdown are verified; natural completion and milestone A remain
-unverified.** The original read-only-root copy failure and a later Docker logging
-failure are retained. High replaced copying with a fixed COPY-only image and disabled
-incompatible log compression. See
-[the current High handoff](../docs/next-phase/runtime-handoff.md). The 45 deterministic
-tests pass; they are not evidence of a working model evaluation.
+Python 3.11+, standard library only. Current status and remaining work live in
+[the runtime handoff](../docs/next-phase/runtime-handoff.md); architectural contracts
+live in [system-design.md](../docs/next-phase/system-design.md).
 
-The explicit `probe` command executes a fixed Python infrastructure test. It never
-uses a model, account credential or a primary model-comparison slot. `plan` retains
-its read-only behavior. `recover-probe` inspects and stops an attempt-owned container
-after a supervisor failure; it cannot erase the consumed attempt. `verify-probe`
-checks saved artifact hashes without executing anything.
+The terminal build at `eaa9b36` recorded 59 passing deterministic tests and verified
+real credential-free worker completion, cancellation and deadline shutdown. Both
+Python 3.11/3.14 CI jobs passed. No evaluated model or judge call occurred, and the
+real-agent milestone remains incomplete. The evidence-and-resource iteration is
+specified in [cost-quality-design.md](../docs/next-phase/cost-quality-design.md);
+its proposed commands are not implemented merely because the design exists.
 
-`authorize-probe-extension` records an explicit local operator approval for one
-additional 20-minute/three-probe window on the original store. It does not obtain
-approval, renew itself, erase attempts or change original count/reservation caps.
-Do not invoke it without authorization. The approved continuation's three probes
-are already consumed. `--deadline` shares a preparation/run command budget;
-shutdown has a separate 15-second grace, and this is not a hard daemon-wide deadline.
-
-New modules: `storage.py` (locked, atomic reservations), `materialization.py`
-(recompiled plan and byte checks), `docker_probe.py` (container lifecycle and capture),
-`probe_cli.py` (explicit commands) and `grading.py` (citation integrity only).
-Checksums assume a trusted local supervisor and detect changed artifacts; they are
-not signed attestations against a hostile host operator. Model adapters, authenticated
-benchmark approval, semantic grading and a comparison report remain unfinished.
-
-The rest of this document describes the underlying architecture scaffold.
-
-Python 3.11+; standard library only. Run from the repository root; no installation,
-server or provider credential is needed for this stage.
+## Existing commands
 
 ```sh
 python3 -B -m ivy_acceptance plan examples/acceptance/preview.json
 python3 -B -m unittest discover -s tests -v
+python3 -B -m ivy_acceptance --help
 ```
 
-`plan` reads the specified input trees and prints a JSON envelope with a detached
-`plan_sha256`. `-B` suppresses interpreter bytecode writes, including first-run imports.
-The command performs no checkout, subprocess execution, network calls or file writes.
-A successful plan command means the preview was compiled; it is not a benchmark pass.
+`plan` reads explicit input trees and prints a detached content-bound preview. It
+performs no subprocess, network call or file write; `-B` suppresses Python bytecode
+writes. Every preview has `execution_ready: false`. Editing that flag cannot
+provide owner approval or enable an agent run.
 
-The example plans eight primary slots: two draft cases × two instruction versions ×
-two repetitions. The planner supports the approved six-case/24-slot proof; the other
-four real fixtures and human approval are build-stage work. The instruction versions
-are draft illustrative inputs, not a validated improvement or deployed configuration.
+`probe` executes a fixed Python infrastructure test in a dedicated Docker context;
+it does not execute an AI model. `--preflight-only` checks setup without reserving
+an attempt. `recover-probe` confirms shutdown of an attempt-owned container after
+failure. `verify-probe` currently verifies artifact integrity and reports execution
+state; a zero exit or integrity result alone does not establish probe success.
+The new design addresses that distinction explicitly.
 
-## Component boundaries
+Runtime launch and grant commands consume the recorded, explicitly authorized
+session allowance. They do not obtain approval or reset history. Follow the current
+handoff for that allowance; an offline evidence read needs no fresh runtime grant.
 
-| Module | Implemented responsibility | Next-stage boundary |
-|---|---|---|
-| `canonical.py` | Canonical JSON, detached hashes, strict JSON reads and explicit file-tree snapshots | Trusted artifact persistence and hostile-worker isolation |
-| `planning.py` | Closed preview config, same visible runtime for both variants, content binding, disjoint visible/grader trees, fixed paired schedule | Live preflight, import resolution, owner approval and execution manifest validation |
-| `budget.py` | Reserve-before-launch semantics, consumed attempt IDs, remaining wall time and unconfirmed-termination blocking | Persistent ledger, real clocks, runtime ownership and provider cost enforcement |
-| `ports.py` | Adapter request/result boundaries, explicit primary/diagnostic distinction and unavailable live adapter | Actual preparation, structured capture and confirmed container termination |
-| `__main__.py` | Read-only plan CLI | Execution, grading, comparison and report commands |
+## Components
 
-The compiled envelope is an ordinary JSON value; treating it as frozen requires
-verifying its detached digest before use. The compiler owns copies of its inputs.
-Plan integrity is not authenticated owner approval. The build must revalidate input
-snapshots immediately before materialization and validate persisted plans, results
-and assessments before trusting them.
+| Module | Existing responsibility |
+|---|---|
+| `canonical.py` | Strict JSON, canonical digests and explicit file snapshots |
+| `planning.py` | Instruction-only preview, separated inputs and paired primary slots |
+| `budget.py`, `storage.py` | Reservation limits, atomic persistence, locking and retained history |
+| `materialization.py` | Recompile plans and verify bytes before packing selected visible inputs |
+| `docker_probe.py` | Fixed-probe image preparation, preflight, capture and container termination |
+| `probe_cli.py` | Probe commands, recovery and artifact integrity checks |
+| `grading.py` | Citation existence/range controls; semantic assessment stays unverified |
+| `ports.py` | Execution contracts; real model adapter remains unavailable |
 
-The config exposes one shared `runtime` object; each variant selects only an
-instruction directory. This intentionally makes a model/tool/config change outside
-the instruction-only comparison schema. Unknown keys fail validation. No automatic
-imports are resolved here. Symlinks and portable case-insensitive path collisions
-are rejected; support for more complex trees is deferred.
+The example contains two synthetic draft cases, two illustrative instruction versions
+and two repetitions. Four further cases, benchmark-owner approval, a real harness,
+independent semantic assessment and a model comparison report remain unfinished.
 
-## Honest current state
+## Evidence boundaries
 
-Every preview returns `execution_ready: false`. Missing harness configuration,
-draft owner review and the absent live adapter are explicit blockers. Changing a
-label file to `owner_reviewed` does not authenticate approval or enable execution.
-The default adapter raises `CapabilityUnavailable` for prepare/run/cancel; it never
-returns simulated success.
+Worker-visible files and hidden grading labels are separated. The actual probe uses
+no host mounts, network or credentials, a non-root user and a read-only root. Captures
+and lifecycle inspection remain supervisor-owned. A separate worktree alone is not
+an isolation boundary.
 
-Execution, criterion and benchmark states have distinct types. There is deliberately
-no implemented aggregator that can produce a benchmark pass yet. The tests prove
-local architecture rules and synthetic fixture behavior, not model performance,
-isolation, complete evidence capture or real cancellation.
+Hash verification assumes a trusted local supervisor. It detects changed artifacts;
+it does not establish signed authority, semantic correctness or a tamper-proof host.
+Missing model/effort/usage observations remain unavailable. Infrastructure probes
+cannot fill primary model-evaluation slots or establish cost per accepted agent task.
 
-The compiler checks path separation across every visible tree and every grader tree.
-This prevents accidental grader selection in the plan; it is not a sandbox. The
-future adapter must mount only worker-visible files in the isolated environment and
-keep authoritative evidence and grading outside that namespace. Never mount the
-repository root or the `acceptance_fixtures` parent tree into a worker.
+The current command deadlines and shutdown grace do not establish a hard end-to-end
+limit on filesystem work or daemon-side image builds. Unknown shutdown blocks later
+launches. The next offline reporting iteration does not repair or erase that limit.
 
-See [the build handoff](../docs/next-phase/build-handoff.md) for the exact Extra High
-and High stages and [the accepted design](../docs/next-phase/system-design.md).
+Production dispatch and Cockpit are separate from this package. Their future
+integration must consume an authoritative assessed result rather than infer success
+from a worker claim, CLI exit or artifact hash.

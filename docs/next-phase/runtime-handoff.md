@@ -1,3 +1,82 @@
+# Current handoff — Ultra evidence-and-resource design → Astra High build
+
+6 September 2026. Tom requested a system-design iteration at Ultra followed by a
+lower-effort build, then asked that his terminal work be read first. The terminal
+task **Continue Ivy acceptance debugging** was inspected directly, and its final
+checkpoint matches the clean acceptance worktree and remote PR head `eaa9b36`.
+Remote main was separately fetched to `020e10d`; its new PR reviews inform this
+iteration. Local main's scan commit and three untracked Cockpit briefs remain intact.
+
+## Authorized next increment
+
+Implement [the evidence-and-resource design](cost-quality-design.md), following
+[ADR 0002](../adr/0002-evidence-and-resource-report.md). Architecture was produced
+by the explicitly requested Astra Ultra lane and reviewed against the saved records. Use **Astra High** for the build:
+that is an engineering choice for evidence validation and accounting logic, not a
+measured universal cost optimum. High should implement the fixed contracts without
+reopening routing, model integration or the UI architecture.
+
+The deliverable is an offline JSON + Markdown evidence/resource report, with strict
+probe assessment and explicit measurement gaps. Reassess the existing completion,
+cancellation and deadline receipts. Preserve their raw originals and original
+ledger; copy-based tamper controls and new derived assessment/report files are allowed.
+A runtime control, hash check or citation check cannot become a model-quality pass.
+
+This is authorized system engineering. The terminal clarification that model/API
+integration is deferred still applies. No new container, evaluated agent, model
+judge or paid API call is needed or authorized for this increment. Complete useful
+local validation without reopening the exhausted runtime-session grants.
+
+## Build contract
+
+- Work in `/tmp/ivy-acceptance-scaffold`, branch `codex/ivy-acceptance-scaffold`.
+  Keep stacked draft PR #20; do not merge it, PR #19 or housekeeping PR #18.
+- Read `cost-quality-design.md` before editing. Implement its named modules/commands
+  and explicit eval cases. Keep the existing instruction-only plan schema unchanged.
+- Separate artifact integrity, execution, probe behavior, expected runtime-control
+  outcome and agent benchmark state. Parse actual capture bytes; a valid hash or
+  irrelevant event stream cannot establish successful probe behavior.
+- Preserve unknown usage, currency and billing coverage. Record reported versus
+  estimated data separately; prevent aggregate/child double-counting. The first
+  report has no accepted agent-task denominator or real savings claim.
+- Use the exact known probe digest already recorded in historical preparation
+  artifacts. Unknown/missing program bindings remain unverified; do not rewrite
+  historical records to make them satisfy a newer schema.
+- Exercise completion, missing/irrelevant/malformed capture, failed observations,
+  cancellation/deadline controls, changed artifacts, numeric boundaries and incomplete
+  resource coverage. Keep software-control evidence separate from model-quality evals.
+- Run affected checks and the full deterministic suite, then replay the three saved
+  real receipts without Docker. Emit a private full report and an allowlisted portable
+  example suitable for this public repo. Protect raw Docker metadata and host paths.
+- Update this handoff, README and the engineering ledger with actual results, push
+  task-owned commits with Tom's verified configured identity and check draft-PR CI.
+
+Use a self-imposed maximum of 60 aggregate engineering minutes for the High build;
+report the concrete deliverable or blocker at that boundary. This is not an account
+usage limit. The new design/build authorization is recorded separately from the
+previous 9,900-second milestone-A debit and the spent runtime grants. Handoffs do not
+reset any recorded effort, worker history or the overall 12-hour proof ceiling.
+Do not create additional build agents by default; the fixed implementation should
+fit one High lane. Escalate only a concrete architectural ambiguity, preserving work.
+
+## Current implementation and open gaps
+
+Before this iteration: 59 deterministic tests and Python 3.11/3.14 CI pass; real
+credential-free completion, cancellation and deadline shutdown were recorded.
+The runtime verifier checks artifact hashes but lacks an explicit semantic success
+assessment for the fixed probe. This design addresses that interpretation gap.
+The new remote runtime review also confirms that hard whole-lifecycle bounds and
+daemon-side build termination remain incomplete; offline reporting does not fix them.
+
+Real-agent authentication, effective harness metadata, an approved neutral benchmark,
+independent semantic assessment and model comparison remain unfinished. Milestone A
+is not passed. Cloud-authenticated attestations remain a later integration requirement
+under the explicitly trusted-local-supervisor scope; do not build a service to satisfy
+that review suggestion in this increment. No external release owner or buyer proof
+has been established.
+
+## Prior runtime validation checkpoint — retained evidence
+
 # Runtime validation passed for completion, cancellation and deadline shutdown
 
 6 September 2026. Tom approved preflight before reservation and a bounded validation
