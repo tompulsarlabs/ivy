@@ -6,7 +6,7 @@ from pathlib import Path
 from .canonical import InvalidManifest, read_json
 from .planning import compile_plan
 from .budget import BudgetBlocked
-from .probe_cli import add_commands, run_command
+from .probe_cli import add_commands, run_command, command_exit
 import subprocess
 
 
@@ -24,7 +24,7 @@ def main(argv=None):
         print(json.dumps({"error": str(exc), "execution_started": False if args.command == "plan" else "inspect_persisted_reservation"}), file=sys.stderr)
         return 2
     print(json.dumps(result, indent=2, ensure_ascii=False))
-    return 0
+    return command_exit(result)
 
 
 if __name__ == "__main__":

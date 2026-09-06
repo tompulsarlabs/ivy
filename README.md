@@ -5,9 +5,10 @@ The [housekeeping audit and rollout](https://github.com/tompulsarlabs/ivy/blob/d
 corrects unsupported historical verification stamps and scopes mandatory workflows.
 The description below records the existing daily system and its intended verification
 model; it is not evidence that every historical result was independently verified.
-The [architecture scaffold](ivy_acceptance/README.md) now compiles read-only plans
-and tests local invariants. Live execution and model-quality evaluation remain
-unimplemented; follow the [build handoff](docs/next-phase/build-handoff.md).
+The [acceptance package](ivy_acceptance/README.md) compiles read-only plans, records
+credential-free runtime probes and produces an offline evidence/resource report.
+Real-agent execution and model-quality evaluation remain unfinished; follow the
+[current runtime handoff](docs/next-phase/runtime-handoff.md).
 
 Ivy is a set of scheduled agents that keep my software projects moving, and
 that remember what they learn while doing it.

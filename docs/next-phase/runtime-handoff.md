@@ -1,79 +1,72 @@
-# Current handoff — Ultra evidence-and-resource design → Astra High build
+# Current handoff — High offline evidence/resource build complete
 
-6 September 2026. Tom requested a system-design iteration at Ultra followed by a
-lower-effort build, then asked that his terminal work be read first. The terminal
-task **Continue Ivy acceptance debugging** was inspected directly, and its final
-checkpoint matches the clean acceptance worktree and remote PR head `eaa9b36`.
-Remote main was separately fetched to `020e10d`; its new PR reviews inform this
-iteration. Local main's scan commit and three untracked Cockpit briefs remain intact.
+6 September 2026. Built on the Ultra design at `89b1f91` after reading the terminal
+checkpoint. Tom authorized this implementation with “Ok build with high”. Work is
+on `/tmp/ivy-acceptance-scaffold`, branch `codex/ivy-acceptance-scaffold`, stacked
+draft PR #20. Keep PRs #18, #19 and #20 unmerged. Main's unrelated scan work and
+Cockpit briefs were not edited.
 
-## Authorized next increment
+## Delivered and checked
 
-Implement [the evidence-and-resource design](cost-quality-design.md), following
-[ADR 0002](../adr/0002-evidence-and-resource-report.md). Architecture was produced
-by the explicitly requested Astra Ultra lane and reviewed against the saved records. Use **Astra High** for the build:
-that is an engineering choice for evidence validation and accounting logic, not a
-measured universal cost optimum. High should implement the fixed contracts without
-reopening routing, model integration or the UI architecture.
+- `assess-probe` parses bounded, strict recorded capture bytes and recognizes the
+  exact historical fixed-program digest. It separates artifact integrity, execution,
+  observed assertions, natural completion, expected stop control and benchmark state.
+- `probe` uses its predeclared expectation and returns assessment exit 0/1/2 for
+  pass/fail/unverified. Invalid cancellation options fail before setup or reservation.
+  `verify-probe` is explicitly integrity-only. `report` exits 0 for successful rendering;
+  its status counts remain the assessment result, not an implied acceptance pass.
+- Versioned exclusive resource records distinguish reported, estimated and unknown
+  values. Declared missing scopes remain unknown; overlapping inclusive totals,
+  duplicate scope records and mismatched recorded durations are rejected.
+- Offline JSON/Markdown reports expose allowlisted results and hashes, protect input
+  stores, refuse overwrites and have a detached canonical-JSON digest.
+- **82 deterministic tests pass locally**, including [EQ01–EQ12](../../evals/evidence-quality.json).
+  They cover known failures with missing evidence, malformed/nested input, numeric
+  boundaries, capture framing, source binding, command exits and read-only replay.
+  Python 3.11/3.14 PR CI is checked after pushing; see the checks on the resulting head.
 
-The deliverable is an offline JSON + Markdown evidence/resource report, with strict
-probe assessment and explicit measurement gaps. Reassess the existing completion,
-cancellation and deadline receipts. Preserve their raw originals and original
-ledger; copy-based tamper controls and new derived assessment/report files are allowed.
-A runtime control, hash check or citation check cannot become a model-quality pass.
+The [portable report](evidence/offline-report-20260906/report.md) reassesses the real
+historical completion, cancellation and deadline receipts. All three expected
+controls pass; only the completion receipt passes natural completion. No model
+benchmark pass is awarded. The [replay record](evidence/offline-report-20260906/replay-controls.json)
+records CLI results, two identical renders and a before/after snapshot of all 120
+original store files, including the ledger. Every source byte remained unchanged.
 
-This is authorized system engineering. The terminal clarification that model/API
-integration is deferred still applies. No new container, evaluated agent, model
-judge or paid API call is needed or authorized for this increment. Complete useful
-local validation without reopening the exhausted runtime-session grants.
+Report canonical digest:
+`6cc0949cc41b6d436baf9a420ea3aea57ad4410fa175e71ad8278468adf9ef15`.
+Private manifest and copied resource observations are under
+`/tmp/ivy-offline-evidence-20260906-high/`; final output is `release-report/`, with
+`release-report-reproduced/` as the matching second render. Originals remain in
+`/tmp/ivy-runtime-proof-20260905`. No Docker command, new container, evaluated model,
+judge, API call or credential read was needed for this build.
 
-## Build contract
+The report's 11,700 engineering seconds are the prior design checkpoint allocation,
+not this build's final cumulative total or measured inference time. Current effort
+is appended in [resource-ledger.json](resource-ledger.json); prior debits, eight
+runtime attempts, 480 reserved seconds and exhausted runtime grants are preserved.
+The High build uses one primary lane and a conservative 2,400-second allocation
+including closeout, within its 3,600-second checkpoint. Unknown tokens and billing
+remain unknown. No cost-per-accepted-task or savings claim is supported.
 
-- Work in `/tmp/ivy-acceptance-scaffold`, branch `codex/ivy-acceptance-scaffold`.
-  Keep stacked draft PR #20; do not merge it, PR #19 or housekeeping PR #18.
-- Read `cost-quality-design.md` before editing. Implement its named modules/commands
-  and explicit eval cases. Keep the existing instruction-only plan schema unchanged.
-- Separate artifact integrity, execution, probe behavior, expected runtime-control
-  outcome and agent benchmark state. Parse actual capture bytes; a valid hash or
-  irrelevant event stream cannot establish successful probe behavior.
-- Preserve unknown usage, currency and billing coverage. Record reported versus
-  estimated data separately; prevent aggregate/child double-counting. The first
-  report has no accepted agent-task denominator or real savings claim.
-- Use the exact known probe digest already recorded in historical preparation
-  artifacts. Unknown/missing program bindings remain unverified; do not rewrite
-  historical records to make them satisfy a newer schema.
-- Exercise completion, missing/irrelevant/malformed capture, failed observations,
-  cancellation/deadline controls, changed artifacts, numeric boundaries and incomplete
-  resource coverage. Keep software-control evidence separate from model-quality evals.
-- Run affected checks and the full deterministic suite, then replay the three saved
-  real receipts without Docker. Emit a private full report and an allowlisted portable
-  example suitable for this public repo. Protect raw Docker metadata and host paths.
-- Update this handoff, README and the engineering ledger with actual results, push
-  task-owned commits with Tom's verified configured identity and check draft-PR CI.
+## Next product proof and remaining gaps
 
-Use a self-imposed maximum of 60 aggregate engineering minutes for the High build;
-report the concrete deliverable or blocker at that boundary. This is not an account
-usage limit. The new design/build authorization is recorded separately from the
-previous 9,900-second milestone-A debit and the spent runtime grants. Handoffs do not
-reset any recorded effort, worker history or the overall 12-hour proof ceiling.
-Do not create additional build agents by default; the fixed implementation should
-fit one High lane. Escalate only a concrete architectural ambiguity, preserving work.
-
-## Current implementation and open gaps
-
-Before this iteration: 59 deterministic tests and Python 3.11/3.14 CI pass; real
-credential-free completion, cancellation and deadline shutdown were recorded.
-The runtime verifier checks artifact hashes but lacks an explicit semantic success
-assessment for the fixed probe. This design addresses that interpretation gap.
-The new remote runtime review also confirms that hard whole-lifecycle bounds and
-daemon-side build termination remain incomplete; offline reporting does not fix them.
+The customer direction remains teams shipping coding or internal-workflow agents.
+The next useful proof is an independently assessed before/after agent change on a
+real release owner's representative cases, with measured whole-run usage and an
+explicit acceptance threshold. A routing service or UI expansion is not required
+to establish that value. Follow [the design](cost-quality-design.md) and
+[ADR 0002](../adr/0002-evidence-and-resource-report.md) for the fixed contracts.
 
 Real-agent authentication, effective harness metadata, an approved neutral benchmark,
-independent semantic assessment and model comparison remain unfinished. Milestone A
-is not passed. Cloud-authenticated attestations remain a later integration requirement
-under the explicitly trusted-local-supervisor scope; do not build a service to satisfy
-that review suggestion in this increment. No external release owner or buyer proof
-has been established.
+independent semantic assessment, actual model comparison and buyer validation remain
+unfinished. Milestone A is not passed. This build does not authorize the deferred
+model/API integration or renew any runtime grant. Hard whole-lifecycle bounds and
+daemon-side build termination also remain incomplete; offline reporting does not
+repair them. Hashes assume a trusted local supervisor and are not signed attestations.
+
+The separate housekeeping work retains ownership of operational-agent instructions
+and its shared inventory. This additive eval file does not silently replace that
+branch or claim all operational agents have now been evaluated.
 
 ## Prior runtime validation checkpoint — retained evidence
 

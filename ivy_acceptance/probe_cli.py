@@ -33,6 +33,12 @@ def add_commands(sub):
     r.add_argument("--attempt", required=True)
     v = sub.add_parser("verify-probe", help="verify saved runtime evidence hashes without executing")
     v.add_argument("directory", type=Path)
+    a = sub.add_parser("assess-probe", help="assess recorded fixed-probe behavior without execution")
+    a.add_argument("directory", type=Path)
+    a.add_argument("--expect", choices=("completion", "cancellation", "deadline"), required=True)
+    report = sub.add_parser("report", help="render an offline infrastructure evidence/resource report")
+    report.add_argument("manifest", type=Path)
+    report.add_argument("--output", type=Path, required=True)
     e = sub.add_parser("authorize-probe-extension", help="record explicit local approval for one 20-minute, three-probe extension")
     e.add_argument("--store", type=Path, required=True)
     e.add_argument("--authorization-reference", required=True)
@@ -77,13 +83,39 @@ def verify_probe(directory):
                 or build["base_image"] != prep["runtime"]["image"]
                 or any(build[k] != image_input[k] for k in ("base_image", "base_id", "context_sha256"))):
             raise InvalidManifest("probe image provenance mismatch")
-    return {"integrity": "verified", "execution_state": receipt["execution_state"],
+    return {"verification_scope": "artifact_integrity_only", "integrity": "verified", "execution_state": receipt["execution_state"],
             "termination_confirmed": receipt["termination_confirmed"],
             "capture_complete": receipt["capture_complete"],
             "model_evaluation": False, "benchmark_status": "evidence_incomplete"}
 
 
+def declared_expectation(args):
+    from .evidence_io import finite_number, EvidenceError
+    if type(args.deadline) is not int or args.deadline <= 0:
+        raise EvidenceError("invalid_probe_deadline")
+    if args.cancel_after is not None:
+        if not args.wait or not finite_number(args.cancel_after) or not 0 < args.cancel_after < args.deadline:
+            raise EvidenceError("ambiguous_probe_cancellation_options")
+        return "cancellation"
+    return "deadline" if args.wait else "completion"
+
+
+def command_exit(result):
+    from .probe_assessment import assessment_exit
+    if result.get("kind") == "probe-assessment":
+        return assessment_exit(result)
+    if "assessment" in result and result["assessment"].get("kind") == "probe-assessment":
+        return assessment_exit(result["assessment"])
+    return 0
+
+
 def run_command(args):
+    if args.command == "assess-probe":
+        from .probe_assessment import assess_probe
+        return assess_probe(args.directory, args.expect)
+    if args.command == "report":
+        from .reporting import write_report
+        return write_report(args.manifest, args.output)
     if args.command == "verify-probe":
         return verify_probe(args.directory)
     if args.command in ("authorize-probe-extension", "authorize-completion-probe", "authorize-validation-session"):
@@ -113,6 +145,7 @@ def run_command(args):
             store.finish(args.attempt, row["runtime_id"], row["outcome"] or "execution_error", terminated=stop.terminated)
             return {"recovery": asdict(stop), "model_evaluation": False,
                     "result": "reservation_closed" if stop.terminated else "still_blocked"}
+    expectation = declared_expectation(args)
     config = read_json(args.config)
     envelope = compile_plan(config, args.root)
     files, binding = materialize_preview(config, envelope, args.root, args.case, args.variant)
@@ -137,7 +170,9 @@ def run_command(args):
         control = {"evidence_kind": "deterministic_bad_output_control_not_model_evaluation",
                    "assessment": check_citations(bad, files)}
         write_record(args.store / args.attempt / "bad-output-control.json", control)
-        return {"attempt_id": args.attempt, "execution_state": outcome.execution_state.value,
+        from .probe_assessment import assess_probe
+        assessment = assess_probe(args.store / args.attempt, expectation)
+        return {"assessment": assessment, "attempt_id": args.attempt, "execution_state": outcome.execution_state.value,
                 "evidence_directory": str((args.store / args.attempt).resolve()),
                 "integrity": verify_probe(args.store / args.attempt),
                 "bad_output_control_status": control["assessment"]["status"],
