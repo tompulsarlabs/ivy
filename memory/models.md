@@ -34,14 +34,18 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 |-------------|--------------|--------------------|---------|-----------|------|
 | 2026-08-28 (partial) | 1 | 0 / 0 | 0 | 0 | D1-D2 bring-up week; first contract 8 wall-min first-pass [cite:2026-08-27] |
 | 2026-08-30 | 1 | 0 / 0 | 0 | 0 | No new verified outcomes this week — 3 contracts still queued unclaimed, D2 runner not yet live [cite:2026-08-29][cite:2026-08-30] |
+| 2026-09-06 | 7 | 1 / 45 | 1 | 0 | D2 runner live all week: 7 new verified (5 review, 2 build), all first-pass; `review` class cleared the ≥3-verified-outcomes Pareto bar (5 straight frontier/openai first-pass) — retro stepped its default lane to `workhorse` [cite:2026-09-06]; `build` still n=2, short of the bar. First real waste (`layout-02`, 45 wall-min, no output) and first expired-unexecuted contract (`photo-02`), both `tomgreen.ai` build [cite:2026-09-04] |
 
 ## Reading
 
 n=8 now (1 chore, 5 review, 2 build), all first-pass. `review` has run
-frontier/openai five times straight, all first-pass — the retro has an even
-stronger basis now to try stepping it down to workhorse and watching
-whether verdict quality holds. `build` has its first two data
-points (workhorse/anthropic and frontier/anthropic, both first-pass) —
+frontier/openai five times straight, all first-pass, clearing the Pareto
+bar (≥3 verified outcomes) for a lane-move trial — **retro decision,
+2026-09-06:** `playbook.md`'s scout section now defaults new `review`
+contracts to `lane: workhorse`, watching whether first-pass verdict
+quality holds there; `frontier` stays available as an explicit per-contract
+pin. `build` has its first two data points (workhorse/anthropic and
+frontier/anthropic, both first-pass) —
 still short of the bar, and confounded by lane: `copy-02` ran frontier
 only because it was hand-pinned there after the runner-bug re-queue, not
 by routing policy, so it is not yet evidence that `build` needs the
@@ -62,6 +66,12 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-06 (retro) — `review` class cleared the Pareto bar (5 straight
+  verified first-pass frontier/openai outcomes); stepped its default lane
+  to `workhorse` in `playbook.md` (one of the week's two tuning
+  adjustments). Added the week's fleet-metrics row: 7 newly verified, first
+  real waste (45 wall-min) and first expired-unexecuted contract, both
+  `tomgreen.ai` `build`.
 - 2026-09-05 — two more `review` contracts verified done (`talentradar-review-01`,
   `tomgreenai-planetary-review-01`); n=6→8; `review` now has 5 straight
   first-pass frontier/openai outcomes, a stronger basis for a retro lane-move

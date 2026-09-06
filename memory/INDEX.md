@@ -1,7 +1,7 @@
 ---
 subject: memory index
 type: index
-updated: 2026-09-05
+updated: 2026-09-06
 ---
 
 # Memory index
@@ -23,11 +23,12 @@ behavior lives in `playbook.md` and only the retro changes it.
 - [[repos/talent-scout]] — first signal 2026-08-29, one data point
 - [[repos/yeva]] — private; setup-guide work, two sessions 09-01/09-02
 - [[repos/tompulsarlabs]] — org profile repo; first signal 2026-09-02
+- [[repos/writing-voice-skill]] — first signal 2026-09-05 (PR #2)
 - [[models]] — lane routing evidence, one row per verified dispatch contract
 
-**No page yet** (no observed commit activity through 09-02): writing-voice-skill,
-aris-ote-benchmarking, Dex, interview-ace, ai-interview-coach,
-bd-lead-comp-dashboard. The failsafe creates a page on first real signal.
+**No page yet** (no observed commit activity through 09-02): aris-ote-benchmarking,
+Dex, interview-ace, ai-interview-coach, bd-lead-comp-dashboard. The failsafe
+creates a page on first real signal.
 
 ## Link syntax
 
