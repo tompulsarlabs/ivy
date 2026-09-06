@@ -1,7 +1,7 @@
 ---
 id: 2026-09-06-ivy-verifyevidence-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-06T11:13:09+02:00
 repo: tompulsarlabs/ivy
 lane: frontier
@@ -35,3 +35,13 @@ tied to file:line, committed and pushed.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head.
+
+outcome:
+  claimed_at: 2026-09-06T11:13:09+02:00
+  finished_at: 2026-09-06T11:20:28+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-sol
+  wall_minutes: 7.2
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-06-ivy-verifyevidence-review-01.md
