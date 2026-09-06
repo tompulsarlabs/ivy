@@ -23,7 +23,8 @@ schedule:            # local times in `timezone`; nothing after 22:30 (midnight 
   retro: "SUN 10:00"
 
 watchlist:
-  source: auto       # scout syncs from `gh api user/repos`; forks + archived excluded
+  source: auto       # scout syncs via search_repositories org:<login> (gh isn't
+                     # available in the cloud sandbox, memory/ops.md); forks + archived excluded
   exclude: []        # manual opt-outs by full name, e.g. tompulsarlabs/scratch
   parked:            # watched, never proposed: contributions still count and attribution is still scanned,
                      # but the scout emits no candidate, contract, or audit for these. Tom's call, retro-reviewed.

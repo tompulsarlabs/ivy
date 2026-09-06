@@ -1,5 +1,59 @@
 # Changelog
 
+## v7 — 2026-09-06
+
+**Retro: review lane stepped down; a missed memory page caught.** Reviewed
+`state.json` 2026-08-23→09-05 (14 recorded days) plus `memory/patterns.md`
+and `memory/models.md`. Failsafe fire rate: still 0/14 — every day has gone
+green by real work before 22:30; the floor keeps doing its job by never
+being needed, no timing change follows. Nudge→conversion: still exactly one
+grey-check nudge ever sent (2026-08-24, unconverted) — n=1 is still too
+thin to safely tune nudge timing, wording, or channel, same conclusion as
+every prior retro. Shipped work: `tomgreen.ai` remains the dominant repo by
+a wide margin, `ivy` ships steadily, `talent-radar` graduated from
+dormant-scaffold to a live PR #1 build; `c2-client-matrix` stays parked
+with no reactivation signal since 2026-09-03.
+
+**Adjustment (1 of 2 used): `review` contracts now default to `lane:
+workhorse`, down from `frontier`.** `memory/models.md` recorded 5 straight
+verified first-pass `review` outcomes on frontier/openai — the Pareto rule
+for lane moves (`playbook.md`, ≥3 verified outcomes) is squarely met, and
+the page's own "Reading" section had already flagged the trial as ready.
+`playbook.md`'s scout section now states the default explicitly (it had
+never been written down — scout was defaulting every review contract to
+`frontier` by unwritten convention, confirmed against three weeks of
+contract files); `frontier` stays available as an explicit per-contract
+pin when a candidate calls for it. No second adjustment made this week —
+the other candidates (nudge timing, watchlist excludes) remain evidence-thin
+or already correctly resolved.
+
+**Doc-accuracy fix (free of the cap — no behavior change).** `playbook.md`
+and `config.yml` both described the scout's watchlist sync as `gh api
+user/repos`, but `gh` has never been available in the cloud sandbox
+(`memory/ops.md`); journals since 2026-08-29 show the scout has actually
+been using `search_repositories org:tompulsarlabs` all along. Corrected
+both to name the tool actually in use.
+
+**Memory curation.** Created `memory/repos/writing-voice-skill.md` on its
+first real signal (PR #2, opened 2026-09-05) — this was the failsafe's job
+the night it happened and was missed; caught in this pass, `INDEX.md`
+updated. Spot-checked `c2-client-matrix.md`, `ai-capability-app.md`, and
+`talent-radar.md` against their citations — all current, no correction or
+pruning needed. Added the week's fleet-metrics row to `memory/models.md`
+(7 newly verified, first real waste and first expired-unexecuted contract,
+both `tomgreen.ai` `build`) and recorded the lane-move decision there.
+`scripts/memory-lint.sh` clean.
+
+**Tag gap found, not backfilled.** `git tag -l` shows only `v1` and `v2`
+exist, though this file documents releases through `v6` — `v3`–`v6` were
+never tagged (a gap in the retro/release process itself, not caught until
+this run). Not backfilling those retroactively: the exact commit each
+should point to is a guess this far after the fact, and inventing historical
+tag placement is the same category of problem as backdating a commit. This
+entry tags `v7`, continuing this file's own version count, which is the
+durable record; the missing tags are a discrepancy for a human to decide
+whether to backfill.
+
 ## v6 — 2026-09-02
 
 **A glossary and a skill layer; the runner's gate fixed.** Adopted

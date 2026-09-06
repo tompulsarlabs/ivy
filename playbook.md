@@ -127,7 +127,9 @@ to execution lanes. Non-negotiables:
   cheaper than re-deriving it from journal history. Follow a `[cite:...]` down
   to the journal only when a claim is decision-critical or looks stale; adopt
   it directly otherwise.
-  Then sync watchlist (`gh api user/repos`, minus forks/archived/excludes).
+  Then sync watchlist (`search_repositories org:<login>`, minus
+  forks/archived/excludes — `gh` is not available in the cloud sandbox,
+  `memory/ops.md`).
   Gather candidates: open PRs close to merge, assigned issues, branches with recent
   pushes but no PR, yesterday's carry-over.
   **Rank by value, not by cheapness.** Tom's focus is revealed, not declared:
@@ -174,7 +176,11 @@ to execution lanes. Non-negotiables:
   **Emit dispatch contracts** for the top candidates: up to
   `dispatch.daily_cap` minus contracts already created today, using the
   contract format in `dispatch/DESIGN.md` §2. Review contracts pin the
-  family that did not author the PR. Run `scripts/dispatch-lint.sh`, commit
+  family that did not author the PR and default to `lane: workhorse` (down
+  from `frontier`, retro 2026-09-06: five straight verified first-pass
+  frontier/openai review outcomes met the Pareto bar for a lane-move trial,
+  `memory/models.md`) — pin `frontier` explicitly only when a candidate's
+  own signal calls for it. Run `scripts/dispatch-lint.sh`, commit
   bot-authored (`dispatch: open <id>`). Execution is the runner's job — the
   scout only queues. A contract is a ticket in the `to-tickets` sense: one
   vertical slice, complete and verifiable on its own, sized for a single
