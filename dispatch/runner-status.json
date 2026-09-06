@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-06T11:50:32+02:00",
+  "last_tick": "2026-09-06T12:26:07+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-06-writingvoiceskill-review-01",
-  "runner_sha": "a2c3e1a",
-  "since": "2026-09-06T11:50:32+02:00",
+  "result": "idle",
+  "runner_sha": "fed4752",
+  "since": "2026-09-06T12:26:07+02:00",
   "skipped": []
 }
