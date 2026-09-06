@@ -1,7 +1,8 @@
 ---
 id: 2026-09-06-ivy-verifyevidence-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-06T11:13:09+02:00
 repo: tompulsarlabs/ivy
 lane: frontier
 pool: openai
