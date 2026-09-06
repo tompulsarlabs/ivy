@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-06T06:56:56Z",
+  "generated_at": "2026-09-06T15:45:04Z",
   "repos": [
     {
       "name": "Talent Radar",
@@ -35,9 +35,9 @@
       "name": "ivy",
       "remote": "tompulsarlabs/ivy",
       "branch": "main",
-      "dirty_files": 3,
-      "unpushed_commits": 0,
-      "last_commit": "2026-09-05",
+      "dirty_files": 4,
+      "unpushed_commits": 1,
+      "last_commit": "2026-09-06",
       "author_email_ok": true,
       "last_commit_email_ok": false
     },
@@ -64,10 +64,10 @@
     {
       "name": "tomgreen.ai",
       "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/site-flow",
+      "branch": "codex/sharpen-career-hierarchy",
       "dirty_files": 1,
       "unpushed_commits": 0,
-      "last_commit": "2026-09-05",
+      "last_commit": "2026-09-06",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
