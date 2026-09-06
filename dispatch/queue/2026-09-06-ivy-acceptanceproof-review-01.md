@@ -1,7 +1,8 @@
 ---
 id: 2026-09-06-ivy-acceptanceproof-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-06T10:04:29+02:00
 repo: tompulsarlabs/ivy
 lane: frontier
 pool: openai
