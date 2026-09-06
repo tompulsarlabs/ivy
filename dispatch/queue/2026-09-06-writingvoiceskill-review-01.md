@@ -1,7 +1,8 @@
 ---
 id: 2026-09-06-writingvoiceskill-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-06T11:50:32+02:00
 repo: tompulsarlabs/writing-voice-skill
 lane: frontier
 pool: openai
