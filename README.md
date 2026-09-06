@@ -45,11 +45,8 @@ fakes it — no empty commits, no backdating, no filler.
   the morning scout sees truth that only exists on the laptop.
 - **The weekly retro** may change at most two things, must cite evidence for
   each, and is the only pass allowed to edit behaviour or prune memory.
-- **A shared vocabulary and a skill layer.** `CONTEXT.md` names each thing
-  once, and Matt Pocock's engineering skills are vendored under
-  `.claude/skills/` so routines, workers, and interactive sessions run the
-  same discipline: grill before building, tickets as vertical slices,
-  test-first, two-axis review.
+- **Shared vocabulary and versioned skills** keep routines, workers and
+  interactive sessions consistent across planning, implementation and review.
 
 ## The daily loop
 
@@ -176,36 +173,9 @@ three days outrank the cheapest ship in the nudge.
 
 ## Vocabulary and skills
 
-`CONTEXT.md` is the glossary: one word per concept, and the words to stop
-using. It exists because the words drifted. Journals called scout picks
-"nudge cycles" until a dispatch contract had to reconcile the count; "done"
-meant two different states; "the connected address" implied one when two
-are verified. Journals, memory pages, contracts, and commit messages use its
-terms. The failsafe flags gaps in the day's journal; the retro resolves them.
-
-The skill layer is [Matt Pocock's skills](https://github.com/mattpocock/skills)
-(plugin v1.2.3, upstream `6654f6b`, hashes in `skills-lock.json`), vendored
-under `.claude/skills/` so the cloud routines load them from the checkout.
-`/ask-matt` routes between them. They hook in at four places:
-
-- **Designing the next phase.** `/grill-with-docs` interviews before
-  anything is built and writes what it settles into `CONTEXT.md` and
-  `docs/adr/`. `/to-spec` and `/to-tickets` publish the result as a spec
-  under `.scratch/` and a chain of dispatch contracts, later ones carrying
-  `blocked_by` (`docs/agents/issue-tracker.md` is the mapping).
-- **Workers.** The runner's prompt names `code-review` for review contracts
-  and `tdd` plus `code-review` for builds, conditionally, so a harness
-  without them still executes.
-- **The retro.** A weekly pass applies `writing-for-agents` to the steering
-  files, since every line of `playbook.md` costs on every run, and
-  `domain-modeling` to the glossary.
-- **The Mac.** `/handoff` replaces hand-written "drop this in the terminal"
-  prompts; `/wizard` is how the bring-up scripts under `setup/` get written.
-
-On the Mac the same set installs once for every repo: `claude plugins
-install mattpocock-skills` for Claude Code, `npx skills@latest add
-mattpocock/skills -g` for Codex. The vendored copy is for the cloud, which
-sees neither.
+[CONTEXT.md](CONTEXT.md) defines Ivy's shared terms. Versioned skills support
+planning, implementation and review; see [the setup guide](setup/AGENTIC-STACK.md)
+for integration details and [skills-lock.json](skills-lock.json) for provenance.
 
 ## The learning loop
 
@@ -319,7 +289,7 @@ config.yml        identity, schedule, watchlist, lanes, dispatch limits
 playbook.md       immutable rules + retro-tunable behaviour
 CONTEXT.md        the glossary every routine, worker, and session writes in
 CLAUDE.md         navigation pointers and the agent-skills configuration
-.claude/skills/   Matt Pocock's promoted skill set, vendored (skills-lock.json)
+.claude/skills/   vendored engineering skills (provenance in skills-lock.json)
 docs/agents/      how the skills map onto Ivy: tracker, labels, domain docs
 state.json        machine-readable daily outcomes (append-only schema)
 local-wip.json    the Mac scanner's latest view of local work
@@ -333,18 +303,12 @@ setup/            launchd jobs, install helpers, and the setup guides
 ivy-design.html   design page from the v2 naming
 ```
 
-## Influences
+## Acknowledgements
 
-Perplexity's Brain gave the memory model: a wiki of linked markdown over raw
-evidence, citations down and context sideways. Uber's software-factory
-write-up validated the dispatch thesis: optimise a fleet of specialised
-agents against per-class targets, and cut waste before you downgrade a
-model. Matt Pocock's skills gave the working discipline and the glossary habit:
-grill first, tickets as tracer bullets, a `CONTEXT.md` so the agent stops
-using twenty words where one will do. Neither of the first two was copied
-wholesale — at this size, a small git repo and `grep` do what their
-infrastructure does — and the third is vendored as files, so it can be
-edited where Ivy's shape differs.
+Design inspiration: [Perplexity's Brain](https://www.perplexity.ai/hub/blog/brain-agentic-memory-as-a-knowledge-wiki)
+for knowledge-wiki memory and [Uber's software factory](https://www.uber.com/gb/en/blog/efficient-software-factory/)
+for agent-fleet efficiency. Ivy also includes vendored [Matt Pocock skills](https://github.com/mattpocock/skills),
+with upstream versions and hashes in [skills-lock.json](skills-lock.json).
 
 ## Adopting it
 
