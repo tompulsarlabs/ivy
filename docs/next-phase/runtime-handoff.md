@@ -1,3 +1,55 @@
+# Runtime validation passed for completion, cancellation and deadline shutdown
+
+6 September 2026. Tom approved preflight before reservation and a bounded validation
+session instead of per-launch approvals. System development remains credential-free;
+real-agent authentication and paid integration are deferred.
+
+The CLI now checks eligibility without reserving, then checks evidence-store writes,
+the requested Docker context, daemon access and the pinned local image through the
+same subprocess path as execution. Setup commands share a 15-second deadline and
+write separate preflight records. Preparation repeats image checks, and reserve
+rechecks capacity after preflight. Setup readiness does not guarantee a later build.
+
+A one-use 600-second session allowed at most three fresh probes, preserving all
+prior grants, five attempts, original start, limits and debit. Results:
+
+| Attempt | Result | Whole command observed | Termination | Capture |
+|---|---|---:|---|---|
+| `validation-complete-20260906` | completed | 0.503 s | confirmed | complete |
+| `validation-cancel-20260906` | canceled | 2.428 s | confirmed | partial |
+| `validation-deadline-20260906` | timed out | 10.190 s | confirmed | partial |
+
+All three receipts verify. Completed-worker fixture hashes match selected inputs;
+non-root/read-only/no-network/no-host-mount settings remain intact. Tampering with
+a copy of completed capture is rejected and its original still verifies. Successful
+preflight left ledger bytes unchanged. A real sandbox-denied preflight recorded the
+setup error without reserving an attempt or changing ledger bytes. A fourth session
+reservation was refused with identical ledger bytes. Final dedicated-context
+inventory: seven stopped containers, none running.
+
+**59 deterministic tests pass locally.** The existing ledger now retains eight
+attempts and 480 reserved seconds, with no unresolved reservation. All historical
+failures remain. Private originals and tampered copy remain in the same store;
+portable observations are in [the validation report](evidence/runtime-validation-20260906.json).
+
+Natural completion is now verified. Remaining limitations: interrupted daemon-side
+build shutdown, live failures after build submission, measured builder network
+behavior, and a hard whole-lifecycle wall ceiling. The observed 10.190-second deadline
+command includes shutdown; it is not proof of a 10-second end-to-end guarantee.
+Real-agent authentication, effective harness metadata and approved neutral-case
+assessment remain deferred. No model/judge call occurred; Milestone A has not passed.
+
+The prior 9,300-second engineering debit is preserved; the remaining 600 seconds
+are allocated after the prior closeout boundary (08:13:27 through 08:23:27 UTC),
+including this session's verification, docs, push and CI closeout. Initial reading
+at 08:12:18 falls in the prior allocation, not a second charge. Cumulative allocated
+debit is 9,900 seconds, with no remaining engineering allowance or session probes.
+The earlier pending per-attempt question is superseded by Tom's session approval.
+Keep branch `codex/ivy-acceptance-scaffold` and stacked draft PR #20. Production
+dispatch, Cockpit and the unrelated checkout were not changed.
+
+## Previous checkpoint — retained history
+
 # System-only continuation: preparation failures recorded; completion still pending
 
 6 September 2026. Tom clarified that this is system development and approved

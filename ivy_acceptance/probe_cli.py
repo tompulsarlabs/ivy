@@ -27,6 +27,7 @@ def add_commands(sub):
     p.add_argument("--deadline", type=int, default=10)
     p.add_argument("--wait", action="store_true", help="keep probe alive for cancellation/timeout control")
     p.add_argument("--cancel-after", type=float)
+    p.add_argument("--preflight-only", action="store_true", help="check setup and record evidence without reserving an attempt")
     r = sub.add_parser("recover-probe", help="confirm shutdown of a reserved probe after supervisor failure")
     r.add_argument("--store", type=Path, required=True)
     r.add_argument("--attempt", required=True)
@@ -38,6 +39,9 @@ def add_commands(sub):
     c = sub.add_parser("authorize-completion-probe", help="append explicit approval for one completion probe in 10 minutes")
     c.add_argument("--store", type=Path, required=True)
     c.add_argument("--authorization-reference", required=True)
+    s = sub.add_parser("authorize-validation-session", help="record one 10-minute runtime session with at most three fresh probes")
+    s.add_argument("--store", type=Path, required=True)
+    s.add_argument("--authorization-reference", required=True)
 
 
 def verify_probe(directory):
@@ -82,13 +86,15 @@ def verify_probe(directory):
 def run_command(args):
     if args.command == "verify-probe":
         return verify_probe(args.directory)
-    if args.command in ("authorize-probe-extension", "authorize-completion-probe"):
+    if args.command in ("authorize-probe-extension", "authorize-completion-probe", "authorize-validation-session"):
         prior = read_record(args.store / "ledger.json")
         with AttemptStore(args.store, prior["binding"], Limits(**prior["limits"])) as store:
-            grant = (store.authorize_completion(args.authorization_reference)
+            grant = (store.authorize_validation_session(args.authorization_reference)
+                     if args.command == "authorize-validation-session" else store.authorize_completion(args.authorization_reference)
                      if args.command == "authorize-completion-probe"
                      else store.authorize_extension(args.authorization_reference))
-            key = "completion_authorization" if args.command == "authorize-completion-probe" else "authorization_extension"
+            key = ("validation_session" if args.command == "authorize-validation-session" else
+                   "completion_authorization" if args.command == "authorize-completion-probe" else "authorization_extension")
             return {key: grant,
                     "original_limits_preserved": True, "model_evaluation": False}
     if args.command == "recover-probe":
@@ -117,6 +123,10 @@ def run_command(args):
                                      wait=args.wait, cancel_after=args.cancel_after)
         request = WorkerRequest(args.attempt, "infrastructure-probe", binding["plan_sha256"],
                                 binding["fixture_sha256"], binding["agent_version_sha256"], args.deadline)
+        if args.preflight_only:
+            return {"preflight": adapter.preflight(), "attempt_reserved": False, "model_evaluation": False}
+        store.check_reservation(args.attempt, args.attempt, args.deadline)
+        adapter.preflight()
         try:
             handle = adapter.prepare(request)
         except subprocess.CalledProcessError as exc:

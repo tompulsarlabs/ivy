@@ -97,7 +97,8 @@ class AttemptStore:
         s = self.state
         keys = {"schema_version", "binding", "limits", "started_at", "last_time", "attempts"}
         if (type(s) is not dict or set(s) not in (keys, keys | {"authorization_extension"},
-                keys | {"authorization_extension", "completion_authorization"}) or type(s["schema_version"]) is not int
+                keys | {"authorization_extension", "completion_authorization"},
+                keys | {"authorization_extension", "completion_authorization", "validation_session"}) or type(s["schema_version"]) is not int
                 or s["schema_version"] != 1 or s["binding"] != self.binding
                 or s["limits"] != asdict(self.limits) or type(s["attempts"]) is not list):
             raise InvalidManifest("ledger schema, comparison or limits changed")
@@ -138,7 +139,7 @@ class AttemptStore:
                     or type(ext["prior_attempt_count"]) is not int
                     or not 0 <= ext["prior_attempt_count"] <= len(s["attempts"])
                     or len(s["attempts"]) - ext["prior_attempt_count"] > ext["max_fresh_attempts"]
-                        + (1 if "completion_authorization" in s else 0)
+                        + (1 if "completion_authorization" in s else 0) + (3 if "validation_session" in s else 0)
                     or type(ext["prior_ledger_sha256"]) is not str
                     or not re.fullmatch(r"[a-f0-9]{64}", ext["prior_ledger_sha256"])):
                 raise InvalidManifest("invalid authorization extension")
@@ -156,9 +157,25 @@ class AttemptStore:
                     or type(grant["prior_attempt_count"]) is not int
                     or grant["prior_attempt_count"] != ext["prior_attempt_count"] + ext["max_fresh_attempts"]
                     or not grant["prior_attempt_count"] <= len(s["attempts"]) <= grant["prior_attempt_count"] + 1
+                        + (3 if "validation_session" in s else 0)
                     or type(grant["prior_ledger_sha256"]) is not str
                     or not re.fullmatch(r"[a-f0-9]{64}", grant["prior_ledger_sha256"])):
                 raise InvalidManifest("invalid completion authorization")
+        if "validation_session" in s:
+            session = s["validation_session"]
+            if (type(session) is not dict or set(session) != set(grant)
+                    or type(session["authorization_reference"]) is not str or not session["authorization_reference"].strip()
+                    or session["authority"] != "trusted_local_supervisor_not_signed_authority"
+                    or type(session["started_at"]) not in (int, float)
+                    or not grant["started_at"] <= session["started_at"] <= s["last_time"]
+                    or type(session["window_seconds"]) is not int or session["window_seconds"] != 600
+                    or type(session["max_fresh_attempts"]) is not int or session["max_fresh_attempts"] != 3
+                    or type(session["prior_attempt_count"]) is not int
+                    or session["prior_attempt_count"] != grant["prior_attempt_count"] + 1
+                    or not session["prior_attempt_count"] <= len(s["attempts"]) <= session["prior_attempt_count"] + 3
+                    or type(session["prior_ledger_sha256"]) is not str
+                    or not re.fullmatch(r"[a-f0-9]{64}", session["prior_ledger_sha256"])):
+                raise InvalidManifest("invalid validation session")
 
     def authorize_extension(self, reference):
         """Record the one explicit local approval; preserve every original debit/cap.
@@ -210,7 +227,28 @@ class AttemptStore:
         self._save()
         return self.state["completion_authorization"]
 
-    def reserve(self, attempt_id, runtime_id, seconds):
+    def authorize_validation_session(self, reference):
+        """One bounded session permits local retries without per-launch approval."""
+        grant = self.state.get("completion_authorization")
+        if "validation_session" in self.state:
+            raise BudgetBlocked("validation session already recorded; no renewal")
+        if grant is None or len(self.state["attempts"]) != grant["prior_attempt_count"] + 1:
+            raise BudgetBlocked("prior completion authorization must be consumed first")
+        if type(reference) is not str or not reference.strip() or len(reference) > 2000:
+            raise BudgetBlocked("explicit authorization reference required")
+        now = self._now()
+        if now < self.state["last_time"] or any(not r["termination_confirmed"] for r in self.state["attempts"]):
+            raise BudgetBlocked("clock rollback or unconfirmed prior workload")
+        self.state["validation_session"] = {
+            "authorization_reference": reference, "authority": "trusted_local_supervisor_not_signed_authority",
+            "started_at": now, "window_seconds": 600, "max_fresh_attempts": 3,
+            "prior_attempt_count": len(self.state["attempts"]), "prior_ledger_sha256": digest(self.state)}
+        self.state["last_time"] = now
+        self._save()
+        return self.state["validation_session"]
+
+    def check_reservation(self, attempt_id, runtime_id, seconds):
+        """Read-only eligibility check; reserve repeats it after setup preflight."""
         safe_id(attempt_id)
         safe_id(runtime_id)
         now = self._now()
@@ -223,7 +261,7 @@ class AttemptStore:
             raise BudgetBlocked("attempt id already consumed")
         if type(seconds) is not int or not 0 < seconds <= self.limits.per_attempt_seconds:
             raise BudgetBlocked("invalid deadline")
-        ext = self.state.get("completion_authorization", self.state.get("authorization_extension"))
+        ext = self.state.get("validation_session", self.state.get("completion_authorization", self.state.get("authorization_extension")))
         window_exhausted = (now - self.state["started_at"] + seconds > self.limits.total_seconds)
         if ext is not None:
             window_exhausted = (now - ext["started_at"] + seconds > ext["window_seconds"]
@@ -232,8 +270,12 @@ class AttemptStore:
                 or sum(row["seconds"] for row in rows) + seconds > self.limits.total_seconds
                 or window_exhausted):
             raise BudgetBlocked("attempt or execution time budget exhausted")
+        return now
+
+    def reserve(self, attempt_id, runtime_id, seconds):
+        now = self.check_reservation(attempt_id, runtime_id, seconds)
         self.state["last_time"] = now
-        rows.append({"id": attempt_id, "runtime_id": runtime_id, "seconds": seconds,
+        self.state["attempts"].append({"id": attempt_id, "runtime_id": runtime_id, "seconds": seconds,
                      "termination_confirmed": False, "outcome": None})
         self._save()  # Must succeed before Docker create/start.
 

@@ -111,6 +111,42 @@ class DockerProbeAdapter:
                 "derived_image": self.derived_image,
                 "capture_scope": "Docker stdout/stderr and supervisor lifecycle; not an agent tool trace"}
 
+    def preflight(self):
+        """Read Docker through the execution path before reserving any workload.
+
+        Evidence writes test store access. This cannot prove a future build will
+        succeed, and prepare repeats image checks to handle intervening changes.
+        """
+        if self.request is not None:
+            raise InvalidManifest("preflight must precede attempt reservation")
+        path = self.store.directory / ("preflight-" + str(time.time_ns()) + ".json")
+        record = {"kind": "setup_preflight_not_worker_attempt", "status": "checking",
+                  "context": self.context, "image": self.image, "workload_submitted": False}
+        write_record(path, record)
+        previous_deadline = self.operation_deadline
+        self.operation_deadline = time.monotonic() + 15
+        try:
+            context = json.loads(self._cmd(["context", "inspect", self.context]).stdout)[0]
+            if context["Name"] != self.context:
+                raise InvalidManifest("Docker context mismatch")
+            server = json.loads(self._cmd(["version", "--format", "{{json .Server}}"]).stdout)
+            if not server or not server.get("Version"):
+                raise InvalidManifest("Docker daemon unavailable")
+            base = json.loads(self._cmd(["image", "inspect", self.image]).stdout)[0]
+            if (not re.fullmatch(r"sha256:[a-f0-9]{64}", base["Id"])
+                    or base["Config"].get("OnBuild") or base["Config"].get("Volumes")):
+                raise InvalidManifest("invalid base identity, build hooks or volumes")
+            record.update(status="ready", server_version=server["Version"], base_id=base["Id"])
+        except (Exception, KeyboardInterrupt) as exc:
+            record.update(status="failed", error=type(exc).__name__ + ": " + str(exc),
+                          stderr=(getattr(exc, "stderr", None) or b"").decode(errors="replace"))
+            write_record(path, record)
+            raise
+        finally:
+            self.operation_deadline = previous_deadline
+        write_record(path, record)
+        return {"status": "ready", "evidence_reference": path.name, "workload_submitted": False}
+
     def _inspect(self, handle, *, cleanup=False):
         info = json.loads(self._cmd(["container", "inspect", handle.runtime_id], cleanup=cleanup).stdout)[0]
         labels = info["Config"].get("Labels") or {}

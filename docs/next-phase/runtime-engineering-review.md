@@ -1,3 +1,38 @@
+# Preflight and bounded validation review — 6 September 2026
+
+The previous socket-denied attempt exposed a setup check occurring after reservation.
+The CLI now checks eligibility read-only, runs bounded preflight on the same Docker
+subprocess path, then reserves immediately before preparation. Preflight checks
+context identity, daemon availability, pinned-image identity/hooks/volumes and
+artifact-store writes. Setup failures retain separate evidence and consume no worker
+attempt. Runtime failures still consume their attempts; uncertain shutdown blocks
+retry. The real denied-socket control confirmed unchanged ledger bytes and no attempt.
+
+One explicit session grants three fresh probes within 600 seconds, retaining both
+prior authorizations and all five prior rows. The existing hard aggregate attempt
+and reserved-time limits still apply. Tests cover history, nonrenewal, session count,
+full deadline reservation and unresolved-work blocking. This is local operator
+approval accounting, not signed authority or provider billing control.
+
+Observed real completion, cancellation and deadline shutdown all passed; all three
+receipts independently verify. Complete capture tampering on a copy is rejected.
+The original completed receipt verifies. Eight attempts/480 reserved seconds remain,
+none unresolved; final inventory has seven stopped containers and no running ones.
+The session is consumed and the fourth reservation refuses without ledger changes.
+59 deterministic tests pass. A report-extraction assertion initially looked for the
+nested daemon message in generic CLI stderr; reading the retained preflight record
+corrected that extraction. No runtime attempt was retried for that assertion.
+
+Whole-command measurements (0.503/2.428/10.190 seconds) are observations, not hard
+lifecycle bounds. Interrupted daemon build shutdown, post-submission preparation
+failures and builder network behavior remain unverified. Filesystem operations and
+daemon build lifetime still prevent the hard-ceiling claim. No model/judge call
+occurred; authentication and neutral-case assessment remain deferred. Milestone A
+is not passed. The current handoff and resource ledger carry the exhausted bounded
+session and engineering allocation; the same stacked draft PR #20 is preserved.
+
+## Previous review — retained history
+
 # Preparation failure and client cleanup review — 6 September 2026
 
 The system-only continuation fixes two concrete evidence gaps. A failed image

@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "stage": "high_system_only_completion_continuation",
+  "stage": "high_preflight_and_bounded_validation",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-06T08:07:42.582562+00:00",
+  "recorded_through": "2026-09-06T08:21:33.673501+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 9300,
-  "debit_method": "Prior 8400-second debit preserved. Added 900-second single-agent allocation from 2026-09-06T07:58:27Z through at most 08:13:27Z, including reading, implementation, tests, Docker diagnostics, evidence and PR/CI closeout. No parallel agents. This is conservative wall-time allocation, not measured active inference or provider billing. Further work beyond the allocation must debit the same remaining allowance.",
+  "engineering_budget_debit_seconds": 9900,
+  "debit_method": "Prior 9300-second debit preserved. Remaining 600-second single-agent allocation begins after the prior closeout boundary, 2026-09-06T08:13:27Z through 08:23:27Z, including implementation, tests, runtime controls, evidence, push and CI. Initial reading at 08:12:18 belongs to the prior allocation and is not charged twice. Conservative wall-time allocation, not provider billing or measured active inference; no capacity reset.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -13,7 +13,7 @@
     "per_attempt_seconds": 90,
     "execution_wall_seconds": 3600
   },
-  "milestone_a_budget_remaining_at_checkpoint_seconds": 600,
+  "milestone_a_budget_remaining_at_checkpoint_seconds": 0,
   "authorized_extensions": [
     {
       "recorded_at": "2026-09-05T18:34:51+00:00",
@@ -40,22 +40,34 @@
       "budget_reset": false,
       "api_spending_authorized": false,
       "status": "one_completion_attempt_consumed_by_pre_build_sandbox_denial"
+    },
+    {
+      "recorded_at": "2026-09-06T08:21:33.673501+00:00",
+      "authorization": "Tom: Okay, sounds good. Let's get on with that.",
+      "responds_to": "Preflight before reservation and bounded runtime-validation session instead of per-launch approval. Operator ceiling: remaining 10 engineering minutes, 600-second runtime session, at most three fresh credential-free probes; model integration deferred.",
+      "additional_aggregate_engineering_seconds": 0,
+      "additional_runtime_window_seconds": 600,
+      "additional_runtime_probes": 3,
+      "repair_policy": "Diagnose, repair and retry within the bounded session; stop on uncertain shutdown.",
+      "budget_reset": false,
+      "api_spending_authorized": false,
+      "status": "three_runtime_controls_passed_session_consumed"
     }
   ],
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 9,
+    "participants": 10,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
     "status": "No paid API calls authorized or needed for current system development. Real-agent authentication and model/judge execution intentionally deferred; existing subscription credentials were not read or exposed."
   },
-  "stage_status": "54 deterministic tests pass. Preparation phase/failure retention and client cleanup repaired. One real pre-build sandbox denial retained and safely closed without submitting a workload. Natural completion remains unverified. Milestone A not passed; authentication/model assessment deferred.",
+  "stage_status": "59 deterministic tests pass; real completion, cancellation and deadline shutdown verified with receipts. Real setup denial consumes no worker attempt. Eight attempts/480 reserved seconds retained; zero unresolved/running workloads. No evaluated model/judge calls; Milestone A not passed.",
   "continuation_rule": "Charge subsequent implementation/debugging and any later verification time to this same budget. Handoffs do not reset it.",
   "stage_debits": [
     {
@@ -91,35 +103,47 @@
       "seconds": 900,
       "primary_closeout_allocation_ends_at": "2026-09-06T08:13:27+00:00",
       "accounting": "One primary agent; includes all work and closeout within this allocation, not model-quality evaluation."
+    },
+    {
+      "stage": "high_preflight_and_bounded_validation",
+      "started_at": "2026-09-06T08:12:18+00:00",
+      "charged_from": "2026-09-06T08:13:27+00:00",
+      "seconds": 600,
+      "primary_closeout_allocation_ends_at": "2026-09-06T08:23:27+00:00",
+      "accounting": "Single primary agent; initial 69 seconds covered by preceding stage allocation."
     }
   ],
-  "runtime_probe_attempts": 5,
+  "runtime_probe_attempts": 8,
   "runtime_probe_outcomes": {
     "preparation_failed_recovered": 1,
     "start_failed_logging_configuration": 1,
-    "canceled": 1,
-    "timed_out": 1,
-    "completed": 0,
+    "canceled": 2,
+    "timed_out": 2,
+    "completed": 1,
     "pre_build_sandbox_denial_no_workload_submitted": 1
   },
-  "repair_iterations_used": 3,
-  "repair_iterations_limit": 3,
+  "repair_iterations_used": 4,
+  "repair_iterations_limit": 4,
   "runtime_debug_controls": {
     "copy_failure_reproduced": true,
     "recovery": "verified_stopped_reservation_closed",
     "fresh_budget_refusal": "observed_cli_exit_2_ledger_unchanged",
     "runtime_window": "explicit_additive_1200_second_extension_three_of_three_consumed",
     "actual_build_cancel_deadline": "verified_on_real_docker",
-    "natural_completion": "unverified_after_incremental_logging_correction",
-    "hard_whole_lifecycle_deadline": "unverified_filesystem_daemon_build_and_final_client_wait",
+    "natural_completion": "verified_real_worker_complete_capture_exit_zero_receipt_integrity",
+    "hard_whole_lifecycle_deadline": "unverified_filesystem_and_daemon_build_lifetime",
     "ownership_rejection": "observed_real_docker_inspection",
     "actual_receipt_copy_tamper_controls_rejected": 4,
     "fourth_reservation_refusal": "observed_original_ledger_byte_identical",
-    "runtime_reserved_seconds_total": 290,
+    "runtime_reserved_seconds_total": 480,
     "running_containers_at_final_inventory": 0,
     "completion_probe": "pre_build_sandbox_denial_consumed_attempt_no_workload_submitted",
     "completion_grant_extra_reservation_refusal": "observed_cli_exit_2_original_ledger_byte_identical",
-    "client_cleanup_wait": "clamped_to_existing_shutdown_grace_receipt_survives_timeout_deterministic_only"
+    "client_cleanup_wait": "clamped_to_existing_shutdown_grace_receipt_survives_timeout_deterministic_only",
+    "validation_session": "three_of_three_consumed_complete_cancel_deadline_all_terminated",
+    "preflight_denial": "real_setup_error_retained_ledger_byte_identical_no_attempt",
+    "validation_session_fourth_refusal": "observed_ledger_byte_identical",
+    "completed_capture_tamper": "rejected_on_copy_original_receipt_verified"
   },
   "followup_recovery": {
     "observed_at": "2026-09-05 18:02:35 UTC",
@@ -128,5 +152,6 @@
     "implementation_extension": "pending_user_response_45_minutes_3_probes_20_minute_window",
     "engineering_budget_reopened": false
   },
-  "pending_completion_retry": "Asked explicit approval for one additional fresh credential-free completion attempt after sandbox denial; no reply recorded, no additional capacity granted."
+  "pending_completion_retry": "Superseded by explicit bounded-session approval; completion now verified. No outstanding per-attempt approval request.",
+  "repair_policy": "Prior iteration history retained; latest approval permits bounded session work rather than per-launch approval. One implementation iteration used in this session."
 }

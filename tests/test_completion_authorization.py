@@ -10,6 +10,49 @@ from ivy_acceptance.storage import AttemptStore, read_record, write_record
 
 
 class CompletionAuthorizationTests(unittest.TestCase):
+    def validation_session(self):
+        with self.store() as store:
+            store.authorize_completion("prior approval")
+            store.reserve("prior-completion", "prior-completion-container", 10)
+            store.finish("prior-completion", "prior-completion-container", "execution_error", terminated=True)
+        self.now += 1000
+
+    def test_validation_session_retains_grants_and_stops_after_three_attempts(self):
+        self.validation_session()
+        original = read_record(self.path / "ledger.json")
+        with self.store() as store:
+            session = store.authorize_validation_session("approved bounded debugging session")
+            self.assertEqual(session["prior_ledger_sha256"], digest(original))
+            for key in ("started_at", "limits", "attempts", "authorization_extension", "completion_authorization"):
+                self.assertEqual(store.state[key], original[key])
+            for number in range(3):
+                store.reserve("session-" + str(number), "owned-" + str(number), 90)
+                store.finish("session-" + str(number), "owned-" + str(number), "completed", terminated=True)
+        before = (self.path / "ledger.json").read_bytes()
+        with self.store() as store:
+            with self.assertRaises(BudgetBlocked):
+                store.reserve("extra", "extra", 1)
+            with self.assertRaises(BudgetBlocked):
+                store.authorize_validation_session("renew")
+        self.assertEqual((self.path / "ledger.json").read_bytes(), before)
+
+    def test_validation_session_blocks_unknown_shutdown_and_expired_time(self):
+        self.validation_session()
+        with self.store() as store:
+            store.authorize_validation_session("approved")
+            before = (self.path / "ledger.json").read_bytes()
+            store.check_reservation("first", "owned", 90)
+            self.assertEqual((self.path / "ledger.json").read_bytes(), before)
+            store.reserve("first", "owned", 90)
+            store.finish("first", "owned", "timed_out", terminated=False)
+            with self.assertRaises(BudgetBlocked):
+                store.reserve("next", "next", 90)
+            store.finish("first", "owned", "timed_out", terminated=True)
+        self.now += 511
+        with self.store() as store:
+            with self.assertRaises(BudgetBlocked):
+                store.reserve("late", "late", 90)
+
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.addCleanup(self.tmp.cleanup)
