@@ -44,3 +44,16 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-07-tomgreenai-activitymatrix-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, 162 lines, non-empty. PR #41 merged today
+  (07:16:52 CEST, as c51e56c) before this stamp, so all cited paths are on
+  main: confirmed src/lib/data/github.ts, src/components/recent-build-activity.tsx,
+  src/lib/data/ivy.ts, src/lib/data/github.test.ts, src/app/building/page.tsx,
+  e2e/content-baseline.json, e2e/content-guard.mjs, src/components/contribution-graph.tsx,
+  and src/app/globals.css all exist via search_code against the merge commit
+  (query-string repo: technique, session tools otherwise hard-scoped to ivy
+  alone). Report's finding #1 (terminal-day strictness collapsing the window
+  at the Berlin/UTC boundary) matches the cited recentContributionDays code
+  directly.

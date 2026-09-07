@@ -44,3 +44,19 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-07-talentradar-pilot-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, 28 lines, non-empty. PR #2 remains open
+  (draft, not merged), so its files live only on the PR branch --
+  search_code only indexes default branches and cannot confirm them
+  directly (session tools are otherwise hard-scoped to ivy alone). Cross-
+  checked instead against PR #2's own body text, which corroborates the
+  report's cited surfaces verbatim: "Private records use RLS, encrypted
+  per-user Notion tokens and server-side Astra Responses calls" (matches
+  the report's RLS and Notion-token findings), "155 deterministic tests
+  pass, including PostgreSQL migration/RLS/RPC execution" (matches
+  supabase/migrations/20260906120000_executive_pilot.sql and
+  tests/pilot.test.ts), and docs/PILOT.md is named directly for the
+  interview-evaluation limits the report's top finding is about. Same
+  corroboration standard used for talentradar-review-01 on 2026-09-05.
