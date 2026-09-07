@@ -3,6 +3,16 @@
   "last_green": "2026-09-06",
   "memory_last_synthesized": "2026-09-05",
   "days": {
+    "2026-09-07": {
+      "green_by": "tompulsarlabs/tomgreen.ai PR #38 through #45 (8 merged: opening reconstruction, CI perf, opening pause/Chapter2 copy, Lab activity matrix, case-study typography x2, Chapter2 client-name removal) + tompulsarlabs/writing-voice-skill PR #2 (merged, plain-writing pass) + follow-up doc commit + tompulsarlabs/tompulsarlabs (1 commit, README) + tompulsarlabs/ivy-showcase (1 commit, Tom Green, new repo) + tompulsarlabs/pixel-perfect-showcase-8458 PR #1 + PR #2 (opened, draft) + tompulsarlabs/talent-radar PR #3 (opened, draft, voice rehearsal beta)",
+      "method": "real-work",
+      "contributions": 14,
+      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date:2026-09-07/created:2026-09-07 (18:00 check; check.sh exit 2, no github.com egress in cloud sandbox) — all connected-author (tom@pulsarlabsai.com / tompulsarlabs login), default branch, non-fork; two repos not yet in config.yml watchlist (ivy-showcase, pixel-perfect-showcase-8458) surfaced today, for tomorrow's scout to sync; see journal ## Verification",
+      "cite": "journal/2026-09-07.md",
+      "nudge_sent": false,
+      "nudge_converted": null,
+      "failsafe_fired": false
+    },
     "2026-09-06": {
       "green_by": "tompulsarlabs/tomgreen.ai PR #30 + #31 + #32 + #33 + #35 + #36 + #37 (merged, homepage grouping + ARR wording + CV role hierarchy + opening reassembly/order/motion/stagger) + PR #34 (opened, Calendly capitalization) + tompulsarlabs/talent-radar PR #2 (opened, executive opportunity pilot) + tompulsarlabs/tompulsarlabs (1 commit, README)",
       "method": "real-work",
