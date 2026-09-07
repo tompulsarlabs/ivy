@@ -1,7 +1,8 @@
 ---
 id: 2026-09-07-tomgreenai-activitymatrix-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-07T10:04:07+02:00
 repo: tompulsarlabs/tomgreen.ai
 lane: workhorse
 pool: anthropic
