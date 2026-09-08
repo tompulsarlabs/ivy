@@ -1,7 +1,7 @@
 ---
 subject: memory index
 type: index
-updated: 2026-09-06
+updated: 2026-09-08
 ---
 
 # Memory index
@@ -24,6 +24,8 @@ behavior lives in `playbook.md` and only the retro changes it.
 - [[repos/yeva]] — private; setup-guide work, two sessions 09-01/09-02
 - [[repos/tompulsarlabs]] — org profile repo; first signal 2026-09-02
 - [[repos/writing-voice-skill]] — first signal 2026-09-05 (PR #2)
+- [[repos/pixel-perfect-showcase-8458]] — `ivy-cockpit`; write-credential finding 09-08
+- [[repos/sybil-showcase]] / [[repos/safari-harness]] / [[repos/ivy-showcase]] — first signal 09-07/09-08
 - [[models]] — lane routing evidence, one row per verified dispatch contract
 
 **No page yet** (no observed commit activity through 09-02): aris-ote-benchmarking,

@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-05
+updated: 2026-09-08
 ---
 
 # talent-radar
@@ -39,8 +39,36 @@ PR #1's files exist only on its own branch, not `main` — `search_code`
 own body text is the fallback corroboration [[ops]]. This will resolve
 itself the day the PR merges.
 
+## PR #2 and #3 — a second and third unmerged draft, both stacked
+
+**PR #2** ("Build the private executive opportunity and interview
+pilot"), opened 2026-09-03: RLS, encrypted per-user Notion tokens,
+server-side Astra Responses calls. Reviewed 2026-09-05 by
+`2026-09-05-talentradar-review-01` (verified done, PR-body corroboration)
+[[models]] [cite:2026-09-05].
+
+**PR #3**, opened 2026-09-07, stacked on PR #2. Reviewed 2026-09-08 by
+`2026-09-08-talentradar-voicepractice-review-01` at head `a8a4cf4`
+(branch `codex/rad-interview-beta`), titled at review time "Add
+configurable voice interview practice for invited users" — the report
+found the Google-sign-in + allowlist gate sound, private notes correctly
+excluded from model requests, and no code path promoting the beta beyond
+its preview branch. **But the PR changed after the review completed**:
+by the 22:30 failsafe pass the same day, its title had become "Connect
+Sybil intake to private Radar and invited voice practice" and
+`updated_at` had moved to 14:20 UTC — over three hours past the review's
+10:56 CEST finish. The failsafe could not confirm the reviewed findings
+still hold against whatever the new head actually contains (`talent-radar`
+sits outside this session's direct repo access [[ops]]), so the contract
+was left **unverified** rather than assumed carried-over [cite:2026-09-08].
+**Open finding for the next scout/dispatch pass:** PR #3 needs a fresh
+review contract against its current head before it can be treated as
+verified-done.
+
 ## Changelog
 
+- 2026-09-08 — recorded PR #3's post-review title/scope drift and the
+  resulting unverified contract; added the PR #2 review pointer.
 - 2026-09-05 — rewritten: dormant-scaffold framing replaced with the real
   PR #1 build (Supabase fetch layer, Radar UI, CI); recorded the
   search_code verification gap while PR #1 stays unmerged.
