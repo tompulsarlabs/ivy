@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-08T10:53:46+02:00",
+  "last_tick": "2026-09-08T11:26:04+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-08-talentradar-voicepractice-review-01",
-  "runner_sha": "9766e7e",
-  "since": "2026-09-08T10:53:46+02:00",
+  "result": "idle",
+  "runner_sha": "c9cfe6f",
+  "since": "2026-09-08T11:26:04+02:00",
   "skipped": []
 }
