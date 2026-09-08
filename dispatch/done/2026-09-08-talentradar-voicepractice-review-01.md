@@ -1,7 +1,7 @@
 ---
 id: 2026-09-08-talentradar-voicepractice-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-08T10:53:46+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
@@ -35,3 +35,13 @@ finding tied to file:line, committed and pushed.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head.
+
+outcome:
+  claimed_at: 2026-09-08T10:53:46+02:00
+  finished_at: 2026-09-08T10:55:59+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 2.1
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-08-talentradar-voicepractice-review-01.md
