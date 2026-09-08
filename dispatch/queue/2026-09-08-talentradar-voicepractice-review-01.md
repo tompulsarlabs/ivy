@@ -1,7 +1,8 @@
 ---
 id: 2026-09-08-talentradar-voicepractice-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-08T10:53:46+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
