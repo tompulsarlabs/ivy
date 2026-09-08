@@ -1,7 +1,7 @@
 ---
 id: 2026-09-08-ivycockpit-credentialharden-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-08T09:32:47+02:00
 repo: tompulsarlabs/pixel-perfect-showcase-8458
 lane: frontier
@@ -45,3 +45,13 @@ finding tied to file:line, committed and pushed.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head.
+
+outcome:
+  claimed_at: 2026-09-08T09:32:47+02:00
+  finished_at: 2026-09-08T09:42:20+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 9.4
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-08-ivycockpit-credentialharden-review-01.md
