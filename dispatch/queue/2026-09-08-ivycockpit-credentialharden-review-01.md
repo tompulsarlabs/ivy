@@ -1,7 +1,8 @@
 ---
 id: 2026-09-08-ivycockpit-credentialharden-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-08T09:32:47+02:00
 repo: tompulsarlabs/pixel-perfect-showcase-8458
 lane: frontier
 pool: anthropic
