@@ -1,7 +1,8 @@
 ---
 id: 2026-09-08-ivycockpit-queueconnect-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-08T10:12:24+02:00
 repo: tompulsarlabs/pixel-perfect-showcase-8458
 lane: workhorse
 pool: anthropic
