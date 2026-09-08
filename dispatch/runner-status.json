@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-08T09:32:47+02:00",
+  "last_tick": "2026-09-08T10:12:24+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-08-ivycockpit-credentialharden-review-01",
-  "runner_sha": "b8546a6",
-  "since": "2026-09-08T09:32:47+02:00",
+  "result": "finished 2026-09-08-ivycockpit-queueconnect-review-01",
+  "runner_sha": "1f28068",
+  "since": "2026-09-08T10:12:24+02:00",
   "skipped": []
 }
