@@ -44,3 +44,13 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-06-ivy-acceptanceproof-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty. PR #19 remains open (draft) at
+  the exact reviewed head 8528cb5d60f5f63df4bdafd842bb08a461e20c6a --
+  confirmed via local git against the fetched branch. All five cited paths
+  (docs/next-phase/proof-plan.md, docs/agents/issue-tracker.md,
+  docs/next-phase/system-design.md, docs/adr/0001-agent-acceptance-proof.md,
+  playbook.md) exist at that SHA; spot-checked system-design.md:249-255
+  verbatim against the cited deterministic-decision-function text.

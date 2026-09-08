@@ -45,3 +45,19 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-08-talentradar-voicepractice-review-01.md
+
+verified: false
+verified_note: >
+  Report exists on main of ivy, non-empty, and its findings read as sound
+  for the head it names (a8a4cf4 on codex/rad-interview-beta, reviewed
+  2026-09-08T10:53:46+02:00–10:55:59+02:00). But PR #3 changed materially
+  after that review completed: title moved from "Add configurable voice
+  interview practice for invited users" (this contract's own task
+  description) to "Connect Sybil intake to private Radar and invited voice
+  practice", and updated_at moved to 2026-09-08T14:20:25Z -- over three
+  hours after the review finished. talent-radar is outside this session's
+  repo scope, so the new head's diff could not be inspected directly to
+  confirm whether the reviewed findings (Google-sign-in gating, private
+  notes exclusion, beta-scope containment) still hold against the expanded
+  scope. Treating this as unconfirmed rather than assuming carryover:
+  needs a fresh review contract against the current head.

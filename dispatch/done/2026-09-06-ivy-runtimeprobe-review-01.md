@@ -43,3 +43,16 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-06-ivy-runtimeprobe-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty. PR #20's head has since advanced
+  to 91e09e116ce8a8a9073f1131fca91cde02f83b99, but the reviewed SHA
+  eaa9b3642a49a5bbe31406f51ebce014f79f235a is confirmed a real commit and
+  an ancestor of the current head via local git, so the reviewed work is
+  still part of the branch, not discarded. All seven cited paths exist at
+  the reviewed SHA; spot-checked probe_cli.py:80 and :135 verbatim against
+  the report's "integrity: verified" and CLI-flow citations at that exact
+  commit (both match; they no longer match at the current, later head,
+  which is expected file drift from subsequent commits, not a report
+  defect).

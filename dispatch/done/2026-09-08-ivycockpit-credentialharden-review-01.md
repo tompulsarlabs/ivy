@@ -55,3 +55,17 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-08-ivycockpit-credentialharden-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty. PR #2 remains open (draft) and
+  unchanged since 2026-09-07T13:39:49Z, well before this review's
+  2026-09-08T09:32:47+02:00 claim -- head 87a61a5 confirmed stable.
+  pixel-perfect-showcase-8458 is not in this session's repo scope, so
+  paths could not be checked directly; corroborated instead against PR
+  #2's own body, which restates the report's central claim verbatim: "The
+  earlier Contents-write setup must remain disabled: that credential can
+  modify the repository from which the Mac automatically executes runner
+  code" -- matching F1's finding that the credential is armed by one env
+  var, not actually disabled in code. Same corroboration standard used for
+  talentradar-pilot-review-01 on 2026-09-07.

@@ -45,3 +45,11 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-06-ivy-verifyevidence-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty. PR #18 remains open (draft) at
+  the exact reviewed head de084f15bece5393630dc6cf57191043a684c379 --
+  confirmed via local git against the fetched branch. All fourteen cited
+  paths exist at that SHA; spot-checked playbook.md:101-104 verbatim
+  against the report's "Workers are untrusted" citation (matches exactly).

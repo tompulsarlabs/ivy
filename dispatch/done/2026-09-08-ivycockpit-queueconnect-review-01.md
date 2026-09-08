@@ -47,3 +47,17 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-08-ivycockpit-queueconnect-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty. PR #1 remains open (draft) and
+  unchanged since 2026-09-07T13:39:52Z, well before this review's
+  2026-09-08T10:12:24+02:00 claim -- head fc99eac confirmed stable.
+  pixel-perfect-showcase-8458 is not in this session's repo scope, so
+  paths could not be checked directly; corroborated instead against PR
+  #1's own body, which the report explicitly contrasts with the code
+  (Finding 0): the PR body's "command adapter points to an undefined
+  endpoint... execution is disconnected" framing is present verbatim, and
+  the report correctly flags it as describing the adapter this PR deletes
+  rather than the shipped code. Same corroboration standard used for
+  talentradar-pilot-review-01 on 2026-09-07.
