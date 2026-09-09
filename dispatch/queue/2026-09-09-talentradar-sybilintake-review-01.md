@@ -1,7 +1,8 @@
 ---
 id: 2026-09-09-talentradar-sybilintake-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-09T11:14:16+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
