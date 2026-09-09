@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-08
+updated: 2026-09-09
 ---
 
 # talent-radar
@@ -65,8 +65,28 @@ was left **unverified** rather than assumed carried-over [cite:2026-09-08].
 review contract against its current head before it can be treated as
 verified-done.
 
+**Resolved 2026-09-09:** `2026-09-09-talentradar-sybilintake-review-01`
+reviewed PR #3 at its current head `23724a0`, unchanged since the
+09-08T14:20:25Z drift (confirmed stable — no further scope change).
+Six findings, three P1: the three-phase interview contract can be
+bypassed by a forced-ready fallback at 25 turns
+(`src/app/api/intake/route.ts:57`); client-controlled candidate/company
+fields are interpolated directly into the system prompt that also holds
+the hidden rubric, with no role/data boundary
+(`src/lib/intake/sybil-prompts.ts:12-25`); and a shared-browser
+account-switch can transiently leak one user's voice interview data to
+another because in-flight requests aren't bound to an auth epoch
+(`src/components/InterviewBeta.tsx:60-96`). Current-head CI is also red
+(`tsc --noEmit` failures in `tests/sybil-intake.test.ts`). Confirmed
+still sound: the Google-sign-in + allowlist voice gate, private-notes
+exclusion, owner-scoped intake/upload state, and the PR's own
+draft/no-merge claim [cite:2026-09-09] [[models]].
+
 ## Changelog
 
+- 2026-09-09 — recorded the fresh PR #3 review (three P1 findings: phase
+  bypass, prompt injection via unescaped fields, cross-account voice
+  leak; plus a red-CI finding), resolving the 09-08 unverified-drift gap.
 - 2026-09-08 — recorded PR #3's post-review title/scope drift and the
   resulting unverified contract; added the PR #2 review pointer.
 - 2026-09-05 — rewritten: dormant-scaffold framing replaced with the real

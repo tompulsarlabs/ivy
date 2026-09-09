@@ -1,7 +1,7 @@
 ---
 subject: Ivy's runtime environment
 type: ops
-updated: 2026-09-06
+updated: 2026-09-09
 ---
 
 # Ops: how the environment actually behaves
@@ -70,6 +70,21 @@ confirmed exists. So a review/build contract's file-existence check is only
 directly answerable by `search_code` once the underlying PR has merged;
 before that, PR-body corroboration is the fallback, not a sign the contract
 failed [cite:2026-09-05].
+
+## The default clone is shallow, and memory-lint needs full history
+
+The cloud sandbox's checkout of this repo starts shallow (`git
+rev-parse --is-shallow-repository` → true). `scripts/memory-lint.sh`
+resolves every `[cite:<sha>]` with a local commit lookup, so a citation to
+a real, correctly-formed commit can still fail lint in a session whose
+shallow depth doesn't reach it — not a broken citation, a checkout
+artifact. Confirmed 2026-09-09: `[cite:60535f0]`, `[cite:ada1982]`,
+`[cite:e7e918b]`, `[cite:407cf03]` (all pre-existing, unrelated to that
+day's edits) failed lint at session start; `git fetch --unshallow` (took
+under a minute, ~230 commits total) made all four resolve with no content
+change needed. Run `git fetch --unshallow` once per session before trusting
+a memory-lint failure that names a citation nothing else about the day's
+edits would explain.
 
 ## The contributions signal is not stable
 
@@ -177,6 +192,9 @@ explicitly [cite:ada1982].
 
 ## Changelog
 
+- 2026-09-09 — recorded that the default cloud checkout is shallow, which
+  makes `memory-lint.sh` misreport valid, pre-existing citations as broken;
+  `git fetch --unshallow` is the fix, not a content edit.
 - 2026-09-06 (retro) — recorded that cloud sessions can push commits to
   `main` but get a 403 pushing any tag ref; the retro's version-tag step
   needs a human to run.

@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-05
+updated: 2026-09-09
 ---
 
 # Models: lane × task-class outcomes
@@ -23,6 +23,13 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-03-tomgreenai-vfx-review-01 | review | frontier / openai | yes | 5.7 | Third D2 review execution; PR #13's "review gate, not a site change" claim held, but four real defects found in the asset-generation tooling itself [cite:2026-09-04] |
 | 2026-09-05-talentradar-review-01 | review | frontier / openai | yes | 7.8 | First review of `talent-radar`; PR #1's Supabase fetch layer and Radar UI, findings file:line-tied; verified via PR-body corroboration since PR #1 is still open (see [[ops]] on the search_code default-branch limit) [cite:2026-09-05] |
 | 2026-09-05-tomgreenai-planetary-review-01 | review | frontier / openai | yes | 14.5 | Fourth `tomgreen.ai` review; PR #16 merged before the review even finished, so verified directly via `search_code` against 3 sampled paths [cite:2026-09-05] |
+| 2026-09-06-ivy-acceptanceproof-review-01 | review | frontier / openai | yes | 3.7 | Self-modifying-instructions review, PR #19's bounded acceptance proof; report confirmed sound against local-git-fetched head [cite:2026-09-08] |
+| 2026-09-06-ivy-runtimeprobe-review-01 | review | frontier / openai | yes | 4.7 | PR #20 runtime probe (follow-on build to PR #19); all 7 cited paths and two spot-checked line citations matched the reviewed SHA [cite:2026-09-08] |
+| 2026-09-06-ivy-verifyevidence-review-01 | review | frontier / openai | yes | 7.2 | Self-modifying-instructions review, PR #18's verification-evidence wording; 14 cited paths matched, spot-check exact [cite:2026-09-08] |
+| 2026-09-06-writingvoiceskill-review-01 | review | frontier / openai | yes | 5.4 | `writing-voice-skill` PR #2, merged next morning; verified via `search_commits` hash match plus `search_code` SKILL.md version confirmation [cite:2026-09-08] |
+| 2026-09-08-ivycockpit-credentialharden-review-01 | review | frontier / anthropic | yes | 9.4 | Highest-stakes review to date: `pixel-perfect-showcase-8458` PR #2 credential-hardening claim (the write credential that could modify ivy's own runner repo) confirmed armed-not-disabled via PR-body corroboration [cite:2026-09-08] |
+| 2026-09-08-ivycockpit-queueconnect-review-01 | review | workhorse / anthropic | yes | 11.2 | Same repo PR #1, first `pixel-perfect-showcase-8458` contract run at the post-retro `workhorse` default; report caught the PR body describing deleted rather than shipped code (Finding 0) [cite:2026-09-08] |
+| 2026-09-09-talentradar-sybilintake-review-01 | review | workhorse / openai | yes | 23.2 | Fresh review of `talent-radar` PR #3 at its current (post-drift) head; six findings including three P1s (three-phase-contract bypass, prompt injection via unescaped candidate/company fields, cross-account voice-response leak) and a red-CI finding; verified via PR-body corroboration [cite:2026-09-09] |
 
 ## Pool health
 
@@ -38,13 +45,22 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 
 ## Reading
 
-n=8 now (1 chore, 5 review, 2 build), all first-pass. `review` has run
-frontier/openai five times straight, all first-pass, clearing the Pareto
-bar (≥3 verified outcomes) for a lane-move trial — **retro decision,
-2026-09-06:** `playbook.md`'s scout section now defaults new `review`
-contracts to `lane: workhorse`, watching whether first-pass verdict
-quality holds there; `frontier` stays available as an explicit per-contract
-pin. `build` has its first two data points (workhorse/anthropic and
+n=15 now (1 chore, 12 review, 2 build), all first-pass. `review` cleared
+the Pareto bar on 2026-09-06 (five straight frontier/openai first-pass
+outcomes) — **retro decision, 2026-09-06:** `playbook.md`'s scout section
+now defaults new `review` contracts to `lane: workhorse`; `frontier` stays
+available as an explicit per-contract pin. Of the six `review` contracts
+verified since that trial began, two ran at the new `workhorse` default
+(`2026-09-08-ivycockpit-queueconnect-review-01`,
+`2026-09-09-talentradar-sybilintake-review-01`) and both were first-pass
+with real findings (one caught a PR body describing deleted rather than
+shipped code; the other found three P1 security issues), the other four
+(`acceptanceproof`, `runtimeprobe`, `verifyevidence`,
+`ivycockpit-credentialharden`) stayed pinned `frontier` — the first two
+were self-modifying-instructions reviews created before the retro's lane
+change landed, the third for a named highest-stakes credential finding.
+Early but consistent: no quality drop yet observed at `workhorse` for
+`review`. `build` has its first two data points (workhorse/anthropic and
 frontier/anthropic, both first-pass) —
 still short of the bar, and confounded by lane: `copy-02` ran frontier
 only because it was hand-pinned there after the runner-bug re-queue, not
@@ -66,6 +82,13 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-09 — backfilled 6 contracts verified 2026-09-08 but never
+  recorded here (4 dated 09-06: `acceptanceproof`, `runtimeprobe`,
+  `verifyevidence`, `writingvoiceskill`; 2 dated 09-08:
+  `ivycockpit-credentialharden`, `ivycockpit-queueconnect`) plus today's
+  `talentradar-sybilintake-review-01`; n=8→15. First two `workhorse`-default
+  `review` outcomes recorded (queueconnect, sybilintake), both first-pass —
+  early support for the 2026-09-06 lane-move trial holding.
 - 2026-09-06 (retro) — `review` class cleared the Pareto bar (5 straight
   verified first-pass frontier/openai outcomes); stepped its default lane
   to `workhorse` in `playbook.md` (one of the week's two tuning
