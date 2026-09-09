@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-08T17:44:41+02:00",
+  "last_tick": "2026-09-09T11:14:16+02:00",
   "lint_ok": true,
-  "result": "idle",
-  "runner_sha": "01b74a7",
-  "since": "2026-09-08T11:26:04+02:00",
+  "result": "finished 2026-09-09-talentradar-sybilintake-review-01",
+  "runner_sha": "bf3b01e",
+  "since": "2026-09-09T11:14:16+02:00",
   "skipped": []
 }
