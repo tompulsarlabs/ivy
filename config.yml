@@ -29,7 +29,7 @@ watchlist:
   parked:            # watched, never proposed: contributions still count and attribution is still scanned,
                      # but the scout emits no candidate, contract, or audit for these. Tom's call, retro-reviewed.
     - tompulsarlabs/c2-client-matrix   # 2026-09-03: "not WIP or something to devote my time to atm"; #1 picked 8x, 0 conversions
-  repos:             # synced 2026-09-08 — 18 repos, 0 forks, 0 archived, 0 excluded (+pixel-perfect-showcase-8458, +ivy-showcase, new 2026-09-07)
+  repos:             # synced 2026-09-09 — 20 repos, 0 forks, 0 archived, 0 excluded (+sybil-showcase, +safari-harness, new 2026-09-08)
     - tompulsarlabs/talent-scout
     - tompulsarlabs/talent-radar
     - tompulsarlabs/BrightPaws
@@ -48,6 +48,8 @@ watchlist:
     - tompulsarlabs/tompulsarlabs
     - tompulsarlabs/pixel-perfect-showcase-8458
     - tompulsarlabs/ivy-showcase
+    - tompulsarlabs/sybil-showcase
+    - tompulsarlabs/safari-harness
 
 notifications:
   quiet_when_green: true
