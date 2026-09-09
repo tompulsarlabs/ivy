@@ -53,3 +53,21 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-09-talentradar-sybilintake-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty (dispatch/reports/2026-09-09-talentradar-sybilintake-review-01.md,
+  6 findings + 6 confirmations, each tied to file:line). PR #3 remains
+  open (draft) and unchanged since 2026-09-08T14:20:25Z — well before this
+  review's 2026-09-09T11:14:16+02:00 claim, so head 23724a0 is confirmed
+  stable, not further drifted. talent-radar is outside this session's
+  direct repo scope, so paths could not be checked line-by-line;
+  corroborated instead against PR #3's own body, which restates the
+  report's central claims verbatim: "conversational intake... paste
+  background or upload a PDF, confirm extracted context" (matches the
+  Sybil-intake findings), "original Sybil three-phase interview contract
+  and all 25 rubric entries are server-only" (matches the report's rubric
+  confirmation), and "This remains a draft stacked on the
+  executive-pilot branch... no private PR is merged" (matches the
+  report's PR-state confirmation). Same corroboration standard used for
+  talentradar-review-01 (09-05) and talentradar-pilot-review-01 (09-07).
