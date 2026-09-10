@@ -1,7 +1,7 @@
 ---
 subject: Ivy's runtime environment
 type: ops
-updated: 2026-09-09
+updated: 2026-09-10
 ---
 
 # Ops: how the environment actually behaves
@@ -70,6 +70,19 @@ confirmed exists. So a review/build contract's file-existence check is only
 directly answerable by `search_code` once the underlying PR has merged;
 before that, PR-body corroboration is the fallback, not a sign the contract
 failed [cite:2026-09-05].
+
+**`path:` is a directory-prefix match, not an exact-file match — use
+`filename:` for a single known path.** Verifying
+`2026-09-10-tomgreenai-planetarymap-review-01` against `tomgreen.ai`'s
+now-merged PR #54, `search_code repo:tompulsarlabs/tomgreen.ai
+path:src/components/orbit-portal.tsx` returned zero hits for a file
+confirmed present in the PR body and later merged to main — indistinguishable
+from a missing path. The same file resolved immediately with
+`filename:orbit-portal.tsx` (also plain `org:tompulsarlabs
+filename:orbit-portal.tsx`, which additionally returns the owning repo).
+All 9 files cited by that report resolved this way. `get_file_contents`
+still refuses cross-repo outright ("not configured for this session") in
+every session tested so far, including this one [cite:2026-09-10].
 
 ## The default clone is shallow, and memory-lint needs full history
 
@@ -192,6 +205,12 @@ explicitly [cite:ada1982].
 
 ## Changelog
 
+- 2026-09-10 — recorded that `search_code`'s `path:` qualifier is a
+  directory-prefix match, not exact-file, so it silently misses a real file
+  the same way a missing one would; `filename:` is the exact-match
+  qualifier and resolved all 9 files a review contract cited, letting the
+  failsafe stamp `2026-09-10-tomgreenai-planetarymap-review-01` verified
+  same-night instead of carrying it forward.
 - 2026-09-09 — recorded that the default cloud checkout is shallow, which
   makes `memory-lint.sh` misreport valid, pre-existing citations as broken;
   `git fetch --unshallow` is the fix, not a content edit.
