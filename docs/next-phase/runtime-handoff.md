@@ -1,3 +1,54 @@
+# Current handoff — Paperclip isolated integration slice verified
+
+10 September 2026. Tom approved the proposed integration with “I'm aligned,
+let's go.” Work is on `/tmp/ivy-paperclip-integration`, the existing
+`codex/ivy-acceptance-scaffold` branch and stacked draft PR #20. The previous
+worktree path was missing/prunable, so this worktree restores the same branch.
+Keep PRs #18, #19 and #20 unmerged.
+
+Paperclip `2026.831.1` ran real Python fixture processes in a separate local
+instance. The bridge seals captured output, checks task/run ownership and the
+fixed fixture, and publishes through a separate reviewer identity. Valid
+output and duplicate delivery finish through review; false completion and a
+rehashed tampered copy remain in review. Cancellation plus pause leaves the
+observed worker PID absent and refuses a later completion claim. Paperclip can
+create a retry record after cancellation: the final control retained two run
+records but only one worker process. This is not a daemon/descendant lifetime
+or distributed exactly-once guarantee.
+
+The final five-case campaign passed, including under Python `-O`; the complete
+software suite has **102 passing deterministic tests**. These are integration
+and software controls, not model or semantic acceptance. The supervisor relays
+the completion claim and performs assessment; reviewer no-op runs establish
+Paperclip run context. Workers share the operator's OS trust boundary.
+
+Read [the integration notes](paperclip-integration.md) and
+[portable evidence](evidence/paperclip-integration-20260910/report.json).
+All eleven development campaigns, including six failed campaigns, and the first
+failed PostgreSQL startup remain under `/tmp/ivy-paperclip-pilot-20260910`.
+Aggregate inventory: 58 Paperclip run records, 51 observed process PIDs; all
+60 pilot agents paused, no queued/running work and no active pilot agent keys.
+The final transport fixtures are copied with digests; raw instance data and
+logs remain private. The data directory is not the original Docker store. The pilot server and
+embedded database were stopped; both listeners and fixture process inventory
+were confirmed absent.
+
+The same engineering ledger retains 14,100 prior allocated seconds and adds
+2,400 for this single-primary integration and closeout: cumulative **16,500**.
+This is bookkeeping for the newly approved system-development scope, not an
+account limit, provider cost or renewed runtime grant. The historical eight
+Docker attempts, 480 reserved seconds, failures and exhausted grants are
+unchanged. No Docker launch, model, judge or paid-provider call occurred.
+
+Continue the adoption evaluation with one representative Ivy contract and its
+independent check, making recovery policy explicit. No production dispatch,
+Cockpit, live demo or unrelated main-checkout files were changed. Native Runner
+bundle compatibility, isolated real-agent auth, effective harness metadata,
+neutral benchmark approval, independent semantic assessment, buyer validation
+and hard whole-lifecycle timing remain unverified. **Milestone A is not passed.**
+
+## Previous checkpoint — retained
+
 # Current handoff — High offline evidence/resource build complete
 
 6 September 2026. Built on the Ultra design at `89b1f91` after reading the terminal

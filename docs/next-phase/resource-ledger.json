@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "stage": "high_offline_evidence_resource_build",
+  "stage": "paperclip_isolated_fixture_integration",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-06T15:24:00+00:00",
+  "recorded_through": "2026-09-10T13:39:51.061983+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 14100,
-  "debit_method": "Prior 11700-second debit preserved. Single-primary High build started 14:51:52 UTC; 2400 seconds conservatively allocated through 15:31:52 UTC including verification and closeout. This is engineering allocation, not token usage, billing or measured inference. Runtime grants and milestone-A allowance do not reset.",
+  "engineering_budget_debit_seconds": 16500,
+  "debit_method": "Prior 14100-second cumulative debit retained. Add 2400 seconds conservative single-primary engineering allocation for the authorized Paperclip integration, including initial inspection, failed development campaigns, tests and shipping closeout. This is not measured inference, provider usage or an account limit.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -57,17 +57,17 @@
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 13,
+    "participants": 14,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
     "status": "No paid API calls authorized or needed for current system development. Real-agent authentication and model/judge execution intentionally deferred; existing subscription credentials were not read or exposed."
   },
-  "stage_status": "High offline assessment/resource report implemented; 82 deterministic tests pass locally; three historical receipts reassessed offline, source store unchanged and report reproducible. PR CI checked after push. No model-quality proof or milestone-A pass.",
+  "stage_status": "Paperclip released process-API fixture integration: five real local controls pass, 102 deterministic tests pass. Eleven development campaigns and startup failure retained; 58 Paperclip run records, 51 observed process PIDs. Historical Docker attempts/grants unchanged; Milestone A not passed.",
   "continuation_rule": "Charge subsequent implementation/debugging and any later verification time to this same budget. Handoffs do not reset it.",
   "stage_debits": [
     {
@@ -129,6 +129,14 @@
       "seconds": 2400,
       "participants": 1,
       "accounting": "Conservative single-primary wall-window allocation includes build, checks, commit, push and CI closeout; no per-call token or monetary measurement."
+    },
+    {
+      "stage": "paperclip_isolated_fixture_integration",
+      "first_timed_checkpoint": "2026-09-10T13:21:53+00:00",
+      "recorded_through": "2026-09-10T13:39:51.061983+00:00",
+      "seconds": 2400,
+      "participants": 1,
+      "accounting": "Conservative allocation includes initial untimed repository reads and remaining closeout. No subagents, evaluated models or judges."
     }
   ],
   "runtime_probe_attempts": 8,
@@ -189,6 +197,22 @@
       "deterministic_tests_passed": 82,
       "offline_control_assessments_passed": 3,
       "source_tree_unchanged": true
+    },
+    {
+      "id": "paperclip-fixture-integration-v1",
+      "authorization": "Tom: I'm aligned, let's go.",
+      "scope": "Proposed isolated Paperclip task/evidence/review integration using deterministic workers; no production migration or provider execution.",
+      "engineering_debit_seconds": 2400,
+      "numeric_limit_origin": "Engineering allocation chosen for bookkeeping; user authorized scope, not a new numeric account limit.",
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false,
+      "historical_runtime_store_opened": false,
+      "status": "five_live_fixture_controls_passed",
+      "development_campaigns_retained": 11,
+      "paperclip_run_records": 58,
+      "observed_process_pids": 51,
+      "deterministic_tests_passed": 102,
+      "evidence": "evidence/paperclip-integration-20260910/report.json"
     }
   ]
 }
