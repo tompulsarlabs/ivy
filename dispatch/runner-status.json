@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-10T09:44:54+02:00",
+  "last_tick": "2026-09-10T10:17:10+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-10-tomgreenai-planetarymap-review-01",
-  "runner_sha": "42b2a64",
-  "since": "2026-09-10T09:44:54+02:00",
+  "result": "idle",
+  "runner_sha": "bf8352a",
+  "since": "2026-09-10T10:17:10+02:00",
   "skipped": []
 }
