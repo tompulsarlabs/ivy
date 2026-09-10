@@ -1,7 +1,7 @@
 ---
 id: 2026-09-10-tomgreenai-planetarymap-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-10T09:44:54+02:00
 repo: tompulsarlabs/tomgreen.ai
 lane: workhorse
@@ -36,3 +36,13 @@ finding tied to file:line, committed and pushed.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head.
+
+outcome:
+  claimed_at: 2026-09-10T09:44:54+02:00
+  finished_at: 2026-09-10T09:47:04+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 2.0
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-10-tomgreenai-planetarymap-review-01.md
