@@ -46,3 +46,10 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-10-tomgreenai-planetarymap-review-01.md
+
+verified: true
+verified_at: 2026-09-10T22:30:00+02:00
+verified_note: >
+  Report file present on main of ivy, non-empty (31 lines). All 9 files it
+  cites resolved via search_code repo:tompulsarlabs/tomgreen.ai
+  filename:<name> against PR #54's now-merged head (85d189fa).
