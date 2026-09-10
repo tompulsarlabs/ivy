@@ -336,9 +336,22 @@ wholesale — at this size, a small git repo and `grep` do what their
 infrastructure does — and the third is vendored as files, so it can be
 edited where Ivy's shape differs.
 
-## Adopting it
+## Licence
 
-Fork it, don't clone it. A fork gives you the frame — routines, playbook,
+Original project materials owned by Tom Green are proprietary. Commercial
+reuse requires prior written permission; see [LICENSE](LICENSE). Access to
+this repository does not grant permission to reuse the underlying code.
+Authorised use of the hosted product or public demo remains allowed under
+its applicable terms. Third-party materials, users' content and rights
+previously granted remain governed by their own terms.
+
+## Deploying with permission
+
+The following setup instructions apply only where the required permission
+has been granted. GitHub's platform rights to view and fork a public repository
+do not themselves grant a commercial licence.
+
+For an authorised deployment, a fork gives you the frame — routines, playbook,
 structure — and none of my access. Swap `commit_email` and the watchlist in
 `config.yml`, rename the launchd labels in `setup/`, clear `journal/`,
 `memory/`, and `state.json`, then follow `setup/SETUP.md`. Experimental,

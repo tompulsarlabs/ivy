@@ -257,7 +257,11 @@ codex mcp add <name> --env API_KEY=xxx -- npx some-mcp-server
 
 **Two things to know before you start.** It's **experimental**. And it needs **Claude Code cloud routines** (claude.ai/code → routines), which come with a paid Claude plan.
 
-**Fork it, don't clone it.** A fork gives you the frame — the routines, the playbook, the structure — and none of anyone else's access. This repo carries its author's commit email, a watchlist of their repositories, and their journal and memory; cloned verbatim, you'd get a bot diligently tracking someone else's projects. Fork it and make it yours:
+**Permission required.** Ivy's original materials are proprietary; commercial
+reuse requires prior written permission. See [LICENSE](../LICENSE). The setup
+steps below are for authorised deployments.
+
+A fork gives you the frame — the routines, the playbook, the structure — and none of anyone else's access. This repo carries its author's commit email, a watchlist of their repositories, and their journal and memory; cloned verbatim, you'd get a bot diligently tracking someone else's projects. With the required permission, create your deployment:
 
 ```bash
 gh repo fork tompulsarlabs/ivy --clone --fork-name ivy
