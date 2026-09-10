@@ -1,7 +1,8 @@
 ---
 id: 2026-09-10-tomgreenai-planetarymap-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-10T09:44:54+02:00
 repo: tompulsarlabs/tomgreen.ai
 lane: workhorse
 pool: openai
