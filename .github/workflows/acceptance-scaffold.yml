@@ -1,0 +1,32 @@
+name: Acceptance scaffold
+on:
+  pull_request:
+    paths:
+      - 'ivy_acceptance/**'
+      - 'acceptance_fixtures/**'
+      - 'examples/acceptance/**'
+      - 'tests/**'
+      - '.github/workflows/acceptance-scaffold.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'ivy_acceptance/**'
+      - 'acceptance_fixtures/**'
+      - 'examples/acceptance/**'
+      - 'tests/**'
+      - '.github/workflows/acceptance-scaffold.yml'
+permissions:
+  contents: read
+jobs:
+  deterministic:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -B -m unittest discover -s tests -v
+      - run: python -B -m ivy_acceptance plan examples/acceptance/preview.json

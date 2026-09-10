@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "sanitized_observation_summary_not_runtime_receipt",
+  "fixture_kind": "synthetic",
+  "source_revision_before_repair": "8f9e95e",
+  "repair_iterations": 1,
+  "model_evaluation": false,
+  "benchmark_status": "evidence_incomplete",
+  "milestone_a": "not_passed",
+  "observed": {
+    "attempt_id": "isolation-1",
+    "copy_returncode": 1,
+    "copy_stderr": "Error response from daemon: container rootfs is marked read-only\n",
+    "before_state": "created",
+    "after_state": "created",
+    "running_before_and_after": false,
+    "ownership_labels_match": true,
+    "read_only_root": true,
+    "mount_count": 0,
+    "network_mode": "none",
+    "worker_user": "65534:65534",
+    "worker_archive_sha256": "89e138c9ae32119fe014a078314aa981f21479e9cc36de37637391cf4ad04f18",
+    "private_reproduction_record_sha256": "871607b116c370e2053529a49b578aa5d3351f167da112da4164c6f813e1a0d5"
+  },
+  "deterministic_controls": {
+    "command": "python3 -B -m unittest discover -s tests -v",
+    "passed": 36,
+    "receipt_inputs": "synthetic, not produced by a container",
+    "docker_command_failure": "mocked, not live builder evidence",
+    "checks": ["fixed COPY-only context and exact input bytes", "invalid base identity rejection", "subprocess diagnostic retention", "receipt and capture tampering", "missing capture and image bindings", "mismatched derived image identity", "partial capture remains incomplete", "fabricated citation fails independently"]
+  },
+  "unverified": ["recovery reservation closure", "live ownership rejection", "fresh CLI budget refusal", "derived image build and effective worker startup", "offline builder behavior", "successful runtime capture", "explicit cancel of a running container", "deadline termination", "whole preparation-plus-execution deadline", "actual runtime receipt integrity", "authenticated agent execution and semantic evaluation"],
+  "budget": {
+    "reset": false,
+    "runtime_reservations_consumed": 1,
+    "original_reservation_unconfirmed": true,
+    "elapsed_window_expired_by_ledger_and_clock": true,
+    "recovery_tool_status": "approval pending for approximately 390 seconds, then interrupted; no result"
+  },
+  "portability": "This selected-field report and repository tests are portable. Raw Docker inspect records remain private. Their checksum is a reference, not a public independently verifiable attestation. No home paths, account environment or raw Docker storage paths are exported."
+}

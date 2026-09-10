@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "stage": "paperclip_isolated_fixture_integration",
+  "tracked_started_at": "2026-09-05T13:14:03+00:00",
+  "recorded_through": "2026-09-10T13:39:51.061983+00:00",
+  "tracked_wall_seconds": 1251,
+  "engineering_budget_debit_seconds": 16500,
+  "debit_method": "Prior 14100-second cumulative debit retained. Add 2400 seconds conservative single-primary engineering allocation for the authorized Paperclip integration, including initial inspection, failed development campaigns, tests and shipping closeout. This is not measured inference, provider usage or an account limit.",
+  "limits": {
+    "milestone_a_engineering_seconds": 9900,
+    "total_proof_engineering_seconds": 43200,
+    "worker_attempts": 32,
+    "per_attempt_seconds": 90,
+    "execution_wall_seconds": 3600
+  },
+  "milestone_a_budget_remaining_at_checkpoint_seconds": 0,
+  "authorized_extensions": [
+    {
+      "recorded_at": "2026-09-05T18:34:51+00:00",
+      "authorization": "Tom: i upgraded to the 20x pro plan / you can continue and complete what we need to do. LFG",
+      "responds_to": "Proposed 45 additional engineering minutes, 20-minute runtime window, at most three fresh probes and one remaining repair iteration.",
+      "additional_aggregate_engineering_seconds": 2700,
+      "previous_engineering_debit_seconds": 7200,
+      "additional_runtime_window_seconds": 1200,
+      "additional_runtime_probes": 3,
+      "repair_iterations_remaining_at_authorization": 1,
+      "budget_reset": false,
+      "api_spending_authorized": false,
+      "status": "runtime_probe_allowance_consumed_implementation_iteration_complete"
+    },
+    {
+      "recorded_at": "2026-09-06T08:03:36.789819+00:00",
+      "authorization": "Tom: ok so let's go and just do what makes sense",
+      "responds_to": "Remaining 25 engineering minutes, one further repair iteration, one credential-free completion probe; real-agent authentication and paid integration deferred.",
+      "additional_aggregate_engineering_seconds": 0,
+      "previous_engineering_debit_seconds": 8400,
+      "additional_runtime_window_seconds": 600,
+      "additional_runtime_probes": 1,
+      "additional_repair_iterations": 1,
+      "budget_reset": false,
+      "api_spending_authorized": false,
+      "status": "one_completion_attempt_consumed_by_pre_build_sandbox_denial"
+    },
+    {
+      "recorded_at": "2026-09-06T08:21:33.673501+00:00",
+      "authorization": "Tom: Okay, sounds good. Let's get on with that.",
+      "responds_to": "Preflight before reservation and bounded runtime-validation session instead of per-launch approval. Operator ceiling: remaining 10 engineering minutes, 600-second runtime session, at most three fresh credential-free probes; model integration deferred.",
+      "additional_aggregate_engineering_seconds": 0,
+      "additional_runtime_window_seconds": 600,
+      "additional_runtime_probes": 3,
+      "repair_policy": "Diagnose, repair and retry within the bounded session; stop on uncertain shutdown.",
+      "budget_reset": false,
+      "api_spending_authorized": false,
+      "status": "three_runtime_controls_passed_session_consumed"
+    }
+  ],
+  "evaluated_worker_attempts": 0,
+  "model_judge_attempts": 0,
+  "implementation_assistants": {
+    "participants": 14,
+    "tokens": null,
+    "billed_dollars": null,
+    "usage_status": "per-call usage unavailable in this task",
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls."
+  },
+  "provider_execution_budget": {
+    "billed_dollars": null,
+    "status": "No paid API calls authorized or needed for current system development. Real-agent authentication and model/judge execution intentionally deferred; existing subscription credentials were not read or exposed."
+  },
+  "stage_status": "Paperclip released process-API fixture integration: five real local controls pass, 102 deterministic tests pass. Eleven development campaigns and startup failure retained; 58 Paperclip run records, 51 observed process PIDs. Historical Docker attempts/grants unchanged; Milestone A not passed.",
+  "continuation_rule": "Charge subsequent implementation/debugging and any later verification time to this same budget. Handoffs do not reset it.",
+  "stage_debits": [
+    {
+      "stage": "ultra_architecture_scaffold",
+      "seconds": 4080
+    },
+    {
+      "stage": "extra_high_runtime_implementation",
+      "started_at": "2026-09-05T13:47:30+00:00",
+      "through": "2026-09-05T14:08:44.573608+00:00",
+      "seconds": 1320
+    },
+    {
+      "stage": "high_bounded_debugging",
+      "started_at": "2026-09-05T16:09:30+00:00",
+      "through": "2026-09-05T16:26:20+00:00",
+      "seconds": 1800,
+      "accounting": "Conservative aggregate allocation including final closeout; exact per-agent active duration unavailable."
+    },
+    {
+      "stage": "high_authorized_runtime_extension",
+      "started_at": "2026-09-05T18:34:51+00:00",
+      "checkpoint_at": "2026-09-05T18:43:43+00:00",
+      "seconds": 1200,
+      "astra_high_wall_seconds": 350,
+      "primary_and_closeout_allocation_seconds": 850,
+      "primary_closeout_allocation_ends_at": "2026-09-05T18:49:01+00:00",
+      "accounting": "Conservative aggregate stage allocation includes final verification, commit, push and CI check; unused engineering extension is retained, not a new repair/probe grant."
+    },
+    {
+      "stage": "high_system_only_completion_continuation",
+      "started_at": "2026-09-06T07:58:27+00:00",
+      "seconds": 900,
+      "primary_closeout_allocation_ends_at": "2026-09-06T08:13:27+00:00",
+      "accounting": "One primary agent; includes all work and closeout within this allocation, not model-quality evaluation."
+    },
+    {
+      "stage": "high_preflight_and_bounded_validation",
+      "started_at": "2026-09-06T08:12:18+00:00",
+      "charged_from": "2026-09-06T08:13:27+00:00",
+      "seconds": 600,
+      "primary_closeout_allocation_ends_at": "2026-09-06T08:23:27+00:00",
+      "accounting": "Single primary agent; initial 69 seconds covered by preceding stage allocation."
+    },
+    {
+      "stage": "ultra_offline_evidence_resource_design",
+      "started_at": "2026-09-06T14:00:11+00:00",
+      "recorded_through": "2026-09-06T14:14:11.604577+00:00",
+      "primary_closeout_allocation_ends_at": "2026-09-06T14:15:11+00:00",
+      "seconds": 1800,
+      "participants": 2,
+      "accounting": "Two-participant conservative wall-window allocation, not token usage, billing or measured active inference."
+    },
+    {
+      "stage": "high_offline_evidence_resource_build",
+      "started_at": "2026-09-06T14:51:52+00:00",
+      "recorded_through": "2026-09-06T15:24:00+00:00",
+      "primary_closeout_allocation_ends_at": "2026-09-06T15:31:52+00:00",
+      "seconds": 2400,
+      "participants": 1,
+      "accounting": "Conservative single-primary wall-window allocation includes build, checks, commit, push and CI closeout; no per-call token or monetary measurement."
+    },
+    {
+      "stage": "paperclip_isolated_fixture_integration",
+      "first_timed_checkpoint": "2026-09-10T13:21:53+00:00",
+      "recorded_through": "2026-09-10T13:39:51.061983+00:00",
+      "seconds": 2400,
+      "participants": 1,
+      "accounting": "Conservative allocation includes initial untimed repository reads and remaining closeout. No subagents, evaluated models or judges."
+    }
+  ],
+  "runtime_probe_attempts": 8,
+  "runtime_probe_outcomes": {
+    "preparation_failed_recovered": 1,
+    "start_failed_logging_configuration": 1,
+    "canceled": 2,
+    "timed_out": 2,
+    "completed": 1,
+    "pre_build_sandbox_denial_no_workload_submitted": 1
+  },
+  "repair_iterations_used": 4,
+  "repair_iterations_limit": 4,
+  "runtime_debug_controls": {
+    "copy_failure_reproduced": true,
+    "recovery": "verified_stopped_reservation_closed",
+    "fresh_budget_refusal": "observed_cli_exit_2_ledger_unchanged",
+    "runtime_window": "explicit_additive_1200_second_extension_three_of_three_consumed",
+    "actual_build_cancel_deadline": "verified_on_real_docker",
+    "natural_completion": "verified_real_worker_complete_capture_exit_zero_receipt_integrity",
+    "hard_whole_lifecycle_deadline": "unverified_filesystem_and_daemon_build_lifetime",
+    "ownership_rejection": "observed_real_docker_inspection",
+    "actual_receipt_copy_tamper_controls_rejected": 4,
+    "fourth_reservation_refusal": "observed_original_ledger_byte_identical",
+    "runtime_reserved_seconds_total": 480,
+    "running_containers_at_final_inventory": 0,
+    "completion_probe": "pre_build_sandbox_denial_consumed_attempt_no_workload_submitted",
+    "completion_grant_extra_reservation_refusal": "observed_cli_exit_2_original_ledger_byte_identical",
+    "client_cleanup_wait": "clamped_to_existing_shutdown_grace_receipt_survives_timeout_deterministic_only",
+    "validation_session": "three_of_three_consumed_complete_cancel_deadline_all_terminated",
+    "preflight_denial": "real_setup_error_retained_ledger_byte_identical_no_attempt",
+    "validation_session_fourth_refusal": "observed_ledger_byte_identical",
+    "completed_capture_tamper": "rejected_on_copy_original_receipt_verified"
+  },
+  "followup_recovery": {
+    "observed_at": "2026-09-05 18:02:35 UTC",
+    "authorization": "User asked to solve remaining gaps; recovery and nonlaunching diagnostics only.",
+    "runtime_allowance_changed": false,
+    "implementation_extension": "pending_user_response_45_minutes_3_probes_20_minute_window",
+    "engineering_budget_reopened": false
+  },
+  "pending_completion_retry": "Superseded by explicit bounded-session approval; completion now verified. No outstanding per-attempt approval request.",
+  "repair_policy": "Prior iteration history retained; latest approval permits bounded session work rather than per-launch approval. One implementation iteration used in this session.",
+  "system_development_iterations": [
+    {
+      "id": "offline-evidence-resources-v1",
+      "authorization": "Tom: Ok design the architecture / system design iteration with ultra then hand off to the lower optimal effort tier to build",
+      "scope": "Astra Ultra architecture then one Astra High implementation lane; offline assessment and reporting from existing receipts; no evaluated model, judge, Docker launch or API integration. Terminal work read first as additionally requested.",
+      "design_allocation_seconds": 1800,
+      "build_checkpoint_seconds": 3600,
+      "checkpoint_origin": "Self-imposed engineering scope limit; Tom authorized the work but did not specify a new numeric cap. This is not an account usage limit.",
+      "build_debit_seconds": 2400,
+      "status": "build_complete_offline_replay_passed",
+      "previous_milestone_a_budget_unchanged": true,
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false,
+      "build_authorization": "Tom: Ok build with high",
+      "deterministic_tests_passed": 82,
+      "offline_control_assessments_passed": 3,
+      "source_tree_unchanged": true
+    },
+    {
+      "id": "paperclip-fixture-integration-v1",
+      "authorization": "Tom: I'm aligned, let's go.",
+      "scope": "Proposed isolated Paperclip task/evidence/review integration using deterministic workers; no production migration or provider execution.",
+      "engineering_debit_seconds": 2400,
+      "numeric_limit_origin": "Engineering allocation chosen for bookkeeping; user authorized scope, not a new numeric account limit.",
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false,
+      "historical_runtime_store_opened": false,
+      "status": "five_live_fixture_controls_passed",
+      "development_campaigns_retained": 11,
+      "paperclip_run_records": 58,
+      "observed_process_pids": 51,
+      "deterministic_tests_passed": 102,
+      "evidence": "evidence/paperclip-integration-20260910/report.json"
+    }
+  ]
+}

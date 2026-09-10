@@ -1,6 +1,6 @@
 # Ivy next phase: evidence for agent release decisions
 
-Design proposal · 5 September 2026 · implementation has not started.
+Direction approved · 5 September 2026 · architecture scaffold implemented; live execution pending.
 Tom authorized system design after the housekeeping handoff and selected teams
 shipping coding or internal-workflow agents as the first customer group.
 
@@ -11,6 +11,12 @@ using the team's actual agent and inspectable evidence.
 The first proof compares two instruction revisions of one PR-review agent on six
 frozen repository scenarios. It produces a comparison and a reviewable decision
 record. It does not deploy the agent or approve the code being reviewed.
+
+## Current handoff
+
+[Ultra → Extra High → High](build-handoff.md) records the implemented scaffold, exact
+commands, remaining build interfaces and resource limits. The [package README](../../ivy_acceptance/README.md)
+describes what works now. No model-quality eval has run in this stage.
 
 ## Read and decide
 
