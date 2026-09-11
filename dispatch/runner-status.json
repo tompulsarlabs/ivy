@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-11T09:18:05+02:00",
+  "last_tick": "2026-09-11T09:50:04+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-11-tomgreenai-radarsubtitle-review-01",
-  "runner_sha": "14f1cc8",
-  "since": "2026-09-11T09:18:05+02:00",
+  "result": "idle",
+  "runner_sha": "6046f96",
+  "since": "2026-09-11T09:50:04+02:00",
   "skipped": []
 }
