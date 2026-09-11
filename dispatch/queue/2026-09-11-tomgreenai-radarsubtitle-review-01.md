@@ -1,7 +1,8 @@
 ---
 id: 2026-09-11-tomgreenai-radarsubtitle-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-11T09:18:05+02:00
 repo: tompulsarlabs/tomgreen.ai
 lane: workhorse
 pool: openai
