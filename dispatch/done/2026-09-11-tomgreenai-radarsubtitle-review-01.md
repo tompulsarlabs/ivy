@@ -45,3 +45,16 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-11-tomgreenai-radarsubtitle-review-01.md
+
+verified: true
+verified_at: 2026-09-11T22:30:00+02:00
+verified_note: >
+  Report file present on main of ivy (32fcbe6, non-empty, 2 findings + a
+  validation-confirmation section). Both cited paths — src/app/demos/
+  interview/preview.tsx and src/app/demos/page.tsx — resolved via
+  search_code repo:tompulsarlabs/tomgreen.ai filename:<name>; search_code
+  indexes the default branch only (same limitation noted on prior
+  contracts), so this confirms the files exist on tomgreen.ai main rather
+  than on PR #58's own branch head — pull_request_read/get_file_contents
+  remain blocked for repos outside this session's scope. PR #58 is still
+  open (draft, unmerged) as of this check.
