@@ -1,13 +1,13 @@
 {
-  "streak": 18,
-  "last_green": "2026-09-10",
+  "streak": 19,
+  "last_green": "2026-09-11",
   "memory_last_synthesized": "2026-09-10",
   "days": {
     "2026-09-11": {
-      "green_by": "tompulsarlabs/tomgreen.ai PR #60 (merged 09:04:19 CEST, 'Add Radar to Lab and restore the moon's field motion') + tompulsarlabs/opencode-job-search-starter (3 commits 14:31-15:12 CEST: new private repo build, release-checks/PDF-instructions record, guided Notion OAuth setup entry point)",
+      "green_by": "tompulsarlabs/tomgreen.ai PR #60 (merged 09:04:19 CEST) + tompulsarlabs/opencode-job-search-starter (3 commits 14:31-15:12 CEST)",
       "method": "real-work",
       "contributions": 4,
-      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date:2026-09-11/created:2026-09-11 (18:00 check; check.sh exit 2, no github.com egress in cloud sandbox) — PR #60 connected-author (tom@pulsarlabsai.com), default branch, non-fork, public, already secures the day alone; opencode-job-search-starter is a new repo not yet in config.yml watchlist and private, connected noreply author, 3 commits (rule 4: counts on the graph only if the account's Private-contributions toggle is on, state unknown, doesn't affect today's green either way); ivy's own commits today all bot-authored (dispatch claim/done/runner-status, scout), correctly excluded; dispatch/queue empty, no claimed contract pending",
+      "signal_source": "github-mcp:search_commits + search_pull_requests (failsafe 22:30; check.sh exit 2)",
       "cite": "journal/2026-09-11.md",
       "nudge_sent": false,
       "nudge_converted": null,
