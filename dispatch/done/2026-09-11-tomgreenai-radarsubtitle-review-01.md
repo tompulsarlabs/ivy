@@ -1,7 +1,7 @@
 ---
 id: 2026-09-11-tomgreenai-radarsubtitle-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-11T09:18:05+02:00
 repo: tompulsarlabs/tomgreen.ai
 lane: workhorse
@@ -35,3 +35,13 @@ finding tied to file:line, committed and pushed.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head.
+
+outcome:
+  claimed_at: 2026-09-11T09:18:05+02:00
+  finished_at: 2026-09-11T09:19:59+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 1.8
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-11-tomgreenai-radarsubtitle-review-01.md
