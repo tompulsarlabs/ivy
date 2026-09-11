@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-04
+updated: 2026-09-11
 ---
 
 # ivy
@@ -38,6 +38,14 @@ commit dated 08-29 with `last_commit_email_ok: false` — the scout nudged
 same-morning per the outranking rule, before it reached `main`
 [cite:2026-08-30] [[ops]] [[patterns]].
 
+The scanner itself has now gone dark for an extended stretch: `local-wip.json`
+last landed 2026-09-08T15:45 CEST and missed five straight windows (09-09
+08:45/17:45, 09-10 08:45/17:45, 09-11 08:45), crossing the playbook's 3-day
+outranking bar on 2026-09-11 [cite:2026-09-11]. Every day it stays dark, the
+carry-over pattern above goes blind — no candidate can surface from it, and a
+sleeping Mac reads as a clean tree. Not yet resolved as of the 2026-09-11
+failsafe.
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -64,6 +72,8 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-11 (failsafe) — recorded the local-WIP scanner's 5-missed-window,
+  3-day outage (blocker since 09-08, still open).
 - 2026-09-04 — recorded the dispatch-runner dirty-clone bug (PR #17) and
   the guardrail it added; both PR #16 and #17 merged same day, real work.
 - 2026-08-30 (retro) — added the pre-push attribution catch on this repo's
