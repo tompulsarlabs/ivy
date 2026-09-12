@@ -1,5 +1,12 @@
 # Ivy
 
+**Next phase (design proposal, 5 September 2026):** [agent release acceptance](docs/next-phase/README.md).
+The [housekeeping audit and rollout](https://github.com/tompulsarlabs/ivy/blob/de084f15bece5393630dc6cf57191043a684c379/docs/housekeeping/rollout.md)
+corrects unsupported historical verification stamps and scopes mandatory workflows.
+The description below records the existing daily system and its intended verification
+model; it is not evidence that every historical result was independently verified.
+The proposed acceptance product has not been implemented or deployed.
+
 Ivy is a set of scheduled agents that keep my software projects moving, and
 that remember what they learn while doing it.
 
