@@ -3,6 +3,19 @@
   "last_green": "2026-09-11",
   "memory_last_synthesized": "2026-09-11",
   "days": {
+    "2026-09-12": {
+      "green_by": null,
+      "method": "pending",
+      "contributions": 0,
+      "signal_source": "github-mcp:search_commits + search_pull_requests + search_issues org:tompulsarlabs (18:00 check; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today as of 18:04 CEST; only activity is ivy's own bot-authored scout + runner-status commits, correctly excluded; dispatch/queue empty, runner idle and ticking inside its window",
+      "cite": "journal/2026-09-12.md",
+      "nudge_sent": true,
+      "nudge_sent_at": "2026-09-12T18:04:40+02:00",
+      "nudge_channel": "push",
+      "nudge_candidate": "local-wip scanner down 4 calendar days / 7 missed windows (past playbook's 3-day blocker-outranks-cheapest-ship bar) — confirm Mac launchd job for local-wip.sh is loaded; standing top candidate otherwise unchanged: tomgreen.ai PR #59 merge decision",
+      "nudge_converted": null,
+      "failsafe_fired": false
+    },
     "2026-09-11": {
       "green_by": "tompulsarlabs/tomgreen.ai PR #60 (merged 09:04:19 CEST) + tompulsarlabs/opencode-job-search-starter (3 commits 14:31-15:12 CEST)",
       "method": "real-work",
