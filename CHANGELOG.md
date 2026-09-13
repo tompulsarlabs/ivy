@@ -1,5 +1,61 @@
 # Changelog
 
+## v8 — 2026-09-13
+
+**Retro: no tuning adjustment — the two live questions are still one data
+point each.** Reviewed `state.json` 2026-08-23→09-12 (21 recorded days) plus
+`memory/patterns.md`, `memory/models.md`, and the week's journals
+(09-07→09-13). Failsafe fire rate: 1/21 — the floor fired for the first
+time ever on 2026-09-12 (a genuinely quiet day, no connected-author activity
+org-wide) and did exactly its job, securing the streak at 20. One
+occurrence confirms the floor works; it is not grounds to move failsafe
+timing. Nudge→conversion: still exactly two nudges ever sent, both push,
+both unconverted — 2026-08-24 (`c2-client-matrix` #1) and, new this window,
+2026-09-12 (the local-WIP scanner outage, correctly picked over the
+standing `tomgreen.ai` PR #59 candidate by the blocker-outranking rule).
+n=2 is the same "too thin to tune nudge timing/wording/channel" verdict
+every retro has reached since n=1 — one more data point in the same
+direction doesn't change that. Shipped work: `tomgreen.ai` still dominant;
+`review`-class dispatch outcomes are now six-for-six first-pass at the
+`workhorse` default (up from two-for-two last week, `memory/models.md`),
+which strengthens rather than changes the 09-06 lane decision. Ranking and
+excludes are working as designed: `BrightPaws` #1 and `ai-capability-app`
+#4 are tracked as known non-movers without being repeatedly nudged (unlike
+`c2-client-matrix` before it was parked), and the scout's blocker-outranks-
+candidate rule already routed the one nudge this window correctly. No
+config.yml change either — watchlist sync, schedule, and lanes all match
+what the week's evidence supports.
+
+**Free-of-cap wording fix (no behavior change).** `playbook.md`'s nudge-
+channel line said "Never both; never anything on a green day" — the second
+clause restates "Green → ... stay silent" two sentences earlier in the same
+bullet. Collapsed to "Send through exactly one of the two," a positive
+statement of the same constraint, per `writing-for-agents`.
+
+**Memory curation.** Two stale claims in `memory/patterns.md` corrected:
+the never-fired-failsafe note (superseded by the 09-12 fire) and the
+nudge-conversion count (1→2). Both had gone unedited since 2026-09-05 while
+the daily failsafe recorded the underlying facts elsewhere without
+updating this page — a synthesis gap, not a wrong observation at the time
+written. `memory/models.md` backfilled 4 verified `review` contracts no
+failsafe pass had recorded (`talentradar-pilot-review-01`,
+`tomgreenai-activitymatrix-review-01`, `tomgreenai-planetarymap-review-01`,
+`tomgreenai-radarsubtitle-review-01`; n=15→19) and added the week's
+fleet-metrics row. Created `memory/repos/opencode-job-search-starter.md` on
+its 2026-09-11 first real signal (3 commits) — missed the night it
+happened because the repo wasn't yet in `config.yml` at scout time that
+morning, caught here the same way `writing-voice-skill` was caught last
+retro. `memory/INDEX.md` updated to list it and trimmed a line to hold the
+40-line budget. `scripts/memory-lint.sh` clean, 20 pages.
+
+**Tag gap unchanged.** `git ls-remote --tags origin` still shows only `v1`
+and `v2`; `v3`–`v7` remain documented here but untagged on the remote, per
+the standing 2026-09-06 finding (`memory/ops.md`: cloud sessions can push
+commits to `main` but a tag-ref push 403s every time). This entry advances
+the count to `v8` on the same basis — attempted `git tag v8 && git push
+origin v8` from this session; if it 403s again, a human run is still the
+only way to close the gap.
+
 ## v7 — 2026-09-06
 
 **Retro: review lane stepped down; a missed memory page caught.** Reviewed

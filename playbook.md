@@ -202,7 +202,7 @@ to execution lanes. Non-negotiables:
   Nudge channel: **PushNotification** (verified working from cloud runs
   2026-08-23, "Mobile push requested"). Fallback if PushNotification reports
   not-sent/unavailable: a Google Calendar event ~15 min out titled with the
-  candidate. Never both; never anything on a green day.
+  candidate. Send through exactly one of the two.
 - **Failsafe (22:30)** — still grey → finalize today's journal entry, commit it
   **Tom-authored** per the attribution rule, push, verify per the immutable rule.
   Record outcome either way — `state.json` gets `{date: {green_by, method,
