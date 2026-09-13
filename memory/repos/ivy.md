@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-12
+updated: 2026-09-13
 ---
 
 # ivy
@@ -39,16 +39,17 @@ same-morning per the outranking rule, before it reached `main`
 [cite:2026-08-30] [[ops]] [[patterns]].
 
 The scanner itself has now gone dark for an extended stretch: `local-wip.json`
-last landed 2026-09-08T15:45 CEST and has missed seven straight windows
-(09-09 08:45/17:45, 09-10 08:45/17:45, 09-11 08:45/17:45, 09-12 08:45),
-crossing the playbook's 3-day outranking bar on 2026-09-11 and still open a
-full calendar day later [cite:2026-09-12]. Every day it stays dark, the
-carry-over pattern above goes blind — no candidate can surface from it, and a
-sleeping Mac reads as a clean tree. This same outage window covers the first
-grey day of the run (2026-09-12, failsafe fired, journal secured the streak
-at 20): whether a same-day local push would have gone green instead is
-unknowable while the scanner stays dark [cite:2026-09-12]. Not yet resolved
-as of the 2026-09-12 failsafe.
+last landed 2026-09-08T15:45 CEST and has missed nine straight windows
+(09-09 08:45/17:45, 09-10 08:45/17:45, 09-11 08:45/17:45, 09-12 08:45/17:45,
+09-13 08:45), crossing the playbook's 3-day outranking bar on 2026-09-11 and
+still open two full calendar days later [cite:2026-09-13]. Every day it
+stays dark, the carry-over pattern above goes blind — no candidate can
+surface from it, and a sleeping Mac reads as a clean tree. This same outage
+window now covers *both* grey days of the run (2026-09-12 and 2026-09-13,
+failsafe fired both times, journal secured the streak at 20 then 21):
+whether a same-day local push would have gone green instead is unknowable
+while the scanner stays dark [cite:2026-09-12][cite:2026-09-13]. Not yet
+resolved as of the 2026-09-13 failsafe.
 
 ## Activity
 
@@ -76,6 +77,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-13 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 9 missed windows / 5 calendar days, still open; noted it now coincides
+  with both failsafe-fired grey days of the run (streak secured at 20, then
+  21, by journal entry, not real work).
 - 2026-09-12 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 7 missed windows / 4 calendar days, still open; noted it coincides with
   the run's first failsafe-fired grey day (streak secured at 20 by journal

@@ -10,18 +10,21 @@ Observations about the rhythm of real work, drawn from outcome history. These
 are findings, not directives — the retro decides whether any of them should
 change the ladder, and `playbook.md` is the only place behavior lives.
 
-## The failsafe fired for the first time on day 21
+## The failsafe has now fired twice in a row
 
 Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
 That ended 2026-09-12 — a genuinely quiet day (no connected-author
 commit/PR/issue anywhere org-wide from the 18:00 check through 22:30) —
 where the failsafe wrote the journal entry itself and secured the streak at
-20 [cite:2026-09-12]. Fire rate now 1/21. This is the floor doing exactly
-its designed job the one time it was needed, not evidence of a problem —
-still one data point, so no ladder-timing change follows from it. The prior
-reading (0/7, then 0/20) was never "the floor is untested," only "the floor
-hasn't been needed yet"; it has now been needed once and worked.
+20 [cite:2026-09-12]. 2026-09-13 repeated the same pattern exactly: zero
+connected-author activity org-wide all day, failsafe journal entry secured
+the streak at 21 [cite:2026-09-13]. Fire rate now 2/22, both back-to-back
+and both coinciding with the local-WIP scanner outage
+[[repos/ivy]]. Two consecutive quiet days is still a thin sample for a
+causal claim about the scanner, but it is the first repeat of the pattern —
+worth a retro look if a third quiet day lands while the scanner is still
+dark.
 
 ## Volume is bursty, not steady
 
@@ -54,18 +57,22 @@ This matters for candidate ranking: `c2-client-matrix` #1 has been the scout's
 "cheapest real contribution" pick repeatedly and has never been taken
 [[repos/c2-client-matrix]].
 
-## Nudge conversion is 0 for 2 — resolved count
+## Nudge conversion is 0 for 3 — resolved count
 
-Two *grey-check* nudges have ever been sent, both push channel, both
-unconverted: 2026-08-24 (`c2-client-matrix #1`) [cite:2026-08-24] and
+Three *grey-check* nudges have ever been sent, all push channel, all
+unconverted: 2026-08-24 (`c2-client-matrix #1`) [cite:2026-08-24],
 2026-09-12 (local-WIP scanner outage, sent 18:04:40 CEST, the first time a
 *blocker* rather than a candidate was the nudge subject — the
 blocker-outranks-cheapest-ship rule picked it correctly over the standing
-`tomgreen.ai` PR #59 candidate) [cite:2026-09-12]. Every other day through
-09-11 was green before the 18:00 check, so no grey-check nudge fired on
-those days. Retro reading (2026-09-13): n=2 is still too thin to safely
-tune nudge timing, wording, or channel — same discipline held at n=1 since
-2026-08-30, unchanged by one more data point in the same direction.
+`tomgreen.ai` PR #59 candidate) [cite:2026-09-12], and 2026-09-13 (same
+blocker, same rule, sent 18:04 CEST, scanner still dark) [cite:2026-09-13].
+Every other day through 09-11 was green before the 18:00 check, so no
+grey-check nudge fired on those days. Retro reading (2026-09-13, before
+today's nudge landed): n=2 was still too thin to safely tune nudge timing,
+wording, or channel — n=3 doesn't change that verdict, but two of the three
+are now the same unconverted blocker on consecutive days, which is itself
+a finding for the next retro to weigh (is the nudge reaching Tom, or is the
+blocker just not urgent to him yet?).
 
 ## A second nudge type fired early, then fired false: attribution nudges
 
