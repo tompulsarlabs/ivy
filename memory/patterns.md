@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-05
+updated: 2026-09-13
 ---
 
 # Patterns: how the work actually happens
@@ -10,15 +10,18 @@ Observations about the rhythm of real work, drawn from outcome history. These
 are findings, not directives — the retro decides whether any of them should
 change the ladder, and `playbook.md` is the only place behavior lives.
 
-## Real work carries every day so far; the failsafe has never fired
+## The failsafe fired for the first time on day 21
 
-Seven recorded days (2026-08-23→29), all green by real work, streak 7. The
-failsafe journal entry has not once been needed [cite:2026-08-28]
-[cite:2026-08-29]. The system is currently a *nudge* system in practice, not
-a floor system — the floor has never been tested in anger. Retro reading
-(2026-08-30): 0/7 fire rate is not evidence of a problem to tune — it is the
-floor doing its job by never being needed. No ladder-timing change follows
-from this.
+Real work carried every one of the first 20 recorded days (2026-08-23→11):
+never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
+That ended 2026-09-12 — a genuinely quiet day (no connected-author
+commit/PR/issue anywhere org-wide from the 18:00 check through 22:30) —
+where the failsafe wrote the journal entry itself and secured the streak at
+20 [cite:2026-09-12]. Fire rate now 1/21. This is the floor doing exactly
+its designed job the one time it was needed, not evidence of a problem —
+still one data point, so no ladder-timing change follows from it. The prior
+reading (0/7, then 0/20) was never "the floor is untested," only "the floor
+hasn't been needed yet"; it has now been needed once and worked.
 
 ## Volume is bursty, not steady
 
@@ -51,14 +54,18 @@ This matters for candidate ranking: `c2-client-matrix` #1 has been the scout's
 "cheapest real contribution" pick repeatedly and has never been taken
 [[repos/c2-client-matrix]].
 
-## Nudge conversion is 0 for 1 — resolved count
+## Nudge conversion is 0 for 2 — resolved count
 
-Exactly one *grey-check* nudge has ever been sent: 2026-08-24, push channel,
-candidate `c2-client-matrix #1`, `nudge_converted: false` [cite:2026-08-24].
-Every other day through 08-29 was green before the 18:00 check, so no
-grey-check nudge fired. Retro reading (2026-08-30): n=1 is still too thin to
-safely tune nudge timing, wording, or channel — the existing "no change"
-discipline holds this week too.
+Two *grey-check* nudges have ever been sent, both push channel, both
+unconverted: 2026-08-24 (`c2-client-matrix #1`) [cite:2026-08-24] and
+2026-09-12 (local-WIP scanner outage, sent 18:04:40 CEST, the first time a
+*blocker* rather than a candidate was the nudge subject — the
+blocker-outranks-cheapest-ship rule picked it correctly over the standing
+`tomgreen.ai` PR #59 candidate) [cite:2026-09-12]. Every other day through
+09-11 was green before the 18:00 check, so no grey-check nudge fired on
+those days. Retro reading (2026-09-13): n=2 is still too thin to safely
+tune nudge timing, wording, or channel — same discipline held at n=1 since
+2026-08-30, unchanged by one more data point in the same direction.
 
 ## A second nudge type fired early, then fired false: attribution nudges
 
@@ -115,6 +122,13 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-13 (retro) — corrected two stale claims: the never-fired-failsafe
+  note (fired once, 2026-09-12, streak 20) and the nudge count (now 2,
+  both unconverted, second one a blocker not a candidate). Both sections
+  had gone unedited since 09-05 while the daily failsafe recorded the
+  underlying facts elsewhere (`state.json`, `[[repos/ivy]]`) without
+  updating this page — a synthesis gap, not a wrong observation at the
+  time it was written.
 - 2026-09-05 — recorded that even a green 18:00 reading can be mid-day:
   two more `tomgreen.ai` PRs landed 18:20→19:30 CEST tonight, after the
   check had already recorded green.

@@ -1,7 +1,7 @@
 ---
 subject: memory index
 type: index
-updated: 2026-09-08
+updated: 2026-09-13
 ---
 
 # Memory index
@@ -26,11 +26,10 @@ behavior lives in `playbook.md` and only the retro changes it.
 - [[repos/writing-voice-skill]] — first signal 2026-09-05 (PR #2)
 - [[repos/pixel-perfect-showcase-8458]] — `ivy-cockpit`; write-credential finding 09-08
 - [[repos/sybil-showcase]] / [[repos/safari-harness]] / [[repos/ivy-showcase]] — first signal 09-07/09-08
+- [[repos/opencode-job-search-starter]] — private; first signal 09-11
 - [[models]] — lane routing evidence, one row per verified dispatch contract
 
-**No page yet** (no observed commit activity through 09-02): aris-ote-benchmarking,
-Dex, interview-ace, ai-interview-coach, bd-lead-comp-dashboard. The failsafe
-creates a page on first real signal.
+**No page yet** (no observed commit activity): aris-ote-benchmarking, Dex, interview-ace, ai-interview-coach, bd-lead-comp-dashboard — a page arrives on first real signal.
 
 ## Link syntax
 

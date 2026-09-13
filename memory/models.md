@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-09
+updated: 2026-09-13
 ---
 
 # Models: lane × task-class outcomes
@@ -30,6 +30,10 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-08-ivycockpit-credentialharden-review-01 | review | frontier / anthropic | yes | 9.4 | Highest-stakes review to date: `pixel-perfect-showcase-8458` PR #2 credential-hardening claim (the write credential that could modify ivy's own runner repo) confirmed armed-not-disabled via PR-body corroboration [cite:2026-09-08] |
 | 2026-09-08-ivycockpit-queueconnect-review-01 | review | workhorse / anthropic | yes | 11.2 | Same repo PR #1, first `pixel-perfect-showcase-8458` contract run at the post-retro `workhorse` default; report caught the PR body describing deleted rather than shipped code (Finding 0) [cite:2026-09-08] |
 | 2026-09-09-talentradar-sybilintake-review-01 | review | workhorse / openai | yes | 23.2 | Fresh review of `talent-radar` PR #3 at its current (post-drift) head; six findings including three P1s (three-phase-contract bypass, prompt injection via unescaped candidate/company fields, cross-account voice-response leak) and a red-CI finding; verified via PR-body corroboration [cite:2026-09-09] |
+| 2026-09-07-talentradar-pilot-review-01 | review | workhorse / openai | yes | 2.9 | `talent-radar` PR #2 executive-pilot RLS/Notion-token/evaluation-harness review; verified via PR-body corroboration (PR still draft) [cite:2026-09-07] |
+| 2026-09-07-tomgreenai-activitymatrix-review-01 | review | workhorse / anthropic | yes | 10.5 | `tomgreen.ai` PR #41 activity-matrix review; merged same morning, all 9 cited paths confirmed on main; top finding (terminal-day strictness at the Berlin/UTC boundary) matched the cited code directly [cite:2026-09-07] |
+| 2026-09-10-tomgreenai-planetarymap-review-01 | review | workhorse / openai | yes | 2.0 | `tomgreen.ai` PR #54 planetary-map materials/motion/navigation review; all 9 cited files resolved via `filename:` search against the merged head [cite:2026-09-10] |
+| 2026-09-11-tomgreenai-radarsubtitle-review-01 | review | workhorse / openai | yes | 1.8 | `tomgreen.ai` PR #58 one-line subtitle-copy review; both cited paths resolved on main (PR itself still open/draft) [cite:2026-09-11] |
 
 ## Pool health
 
@@ -42,30 +46,42 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 | 2026-08-28 (partial) | 1 | 0 / 0 | 0 | 0 | D1-D2 bring-up week; first contract 8 wall-min first-pass [cite:2026-08-27] |
 | 2026-08-30 | 1 | 0 / 0 | 0 | 0 | No new verified outcomes this week — 3 contracts still queued unclaimed, D2 runner not yet live [cite:2026-08-29][cite:2026-08-30] |
 | 2026-09-06 | 7 | 1 / 45 | 1 | 0 | D2 runner live all week: 7 new verified (5 review, 2 build), all first-pass; `review` class cleared the ≥3-verified-outcomes Pareto bar (5 straight frontier/openai first-pass) — retro stepped its default lane to `workhorse` [cite:2026-09-06]; `build` still n=2, short of the bar. First real waste (`layout-02`, 45 wall-min, no output) and first expired-unexecuted contract (`photo-02`), both `tomgreen.ai` build [cite:2026-09-04] |
+| 2026-09-13 | 4 | 0 / 0 | 0 | 0 | All 4 new-verified this week are `review`, all first-pass, all at the `workhorse` default (2 on 09-07, 1 each 09-10/09-11); zero waste, zero expired. No new `build` or `chore` contracts ran — `build` stays at n=2, unmoved since 09-02. Fleet total now n=19 (1 chore, 16 review, 2 build) |
 
 ## Reading
 
-n=15 now (1 chore, 12 review, 2 build), all first-pass. `review` cleared
+n=19 now (1 chore, 16 review, 2 build), all first-pass. `review` cleared
 the Pareto bar on 2026-09-06 (five straight frontier/openai first-pass
 outcomes) — **retro decision, 2026-09-06:** `playbook.md`'s scout section
 now defaults new `review` contracts to `lane: workhorse`; `frontier` stays
-available as an explicit per-contract pin. Of the six `review` contracts
-verified since that trial began, two ran at the new `workhorse` default
+available as an explicit per-contract pin. Of the ten `review` contracts
+verified since that trial began, six ran at the new `workhorse` default
 (`2026-09-08-ivycockpit-queueconnect-review-01`,
-`2026-09-09-talentradar-sybilintake-review-01`) and both were first-pass
-with real findings (one caught a PR body describing deleted rather than
-shipped code; the other found three P1 security issues), the other four
+`2026-09-09-talentradar-sybilintake-review-01`,
+`2026-09-07-talentradar-pilot-review-01`,
+`2026-09-07-tomgreenai-activitymatrix-review-01`,
+`2026-09-10-tomgreenai-planetarymap-review-01`,
+`2026-09-11-tomgreenai-radarsubtitle-review-01`) and all six were
+first-pass — two with real findings worth catching (a PR body describing
+deleted rather than shipped code; three P1 security issues), the rest
+clean confirmations or minor findings on already-solid PRs. The other four
 (`acceptanceproof`, `runtimeprobe`, `verifyevidence`,
 `ivycockpit-credentialharden`) stayed pinned `frontier` — the first two
 were self-modifying-instructions reviews created before the retro's lane
 change landed, the third for a named highest-stakes credential finding.
-Early but consistent: no quality drop yet observed at `workhorse` for
-`review`. `build` has its first two data points (workhorse/anthropic and
-frontier/anthropic, both first-pass) —
+Six-for-six first-pass at `workhorse` is a stronger basis than last week's
+two-for-two, still with no quality drop observed; a further step to
+`fast-cheap` would need its own evidence at that tier first (the Pareto
+rule requires outcomes *at* the cheaper lane, not just success one tier
+up) — worth an `experiment` contract if the scout has queue headroom,
+rather than a retro-only ranking guess. `build` has its first two data
+points (workhorse/anthropic and frontier/anthropic, both first-pass) —
 still short of the bar, and confounded by lane: `copy-02` ran frontier
 only because it was hand-pinned there after the runner-bug re-queue, not
 by routing policy, so it is not yet evidence that `build` needs the
-frontier tier [cite:2026-09-04].
+frontier tier [cite:2026-09-04]. No new `build` contract has queued since
+2026-09-02 — a supply gap (no build-shaped candidate has surfaced), not a
+lane problem.
 
 **First real waste of the fleet, 2026-09-04:** `2026-09-02-tomgreenai-layout-02`
 spent its full 45-minute budget (frontier/anthropic) and produced no PR and
@@ -82,6 +98,16 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-13 (retro) — backfilled 4 contracts verified 09-07/09-10/09-11
+  that no failsafe pass had recorded here yet (`talentradar-pilot-review-01`,
+  `tomgreenai-activitymatrix-review-01`, `tomgreenai-planetarymap-review-01`,
+  `tomgreenai-radarsubtitle-review-01`); n=15→19. All four are `review` at
+  the `workhorse` default, all first-pass — six-for-six now at that lane,
+  up from two-for-two last week, still no quality drop. Added the week's
+  fleet-metrics row (4 new verified, 0 waste, 0 expired). `build` unmoved
+  at n=2, no new contracts since 09-02 — flagged as a supply gap, and
+  `review`'s next open question (a further step to `fast-cheap`) as an
+  `experiment`-contract candidate rather than a retro-only guess.
 - 2026-09-09 — backfilled 6 contracts verified 2026-09-08 but never
   recorded here (4 dated 09-06: `acceptanceproof`, `runtimeprobe`,
   `verifyevidence`, `writingvoiceskill`; 2 dated 09-08:
