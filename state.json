@@ -1,20 +1,20 @@
 {
-  "streak": 20,
-  "last_green": "2026-09-12",
-  "memory_last_synthesized": "2026-09-12",
+  "streak": 21,
+  "last_green": "2026-09-13",
+  "memory_last_synthesized": "2026-09-13",
   "days": {
     "2026-09-13": {
-      "green_by": null,
-      "method": null,
+      "green_by": "failsafe journal entry (commit 086f0c6)",
+      "method": "journal",
       "contributions": 0,
-      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date:2026-09-13/created:2026-09-13, plus list_commits on ivy (check 18:00 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — only 4 commits today, all bot-authored (ivy-bot <bot@ivy.invalid>: scout, memory retro, learn, runner-status), correctly excluded; zero connected-author commits/PRs/issues; dispatch/queue empty, local-wip.json still stale (generated_at 2026-09-08, unchanged) — so far",
+      "signal_source": "github-mcp:list_commits on ivy + search_commits + search_pull_requests + search_issues org:tompulsarlabs author-date:2026-09-13/created:2026-09-13 (failsafe 22:30 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today, confirmed unchanged from the 18:04 CEST check through 22:30; only activity was ivy's own bot-authored scout + memory retro + learn + runner-status + check commits, correctly excluded; failsafe fired per the no-synthetic-contributions rule, journal commit verified on main via mcp__github__list_commits (author.login: tompulsarlabs, email 249609836+tompulsarlabs@users.noreply.github.com, matches connected commit_email)",
       "cite": "journal/2026-09-13.md",
       "nudge_sent": true,
       "nudge_sent_at": "2026-09-13T18:00:00+02:00",
       "nudge_channel": "push",
       "nudge_candidate": "local-wip scanner down 5 calendar days / 9 missed windows (past playbook's 3-day blocker-outranks-cheapest-ship bar) — confirm Mac launchd job for local-wip.sh is loaded; standing top candidate otherwise unchanged: tomgreen.ai PR #59 merge decision",
-      "nudge_converted": null,
-      "failsafe_fired": null
+      "nudge_converted": false,
+      "failsafe_fired": true
     },
     "2026-09-12": {
       "green_by": "failsafe journal entry (commit b143b17)",
