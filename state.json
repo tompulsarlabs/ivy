@@ -1,20 +1,20 @@
 {
-  "streak": 21,
-  "last_green": "2026-09-13",
+  "streak": 22,
+  "last_green": "2026-09-14",
   "memory_last_synthesized": "2026-09-13",
   "days": {
     "2026-09-14": {
-      "green_by": null,
-      "method": "pending",
+      "green_by": "failsafe journal entry (commit 10aedbc)",
+      "method": "journal",
       "contributions": 0,
-      "signal_source": "github-mcp:list_commits on ivy + search_commits + search_pull_requests + search_issues org:tompulsarlabs author-date/created/merged:2026-09-14 (check 18:00 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today; only activity is ivy's own bot-authored scout + runner-status commits, correctly excluded",
+      "signal_source": "github-mcp:list_commits on ivy + search_commits + search_pull_requests + search_issues org:tompulsarlabs author-date/created/merged:2026-09-14 (failsafe 22:30 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today, confirmed unchanged from the 18:04 CEST check through 22:30; only activity was ivy's own bot-authored scout + runner-status + check commits, correctly excluded; failsafe fired per the no-synthetic-contributions rule, journal commit verified on main via mcp__github__list_commits (author.login: tompulsarlabs, email 249609836+tompulsarlabs@users.noreply.github.com, matches connected commit_email)",
       "cite": "journal/2026-09-14.md",
       "nudge_sent": true,
       "nudge_sent_at": "2026-09-14T18:00:00+02:00",
       "nudge_channel": "push",
-      "nudge_candidate": "local-wip scanner dead 6 calendar days / 11 missed windows (blocker, outranks every open candidate per the 3-day bar) — confirm Mac launchd job for local-wip.sh is loaded; fallback ship: tomgreen.ai PR #59 merge decision",
-      "nudge_converted": null,
-      "failsafe_fired": null
+      "nudge_candidate": "local-wip scanner dead 6 calendar days / 12 missed windows (blocker, outranks every open candidate per the 3-day bar) — confirm Mac launchd job for local-wip.sh is loaded; fallback ship: tomgreen.ai PR #59 merge decision",
+      "nudge_converted": false,
+      "failsafe_fired": true
     },
     "2026-09-13": {
       "green_by": "failsafe journal entry (commit 086f0c6)",
