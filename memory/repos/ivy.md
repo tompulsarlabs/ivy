@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-13
+updated: 2026-09-14
 ---
 
 # ivy
@@ -45,11 +45,13 @@ last landed 2026-09-08T15:45 CEST and has missed nine straight windows
 still open two full calendar days later [cite:2026-09-13]. Every day it
 stays dark, the carry-over pattern above goes blind — no candidate can
 surface from it, and a sleeping Mac reads as a clean tree. This same outage
-window now covers *both* grey days of the run (2026-09-12 and 2026-09-13,
-failsafe fired both times, journal secured the streak at 20 then 21):
-whether a same-day local push would have gone green instead is unknowable
-while the scanner stays dark [cite:2026-09-12][cite:2026-09-13]. Not yet
-resolved as of the 2026-09-13 failsafe.
+window now covers *three consecutive* grey days of the run (2026-09-12,
+2026-09-13, 2026-09-14, failsafe fired all three times, journal secured
+the streak at 20, then 21, then 22): whether a same-day local push would
+have gone green instead is unknowable while the scanner stays dark
+[cite:2026-09-12][cite:2026-09-13][cite:2026-09-14]. Not yet resolved as
+of the 2026-09-14 failsafe — now 12 missed windows / 6 calendar days,
+three days past the playbook's 3-day outranking bar.
 
 ## Activity
 
@@ -77,6 +79,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-14 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 12 missed windows / 6 calendar days, still open; noted it now coincides
+  with the run's third consecutive failsafe-fired grey day (streak secured
+  at 22 by journal entry, not real work).
 - 2026-09-13 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 9 missed windows / 5 calendar days, still open; noted it now coincides
   with both failsafe-fired grey days of the run (streak secured at 20, then
