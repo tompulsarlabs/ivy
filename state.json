@@ -3,6 +3,19 @@
   "last_green": "2026-09-14",
   "memory_last_synthesized": "2026-09-14",
   "days": {
+    "2026-09-15": {
+      "green_by": "pending — grey as of 18:00 check, final outcome recorded by failsafe",
+      "method": "pending",
+      "contributions": 0,
+      "signal_source": "github-mcp:list_commits on ivy + search_commits + search_pull_requests(created/merged) + search_issues(created) org:tompulsarlabs author-date/created/merged:2026-09-15 (check 18:00 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today; only activity on ivy was ivy-bot-authored scout + runner-status commits, correctly excluded; local-wip.json still stale (last landed 2026-09-08T15:45:06Z, unrecovered at check time)",
+      "cite": "journal/2026-09-15.md",
+      "nudge_sent": true,
+      "nudge_sent_at": "2026-09-15T18:00:00+02:00",
+      "nudge_channel": "push",
+      "nudge_candidate": "local-wip scanner dead 7 calendar days / 14 missed windows (blocker, outranks every candidate per the 3-day bar) — confirm Mac launchd job for local-wip.sh is loaded; fallback ship: tomgreen.ai PR #59 merge decision",
+      "nudge_converted": false,
+      "failsafe_fired": "pending"
+    },
     "2026-09-14": {
       "green_by": "failsafe journal entry (commit 10aedbc)",
       "method": "journal",
