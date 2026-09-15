@@ -49,9 +49,12 @@ window now covers *three consecutive* grey days of the run (2026-09-12,
 2026-09-13, 2026-09-14, failsafe fired all three times, journal secured
 the streak at 20, then 21, then 22): whether a same-day local push would
 have gone green instead is unknowable while the scanner stays dark
-[cite:2026-09-12][cite:2026-09-13][cite:2026-09-14]. Not yet resolved as
-of the 2026-09-14 failsafe — now 12 missed windows / 6 calendar days,
-three days past the playbook's 3-day outranking bar.
+[cite:2026-09-12][cite:2026-09-13][cite:2026-09-14]. Still dark as of the
+2026-09-15 failsafe — now 14 missed windows / 7 calendar days, four days
+past the playbook's 3-day outranking bar. The outage now covers *four
+consecutive* grey days (2026-09-12 through 2026-09-15, failsafe fired all
+four times, journal secured the streak at 20, 21, 22, then 23)
+[cite:2026-09-15].
 
 ## Activity
 
