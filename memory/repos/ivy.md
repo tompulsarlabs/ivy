@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-14
+updated: 2026-09-16
 ---
 
 # ivy
@@ -54,7 +54,11 @@ have gone green instead is unknowable while the scanner stays dark
 past the playbook's 3-day outranking bar. The outage now covers *four
 consecutive* grey days (2026-09-12 through 2026-09-15, failsafe fired all
 four times, journal secured the streak at 20, 21, 22, then 23)
-[cite:2026-09-15].
+[cite:2026-09-15]. Still dark as of the 2026-09-16 failsafe — now 16
+missed windows / 8 calendar days, five days past the bar. The outage now
+covers *five consecutive* grey days (2026-09-12 through 2026-09-16,
+failsafe fired all five times, journal secured the streak at 20, 21, 22,
+23, then 24) [cite:2026-09-16].
 
 ## Activity
 
@@ -82,6 +86,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-16 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 16 missed windows / 8 calendar days, still open; noted it now coincides
+  with the run's fifth consecutive failsafe-fired grey day (streak secured
+  at 24 by journal entry, not real work).
 - 2026-09-14 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 12 missed windows / 6 calendar days, still open; noted it now coincides
   with the run's third consecutive failsafe-fired grey day (streak secured
