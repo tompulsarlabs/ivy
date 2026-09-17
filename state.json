@@ -3,6 +3,19 @@
   "last_green": "2026-09-16",
   "memory_last_synthesized": "2026-09-16",
   "days": {
+    "2026-09-17": {
+      "green_by": "check pending — grey so far",
+      "method": "check",
+      "contributions": 0,
+      "signal_source": "github-mcp:list_commits on ivy + search_commits + search_pull_requests(created/merged) + search_issues(created) org:tompulsarlabs author-date/created/merged:2026-09-17 (18:04 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today; only activity on ivy was ivy-bot-authored scout + dispatch claim/done/runner-status commits, correctly excluded",
+      "cite": "journal/2026-09-17.md",
+      "nudge_sent": true,
+      "nudge_sent_at": "2026-09-17T18:04:00+02:00",
+      "nudge_channel": "push",
+      "nudge_candidate": "local-wip scanner dead 9 calendar days / 17 missed windows (blocker, outranks every candidate per the 3-day bar) — confirm Mac launchd job for local-wip.sh is loaded; fallback ship: talent-radar PR #2 fresh review",
+      "nudge_converted": false,
+      "failsafe_fired": null
+    },
     "2026-09-16": {
       "green_by": "failsafe journal entry (commit 19ad487)",
       "method": "journal",
