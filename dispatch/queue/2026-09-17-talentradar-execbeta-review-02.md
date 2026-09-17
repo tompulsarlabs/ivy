@@ -1,7 +1,8 @@
 ---
 id: 2026-09-17-talentradar-execbeta-review-02
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-17T09:30:14+01:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
