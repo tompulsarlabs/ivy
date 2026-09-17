@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-13
+updated: 2026-09-17
 ---
 
 # Models: lane × task-class outcomes
@@ -34,6 +34,7 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-07-tomgreenai-activitymatrix-review-01 | review | workhorse / anthropic | yes | 10.5 | `tomgreen.ai` PR #41 activity-matrix review; merged same morning, all 9 cited paths confirmed on main; top finding (terminal-day strictness at the Berlin/UTC boundary) matched the cited code directly [cite:2026-09-07] |
 | 2026-09-10-tomgreenai-planetarymap-review-01 | review | workhorse / openai | yes | 2.0 | `tomgreen.ai` PR #54 planetary-map materials/motion/navigation review; all 9 cited files resolved via `filename:` search against the merged head [cite:2026-09-10] |
 | 2026-09-11-tomgreenai-radarsubtitle-review-01 | review | workhorse / openai | yes | 1.8 | `tomgreen.ai` PR #58 one-line subtitle-copy review; both cited paths resolved on main (PR itself still open/draft) [cite:2026-09-11] |
+| 2026-09-17-talentradar-execbeta-review-02 | review | workhorse / openai | yes | 20.1 | `talent-radar` PR #2 fresh review at its 09-16 head (33 intervening commits since the 09-05 review); two real findings (CSV-dedup silently drops distinct undated funding rows, stale test-count doc) plus five sound confirmations; verified via PR-body corroboration [cite:2026-09-17] |
 
 ## Pool health
 
@@ -50,7 +51,7 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 
 ## Reading
 
-n=19 now (1 chore, 16 review, 2 build), all first-pass. `review` cleared
+n=20 now (1 chore, 17 review, 2 build), all first-pass. `review` cleared
 the Pareto bar on 2026-09-06 (five straight frontier/openai first-pass
 outcomes) — **retro decision, 2026-09-06:** `playbook.md`'s scout section
 now defaults new `review` contracts to `lane: workhorse`; `frontier` stays
@@ -98,6 +99,8 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-17 (failsafe) — recorded `talentradar-execbeta-review-02`,
+  verified done via PR-body corroboration; n=19→20, `review` now 17.
 - 2026-09-13 (retro) — backfilled 4 contracts verified 09-07/09-10/09-11
   that no failsafe pass had recorded here yet (`talentradar-pilot-review-01`,
   `tomgreenai-activitymatrix-review-01`, `tomgreenai-planetarymap-review-01`,

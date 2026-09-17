@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-09
+updated: 2026-09-17
 ---
 
 # talent-radar
@@ -82,8 +82,36 @@ still sound: the Google-sign-in + allowlist voice gate, private-notes
 exclusion, owner-scoped intake/upload state, and the PR's own
 draft/no-merge claim [cite:2026-09-09] [[models]].
 
+## PR #2 — fresh review at the 09-16 head (2026-09-17)
+
+`updated_at` moved 2026-09-16 for the first time since the 09-05 review
+(now titled "Build Radar's private executive beta with grounded interview
+evaluation") — 33 intervening commits since the reviewed head `a7bf289`,
+landing to tip `1395d45`: the executive pilot, knowledge/evidence and
+grounded-evaluation paths, capped approval/admission, private funding CSV
+import (09-11), then a workspace/Notion UI pass (09-16).
+`2026-09-17-talentradar-execbeta-review-02` reviewed the new head. Two
+real findings: **P2** — `src/lib/market/import.ts:44` de-dupes CSV funding
+rows on `[domain, sourceUrl, eventDate]` only, so two undated rows from the
+same company/provider URL with different round/amount/currency/investors
+silently collapse to one, contradicting the "without merging different
+rounds" intent in `tests/market-signals.test.ts:16`. **P3** —
+`docs/BETA-READINESS.md` still presents a 10-September, present-tense 297
+test count as current while the head's own validation record
+(`docs/HANDOFF.md:21,31`) is 332. Confirmed sound: Google-OAuth admission
+gating, atomic capacity-reservation locking, the fail-closed approval-
+migration compatibility path, CSV provenance scoping (not a live
+Crunchbase feed), the private evaluator's server-side criteria boundary,
+and the 332-test count's internal consistency. Verified via PR-body
+corroboration (`talent-radar` sits outside this session's direct repo
+access [[ops]]) — same method as the 09-05 review [cite:2026-09-17]
+[[models]].
+
 ## Changelog
 
+- 2026-09-17 (failsafe) — recorded the PR #2 fresh review at its 09-16
+  head: two real findings (CSV-dedup gap, stale test-count doc) plus five
+  sound confirmations, verified via PR-body corroboration.
 - 2026-09-09 — recorded the fresh PR #3 review (three P1 findings: phase
   bypass, prompt injection via unescaped fields, cross-account voice
   leak; plus a red-CI finding), resolving the 09-08 unverified-drift gap.
