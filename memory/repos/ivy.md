@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-17
+updated: 2026-09-18
 ---
 
 # ivy
@@ -67,7 +67,16 @@ streak at 20, 21, 22, 23, 24, then 25) [cite:2026-09-17]. Separately, one
 `+01:00` on 2026-09-16 — a full day before the real CEST→CET flip the
 playbook's DST note expects in late October — read as a Mac clock/timezone
 change rather than a code change; flagged alongside the scanner outage
-since both point at the same machine [cite:2026-09-17] [[ops]].
+since both point at the same machine [cite:2026-09-17] [[ops]]. Still dark
+as of the 2026-09-18 failsafe — now 19 missed windows / 10 calendar days,
+seven days past the bar, with `runner-status.json`'s `last_tick` unchanged
+from the 09-17 read (now ~21+ hours stale, a second consecutive day past
+the "at least every 6 hours inside the window" cadence) — the same Mac
+showing two independent staleness signals at once [cite:2026-09-18]. The
+day itself broke the grey streak: real work (`tomgreen.ai` PR #61 + #62
+merged, 4 `tompulsarlabs` commits) went green well before the check,
+ending a six-day run of failsafe-fired journal-only days
+[cite:2026-09-18].
 
 ## Activity
 
@@ -95,6 +104,11 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-18 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 19 missed windows / 10 calendar days, still open, plus a second
+  staleness signal on the same Mac (`runner-status.json` heartbeat now
+  ~21+ hours old); noted the grey streak broke today — green by real work
+  (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits), not a journal entry.
 - 2026-09-17 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 18 missed windows / 9 calendar days, still open; sixth consecutive
   failsafe-fired grey day (streak secured at 25 by journal entry, not real
