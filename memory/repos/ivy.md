@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-18
+updated: 2026-09-19
 ---
 
 # ivy
@@ -76,7 +76,15 @@ showing two independent staleness signals at once [cite:2026-09-18]. The
 day itself broke the grey streak: real work (`tomgreen.ai` PR #61 + #62
 merged, 4 `tompulsarlabs` commits) went green well before the check,
 ending a six-day run of failsafe-fired journal-only days
-[cite:2026-09-18].
+[cite:2026-09-18]. Still dark as of the 2026-09-19 failsafe — now 21
+missed windows / 11 calendar days, eight days past the bar, with
+`runner-status.json` ticking once during the day (`last_tick` moved to
+2026-09-18T15:55:52+02:00, still `+02:00` CEST — the 09-16 timezone-offset
+shift did not persist) but leaving a ~5-hour gap before the runner window
+closed. The 09-18 real-work green was one day only: today reverted to a
+failsafe-fired journal-only day, the seventh in eight days
+(2026-09-12 through 2026-09-19, only 09-18 breaking the run)
+[cite:2026-09-19].
 
 ## Activity
 
@@ -104,6 +112,12 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-19 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 21 missed windows / 11 calendar days, still open; noted the runner
+  ticked once (still CEST, the 09-16 offset shift did not persist) but left
+  a ~5-hour gap before the window closed; noted the 09-18 real-work green
+  was one day only — today reverted to a failsafe-fired journal-only day
+  (streak secured at 27), the seventh such day in the last eight.
 - 2026-09-18 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 19 missed windows / 10 calendar days, still open, plus a second
   staleness signal on the same Mac (`runner-status.json` heartbeat now
