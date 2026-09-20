@@ -1,20 +1,20 @@
 {
-  "streak": 27,
-  "last_green": "2026-09-19",
+  "streak": 28,
+  "last_green": "2026-09-20",
   "memory_last_synthesized": "2026-09-19",
   "days": {
     "2026-09-20": {
-      "green_by": null,
-      "method": null,
+      "green_by": "failsafe journal entry (commit 2aa53e9)",
+      "method": "journal",
       "contributions": 0,
-      "signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-20 + search_pull_requests(created/merged):2026-09-20 + search_issues(created):2026-09-20 (check 18:04 CEST; check.sh exit 2, no github.com egress in cloud sandbox) — only bot-authored ivy commits found today (learn: 10:10 CEST, scout: 09:06 CEST, both bot@ivy.invalid, correctly excluded); zero connected-author commits, zero PRs opened/merged, zero issues opened org-wide; dispatch/queue/ empty, no claimed contracts pending. Grey as of this check; failsafe re-checks at 22:30 CEST.",
+      "signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-20 + search_pull_requests(created/merged):2026-09-20 + search_issues(created):2026-09-20 (failsafe 22:30 CEST re-check; check.sh exit 2, no github.com egress in cloud sandbox) — zero connected-author commits/PRs/issues today, confirmed unchanged from the 18:04 CEST check through 22:30; only activity on ivy was ivy-bot-authored scout + learn + check + runner-status commits, correctly excluded; failsafe fired per the no-synthetic-contributions rule, journal commit verified on main via mcp__github__list_commits (author.login: tompulsarlabs, email 249609836+tompulsarlabs@users.noreply.github.com, matches connected commit_email); local-wip.json still stale (last landed 2026-09-08T15:45:06Z, unrecovered at failsafe time); dispatch/queue/ empty, no claimed contracts pending, all dispatch/done/ entries already carry verified: stamps, dispatch/failed/ unchanged (last re-checked 09-19)",
       "cite": "journal/2026-09-20.md",
       "nudge_sent": true,
       "nudge_sent_at": "2026-09-20T18:04:02+02:00",
       "nudge_channel": "push",
       "nudge_candidate": "talent-radar PR #2 — fix 2 open review findings (CSV dedupe import.ts:44 + stale test count in BETA-READINESS.md)",
-      "nudge_converted": null,
-      "failsafe_fired": false
+      "nudge_converted": false,
+      "failsafe_fired": true
     },
     "2026-09-19": {
       "green_by": "failsafe journal entry (commit f926f1f)",
