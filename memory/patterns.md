@@ -15,12 +15,13 @@ change the ladder, and `playbook.md` is the only place behavior lives.
 Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
 That ended 2026-09-12 and has since become the norm, not the exception:
-the failsafe fired 09-12, 13, 14, 15, 16, 17, and 19 — seven of the eight
-days since, with only 09-18 breaking the run on real work
+the failsafe fired 09-12, 13, 14, 15, 16, 17, 19, and 20 — eight of the
+nine days since, with only 09-18 breaking the run on real work
 (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits)
 [cite:2026-09-12][cite:2026-09-13][cite:2026-09-14][cite:2026-09-15]
-[cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19].
-Every one of those seven fires falls inside the local-WIP scanner outage,
+[cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19]
+[cite:2026-09-20].
+Every one of those eight fires falls inside the local-WIP scanner outage,
 still dark as of 2026-09-20 at 12 calendar days / 23 missed windows
 [[repos/ivy]]. This is now a large enough, tight enough coincidence to be
 a real candidate explanation, not just a thin correlation: a dark scanner
@@ -65,20 +66,21 @@ This matters for candidate ranking: `c2-client-matrix` #1 has been the scout's
 "cheapest real contribution" pick repeatedly and has never been taken
 [[repos/c2-client-matrix]].
 
-## Nudge conversion is 0 for 8 — but the metric can't score a blocker fix
+## Nudge conversion is 0 for 9 — but the metric can't score a blocker fix
 
-Eight *grey-check* nudges have ever been sent, all push channel, all
+Nine *grey-check* nudges have ever been sent, all push channel, all
 recorded `nudge_converted: false`: 2026-08-24 (`c2-client-matrix #1`)
 [cite:2026-08-24]; six identical repeats of the local-WIP scanner outage,
 2026-09-12 through 2026-09-17 [cite:2026-09-12][cite:2026-09-13]
 [cite:2026-09-14][cite:2026-09-15][cite:2026-09-16][cite:2026-09-17]; and
-2026-09-19 (`talent-radar` PR #2's two open review findings, a fresh
-candidate) [cite:2026-09-19]. Every other day through 09-11, and 09-18,
-was green before the 18:00 check, so no grey-check nudge fired on those
-days.
+2026-09-19 and 2026-09-20 (both `talent-radar` PR #2's two open review
+findings, a fresh candidate, sent verbatim a second day)
+[cite:2026-09-19][cite:2026-09-20]. Every other day through 09-11, and
+09-18, was green before the 18:00 check, so no grey-check nudge fired on
+those days.
 
-n=8 is enough to stop reading this as "too thin," but not to conclude
-"nudging doesn't work" — 6 of the 8 rows are the *same* blocker, and
+n=9 is enough to stop reading this as "too thin," but not to conclude
+"nudging doesn't work" — 6 of the 9 rows are the *same* blocker, and
 `nudge_converted` is scored against GitHub contributions, which a Mac
 `launchd` fix would never produce even if Tom acted on every single one.
 Retro 2026-09-20 read this as a measurement gap, not proof of an ignored
@@ -150,6 +152,10 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-20 (failsafe) — extended both sections with today's outcome:
+  fire rate now 8/9 days since 09-12 (was 7/8); nudge conversion now n=9,
+  0 converted (was n=8) — today's nudge repeated the 09-19 `talent-radar`
+  PR #2 candidate verbatim, still unconverted.
 - 2026-09-20 (retro) — rewrote both stale sections against the full
   window: failsafe fire rate updated from 2/22 to 7/28 (7 of the last 8
   days), all inside the local-WIP scanner outage, now read as a real

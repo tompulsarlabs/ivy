@@ -1,7 +1,7 @@
 {
   "streak": 28,
   "last_green": "2026-09-20",
-  "memory_last_synthesized": "2026-09-19",
+  "memory_last_synthesized": "2026-09-20",
   "days": {
     "2026-09-20": {
       "green_by": "failsafe journal entry (commit 2aa53e9)",

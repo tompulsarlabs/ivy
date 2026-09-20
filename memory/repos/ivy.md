@@ -93,7 +93,12 @@ tune directly, but acted on the six identical unconverted nudges it
 produced (09-12→17): `playbook.md` now caps identical blocker-nudge
 repeats at 3 before falling back to a fresh candidate, and credits a
 blocker nudge as converted on its own recovery signal, not only a GitHub
-contribution [[patterns]].
+contribution [[patterns]]. Still dark at the 2026-09-20 failsafe — same
+23 missed windows / 12 calendar days the same-morning retro already
+recorded, `local-wip.json` unchanged. Today itself reverted to a
+failsafe-fired journal-only day (streak secured at 28), the ninth such
+day in the last ten (2026-09-12 through 2026-09-20, only 09-18 breaking
+the run on real work) [cite:2026-09-20].
 
 ## Activity
 
@@ -121,6 +126,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-20 (failsafe) — recorded today's outcome: local-WIP scanner
+  unchanged from the same-morning retro read (23 missed windows / 12
+  calendar days); failsafe fired, journal-only grey day, streak secured
+  at 28, the ninth such day in the last ten.
 - 2026-09-20 (retro) — escalated the outage to 23 missed windows / 12
   calendar days, still dark; recorded the retro's read that it is the
   likely driver of the failsafe fire-rate step and the two playbook
