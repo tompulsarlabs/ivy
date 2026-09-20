@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-19
+updated: 2026-09-20
 ---
 
 # ivy
@@ -84,7 +84,16 @@ shift did not persist) but leaving a ~5-hour gap before the runner window
 closed. The 09-18 real-work green was one day only: today reverted to a
 failsafe-fired journal-only day, the seventh in eight days
 (2026-09-12 through 2026-09-19, only 09-18 breaking the run)
-[cite:2026-09-19].
+[cite:2026-09-19]. Still dark at the 2026-09-20 retro — 23 missed
+windows / 12 calendar days, nine days past the bar, `local-wip.json`
+unchanged at `generated_at: 2026-09-08T15:45:06Z` [cite:2026-09-20].
+Retro read this outage as the likely driver of the failsafe's 0/20→7/8
+fire-rate step [[patterns]], too Mac-side to fix with a playbook/config
+tune directly, but acted on the six identical unconverted nudges it
+produced (09-12→17): `playbook.md` now caps identical blocker-nudge
+repeats at 3 before falling back to a fresh candidate, and credits a
+blocker nudge as converted on its own recovery signal, not only a GitHub
+contribution [[patterns]].
 
 ## Activity
 
@@ -112,6 +121,11 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-20 (retro) — escalated the outage to 23 missed windows / 12
+  calendar days, still dark; recorded the retro's read that it is the
+  likely driver of the failsafe fire-rate step and the two playbook
+  changes it prompted (blocker-nudge decay cap, corrected
+  `nudge_converted` scoring).
 - 2026-09-19 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 21 missed windows / 11 calendar days, still open; noted the runner
   ticked once (still CEST, the 09-16 offset shift did not persist) but left

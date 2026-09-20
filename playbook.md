@@ -156,7 +156,11 @@ to execution lanes. Non-negotiables:
   journal under `## Blockers` with what it stops and the smallest next
   action; carry it forward every day until it clears or is explicitly
   declined. A blocker that has persisted three days outranks the day's
-  cheapest ship in the nudge. **Also read `local-wip.json`** (pushed by
+  cheapest ship in the nudge — in the journal's Top Pick and Blockers
+  section, every day, regardless of nudge history. Whether the *check*
+  spends its one nudge repeating it is a separate call, governed by the
+  decay rule below: persistence outranks ranking, not repetition.
+  **Also read `local-wip.json`** (pushed by
   the Mac's launchd scanner at 08:45/17:45): repos with `unpushed_commits > 0` or
   `remote: none` are first-class candidates — "push X (N unpushed commits)" is often
   the cheapest real ship of the day. Staleness rule: if its `generated_at` is older
@@ -197,6 +201,12 @@ to execution lanes. Non-negotiables:
   `memory/repos/<name>.md`** — nudge history and conversion record live there.
   A candidate carrying recorded unconverted nudges is a weaker pick than a
   fresh one of similar cost; say so in the journal when you pick it anyway.
+  This decay applies to a standing blocker's nudge too: after 3 identical
+  unconverted nudges on one blocker, nudge the next-best candidate instead
+  and just name the blocker in the journal — it still leads `## Blockers`
+  and the Top Pick every day, only the push stops repeating. Evidence:
+  the local-WIP-scanner nudge repeated verbatim 6 times (2026-09-12→17, 0
+  conversions) before 09-19's switch to a fresh candidate (`memory/patterns.md`).
   Note open/claimed contract states (`dispatch/queue/`) when recording the
   check — a claimed contract may land before failsafe.
   Nudge channel: **PushNotification** (verified working from cloud runs
@@ -208,6 +218,12 @@ to execution lanes. Non-negotiables:
   Record outcome either way — `state.json` gets `{date: {green_by, method,
   contributions: <final count from check>, signal_source, cite, nudge_sent,
   nudge_converted, failsafe_fired}}` (bot-authored); bump or reset `streak`.
+  For a blocker nudge, `nudge_converted` also goes true on the blocker's
+  own recovery signal (a fresh `local-wip.json`, a resumed runner
+  heartbeat), not only a GitHub contribution — an infra fix rarely
+  produces a commit of its own, so scoring it against contributions alone
+  reads every blocker nudge as unconverted by construction (six straight
+  `false` rows on the same outage, 2026-09-12→17, `memory/patterns.md`).
   Keep `signal_source` to a short source label and put the verification
   narrative in the journal entry under `## Verification`, with `cite` pointing
   at that file.

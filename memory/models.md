@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-17
+updated: 2026-09-20
 ---
 
 # Models: lane × task-class outcomes
@@ -48,6 +48,7 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 | 2026-08-30 | 1 | 0 / 0 | 0 | 0 | No new verified outcomes this week — 3 contracts still queued unclaimed, D2 runner not yet live [cite:2026-08-29][cite:2026-08-30] |
 | 2026-09-06 | 7 | 1 / 45 | 1 | 0 | D2 runner live all week: 7 new verified (5 review, 2 build), all first-pass; `review` class cleared the ≥3-verified-outcomes Pareto bar (5 straight frontier/openai first-pass) — retro stepped its default lane to `workhorse` [cite:2026-09-06]; `build` still n=2, short of the bar. First real waste (`layout-02`, 45 wall-min, no output) and first expired-unexecuted contract (`photo-02`), both `tomgreen.ai` build [cite:2026-09-04] |
 | 2026-09-13 | 4 | 0 / 0 | 0 | 0 | All 4 new-verified this week are `review`, all first-pass, all at the `workhorse` default (2 on 09-07, 1 each 09-10/09-11); zero waste, zero expired. No new `build` or `chore` contracts ran — `build` stays at n=2, unmoved since 09-02. Fleet total now n=19 (1 chore, 16 review, 2 build) |
+| 2026-09-20 | 1 | 0 / 0 | 0 | 0 | `talentradar-execbeta-review-02` (09-17) is the only new-verified outcome this week; `dispatch/queue/` has sat empty every day since (09-14→09-20) — every open PR is already reviewed and awaiting a human merge decision, so no fresh candidate needed a contract. Zero waste, zero expired; a supply gap, not a routing problem, same read as `build`'s since 09-02 |
 
 ## Reading
 
@@ -99,6 +100,11 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-20 (retro) — added the week's fleet-metrics row: only
+  `talentradar-execbeta-review-02` (already recorded 09-17) verified this
+  week, zero waste, zero expired; `dispatch/queue/` empty every day
+  09-14→09-20, read as supply gap rather than routing problem — no lane
+  change follows.
 - 2026-09-17 (failsafe) — recorded `talentradar-execbeta-review-02`,
   verified done via PR-body corroboration; n=19→20, `review` now 17.
 - 2026-09-13 (retro) — backfilled 4 contracts verified 09-07/09-10/09-11

@@ -1,5 +1,77 @@
 # Changelog
 
+## v9 — 2026-09-20
+
+**Retro: two adjustments — a repeat cap on unconverted blocker nudges, and
+a corrected `nudge_converted` definition for blocker-class nudges.**
+Reviewed `state.json` 2026-08-23→09-20 (28 recorded days) plus
+`memory/patterns.md`, `memory/models.md`, `memory/repos/ivy.md`, and the
+week's journals (09-13→09-20). Failsafe fire rate: stepped from 0/20
+(08-23→09-11) to 7/8 (09-12→09-19, only 09-18 breaking the run on real
+work) — every fire falls inside the local-WIP scanner outage, still dark
+at 12 calendar days / 23 missed windows as of today's scout. Nudge→
+conversion: n=8 now (up from n=3 last retro), still 0/8 by the old
+GitHub-contribution-only metric, but 6 of the 8 are identical repeats of
+the same scanner-outage blocker (09-12→17) — a metric problem, not
+necessarily an ignored nudge, since a `launchd` fix produces no commit of
+its own to register as "converted." Shipped work: `tomgreen.ai` and
+`tompulsarlabs` carried the two real-work green days this window (09-18,
+and 09-11/09-10 just before it); no new dispatch contract has queued
+since 09-17 (`dispatch/queue/` empty every day 09-14→09-20) — a supply
+gap, not a routing problem, same read `build` has had since 09-02.
+
+**Adjustment 1 of 2: blocker nudges now decay like candidate nudges.**
+`playbook.md`'s scout and check bullets previously let "a blocker that
+has persisted three days outranks the day's cheapest ship in the nudge"
+read as unconditional repetition, in tension with the check's existing
+"a candidate carrying recorded unconverted nudges is a weaker pick"
+decay rule, which technically applied only to candidates. Six identical,
+unconverted local-WIP-scanner nudges (2026-09-12→17) before the check
+switched to a fresh candidate on 09-19 is the evidence: the switch was
+the right call under the decay rule's spirit, six repeats was too late.
+`playbook.md` now states explicitly that a blocker's persistence keeps
+it atop the journal's Top Pick and Blockers section every day regardless,
+but caps identical *nudge* repeats at 3 before the check falls back to
+the next-best candidate — 3 is the threshold that would have caught the
+09-19 switch two nudges sooner, still without acting on a single
+occurrence (`memory/patterns.md`).
+
+**Adjustment 2 of 2: `nudge_converted` also credits a blocker's own
+recovery signal.** Scoring every nudge against GitHub contributions alone
+makes a blocker-class nudge (a Mac-side infra fix) unconvertible by
+construction — the six straight `false` rows on the scanner outage prove
+the metric is blind here, not that the nudge failed to reach Tom.
+`playbook.md`'s failsafe bullet now also counts `nudge_converted: true`
+on a blocker's own recovery signal (a fresh `local-wip.json`, a resumed
+runner heartbeat) even absent a same-window commit. This unblocks future
+retros from actually reading whether blocker nudges work, instead of a
+metric that reads "no" every time by definition.
+
+**Memory curation.** `memory/patterns.md`'s two nudge/failsafe sections
+were stale since the 09-13 retro (last covering n=2/n=3 and two
+back-to-back fires); rewritten against the full 28-day window and the
+two adjustments above. `memory/repos/ivy.md` updated to the 09-20 outage
+figures (23 windows / 12 days) and the retro's causal read. `memory/models.md`
+got the week's fleet-metrics row (1 new-verified, 0 waste, 0 expired;
+`dispatch/queue/` empty all week) — no lane move, `review` still holds
+`workhorse`, `build` still short of the Pareto bar with no new supply.
+`scripts/memory-lint.sh` clean, 20 pages, no pages added or removed.
+
+**Steering-file prune.** Reviewed the new `playbook.md` text against
+`writing-for-agents` before committing (trimmed the two adjustment
+clauses to match the doc's existing evidence-citation style, e.g. the
+`c2-client-matrix` parked-repo line) rather than leaving first-draft
+narrative in; no further no-ops or restatements found elsewhere in
+`playbook.md` or `CLAUDE.md` this pass. No `## Vocabulary gaps` entries
+in any journal since the last retro, so no `CONTEXT.md` change and no
+ADR this week.
+
+**Tag gap unchanged.** Local tags still show only `v1` and `v2`; `v3`–`v8`
+remain documented here but untagged on the remote, per the standing
+2026-09-06 finding (cloud sessions can push commits to `main` but a
+tag-ref push 403s every time). This entry advances the count to `v9` on
+the same basis.
+
 ## v8 — 2026-09-13
 
 **Retro: no tuning adjustment — the two live questions are still one data

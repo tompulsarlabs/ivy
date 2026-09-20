@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-13
+updated: 2026-09-20
 ---
 
 # Patterns: how the work actually happens
@@ -10,21 +10,29 @@ Observations about the rhythm of real work, drawn from outcome history. These
 are findings, not directives — the retro decides whether any of them should
 change the ladder, and `playbook.md` is the only place behavior lives.
 
-## The failsafe has now fired twice in a row
+## The failsafe fire rate stepped from 0/20 to 7/8, entirely inside the scanner outage
 
 Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
-That ended 2026-09-12 — a genuinely quiet day (no connected-author
-commit/PR/issue anywhere org-wide from the 18:00 check through 22:30) —
-where the failsafe wrote the journal entry itself and secured the streak at
-20 [cite:2026-09-12]. 2026-09-13 repeated the same pattern exactly: zero
-connected-author activity org-wide all day, failsafe journal entry secured
-the streak at 21 [cite:2026-09-13]. Fire rate now 2/22, both back-to-back
-and both coinciding with the local-WIP scanner outage
-[[repos/ivy]]. Two consecutive quiet days is still a thin sample for a
-causal claim about the scanner, but it is the first repeat of the pattern —
-worth a retro look if a third quiet day lands while the scanner is still
-dark.
+That ended 2026-09-12 and has since become the norm, not the exception:
+the failsafe fired 09-12, 13, 14, 15, 16, 17, and 19 — seven of the eight
+days since, with only 09-18 breaking the run on real work
+(`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits)
+[cite:2026-09-12][cite:2026-09-13][cite:2026-09-14][cite:2026-09-15]
+[cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19].
+Every one of those seven fires falls inside the local-WIP scanner outage,
+still dark as of 2026-09-20 at 12 calendar days / 23 missed windows
+[[repos/ivy]]. This is now a large enough, tight enough coincidence to be
+a real candidate explanation, not just a thin correlation: a dark scanner
+means "push X (N unpushed commits)" — the cheapest real ship on a quiet
+day, per the pattern below — cannot surface as a candidate at all, so a
+day that would have gone green on a two-minute local push instead runs
+the full grey-check-nudge-fail-safe ladder. Still not provable causally
+(the counterfactual "would he have pushed" is unknowable without the
+scanner), and not something a playbook/config tune can fix directly — the
+scanner is Mac-side infra, the same category as the D1-era dispatch-runner
+gap below. Worth flagging loudly to Tom rather than tuning around: 12 days
+is long past the point a launchd job "hasn't gotten to it yet" explains.
 
 ## Volume is bursty, not steady
 
@@ -57,22 +65,35 @@ This matters for candidate ranking: `c2-client-matrix` #1 has been the scout's
 "cheapest real contribution" pick repeatedly and has never been taken
 [[repos/c2-client-matrix]].
 
-## Nudge conversion is 0 for 3 — resolved count
+## Nudge conversion is 0 for 8 — but the metric can't score a blocker fix
 
-Three *grey-check* nudges have ever been sent, all push channel, all
-unconverted: 2026-08-24 (`c2-client-matrix #1`) [cite:2026-08-24],
-2026-09-12 (local-WIP scanner outage, sent 18:04:40 CEST, the first time a
-*blocker* rather than a candidate was the nudge subject — the
-blocker-outranks-cheapest-ship rule picked it correctly over the standing
-`tomgreen.ai` PR #59 candidate) [cite:2026-09-12], and 2026-09-13 (same
-blocker, same rule, sent 18:04 CEST, scanner still dark) [cite:2026-09-13].
-Every other day through 09-11 was green before the 18:00 check, so no
-grey-check nudge fired on those days. Retro reading (2026-09-13, before
-today's nudge landed): n=2 was still too thin to safely tune nudge timing,
-wording, or channel — n=3 doesn't change that verdict, but two of the three
-are now the same unconverted blocker on consecutive days, which is itself
-a finding for the next retro to weigh (is the nudge reaching Tom, or is the
-blocker just not urgent to him yet?).
+Eight *grey-check* nudges have ever been sent, all push channel, all
+recorded `nudge_converted: false`: 2026-08-24 (`c2-client-matrix #1`)
+[cite:2026-08-24]; six identical repeats of the local-WIP scanner outage,
+2026-09-12 through 2026-09-17 [cite:2026-09-12][cite:2026-09-13]
+[cite:2026-09-14][cite:2026-09-15][cite:2026-09-16][cite:2026-09-17]; and
+2026-09-19 (`talent-radar` PR #2's two open review findings, a fresh
+candidate) [cite:2026-09-19]. Every other day through 09-11, and 09-18,
+was green before the 18:00 check, so no grey-check nudge fired on those
+days.
+
+n=8 is enough to stop reading this as "too thin," but not to conclude
+"nudging doesn't work" — 6 of the 8 rows are the *same* blocker, and
+`nudge_converted` is scored against GitHub contributions, which a Mac
+`launchd` fix would never produce even if Tom acted on every single one.
+Retro 2026-09-20 read this as a measurement gap, not proof of an ignored
+nudge, and changed `playbook.md`'s failsafe bullet so a blocker nudge also
+counts as converted on the blocker's own recovery signal (a fresh
+`local-wip.json`, a resumed runner heartbeat) — future rows on this page
+should be readable against that corrected definition, not the old
+GitHub-only one this count used.
+
+Separately, six identical repeats of the same unconverted blocker nudge
+(09-12→17) before the check switched to a fresh candidate on 09-19 is
+itself the finding that motivated the other 2026-09-20 change: `check`
+now falls back to the next-best candidate after 3 identical unconverted
+blocker nudges rather than repeating verbatim — the blocker still leads
+`## Blockers` and the Top Pick write-up every day regardless.
 
 ## A second nudge type fired early, then fired false: attribution nudges
 
@@ -129,6 +150,16 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-20 (retro) — rewrote both stale sections against the full
+  window: failsafe fire rate updated from 2/22 to 7/28 (7 of the last 8
+  days), all inside the local-WIP scanner outage, now read as a real
+  candidate explanation rather than a thin correlation; nudge conversion
+  updated from n=3 to n=8 and reread as a measurement gap (6 of 8 rows
+  are the same blocker, scored against a metric that can't register an
+  infra fix) rather than proof nudging fails — both readings fed two
+  `playbook.md` adjustments this retro (blocker-nudge decay cap at 3
+  repeats; `nudge_converted` also true on a blocker's own recovery
+  signal). See `CHANGELOG.md` v9.
 - 2026-09-13 (retro) — corrected two stale claims: the never-fired-failsafe
   note (fired once, 2026-09-12, streak 20) and the nudge count (now 2,
   both unconverted, second one a blocker not a candidate). Both sections
