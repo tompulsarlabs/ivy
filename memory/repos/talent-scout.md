@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-scout
 type: repo
-updated: 2026-08-31
+updated: 2026-09-21
 ---
 
 # talent-scout
@@ -20,11 +20,25 @@ Authored `tompulsarlabs <tom@pulsarlabsai.com>` with a resolved GitHub
 the fix itself needed a connected-author commit to land is a small live
 instance of the same attribution-trap class documented on [[ops]].
 
+## Second and third signal: two draft PRs, 2026-09-21
+
+23 days after the first commit, real activity resumed: **PR #1** ("Scout:
+role-first research demo and shared Radar architecture"), opened
+12:50:15 CEST, draft, connected author (`tom@pulsarlabsai.com`, resolves
+`tompulsarlabs`) [cite:2026-09-21]; **PR #2** ("Integrate Scout research
+workspace into the full product"), opened 20:01:00 CEST, draft, same
+author, stacked on PR #1 by its own description [cite:2026-09-21]. Both
+private, non-fork. Same day, a companion repo `gstack-security-patches`
+had its first commit [[repos/gstack-security-patches]] — worth watching
+whether the two are related work or coincidental same-day activity.
+
 ## Reading
 
-One data point — not enough yet to say whether this repo is active or this
-was a one-off unblock. Watch for a second commit before treating it as a
-going concern.
+No longer a one-off: a real commit (08-29) followed 23 days later by two
+draft PRs building toward a described product integration is enough
+signal to call this a going concern, not just an unblock. Both PRs are
+draft and unmerged — watch for either landing before treating it as
+shipping cadence rather than in-progress build.
 
 ## Attribution: same-morning nudge, not yet converted
 
@@ -38,6 +52,9 @@ had not converted by end of day.
 
 ## Changelog
 
+- 2026-09-21 (failsafe) — recorded two new draft PRs (#1, #2) building
+  toward a described product integration, 23 days after the first commit;
+  upgraded the reading from "one data point" to "going concern."
 - 2026-08-31 (failsafe) — recorded the attribution nudge and its
   non-conversion by day's end.
 - 2026-08-30 (retro) — page created on first real signal (08-29 commit),

@@ -1,7 +1,7 @@
 ---
 subject: memory index
 type: index
-updated: 2026-09-13
+updated: 2026-09-21
 ---
 
 # Memory index
@@ -27,6 +27,7 @@ behavior lives in `playbook.md` and only the retro changes it.
 - [[repos/pixel-perfect-showcase-8458]] — `ivy-cockpit`; write-credential finding 09-08
 - [[repos/sybil-showcase]] / [[repos/safari-harness]] / [[repos/ivy-showcase]] — first signal 09-07/09-08
 - [[repos/opencode-job-search-starter]] — private; first signal 09-11
+- [[repos/gstack-security-patches]] — private; first signal 09-21, not yet on watchlist
 - [[models]] — lane routing evidence, one row per verified dispatch contract
 
 **No page yet** (no observed commit activity): aris-ote-benchmarking, Dex, interview-ace, ai-interview-coach, bd-lead-comp-dashboard — a page arrives on first real signal.

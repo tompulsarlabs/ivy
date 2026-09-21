@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-20
+updated: 2026-09-21
 ---
 
 # ivy
@@ -98,7 +98,14 @@ contribution [[patterns]]. Still dark at the 2026-09-20 failsafe — same
 recorded, `local-wip.json` unchanged. Today itself reverted to a
 failsafe-fired journal-only day (streak secured at 28), the ninth such
 day in the last ten (2026-09-12 through 2026-09-20, only 09-18 breaking
-the run on real work) [cite:2026-09-20].
+the run on real work) [cite:2026-09-20]. Still dark at the 2026-09-21
+failsafe — `generated_at` unchanged at 2026-09-08T15:45:06Z, now 26
+missed windows / 13 calendar days, eleven days past the bar. Today broke
+the grey streak a second time: real work went green before the 18:00
+check and kept landing after it (`gstack-security-patches` commit,
+`talent-scout` PR #1, `tomgreen.ai` PR #63 merged at 18:56 CEST) — only
+the second real-work day (with 09-18) in the eleven days since 09-12
+[cite:2026-09-21].
 
 ## Activity
 
@@ -126,6 +133,11 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-21 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 26 missed windows / 13 calendar days, still open; noted today broke
+  the grey streak on real work (`gstack-security-patches` commit,
+  `talent-scout` PR #1, `tomgreen.ai` PR #63), only the second such day
+  since 09-12.
 - 2026-09-20 (failsafe) — recorded today's outcome: local-WIP scanner
   unchanged from the same-morning retro read (23 missed windows / 12
   calendar days); failsafe fired, journal-only grey day, streak secured
