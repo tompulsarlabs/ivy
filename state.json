@@ -1,13 +1,13 @@
 {
-  "streak": 28,
-  "last_green": "2026-09-20",
+  "streak": 29,
+  "last_green": "2026-09-21",
   "memory_last_synthesized": "2026-09-20",
   "days": {
     "2026-09-21": {
-      "green_by": "tompulsarlabs/gstack-security-patches (1 commit, 09:29:45 CEST) + tompulsarlabs/talent-scout PR #1 (opened 14:50:15 CEST, draft)",
+      "green_by": "tompulsarlabs/gstack-security-patches (1 commit, 09:29:45 CEST) + tompulsarlabs/talent-scout PR #1 (opened 14:50:15 CEST, draft) + tompulsarlabs/tomgreen.ai PR #63 (merged 18:56:54 CEST, Ship neutral Scout research demo)",
       "method": "real-work",
-      "contributions": 2,
-      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date/created:2026-09-21 (18:00 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — gstack-security-patches commit af0f355 (tom@pulsarlabsai.com, resolves author.login tompulsarlabs, private, non-fork, default branch main) + talent-scout PR #1 opened (draft, private, non-fork), both connected-author; tompulsarlabs/browser-harness PR #1 merged 09:14:23 CEST correctly excluded — search_repositories fork:true confirms it is a fork of the upstream Browser Harness project (rule 3, forks never count regardless of author/merge state); ivy's own commits today all bot-authored (scout + runner-status x2), correctly excluded; no activity on any repo confirmed public and non-fork today, so this green rests on private-repo evidence per the playbook's cloud verification path (b)/(c) criteria, which do not exclude private repos beyond ignoring forks — see journal ## Verification; dispatch/queue/ empty, nothing claimed pending failsafe; so-far outcome at check time, failsafe re-verifies at 22:30",
+      "contributions": 3,
+      "signal_source": "github-mcp:search_commits + search_pull_requests org:tompulsarlabs author-date/created/merged:2026-09-21 (failsafe 22:30 CEST re-check; check.sh exit 2, no github.com egress in cloud sandbox) — 18:00 CEST check saw 2 connected-author events (gstack-security-patches commit af0f355 + talent-scout PR #1 opened); failsafe re-run of the same queries found one further connected-author event since: tomgreen.ai PR #63 opened 17:59:46 CEST and merged 18:56:54 CEST, commit e7a16e0 (tom@pulsarlabsai.com, resolves author.login tompulsarlabs, default branch, public, non-fork) — all three connected-author, non-fork; tompulsarlabs/browser-harness PR #1 recurs in search but stays correctly excluded — search_repositories fork:true confirms it is a fork of the upstream Browser Harness project (rule 3, forks never count regardless of author/merge state); ivy's own commits today all bot-authored (scout + runner-status x2 + check), correctly excluded; dispatch/queue/ empty, nothing claimed pending failsafe; all dispatch/done/ contracts already verified, dispatch/failed/ unchanged — see journal ## Verification",
       "cite": "journal/2026-09-21.md",
       "nudge_sent": false,
       "nudge_converted": null,
