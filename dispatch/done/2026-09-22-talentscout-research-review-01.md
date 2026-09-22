@@ -1,7 +1,7 @@
 ---
 id: 2026-09-22-talentscout-research-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-22T09:38:47+02:00
 repo: tompulsarlabs/talent-scout
 lane: workhorse
@@ -51,3 +51,13 @@ path is corroborated against the PR's own body/description (this session's
 GitHub access is repo-scoped to ivy; talent-scout's file list and diff are
 not directly readable — same constraint as prior talent-radar reviews,
 [[ops]]).
+
+outcome:
+  claimed_at: 2026-09-22T09:38:47+02:00
+  finished_at: 2026-09-22T09:40:19+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 1.4
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-22-talentscout-research-review-01.md
