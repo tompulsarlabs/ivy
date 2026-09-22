@@ -1,7 +1,8 @@
 ---
 id: 2026-09-22-talentscout-research-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-22T09:38:47+02:00
 repo: tompulsarlabs/talent-scout
 lane: workhorse
 pool: openai
