@@ -5,6 +5,7 @@ neither a worker sandbox nor an importer for Paperclip Runner native bundles.
 """
 import json
 import sqlite3
+from contextlib import closing
 from urllib.parse import urlsplit
 from urllib.request import Request, build_opener, ProxyHandler, HTTPRedirectHandler
 from urllib.error import HTTPError
@@ -66,13 +67,13 @@ class AttemptStore:
     """
     def __init__(self, path):
         self.path = str(path)
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.execute("CREATE TABLE IF NOT EXISTS attempts (request_id TEXT PRIMARY KEY, "
                        "binding TEXT NOT NULL, run_id TEXT UNIQUE, capture TEXT, assessment TEXT)")
 
     def reserve(self, request_id, binding):
         encoded = canonical_bytes(binding).decode()
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             db.execute("BEGIN IMMEDIATE")
             row = db.execute("SELECT binding FROM attempts WHERE request_id=?", (request_id,)).fetchone()
             if row:
@@ -83,14 +84,14 @@ class AttemptStore:
         return True
 
     def bind_run(self, request_id, run_id):
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             if db.execute("UPDATE attempts SET run_id=? WHERE request_id=? AND run_id IS NULL",
                           (run_id, request_id)).rowcount != 1:
                 raise EvidenceError("run_already_bound_or_not_reserved")
 
     def capture(self, request_id, capture):
         envelope = {"record": capture, "sha256": digest(capture)}
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             count = db.execute("UPDATE attempts SET capture=? WHERE request_id=? AND capture IS NULL",
                                (canonical_bytes(envelope).decode(), request_id)).rowcount
             if count != 1:
@@ -98,7 +99,7 @@ class AttemptStore:
         return envelope
 
     def assess(self, request_id, envelope):
-        with sqlite3.connect(self.path) as db:
+        with closing(sqlite3.connect(self.path)) as db, db:
             row = db.execute("SELECT binding,capture,assessment,run_id FROM attempts WHERE request_id=?",
                              (request_id,)).fetchone()
             if not row or not row[1]:

@@ -1,3 +1,62 @@
+# Current handoff — private Paperclip release prepared, hosting decision pending
+
+22 September 2026. Tom asked to ship Paperclip and evaluate the linked workflow
+article, then selected always-on private web hosting and asked its costs.
+Worktree `/tmp/ivy-paperclip-release` restores the same
+`codex/ivy-acceptance-scaffold` branch and stacked draft PR #20. PRs #18/#19/#20
+remain unmerged; no production dispatch, Cockpit, demo or main-checkout edits.
+
+The [release configuration](../../deploy/paperclip/README.md) proposes Railway,
+a private authenticated board, PostgreSQL and persistent storage. Estimated
+$20–40/month before tax; proposed $30 alert and $40 compute shutdown limit in a
+separate workspace. No hosting purchase, model API spending or migration has been
+approved. No billable resources were created. There is no deployed Paperclip URL.
+
+The official Paperclip 2026.916.1 image is pinned by its public OCI index digest.
+Source settings and registry availability were checked; this image has not been
+run. Existing integration controls apply to 2026.831.1 only. Authenticated login,
+restart persistence, a backup restore and current-version worker controls must
+pass before production use. The first release is a manual company/task board;
+Mac/remote autonomous worker authentication and dispatch are not implemented by
+this configuration. No subscription authentication was copied or read.
+
+The bridge now explicitly closes SQLite connections while preserving commit and
+rollback behavior. All **102 deterministic tests pass** on local Python 3.14 with
+resource warnings enabled and none observed. CI on the pushed head is recorded
+by GitHub; this note does not pre-award it a pass. Configuration JSON parses and
+its used fields were checked against the provider schema; no full schema
+validator or hosted runtime validation ran.
+
+The [workflow evaluation](workflow-evaluation-20260922.md) recommends GitHub for
+versioned source/evidence, Paperclip for coordination after validation, Ivy for
+acceptance policy, and optional Notion for human-authored context. One dispatcher
+must own each task class. A representative completed review was checked directly
+against GitHub: its report exists on pinned Ivy main, nine linked files exist
+and cited lines are in range at the recorded PR head, and CI succeeded on that
+head. The original review did not pin its source commit; historical correctness
+and semantic acceptance remain unverified. This was a read-only reassessment,
+not a new Paperclip campaign. See [evidence](evidence/contract-readiness-20260922/assessment.json).
+
+**Private evidence availability changed since the previous checkpoint:**
+`/tmp/ivy-runtime-proof-20260905` is absent on this host, and the September 10
+Paperclip directory contains only an install directory. Original campaign data
+and logs cannot currently be revalidated. Committed portable observations,
+including every recorded failure, remain intact. Neither store was recreated,
+replaced or reset. Earlier statements below describe their historical availability.
+
+The same ledger retains 16,500 seconds and appends a conservative 2,400-second
+single-primary preparation/closeout allocation: cumulative **18,900 seconds**.
+This is engineering bookkeeping, not an account limit. Historical Docker grants,
+eight attempts, 480 reserved seconds and failures are unchanged. No Docker launch,
+evaluated model, judge or paid-provider call occurred. **Milestone A is not passed.**
+
+Next: obtain the recurring hosting-spend decision, connect the chosen hosting
+account, provision the reviewed configuration, run its live release checks, and
+record the actual URL. Keep failed checks and source evidence. A real-agent
+integration still requires isolated authentication and explicit execution scope.
+
+## Previous checkpoint — retained
+
 # Current handoff — Paperclip isolated integration slice verified
 
 10 September 2026. Tom approved the proposed integration with “I'm aligned,
