@@ -7,6 +7,86 @@ not authorize model APIs, cloud execution, an extra paid network service, or
 production queue migration. Provision within the existing proposal once Tom
 connects the hosting account; do not ask him to reapprove individual build tests.
 
+## Product requirement: technical capability accessible to nontechnical people
+
+Tom's explicit direction, 22 September 2026: Ivy must enable nontechnical people
+to operate and ship with the impact of a capable technical operator. The supplied
+Alan Chang screenshot is a useful delivery-process heuristic. Its claims about
+velocity and its thirteen steps are third-party ideas, not measured Ivy results
+or instructions to implement every step literally.
+
+The user's experience starts with an outcome: who needs something, what should
+change, and what constraints matter. Ivy turns that into a concrete preview,
+acceptance checks and a delivery plan, carries out routine technical decisions,
+and returns a working result with evidence of what it does. The user must not
+need to understand agents, repositories, pull requests, harnesses, containers or
+hosting plans to complete the normal journey. Technical detail remains available
+when requested; unresolved risk, spend and consequential choices remain visible
+in plain language.
+
+**Clarity. Clear boundaries. Direction.** These apply to the product experience:
+what is being delivered, what it can do, and what happens next.
+
+| What the person sees | What Ivy handles underneath |
+| --- | --- |
+| Describe the result in ordinary language | Clarify material gaps; gather relevant context and requirements |
+| Review a working preview and expected cost | Design, implementation plan, scoped permissions and acceptance checks |
+| Make a meaningful business decision when needed | Routine repairs, technical review and appropriate specialist escalation |
+| Receive a usable result and confirmation of what works | Tests, deployment, health checks and retained release evidence |
+| See results and request a change | Outcome measurement, incident investigation and proposed improvements |
+
+A simple interface is insufficient if users still need to orchestrate the work.
+Ivy must own the path from intent through delivery and ongoing operation, within
+the scope the user delegates. Show a blocker as its effect and next action, with
+a recommendation; do not forward an infrastructure error as the user's problem.
+Ask for necessary connections once through the provider's secure flow. Never ask
+for secrets in chat or pretend an unavailable connection is working.
+
+Use review effort proportionate to the possible harm, reversibility and strength
+of the evidence. A track record may inform review but cannot by itself establish
+that a new change is safe. Relevant regulatory requirements require reliable
+sources and specialist review where needed. Incident learning should identify
+contributing causes and missing controls; naming a person or agent is not a
+substitute for establishing causality. Record proposed lessons, test them, and
+validate behavior changes before promoting them to operational agents.
+
+Paperclip is initially the internal coordination layer and operator console.
+Its technical board is not yet the intended nontechnical Ivy experience. The
+current deployment remains a foundation milestone; it does not demonstrate this
+product requirement. Do not broaden the ongoing release into a complete new
+interface before selecting and proving one end-to-end use case.
+
+### First journey and acceptance cases — proposed, not yet run
+
+Candidate journey: a small-business operator asks for an enquiry page that
+collects the information they need and routes enquiries to their chosen existing
+inbox. The person reviews the actual page and a test enquiry, sets a budget and
+approves publication. Success includes verified delivery of the enquiry and an
+observable business result; generating code alone does not complete the job.
+Use only fictional data during validation and publish only within authorized
+scope. Confirm this journey with intended users before treating it as validated.
+
+1. A nontechnical participant can move from the ordinary-language brief to a
+   usable result without explaining a stack or interpreting a technical error.
+2. The participant can state what will be published, who can access submitted
+   information, expected cost and how to request a change or stop the service.
+3. A routine recoverable failure is resolved inside scope without repeated
+   implementation approvals; a material business choice gets a concrete preview,
+   a recommendation and the consequence of each option.
+4. A missing permission, unreachable worker or failed check produces a clear
+   status and next action. It never produces a false completion claim.
+5. An independent check observes the page, submission and expected destination
+   before delivery is described as working. Public release and later health are
+   verified separately.
+6. A human correction or production issue produces a traceable proposed
+   improvement and an explicit regression case before operational behavior changes.
+
+Record completion, user interventions, time, cost, outcome evidence and recovery
+failures for the same journey. No user study, end-to-end product pass or model
+quality claim exists yet. After the Paperclip release, evaluate Jev against this
+journey and its integration/operating cost; the specific Jev product still needs
+identification.
+
 ## Architecture
 
 ```mermaid

@@ -1,3 +1,32 @@
+# Current direction — nontechnical users must be able to ship and operate
+
+22 September 2026. Tom supplied a product-factory workflow screenshot and made
+the requirement explicit: Ivy must put the technical delivery process underneath
+a product that lets nontechnical people achieve technical-operator impact.
+The [existing plan](hybrid-worker-plan.md#product-requirement-technical-capability-accessible-to-nontechnical-people)
+now defines the visible journey, internal responsibilities and six proposed
+acceptance cases. These are requirements, not evaluated behavior. Paperclip
+remains the internal coordination foundation; this does not authorize a production
+agent change or broad demo redesign. Evaluate Jev after this release against a
+representative journey once the product is identified.
+
+Hosting state correction: Tom has signed in and Railway reports a verified Trial
+account. Its account screen lists 0.5 GB RAM/service despite public trial docs
+listing 1 GB. The local app used 743.1 MiB in one sample. Tom authorized moving
+to Hobby; checkout is open at $5 upfront with payment details still needed at the
+last observation. Subscription completion is unverified. No service was deployed
+or budget control configured. Next: complete payment directly in Railway, set
+the authorized $30 alert/$40 compute cap and perform hosted release checks.
+
+This documentation/closeout stage appends a conservative 300 seconds to the
+existing engineering ledger: cumulative **22,800 seconds**. Historical runtime
+attempts and grants are unchanged. No new runtime tests, model calls or judge
+calls occurred. The last code head's 121 tests and Python 3.11/3.14 CI passed;
+this update changes documentation and bookkeeping only. Milestone A remains
+unpassed; the Mac connection and public deployment remain unverified.
+
+## Previous checkpoint — retained
+
 # Current handoff — board built and locally rehearsed; hosting login pending
 
 22 September 2026. Tom approved planning/building the always-on Paperclip board
