@@ -61,3 +61,21 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-22-talentscout-research-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy (commit 82c9319), non-empty, two findings
+  and five confirmations each tied to file:line. This session's GitHub
+  access is scoped to ivy alone, so get_file_contents/pull_request_read
+  against tompulsarlabs/talent-scout are denied — could not check every
+  referenced path against the PR head file-by-file. Corroborated instead
+  via the PR's own body (search_pull_requests repo:tompulsarlabs/talent-scout
+  is:pr 1): body claims "73 existing browser interaction checks" — the
+  report's P2 finding that the committed checker only supports 64 does not
+  contradict the body, it disputes it, which is exactly the contract's ask;
+  body states "workspace isolation" is documented and "no runtime backends
+  are merged in this change," matching the report's confirmations; body's
+  own caveat that "external link activation ... and recipient access remain
+  unverified" matches the report's P2 finding that guestAccessVerified is
+  false and no independent-recipient test exists. No contradiction found
+  between the report and the PR body.
