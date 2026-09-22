@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-21
+updated: 2026-09-22
 ---
 
 # ivy
@@ -105,7 +105,12 @@ the grey streak a second time: real work went green before the 18:00
 check and kept landing after it (`gstack-security-patches` commit,
 `talent-scout` PR #1, `tomgreen.ai` PR #63 merged at 18:56 CEST) — only
 the second real-work day (with 09-18) in the eleven days since 09-12
-[cite:2026-09-21].
+[cite:2026-09-21]. Still dark at the 2026-09-22 failsafe —
+`generated_at` unchanged at 2026-09-08T15:45:06Z, now 28 missed windows /
+14 calendar days, eleven days past the bar. Today extended the real-work
+run to a third day: `tomgreen.ai` PR #64 and #65 both merged before the
+18:00 check, the third real-work green day (with 09-18, 09-21) in the
+eleven days since 09-12 [cite:2026-09-22].
 
 ## Activity
 
@@ -133,6 +138,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-22 (failsafe) — recorded the local-WIP scanner outage's escalation
+  to 28 missed windows / 14 calendar days, still open; noted today made it
+  three real-work green days (09-18, 09-21, 09-22) in the eleven days
+  since 09-12, on `tomgreen.ai` PR #64 + #65 merged before the check.
 - 2026-09-21 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 26 missed windows / 13 calendar days, still open; noted today broke
   the grey streak on real work (`gstack-security-patches` commit,

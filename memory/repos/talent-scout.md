@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-scout
 type: repo
-updated: 2026-09-21
+updated: 2026-09-22
 ---
 
 # talent-scout
@@ -40,6 +40,28 @@ signal to call this a going concern, not just an unblock. Both PRs are
 draft and unmerged — watch for either landing before treating it as
 shipping cadence rather than in-progress build.
 
+## First review: PR #1, 2026-09-22
+
+`2026-09-22-talentscout-research-review-01` (workhorse/openai, 1.4 wall-min)
+reviewed PR #1's two commits directly (`52122c2..96f3f4c`) and found two P2s:
+the PR body's claimed "73 existing browser interaction checks" is not
+supported by the committed checker, which the review counted at 64
+(`demos/notion-search/qa.js:2,8,10`); and workspace isolation is documented
+as intended but not proven by the included evidence — the verification file
+records only page/database IDs and explicitly sets
+`guestAccessVerified: false` (`demos/notion-search/verification/2026-09-21-notion-access.json:187`)
+[cite:2026-09-22]. Five confirmations held: no runtime backend is merged,
+the generated preview makes no runtime network/model calls, the
+private-Notion-artifact scope is described accurately (with the same
+isolation caveat above), native Notion priorities stay separate from
+preview controls, and PR #2 needs no corrective change to PR #1's static
+demo [cite:2026-09-22]. Corroborated against the PR's own body
+(`search_pull_requests`): the body itself claims "73 ... interaction
+checks" (disputed by the review) and separately flags "external link
+activation ... and recipient access remain unverified" (matches the
+isolation finding) — no contradiction between the report and the body
+[cite:2026-09-22].
+
 ## Attribution: same-morning nudge, not yet converted
 
 2026-08-31 scout flagged `author_email_ok: false` on 2 dirty files and
@@ -52,6 +74,10 @@ had not converted by end of day.
 
 ## Changelog
 
+- 2026-09-22 (failsafe) — recorded PR #1's first review, verified done: two
+  P2 findings (overstated interaction-check count, unproven workspace
+  isolation) plus five sound confirmations, including that no runtime
+  backend is merged.
 - 2026-09-21 (failsafe) — recorded two new draft PRs (#1, #2) building
   toward a described product integration, 23 days after the first commit;
   upgraded the reading from "one data point" to "going concern."

@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-20
+updated: 2026-09-22
 ---
 
 # Models: lane × task-class outcomes
@@ -35,6 +35,7 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-10-tomgreenai-planetarymap-review-01 | review | workhorse / openai | yes | 2.0 | `tomgreen.ai` PR #54 planetary-map materials/motion/navigation review; all 9 cited files resolved via `filename:` search against the merged head [cite:2026-09-10] |
 | 2026-09-11-tomgreenai-radarsubtitle-review-01 | review | workhorse / openai | yes | 1.8 | `tomgreen.ai` PR #58 one-line subtitle-copy review; both cited paths resolved on main (PR itself still open/draft) [cite:2026-09-11] |
 | 2026-09-17-talentradar-execbeta-review-02 | review | workhorse / openai | yes | 20.1 | `talent-radar` PR #2 fresh review at its 09-16 head (33 intervening commits since the 09-05 review); two real findings (CSV-dedup silently drops distinct undated funding rows, stale test-count doc) plus five sound confirmations; verified via PR-body corroboration [cite:2026-09-17] |
+| 2026-09-22-talentscout-research-review-01 | review | workhorse / openai | yes | 1.4 | First `talent-scout` review, PR #1's two commits; two P2 findings (overstated interaction-check count, unproven workspace isolation) plus five sound confirmations including no-runtime-backend-merged; verified via PR-body corroboration [cite:2026-09-22] |
 
 ## Pool health
 
@@ -52,7 +53,7 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 
 ## Reading
 
-n=20 now (1 chore, 17 review, 2 build), all first-pass. `review` cleared
+n=21 now (1 chore, 18 review, 2 build), all first-pass. `review` cleared
 the Pareto bar on 2026-09-06 (five straight frontier/openai first-pass
 outcomes) — **retro decision, 2026-09-06:** `playbook.md`'s scout section
 now defaults new `review` contracts to `lane: workhorse`; `frontier` stays
@@ -100,6 +101,9 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-22 (failsafe) — recorded `talentscout-research-review-01`,
+  verified done via PR-body corroboration; n=20→21, `review` now 18. First
+  verified outcome on `talent-scout`.
 - 2026-09-20 (retro) — added the week's fleet-metrics row: only
   `talentradar-execbeta-review-02` (already recorded 09-17) verified this
   week, zero waste, zero expired; `dispatch/queue/` empty every day
