@@ -12,3 +12,7 @@ CI does not launch containers or silently claim to reproduce the private origina
 This inventory covers the new infrastructure behavior. It does not replace the
 operational-agent inventory on the separate housekeeping branch, nor establish
 model quality, semantic acceptance or buyer validation.
+
+[paperclip-hosting.json](paperclip-hosting.json) records the guarded board release
+and native Mac connection configuration cases. Local real-image auth/restart/restore
+evidence is separate from CI; hosted HTTPS and real-worker checks remain unverified.

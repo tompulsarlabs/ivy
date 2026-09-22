@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'ivy_acceptance/**'
+      - 'deploy/paperclip/**'
       - 'acceptance_fixtures/**'
       - 'examples/acceptance/**'
       - 'tests/**'
@@ -11,6 +12,7 @@ on:
     branches: [main]
     paths:
       - 'ivy_acceptance/**'
+      - 'deploy/paperclip/**'
       - 'acceptance_fixtures/**'
       - 'examples/acceptance/**'
       - 'tests/**'

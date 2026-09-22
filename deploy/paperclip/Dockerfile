@@ -2,6 +2,8 @@
 # Keep the upstream entrypoint (tini, volume ownership, unprivileged server).
 FROM ghcr.io/paperclipai/paperclip@sha256:a02ac35ac41df911af477422ea0e781cf41d2b2c600c66f0a5ac9d8c63f52c2c
 
+COPY preflight.py /opt/ivy/preflight.py
+
 ENV PAPERCLIP_DEPLOYMENT_MODE=authenticated \
     PAPERCLIP_DEPLOYMENT_EXPOSURE=public \
     PAPERCLIP_BIND=custom \
@@ -11,3 +13,5 @@ ENV PAPERCLIP_DEPLOYMENT_MODE=authenticated \
     PAPERCLIP_HOME=/paperclip \
     HEARTBEAT_SCHEDULER_ENABLED=false \
     DO_NOT_TRACK=1
+
+CMD ["python3", "/opt/ivy/preflight.py"]

@@ -1,3 +1,53 @@
+# Current handoff — board built and locally rehearsed; hosting login pending
+
+22 September 2026. Tom approved planning/building the always-on Paperclip board
+and Mac-first execution direction after the $30 alert/$40 compute cap proposal.
+Work remains on `codex/ivy-acceptance-scaffold`, restored at
+`/tmp/ivy-paperclip-release`, in the same stacked draft PR #20. No PR merged;
+main checkout, production dispatch, Cockpit and tomgreen.ai demo are unchanged.
+
+Built a pinned 2026.916.1 wrapper with startup checks for authenticated mode,
+canonical HTTPS origin, persistent storage, app secrets and inactive scheduler.
+Live debugging fixed missing CLI bootstrap config and differing auth/CSRF origin
+variables. All failures remain in
+[evidence](evidence/paperclip-board-build-20260922.json); private fixture accounts,
+secrets, logs and backups are in `/tmp/ivy-paperclip-release-proof-20260922`.
+This is a separate board rehearsal, not a replacement historical runtime store.
+
+The final real image passed internal HTTP owner signup/bootstrap, anonymous and
+unrelated-user refusal, signup lock, task and owner-session persistence after
+restart, and database/app-data restoration into separate volumes. Agent run
+inventory was empty. All nine rehearsal containers are stopped; their containers,
+images and volumes are retained. Only `colima-ivy-acceptance` was used and its VM
+was returned to stopped. The host loopback HTTP forward failed; public TLS and
+interactive browser login have not been tested. Attachment round-trip and
+scheduled provider backup restoration remain unverified.
+
+All **121 deterministic tests pass** locally. These are deployment/software
+controls, not model-quality evaluation. The native SSH environment configuration
+renderer is built and tested; **the Mac is not connected**. The
+[hybrid plan](hybrid-worker-plan.md) names private networking, dedicated account,
+scoped SSH identity, isolated model authentication and interrupted-run evidence
+as remaining work. No Mac account, SSH service or tunnel was installed. No
+subscription authentication was read, copied or mounted.
+
+Railway is open at its login screen. Tom must sign in to the intended account;
+no billable service exists yet. Next, establish the dedicated workspace's $30
+alert/$40 compute cap, provision the board/database within that allowance, and
+run the [hosted checks](../../deploy/paperclip/README.md). Hosting approval does
+not authorize model APIs, cloud workers, paid networking or production migration.
+No production URL is available. Keep signup locked after Tom claims ownership.
+
+The original 18,900-second cumulative debit is retained and this single-primary
+build/rehearsal/closeout adds a conservative 3,600 seconds: **22,500 seconds**.
+This is engineering bookkeeping, not the ChatGPT subscription or hosting limit.
+Historical timestamps, eight attempts, 480 reserved seconds, failures and exhausted
+runtime grants are unchanged. No evaluated model or judge calls occurred.
+**Milestone A is not passed.** Its hard lifecycle and real-agent/neutral-case
+assessment gaps remain; this board rehearsal does not close them.
+
+## Previous checkpoint — retained
+
 # Current handoff — private Paperclip release prepared, hosting decision pending
 
 22 September 2026. Tom asked to ship Paperclip and evaluate the linked workflow
