@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "id": "ivy-harness-settings-20260923",
+  "scope": "Config-to-command resolution, pre-claim refusal, requested provenance, and fixed-program integration. No operational model-quality claim.",
+  "run_command": "python3 -B -W error::ResourceWarning scripts/harness-settings-test.py",
+  "model_quality_claim": false,
+  "cases": [
+    {
+      "id": "HS01",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_config_to_claude_commands_preserves_distinct_lane_efforts",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS02",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_codex_effort_is_a_single_native_config_override",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS03",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_unset_effort_remains_unset",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS04",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_unknown_model_harness_and_effort_are_rejected",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS05",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_haiku_has_no_effort_and_rejects_explicit_effort",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS06",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_permissions_are_not_broadened_by_effort",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS07",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_explicit_claude_effort_overrides_inherited_effort_only",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS08",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_route_preview_does_not_execute_or_touch_runner_workspace",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS09",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_invalid_preview_exits_nonzero_without_fallback",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS10",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_failed_preview_never_publishes_a_runner_error",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS11",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_empty_and_duplicate_effort_cannot_silently_use_defaults",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS12",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_version_capture_is_bounded_and_only_accepts_version_output",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS13",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_version_failure_or_timeout_is_unknown",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS14",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_provenance_hashes_inputs_but_never_claims_effective_settings",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS15",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_invalid_route_is_skipped_before_claim_or_project_clone",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS16",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_fixed_worker_receives_effort_and_completion_retains_unknowns",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    }
+  ],
+  "live_integration": {
+    "cli_help": "Claude Code 2.1.277 and Codex CLI 0.155.1 inspected",
+    "route_preview": "five active lane/pool entries resolve locally; no subprocess or network",
+    "fixed_worker": "executed temporary local program; confirmed explicit effort argv and child environment; report remains pending independent verification",
+    "real_model_execution": "not_run",
+    "effective_model_and_effort": "unknown",
+    "production_rollout": "not_run"
+  }
+}

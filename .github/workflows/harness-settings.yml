@@ -1,0 +1,31 @@
+name: Harness settings controls
+on:
+  pull_request:
+    paths:
+      - 'scripts/dispatch-runner*'
+      - 'scripts/harness-settings-test.py'
+      - 'config.yml'
+      - '.github/workflows/harness-settings.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/dispatch-runner*'
+      - 'scripts/harness-settings-test.py'
+      - 'config.yml'
+      - '.github/workflows/harness-settings.yml'
+permissions:
+  contents: read
+jobs:
+  settings:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -B -W error::ResourceWarning scripts/harness-settings-test.py
+      - run: python -B scripts/dispatch-runner-test.py
+      - run: python -B scripts/dispatch-runner.py --preview-routes
