@@ -20,6 +20,11 @@
       "file": "memory/repos/ivy.md",
       "count": "\\n- \\d{4}-\\d{2}-\\d{2}",
       "below_heading": "## Changelog"
+    },
+    "confirmed": {
+      "file": "memory/repos/ivy.md",
+      "count": "cite:2026-09-23",
+      "above_heading": "## Changelog"
     }
   },
   "checks": [
@@ -37,6 +42,14 @@
       "assert": {
         "path": "_measures.log_entries.delta",
         "le": 0
+      }
+    },
+    {
+      "id": "confirmed_today",
+      "desc": "the page cites today's confirmation of the outage",
+      "assert": {
+        "path": "_measures.confirmed.after",
+        "ge": 1
       }
     },
     {
