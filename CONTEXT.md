@@ -106,6 +106,13 @@ unknown, never clean.
 The two kinds of playbook section. The retro edits tunables; an immutable
 changes only by a human commit.
 
+**Routine eval**:
+`evals/routines/`: real days replayed against a routine's prompt and the
+steering files, each with one change (a stale scan, a failed contract), and
+graded on the decisions the routine reports. The regression check for a
+change to how a routine decides.
+_Avoid_: test suite, benchmark
+
 ### Memory
 
 **Journal**:

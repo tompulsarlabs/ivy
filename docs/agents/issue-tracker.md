@@ -12,8 +12,9 @@ under `.scratch/<effort>/`, per the local-markdown convention.
   §2: `## Task`, `## Definition of done`, `## Verification (cloud-checkable)`.
 - `created_by: tom` for anything published from an interactive session;
   `scout` is reserved for the routine.
-- Routing: `review` → `frontier`, `pool` pinned to the family that did not
-  write the code; `build` → `frontier` (design-heavy) or `workhorse`
+- Routing: `review` → `workhorse`, `pool` pinned to the family that did not
+  write the code (the playbook's Scout section is authoritative, including
+  when to pin `frontier`); `build` → `frontier` (design-heavy) or `workhorse`
   (mechanical); `chore` → `workhorse`. `budget.wall_minutes` 20 to 45.
   `expires` 48 hours out unless the task says otherwise.
 - Dependencies: `blocked_by: [id, id]`, an inline list. The runner skips a
