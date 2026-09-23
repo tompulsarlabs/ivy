@@ -161,12 +161,14 @@ and which query forms reach other repos.
 starts with `ALERT:` so it never reads as a nudge.
 
 **`state.json` rows stay terse.** Each value is a short label, count, or
-flag: `signal_source` names the lookup (`github-mcp:search_commits`),
-`green_by` names what counted, and `cite` points at the journal, where the
-narrative lives under `## Verification`. The day's row carries `green_by`,
-`method`, `contributions`, `signal_source`, `cite`, `nudge_sent`,
-`nudge_sent_at`, `nudge_channel`, `nudge_candidate`, `nudge_converted`, and
-`failsafe_fired`.
+flag, such as `"green_by": "tomgreen.ai: 3 commits"`,
+`"signal_source": "github-mcp:search_commits"`, and
+`"cite": "journal/2026-09-23.md"`. The narrative (which lookups ran, commit
+titles, what was excluded) goes in the journal under `## Verification`. Many
+existing rows are paragraphs; write new ones in the short form. The day's row
+carries `green_by`, `method`, `contributions`, `signal_source`, `cite`,
+`nudge_sent`, `nudge_sent_at`, `nudge_channel`, `nudge_candidate`,
+`nudge_converted`, and `failsafe_fired`.
 
 **The journal holds what the run learned.** A repo gone quiet, a new access
 limit, a candidate that keeps resurfacing: write it in today's entry and the
