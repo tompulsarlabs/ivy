@@ -181,7 +181,8 @@ six hours in the window. The cloud's only view of the Mac runner.
 The harness session executing one contract in a fresh clone of the target
 repository. Untrusted: it pushes branches and opens draft PRs, never writes
 to a default branch.
-_Avoid_: agent, sub-agent
+_Avoid_: agent, sub-agent (in the skills, a sub-agent is a helper inside one
+session, never a worker)
 
 **Claimed done** / **Verified done**:
 Claimed done: the runner moved the contract to `dispatch/done/` with an

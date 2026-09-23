@@ -258,7 +258,8 @@ def build_prompt(cid, repo, ctype, body):
                 "claims that hold. The review is read-only: leave the checkout, its branches, and "
                 "the pull request as they are.\n"
                 "Skills: if a `code-review` skill is installed in this harness, drive the review "
-                "with it (the Task above is the spec axis); otherwise review without it.\n"
+                "with it (the Task above is the spec axis) and give its sub-agents this bar in place "
+                "of a word limit; otherwise review without it.\n"
                 "Output: print the complete findings as markdown between two lines containing "
                 f"exactly {MARK_BEGIN} and {MARK_END}, and nothing after {MARK_END}.")
     else:
@@ -269,8 +270,9 @@ def build_prompt(cid, repo, ctype, body):
                 "push that branch, and open a draft pull request. The default branch is Tom's: "
                 "never push to it.\n"
                 "Skills: if `tdd` and `code-review` skills are installed in this harness, build "
-                "test-first at the seams the Task names and review the diff against the Task "
-                "before opening the PR; otherwise proceed without them.\n"
+                "test-first at the seams the Task names (if it names none, choose them yourself and "
+                "list them in your summary) and review the diff against the Task before opening the "
+                "PR; otherwise proceed without them.\n"
                 "Output: when finished, print a short summary of what you did and what you "
                 "verified (the tests you ran and their result, anything skipped and why) between "
                 f"two lines containing exactly {MARK_BEGIN} and {MARK_END}.")

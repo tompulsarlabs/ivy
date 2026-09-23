@@ -27,6 +27,9 @@ under `.scratch/<effort>/`, per the local-markdown convention.
   bot-authored as `dispatch: open <id>`.
 - A build contract's Task says which branch to start from and states that
   the worker opens a **draft** PR and never pushes to the default branch.
+  When it changes behaviour, the Task also names its seams, the public
+  interfaces the tests go through: those are the pre-agreed seams `/tdd`
+  asks for, since the worker has nobody to confirm them with.
   Its Verification names a check the cloud can run with the GitHub MCP tools
   (a draft PR by `tompulsarlabs` referencing the contract id, a file present
   on `main` of ivy).

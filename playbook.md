@@ -344,7 +344,8 @@ the trailing weeks, cheaper than re-mining raw history. Then read 7 to 30
 days of `state.json` for the numbers and answer: how often did the failsafe
 fire? Did nudges convert to real activity within four hours? Which repos
 produced shipped work? Every commit the retro makes is bot-authored and pushed
-to `main` before the run ends.
+to `main` before the run ends. The run is unattended: where a skill would stop
+to ask the user, decide, and record the decision in `CHANGELOG.md`.
 
 **Tune behaviour.** Make at most two adjustments (nudge time, wording,
 ranking, excludes, lane policy) by editing the Tunable sections of this file
@@ -381,9 +382,11 @@ Run `scripts/memory-lint.sh`, then commit as `memory: retro — <what changed>`.
 the Skill tool with `writing-for-agents` and apply its tests: delete no-ops
 (instructions the model follows by default), collapse restatements into a
 leading word, state targets positively where a prohibition is not a hard
-guardrail, and push reference that only some runs need behind a pointer. A
-deletion that provably changes no behaviour does not count toward the two
-adjustments; a wording change that does, does. After a lane's model changes
+guardrail, and push reference that only some runs need behind a pointer. When
+a word is too weak to change behaviour, delete it or state the target plainly
+instead of reaching for a stronger one: intensity words over-apply on current
+models. A deletion that provably changes no behaviour does not count toward
+the two adjustments; a wording change that does, does. After a lane's model changes
 or Tom moves a routine to a new model, also audit these files and the worker
 prompt in `scripts/dispatch-runner.py` against that model with the
 `claude-api` skill's `prompt-audit`, since text tuned for one model
