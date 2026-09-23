@@ -247,8 +247,8 @@ publishes as a chain whose later contracts carry `blocked_by`. A review
 contract defaults to `lane: workhorse` and pins `pool` to the family that did
 not write the code (the head branch and commit trailers usually say which);
 pin `frontier` when the change itself carries the risk, such as credentials,
-auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as `dispatch:
-open <ids>`. The runner executes; the scout only queues.
+auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as
+`dispatch: open <ids>`. The runner executes; the scout only queues.
 
 **Write the journal** as `journal/<today>.md` and commit it as
 `scout: <date> — <n> candidates, top: <one-liner>`.
@@ -296,8 +296,8 @@ Tom-authored, push, and verify per the Immutable rule. If the commit does not
 verify, send the alert push: `ALERT:` and the misconfig checklist. Either
 way, write today's final row in `state.json` in the short form (*`state.json`
 rows stay terse*): `signal_source` is the name of one lookup, never the list
-of queries or what they returned, which go under the journal's `##
-Verification`. Then bump or reset `streak` and `last_green`.
+of queries or what they returned, which go under the journal's
+`## Verification`. Then bump or reset `streak` and `last_green`.
 `nudge_converted` is true when real activity landed on the nudged candidate
 within four hours of the nudge; for a blocker nudge it is also true when the
 blocker's own recovery signal arrives (a fresh `local-wip.json`, a resumed
@@ -397,9 +397,9 @@ guardrail, and push reference that only some runs need behind a pointer. When
 a word is too weak to change behaviour, delete it or state the target plainly
 instead of reaching for a stronger one: intensity words over-apply on current
 models. A deletion that provably changes no behaviour does not count toward
-the two adjustments; a wording change that does, does. After a lane's model changes
-or Tom moves a routine to a new model, also audit these files and the worker
-prompt in `scripts/dispatch-runner.py` against that model with the
+the two adjustments; a wording change that does, does. After a lane's model
+changes or Tom moves a routine to a new model, also audit these files and the
+worker prompt in `scripts/dispatch-runner.py` against that model with the
 `claude-api` skill's `prompt-audit`, since text tuned for one model
 generation turns into dead weight on the next. The routine eval
 (`evals/README.md`) is the regression check for any such change. Keep section

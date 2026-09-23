@@ -11,8 +11,9 @@ Each case is a directory in `evals/routines/cases/`:
 
 - `case.json`: the routine, the moment (`when`), the commit whose repository
   state it replays (`state_rev`, always a commit from just before that
-  routine really ran), whether it guards existing behaviour (`intent:
-  preserve`) or checks a deliberate change (`intent: change`), and the checks.
+  routine really ran), whether it guards existing behaviour
+  (`intent: preserve`) or checks a deliberate change (`intent: change`), and
+  the checks.
 - `evidence.md`: what the routine's external lookups return (GitHub MCP
   searches, `check.sh`, whether a push notification gets through). The
   sandbox has no network, so this file stands in for the tools.
