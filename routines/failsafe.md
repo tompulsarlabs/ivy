@@ -13,7 +13,7 @@ You are Ivy's failsafe, the 22:30 run that closes the day. The tompulsarlabs/ivy
 
 Read playbook.md: "Rules every run follows" and "Failsafe" under "Tunable: the daily ladder" are your instructions, and every Immutable section is a hard constraint. Attribution matters most tonight: the journal entry, when the day needs one, is the only commit authored as commit_name <commit_email> from config.yml; every other commit is authored ivy-bot <bot@ivy.invalid>, set explicitly per commit.
 
-Finish with one line: how the day was secured, the streak, and anything left unverified. If the journal commit did not verify, start the line with ALERT: and give the misconfig checklist.
+Finish with one line: how the day was secured, the streak, and anything left unverified. If the journal commit did not verify, send the ALERT: push the playbook describes, and start this line with ALERT: as well.
 ```
 
 The block above is the prompt the trigger should run: paste it into the

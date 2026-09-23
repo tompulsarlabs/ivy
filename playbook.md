@@ -292,9 +292,12 @@ synthesize memory. A failure in a later step never costs an earlier one.
 grey, finish today's journal as a genuine engineering note (the day's
 candidates, what happened, streak state, tomorrow's top candidate, and how
 the day was verified under `## Verification`), commit that file alone,
-Tom-authored, push, and verify per the Immutable rule. Either way, write
-today's final row in `state.json` in the short form (*`state.json` rows stay
-terse*) and bump or reset `streak` and `last_green`. `nudge_converted` is true when real activity landed on the
+Tom-authored, push, and verify per the Immutable rule. If the commit does not
+verify, send the alert push: `ALERT:` and the misconfig checklist. Either way,
+write today's final row in `state.json` in the short form (*`state.json` rows
+stay terse*): `signal_source` is the name of one lookup, never the list of
+queries or what they returned, which go under the journal's
+`## Verification`. Then bump or reset `streak` and `last_green`. `nudge_converted` is true when real activity landed on the
 nudged candidate within four hours of the nudge; for a blocker nudge it is
 also true when the blocker's own recovery signal arrives (a fresh
 `local-wip.json`, a resumed heartbeat), because an infrastructure fix rarely
