@@ -202,13 +202,17 @@ def grade(case, answer):
 
 def measure(sandbox, spec):
     """Occurrences of spec['count'] (a regex) in a file, optionally only above
-    spec['above_heading']. None when the file is missing."""
+    spec['above_heading'] or only below spec['below_heading'] (0 when that
+    heading is absent). None when the file is missing."""
     f = Path(sandbox) / spec["file"]
     if not f.is_file():
         return None
     text = f.read_text()
     if spec.get("above_heading") and spec["above_heading"] in text:
         text = text[: text.index(spec["above_heading"])]
+    if spec.get("below_heading"):
+        head = spec["below_heading"]
+        text = text[text.index(head) + len(head):] if head in text else ""
     return len(re.findall(spec["count"], text, re.I))
 
 def extract_json(text):

@@ -75,6 +75,10 @@ with tempfile.TemporaryDirectory() as tmp:
     check("measure counts matches above the heading only", evalr.measure(tmp, spec) == 2)
     check("measure counts the whole file without a heading",
           evalr.measure(tmp, {"file": "memory/p.md", "count": "still dark"}) == 3)
+    check("measure counts matches below the heading only",
+          evalr.measure(tmp, {"file": "memory/p.md", "count": "still dark", "below_heading": "## Changelog"}) == 1)
+    check("measure below a missing heading is 0",
+          evalr.measure(tmp, {"file": "memory/p.md", "count": "still dark", "below_heading": "## Nope"}) == 0)
     check("measure of a missing file is None", evalr.measure(tmp, {"file": "nope.md", "count": "x"}) is None)
 
 check("extract_json reads a bare object", evalr.extract_json('{"a": 1}') == {"a": 1})
