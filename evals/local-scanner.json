@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "id": "ivy-local-scanner-20260923",
+  "scope": "Local discovery, freshness, publication and launchd recovery. Deterministic software controls only.",
+  "run_command": "python3 -B -W error::ResourceWarning scripts/local-wip-test.py",
+  "model_quality_claim": false,
+  "cases": [
+    {
+      "id": "WIP01",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_external_linked_worktree_and_dirty_work_are_discovered",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP02",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_nested_repositories_and_git_files_are_discovered_once",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP03",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_deleted_registered_worktree_is_skipped_without_pruning",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP04",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_missing_root_refuses_fresh_empty_snapshot",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP05",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_unborn_repository_is_not_a_git_error",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP06",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_orphan_branch_does_not_count_other_branches",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP07",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_unchecked_out_local_branch_remains_visible",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP08",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_counts_current_worktree_head_including_detached_commits",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP09",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_git_failure_is_not_zero_dirty_files",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP10",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_github_remote_is_sanitized_and_identity_is_boolean",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP11",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_unchanged_snapshot_refreshes_at_six_hours",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP12",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_changed_snapshot_publishes_before_heartbeat",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP13",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_missing_or_malformed_snapshot_refreshes",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP14",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_newer_remote_snapshot_cannot_be_overwritten",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP15",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_invalid_new_timestamp_is_refused",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP16",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_publication_leaves_staged_dirty_and_unpushed_work_untouched",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP17",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_repeated_publication_inside_heartbeat_creates_no_commit",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP18",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_branch_race_preserves_remote_change_and_retries_snapshot",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP19",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_failed_push_is_reported_and_future_run_can_publish",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP20",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_preview_has_no_publication_or_lock",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP21",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_concurrent_scan_cannot_publish",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP22",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_old_lock_file_does_not_block_a_new_scan",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP23",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_remote_symlink_cannot_write_outside_clone",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    }
+  ],
+  "live_integration": {
+    "read_only_mac_scan": "20 checkouts, including 3 Ivy checkouts; no absolute paths in payload; 2026-09-23",
+    "launchd_install": "not_run; installer correctly refuses development branch",
+    "github_publication": "not_run; bare local Git remotes exercise publication",
+    "model_execution": "not_run"
+  }
+}
