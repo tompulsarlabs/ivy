@@ -1,8 +1,9 @@
 # Ivy Playbook
 
 Operating instructions for Ivy's routines. The weekly retro may edit the
-**Tunable** sections (commit as `learn:`, tag a new version). The **Immutable**
-sections may only be changed by a human commit.
+**Tunable** sections (commit as `learn:`, record the version in
+`CHANGELOG.md`). The **Immutable** sections may only be changed by a human
+commit.
 
 ---
 
@@ -240,15 +241,14 @@ already created today first (by `created` date, across `dispatch/queue/`,
 `done/`, and `failed/`, whoever wrote them): the day allows
 `dispatch.daily_cap` in all, and `scripts/dispatch-lint.sh` refuses a commit
 past it. Write them in the format of `dispatch/DESIGN.md` §2 and the
-vocabulary of `CONTEXT.md`. A contract is one
-vertical slice, complete and verifiable on its own and sized for one worker
-session; work that needs more publishes as a chain whose later contracts
-carry `blocked_by`. A review contract defaults to `lane: workhorse` and pins
-`pool` to the family that did not write the code (the head branch and commit
-trailers usually say which); pin `frontier` when the change itself carries
-the risk, such as credentials, auth, or data loss. Run
-`scripts/dispatch-lint.sh` and commit as `dispatch: open <ids>`. The runner
-executes; the scout only queues.
+vocabulary of `CONTEXT.md`. A contract is one vertical slice, complete and
+verifiable on its own and sized for one worker session; work that needs more
+publishes as a chain whose later contracts carry `blocked_by`. A review
+contract defaults to `lane: workhorse` and pins `pool` to the family that did
+not write the code (the head branch and commit trailers usually say which);
+pin `frontier` when the change itself carries the risk, such as credentials,
+auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as `dispatch:
+open <ids>`. The runner executes; the scout only queues.
 
 **Write the journal** as `journal/<today>.md` and commit it as
 `scout: <date> — <n> candidates, top: <one-liner>`.
@@ -293,15 +293,16 @@ grey, finish today's journal as a genuine engineering note (the day's
 candidates, what happened, streak state, tomorrow's top candidate, and how
 the day was verified under `## Verification`), commit that file alone,
 Tom-authored, push, and verify per the Immutable rule. If the commit does not
-verify, send the alert push: `ALERT:` and the misconfig checklist. Either way,
-write today's final row in `state.json` in the short form (*`state.json` rows
-stay terse*): `signal_source` is the name of one lookup, never the list of
-queries or what they returned, which go under the journal's
-`## Verification`. Then bump or reset `streak` and `last_green`. `nudge_converted` is true when real activity landed on the
-nudged candidate within four hours of the nudge; for a blocker nudge it is
-also true when the blocker's own recovery signal arrives (a fresh
-`local-wip.json`, a resumed heartbeat), because an infrastructure fix rarely
-produces a commit of its own.
+verify, send the alert push: `ALERT:` and the misconfig checklist. Either
+way, write today's final row in `state.json` in the short form (*`state.json`
+rows stay terse*): `signal_source` is the name of one lookup, never the list
+of queries or what they returned, which go under the journal's `##
+Verification`. Then bump or reset `streak` and `last_green`.
+`nudge_converted` is true when real activity landed on the nudged candidate
+within four hours of the nudge; for a blocker nudge it is also true when the
+blocker's own recovery signal arrives (a fresh `local-wip.json`, a resumed
+heartbeat), because an infrastructure fix rarely produces a commit of its
+own.
 
 **2. Verify contracts.** For each contract in `dispatch/done/` without a
 `verified:` stamp, run its Verification section with cloud-checkable means
