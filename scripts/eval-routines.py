@@ -325,6 +325,8 @@ def run_one(case, variant, rep, workdir):
             "--output-format", "stream-json", "--verbose", "--no-session-persistence",
             "--tools", EDIT_TOOLS if edits else TOOLS, "--strict-mcp-config",
             "--max-budget-usd", str(variant["budget_usd"])]
+    if edits:   # -p denies file writes unless edits are accepted up front
+        argv += ["--permission-mode", "acceptEdits"]
     if variant.get("effort"):
         argv += ["--effort", variant["effort"]]
     row = {"case": case["id"], "routine": case["routine"], "intent": case.get("intent", "preserve"),
@@ -360,7 +362,12 @@ def run_one(case, variant, rep, workdir):
         row["error"] = stream[-600:]
         return row
     row.update(cost_usd=result.get("total_cost_usd"), turns=result.get("num_turns"),
-               served=sorted((result.get("modelUsage") or {}).keys()))
+               served=sorted((result.get("modelUsage") or {}).keys()),
+               denied=len(result.get("permission_denials") or []))
+    if edits and row["denied"]:
+        # the files the checks measure never changed: plumbing, not a model result
+        row.update(status="denied", error=f"{row['denied']} permission denials")
+        return row
     if result.get("is_error"):
         row.update(status="error", error=str(result.get("result"))[:600])
         return row
