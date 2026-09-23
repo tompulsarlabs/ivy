@@ -1,3 +1,29 @@
+# Current assessment — model routing and harness, 23 September 2026
+
+Tom requested reassessment for Opus 5.5, GPT-6 Sol and GPT-6 Luna, independently
+of the coordinator choice. [The review](model-routing-review-20260923.md) records
+source checks, proposed routing, a staged patch and evaluation cases. Confirmed
+without worker execution: the current launcher's Claude frontier/workhorse
+commands are identical because configured effort is ignored. The runner clone
+and main checkout contain the same launcher bytes; neither was modified.
+
+Recommendation: fix effective configuration/capture first, register disabled
+candidate profiles, then compare bounded tasks before promoting one class.
+Sol implementation, Luna bounded support and Opus difficult design/review are
+hypotheses, not evaluated wins. Keep task acceptance and routing independent of
+Paperclip; do not introduce a second dispatcher or subscription-to-API fallback.
+No model/authentication probe, judge, runtime worker or production edit occurred.
+CLI help/version and one pure-function launcher check were run. Prior test
+results are not rerun evidence for a new model. Milestone A remains unpassed.
+
+The existing ledger retains 22,800 seconds and adds a conservative 900-second
+single-primary assessment/documentation/closeout allocation: **23,700 seconds**.
+Historical runtime grants, attempts, original timestamps and failures remain
+unchanged. Hosting checkout/payment and Mac connection remain at the last
+recorded unverified state; this assessment did not operate Railway.
+
+## Previous checkpoint — retained
+
 # Current direction — nontechnical users must be able to ship and operate
 
 22 September 2026. Tom supplied a product-factory workflow screenshot and made
