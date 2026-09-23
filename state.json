@@ -3,6 +3,14 @@
   "last_green": "2026-09-22",
   "memory_last_synthesized": "2026-09-22",
   "days": {
+    "2026-09-23": {
+      "nudge_sent": true,
+      "nudge_sent_at": "2026-09-23T18:00:00+02:00",
+      "nudge_channel": "push",
+      "nudge_candidate": "tomgreen.ai PR #34 — merge outright (Calendly capitalization fix, 17 days stale, ready as-is)",
+      "nudge_converted": null,
+      "check_signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-23 + search_pull_requests(created):2026-09-23 + search_issues(created):2026-09-23 (18:00 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — 9 commits on ivy today, all ivy-bot-authored (scout + dispatch open/claim/done/runner-status x2 pairs), correctly excluded; zero connected-author commits org-wide today; zero PRs opened today; zero issues opened today; dispatch/queue/ empty, two review contracts (2026-09-23-talentradar-execbeta-review-03, 2026-09-23-talentscout-workspace-review-01) already state: done awaiting failsafe verification — see journal ## Check"
+    },
     "2026-09-22": {
       "green_by": "tompulsarlabs/tomgreen.ai PR #64 (merged 09:25:39 UTC, Differentiate demo colours and refine Audibene copy) + PR #65 (merged 10:08:14 UTC, Use green for Ivy and blue for Scout)",
       "method": "real-work",
