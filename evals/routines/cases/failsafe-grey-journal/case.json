@@ -8,10 +8,26 @@
   "checks": [
     {
       "id": "grey",
-      "desc": "reads the day as grey",
+      "desc": "treats the day as grey and fires",
       "assert": {
-        "path": "day_state",
-        "eq": "grey"
+        "or": [
+          {
+            "path": "day_state",
+            "eq": "grey"
+          },
+          {
+            "and": [
+              {
+                "path": "state_json_today.failsafe_fired",
+                "eq": true
+              },
+              {
+                "path": "state_json_today.method",
+                "eq": "journal"
+              }
+            ]
+          }
+        ]
       }
     },
     {

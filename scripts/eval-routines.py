@@ -361,12 +361,13 @@ def run_one(case, variant, rep, workdir):
         row.setdefault("status", "error")
         row["error"] = stream[-600:]
         return row
+    denials = result.get("permission_denials") or []
     row.update(cost_usd=result.get("total_cost_usd"), turns=result.get("num_turns"),
-               served=sorted((result.get("modelUsage") or {}).keys()),
-               denied=len(result.get("permission_denials") or []))
-    if edits and row["denied"]:
+               served=sorted((result.get("modelUsage") or {}).keys()), denied=len(denials))
+    writes = [d for d in denials if d.get("tool_name") in ("Edit", "Write", "MultiEdit")]
+    if edits and writes:
         # the files the checks measure never changed: plumbing, not a model result
-        row.update(status="denied", error=f"{row['denied']} permission denials")
+        row.update(status="denied", error=f"{len(writes)} denied writes")
         return row
     if result.get("is_error"):
         row.update(status="error", error=str(result.get("result"))[:600])

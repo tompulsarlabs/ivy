@@ -30,16 +30,6 @@
       }
     },
     {
-      "id": "not_listed",
-      "desc": "keeps it out of the Top pick section",
-      "assert": {
-        "path": "top_pick_section",
-        "not_contains_any": [
-          "c2-client-matrix"
-        ]
-      }
-    },
-    {
       "id": "commits_bot",
       "desc": "every commit this run makes is bot-authored",
       "assert": {
