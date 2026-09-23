@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-17
+updated: 2026-09-23
 ---
 
 # talent-radar
@@ -107,8 +107,38 @@ corroboration (`talent-radar` sits outside this session's direct repo
 access [[ops]]) — same method as the 09-05 review [cite:2026-09-17]
 [[models]].
 
+## PR #2 — second fresh review at the 09-21 head (2026-09-23)
+
+`updated_at` settled at 2026-09-21T16:51:46Z, two full days stable, and
+the PR body's validation count moved again (332 → 338 tests) —
+`2026-09-23-talentradar-execbeta-review-03` reviewed the new head
+`520de91` (16 commits past the 09-17 head `1395d45`). The 09-17 review's
+**P3 stale-test-count finding is resolved**: `docs/BETA-READINESS.md:17`
+now correctly states 338. The 09-17 review's **P1 CSV-dedupe finding is
+still open, unchanged**: `src/lib/market/import.ts:44` still de-dupes on
+`[domain, sourceUrl, eventDate]` only, so same-company/provider rows
+differing in round/amount/currency/investors still silently collapse — the
+report re-flags it as P1 (upgraded from the 09-17 P2) since it has now
+survived a second review cycle without a fix. New P3: `docs/MARKET-DATA.md`
+documents a per-row CSV `provider` fallback that the API code makes
+unreachable (`src/app/api/pilot/market/route.ts:5` requires a top-level
+provider regardless). New surface since 09-17 — a "Known live now" feature
+deriving confirmed target functions from the authenticated member's own
+saved profile — confirmed read-only with no ranking or extra model call
+(`src/app/api/pilot/route.ts:162-186`, `src/lib/pilot/job-search.ts:35-41`,
+`src/lib/pilot/jobs.ts:5-41`). Also confirmed sound, unchanged from 09-17:
+Google-entry admission gating, atomic capacity-reservation locking, the
+fail-closed migration-compatibility path, and CSV provenance scoping.
+Verified via PR-body corroboration (still outside this session's direct
+repo access) [cite:2026-09-23] [[models]].
+
 ## Changelog
 
+- 2026-09-23 (failsafe) — recorded the second PR #2 fresh review at its
+  09-21 head: resolved the 09-17 stale-test-count finding, re-confirmed
+  the CSV-dedupe finding (now P1, unfixed across two review cycles), found
+  one new P3 (unreachable provider fallback), and confirmed the new
+  "Known live now" feature is read-only as described.
 - 2026-09-17 (failsafe) — recorded the PR #2 fresh review at its 09-16
   head: two real findings (CSV-dedup gap, stale test-count doc) plus five
   sound confirmations, verified via PR-body corroboration.

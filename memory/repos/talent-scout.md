@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-scout
 type: repo
-updated: 2026-09-22
+updated: 2026-09-23
 ---
 
 # talent-scout
@@ -72,8 +72,36 @@ the bad address, still unpushed so nothing uncountable has landed yet
 [cite:2026-08-31]. Unlike the `ivy` catch on 2026-08-30 [[ops]], this nudge
 had not converted by end of day.
 
+## First review: PR #2, 2026-09-23
+
+`2026-09-23-talentscout-workspace-review-01` (workhorse/openai, 12.4
+wall-min) reviewed PR #2 at head `49d09b8` against stacked base `96f3f4c`
+— **no actionable findings**, PR #1's tracked findings correctly left
+un-relitigated. Confirmed: revised-brief review-state isolation holds
+(`src/lib/scout/from-longlist.ts:69` scopes storage to run
+timestamp/brief/criteria/candidate IDs, so a changed brief gets a new
+record rather than overwriting the prior one); the workspace makes no
+model, Notion, backend, or outreach call (demo input is local React
+state, review persistence is browser-local, the Notion surface is static
+markup); the "Start a real brief" transition only clears local state and
+navigates, with the model-backed flow reached only by a later, separate
+user submission; the six-file public mirror into `tomgreen.ai` has
+identical Git blob IDs at PR head for all six files, free of any private
+Notion/Apollo/PR#1-demo markers. Verification ran `git diff --check`, a
+full `tsc --noEmit`, and `eslint`; unit tests, framework lint, build, and
+browser checks were not independently rerun (read-only sandbox blocks
+their temp/cache writes) — a coverage gap the report states explicitly.
+Corroborated against the PR's own body (no claimed change to Notion
+artifacts/prompts/model APIs/backend/outreach; the "shared public-source
+equality check" claim) with no contradiction found [cite:2026-09-23]
+[[models]].
+
 ## Changelog
 
+- 2026-09-23 (failsafe) — recorded PR #2's first review, verified done: no
+  actionable findings, five confirmations including isolation and the
+  six-file public-mirror blob-ID equality check; noted the report's own
+  coverage gap (unit tests/build/browser checks not independently rerun).
 - 2026-09-22 (failsafe) — recorded PR #1's first review, verified done: two
   P2 findings (overstated interaction-check count, unproven workspace
   isolation) plus five sound confirmations, including that no runtime

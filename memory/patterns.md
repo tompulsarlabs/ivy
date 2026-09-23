@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-22
+updated: 2026-09-23
 ---
 
 # Patterns: how the work actually happens
@@ -16,15 +16,17 @@ Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
 That ended 2026-09-12 and has since become the norm, not the exception:
 the failsafe fired 09-12, 13, 14, 15, 16, 17, 19, and 20 — eight of the
-eleven days since, with 09-18, 09-21 and 09-22 breaking the run on real
-work (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits on 09-18;
+twelve days since, with 09-18, 09-21, 09-22 and 09-23 breaking the run on
+real work (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits on 09-18;
 `gstack-security-patches` + `talent-scout` PR #1 + `tomgreen.ai` PR #63 on
-09-21; `tomgreen.ai` PR #64 + #65 on 09-22)
+09-21; `tomgreen.ai` PR #64 + #65 on 09-22; three draft PRs opened on
+`ivy` itself, #21/#22/#23, on 09-23)
 [cite:2026-09-12][cite:2026-09-13][cite:2026-09-14][cite:2026-09-15]
 [cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19]
-[cite:2026-09-20][cite:2026-09-21][cite:2026-09-22].
+[cite:2026-09-20][cite:2026-09-21][cite:2026-09-22][cite:2026-09-23].
 Every one of those eight fires falls inside the local-WIP scanner outage,
-still dark as of 2026-09-22 at 14 calendar days / 28 missed windows
+still dark as of 2026-09-23 at 15 calendar days / 29 missed windows, though
+a fix for the scanner itself (`ivy` PR #22) opened the same evening
 [[repos/ivy]]. This is now a large enough, tight enough coincidence to be
 a real candidate explanation, not just a thin correlation: a dark scanner
 means "push X (N unpushed commits)" — the cheapest real ship on a quiet
@@ -35,7 +37,8 @@ the full grey-check-nudge-fail-safe ladder. Still not provable causally
 scanner), and not something a playbook/config tune can fix directly — the
 scanner is Mac-side infra, the same category as the D1-era dispatch-runner
 gap below. Worth flagging loudly to Tom rather than tuning around: 12 days
-is long past the point a launchd job "hasn't gotten to it yet" explains.
+is long past the point a launchd job "hasn't gotten to it yet" explains —
+now partly acted on, pending the fix PR merging and actually running.
 
 ## Volume is bursty, not steady
 
@@ -154,6 +157,13 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-23 (failsafe) — updated the fire-rate note: 8 of the last 12
+  days since 09-12 (was 8/11), with 09-23 joining 09-18, 09-21 and 09-22
+  as a real-work green day breaking the run — this time on `ivy` itself
+  (three draft PRs), not one of the usual product repos; noted a fix for
+  the scanner outage (`ivy` PR #22) opened the same evening. No nudge
+  conversion (nudged `tomgreen.ai` PR #34, which the green day did not
+  touch), so the nudge-conversion count is unchanged at n=9, 0 converted.
 - 2026-09-22 (failsafe) — updated the fire-rate note: 8 of the last 11
   days since 09-12 (was 8/10), with 09-22 joining 09-18 and 09-21 as a
   real-work green day breaking the run. No nudge sent today (green before
