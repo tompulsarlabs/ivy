@@ -15,38 +15,75 @@ Robustness (replaces the original shell version):
 - JSON is generated with the json module, never string interpolation.
 - The output is written atomically (temp file + os.replace) under a lock,
   so overlapping runs can't interleave.
-- Push flow: an earlier run's unpushed commit is retried even when the new
-  scan changes nothing, and `pull --rebase --autostash` tolerates unrelated
-  dirty files in the Ivy checkout.
+- Registered worktrees are scanned even when they live outside the roots.
+- A six-hour publication heartbeat distinguishes unchanged work from no scan.
+- Publication uses a temporary clone; it never stages, rebases or pushes the
+  operator's checkout. Failed publication exits nonzero and the next run rescans.
 """
 
+import argparse
+import fcntl
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 IVY = Path(os.environ.get("IVY_DIR", Path.home() / "Build" / "ivy"))
-OUT = IVY / "local-wip.json"
 LOCK = IVY / ".local-wip.lock"
-LOCK_STALE_SECONDS = 15 * 60
+HEARTBEAT = timedelta(hours=6)
+BOT = ["-c", "user.name=ivy-bot", "-c", "user.email=bot@ivy.invalid"]
 
 
-def git(repo, *args, check=False):
+def git(repo, *args):
     """Run git in `repo`; return stdout or None on failure."""
     try:
         r = subprocess.run(
             ["git", "-C", str(repo), *args],
             capture_output=True, text=True, timeout=60,
+            env={**os.environ, "GIT_OPTIONAL_LOCKS": "0"},
         )
     except (OSError, subprocess.TimeoutExpired):
         return None
     if r.returncode != 0:
-        return None if not check else None
+        return None
     return r.stdout.strip()
+
+
+def required_git(repo, *args):
+    result = git(repo, *args)
+    if result is None:
+        # Do not log arguments, remote URLs or stderr: they can contain secrets.
+        raise RuntimeError(f"git {args[0]} failed; snapshot not published")
+    return result
+
+
+def discover_repos(roots):
+    """Find root checkouts and their registered, existing linked worktrees."""
+    found = set()
+    for root in roots:
+        if not root.is_dir():
+            raise RuntimeError("configured scan root unavailable; snapshot not published")
+        markers = list(root.glob("*/.git")) + list(root.glob("*/*/.git"))
+        if (root / ".git").exists():
+            markers.append(root / ".git")
+        for marker in markers:
+            if not (marker.is_file() or marker.is_dir()):
+                continue
+            repo = marker.parent.resolve()
+            found.add(repo)
+            listing = required_git(repo, "worktree", "list", "--porcelain", "-z")
+            for field in listing.split("\0"):
+                if field.startswith("worktree "):
+                    worktree = Path(field[len("worktree "):])
+                    # Prunable entries left by deleted temporary worktrees are
+                    # not current work. Never create them or prune Git's registry.
+                    if worktree.is_dir() and (worktree / ".git").exists():
+                        found.add(worktree.resolve())
+    return sorted(found)
 
 
 def read_roots(config_path):
@@ -134,27 +171,33 @@ def read_connected_emails(config_path):
 
 
 def scan_repo(repo, connected_emails):
-    branch = git(repo, "branch", "--show-current") or "(detached)"
-    status = git(repo, "status", "--porcelain")
-    dirty = len(status.splitlines()) if status else 0
-    remotes = git(repo, "remote") or ""
+    branch = required_git(repo, "branch", "--show-current") or "(detached)"
+    status = required_git(repo, "status", "--porcelain")
+    dirty = len(status.splitlines())
+    remotes = required_git(repo, "remote").splitlines()
+    has_commits = bool(required_git(repo, "rev-parse", "--revs-only", "HEAD"))
     if not remotes:
         remote = "none"
-        unpushed = int(git(repo, "rev-list", "--count", "HEAD") or 0)
+        checkout_unpushed = int(required_git(repo, "rev-list", "--count", "HEAD")) if has_commits else 0
+        unpushed = int(required_git(repo, "rev-list", "--count", "--branches", *(["HEAD"] if has_commits else [])))
     else:
-        url = git(repo, "remote", "get-url", "origin") or ""
-        m = re.search(r"github\.com[:/]+(.+?)(?:\.git)?$", url)
+        remote_name = "origin" if "origin" in remotes else remotes[0]
+        url = required_git(repo, "remote", "get-url", remote_name)
+        m = re.fullmatch(r"(?:https://github\.com/|git@github\.com:)([\w.-]+/[\w.-]+?)(?:\.git)?", url)
         remote = m.group(1) if m else "other"
-        unpushed = int(
-            git(repo, "rev-list", "--count", "--branches", "--not", "--remotes") or 0
-        )
+        checkout_unpushed = int(
+            required_git(repo, "rev-list", "--count", "HEAD", "--not", "--remotes")
+        ) if has_commits else 0
+        unpushed = int(required_git(repo, "rev-list", "--count", "--branches",
+                                   *(["HEAD"] if has_commits else []), "--not", "--remotes"))
     return {
         "name": repo.name,
         "remote": remote,
         "branch": branch,
         "dirty_files": dirty,
         "unpushed_commits": unpushed,
-        "last_commit": git(repo, "log", "-1", "--format=%cs") or "",
+        "checkout_unpushed_commits": checkout_unpushed,
+        "last_commit": required_git(repo, "log", "-1", "--format=%cs") if has_commits else "",
         # Verdicts, not addresses: git's invented fallback embeds the machine
         # hostname, and this file is published to a public repo (see Privacy).
         "author_email_ok": next_author_email(repo) in connected_emails,
@@ -164,79 +207,91 @@ def scan_repo(repo, connected_emails):
     }
 
 
-def acquire_lock():
+def timestamp(payload):
     try:
-        fd = os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-        os.write(fd, str(os.getpid()).encode())
-        os.close(fd)
+        value = datetime.fromisoformat(payload["generated_at"].replace("Z", "+00:00"))
+        return value if value.tzinfo else None
+    except (KeyError, TypeError, ValueError, AttributeError):
+        return None
+
+
+def should_publish(previous, payload):
+    new = timestamp(payload)
+    if new is None:
+        raise RuntimeError("scan timestamp invalid; snapshot not published")
+    if not isinstance(previous, dict):
         return True
-    except FileExistsError:
-        try:
-            if LOCK.stat().st_mtime < datetime.now().timestamp() - LOCK_STALE_SECONDS:
-                LOCK.unlink()
-                return acquire_lock()
-        except OSError:
-            pass
-        return False
+    old = timestamp(previous)
+    if old and new and old > new:
+        raise RuntimeError("published snapshot is newer than this scan; rescan required")
+    return (previous.get("repos") != payload["repos"] or old is None
+            or new - old >= HEARTBEAT)
 
 
-def unpushed_in_ivy():
-    out = git(IVY, "rev-list", "--count", "@{u}..HEAD")
-    return int(out) if out and out.isdigit() else 0
+def publish_snapshot(payload, remote):
+    """Publish only this snapshot, retrying branch races without force pushes."""
+    with tempfile.TemporaryDirectory(prefix="ivy-wip-publish-") as temp:
+        clone = Path(temp) / "ivy"
+        required_git(Path(temp), "clone", "--quiet", "--single-branch", "--branch", "main", "--", remote, str(clone))
+        for attempt in range(3):
+            if attempt:
+                required_git(clone, "fetch", "--quiet", "origin", "main")
+                # This clone is created and owned by this invocation only.
+                required_git(clone, "reset", "--hard", "--quiet", "origin/main")
+            target = clone / "local-wip.json"
+            if target.is_symlink():
+                raise RuntimeError("snapshot target is a symbolic link; publication refused")
+            try:
+                previous = json.loads(target.read_text())
+            except (OSError, ValueError):
+                previous = None
+            if not should_publish(previous, payload):
+                return False
+            target.write_text(json.dumps(payload, indent=2) + "\n")
+            required_git(clone, "add", "--", "local-wip.json")
+            required_git(clone, *BOT, "-c", "commit.gpgsign=false", "commit", "--quiet", "-m",
+                         f"wip: local scan — {len(payload['repos'])} checkouts",
+                         "--author=ivy-bot <bot@ivy.invalid>", "--", "local-wip.json")
+            if git(clone, "push", "--quiet", "origin", "HEAD:refs/heads/main") is not None:
+                return True
+        raise RuntimeError("snapshot publication failed after 3 attempts; next run will rescan")
 
 
-def sync_ivy():
-    """Rebase onto upstream (stashing unrelated dirt) and push."""
-    if git(IVY, "pull", "--rebase", "--autostash", "--quiet") is None:
-        git(IVY, "rebase", "--abort")
-        return False
-    return git(IVY, "push", "--quiet") is not None
+def collect_snapshot():
+    config = IVY / "config.yml"
+    if not config.is_file():
+        raise RuntimeError("scanner configuration missing; snapshot not published")
+    connected = read_connected_emails(config)
+    if not connected:
+        raise RuntimeError("connected identities missing; snapshot not published")
+    repos = [scan_repo(repo, connected) for repo in discover_repos(read_roots(config))]
+    return {"generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "repos": repos}
 
 
-def main():
-    if not acquire_lock():
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dry-run", action="store_true", help="print a local snapshot; no lock, writes or network")
+    args = parser.parse_args(argv)
+    if args.dry_run:
+        print(json.dumps(collect_snapshot(), indent=2))
         return 0
-    try:
-        connected_emails = read_connected_emails(IVY / "config.yml")
-        repos = []
-        for root in read_roots(IVY / "config.yml"):
-            if not root.is_dir():
-                continue
-            for gitdir in sorted(root.glob("*/.git")) + sorted(root.glob("*/*/.git")):
-                if gitdir.is_dir():
-                    repos.append(scan_repo(gitdir.parent, connected_emails))
-
-        payload = {
-            "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "repos": repos,
-        }
-
+    with LOCK.open("a") as lock:
         try:
-            previous = json.loads(OUT.read_text())
-        except (OSError, ValueError):
-            previous = None
-        changed = previous is None or previous.get("repos") != repos
-
-        if changed:
-            fd, tmp = tempfile.mkstemp(dir=IVY, prefix=".local-wip.")
-            with os.fdopen(fd, "w") as f:
-                json.dump(payload, f, indent=2)
-                f.write("\n")
-            os.replace(tmp, OUT)
-            git(IVY, "add", "local-wip.json")
-            git(
-                IVY, "-c", "user.name=ivy-bot", "-c", "user.email=bot@ivy.invalid",
-                "commit", "--quiet", "-m", f"wip: local scan — {len(repos)} repos",
-            )
-
-        # Push whenever anything is unpushed — including a stranded commit
-        # from an earlier run whose push failed.
-        if unpushed_in_ivy() > 0:
-            sync_ivy()
-        return 0
-    finally:
-        LOCK.unlink(missing_ok=True)
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            print("local-wip: another scan is running")
+            return 0
+        payload = collect_snapshot()
+        remote = required_git(IVY, "remote", "get-url", "origin")
+        published = publish_snapshot(payload, remote)
+        print(f"local-wip: {'published' if published else 'current'} — {len(payload['repos'])} checkouts")
+    return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except (RuntimeError, OSError) as error:
+        print(f"local-wip: {error}", file=sys.stderr)
+        sys.exit(1)
