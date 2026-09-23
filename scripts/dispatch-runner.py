@@ -25,7 +25,7 @@ The runner execs the copy inside IVY once the sync has run: the launchd entry
 point is a dev checkout that only moves when a human pulls, so without this a
 pushed runner change lands in IVY while the old code keeps executing.
 """
-import fcntl, json, os, re, shlex, shutil, signal, subprocess, sys
+import argparse, fcntl, hashlib, json, os, re, shlex, shutil, signal, subprocess, sys
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -39,6 +39,18 @@ STATUS_REL = "dispatch/runner-status.json"
 STATUS_HEARTBEAT_HOURS = 6
 STATUS_KEYS = ("harness", "lint_ok", "result", "skipped")  # what a reader acts on
 MARK_BEGIN, MARK_END = "BEGIN_REPORT", "END_REPORT"
+# Local compatibility policy, not an account-availability or quality claim.
+# Add a model only after checking its exact native CLI compatibility.
+HARNESS_MODELS = {
+    "claude-code": {
+        "claude-opus-5": {"low", "medium", "high", "xhigh", "max"},
+        "claude-haiku-4-5": set(),
+    },
+    "codex": {
+        "gpt-5.6-sol": {"none", "low", "medium", "high", "xhigh", "max", "ultra"},
+        "gpt-5.6-terra": {"none", "low", "medium", "high", "xhigh", "max", "ultra"},
+    },
+}
 
 def log(msg):
     print(f"[{datetime.now().astimezone().isoformat(timespec='seconds')}] {msg}", flush=True)
@@ -88,8 +100,8 @@ def parse_frontmatter(text):
     fm["blocked_by"] = [x.strip() for x in raw.split(",") if x.strip()]
     return fm, m.group(2)
 
-def load_config():
-    cfg = (IVY / "config.yml").read_text()
+def load_config(config_path=None):
+    cfg = (config_path or IVY / "config.yml").read_text()
     commit_email = re.search(r"^commit_email:\s*(\S+)", cfg, re.M).group(1)
     block = re.search(r"^connected_emails:[^\n]*\n((?:[ \t]+-[^\n]*\n?)*)", cfg, re.M)
     connected = re.findall(r"-\s*(\S+)", block.group(1)) if block else []
@@ -104,7 +116,12 @@ def load_config():
         m = re.match(r"^    ([a-z]+):\s*\{(.*)\}", line)
         if m and current:
             pool, inner = m.group(1), m.group(2)
-            entry = dict(re.findall(r"([a-z_-]+):\s*([^,}\s]+)", inner))
+            entry = {}
+            for item in inner.split(","):
+                setting = re.fullmatch(r"\s*(harness|model|effort):\s*([^,}\s]+)\s*", item)
+                if not setting or setting.group(1) in entry:
+                    raise ValueError("malformed or duplicate harness setting")
+                entry[setting.group(1)] = setting.group(2)
             lanes[current][pool] = entry
     return commit_email, connected, lanes
 
@@ -210,8 +227,15 @@ def set_state(path, new_state, extra_fm=None):
 
 def harness_argv(entry, prompt, ctype):
     h, model = entry.get("harness"), entry.get("model")
+    effort = entry.get("effort")
+    if model not in HARNESS_MODELS.get(h, {}):
+        raise ValueError("model/harness combination is not registered")
+    if effort is not None and effort not in HARNESS_MODELS[h][model]:
+        raise ValueError("configured effort is unsupported for this model/harness")
     if h == "claude-code":
         argv = ["claude", "-p", prompt, "--model", model]
+        if effort is not None:
+            argv += ["--effort", effort]
         if ctype in ("build", "chore"):
             # acceptEdits alone denies git push / gh pr create in -p mode
             # (verified 2026-08-28); the worker needs the shell for its DoD.
@@ -219,10 +243,73 @@ def harness_argv(entry, prompt, ctype):
         return argv
     if h == "codex":
         argv = ["codex", "exec", "--model", model]
+        if effort is not None:
+            argv += ["-c", f"model_reasoning_effort={json.dumps(effort)}"]
         if ctype in ("build", "chore"):
             argv += ["-s", "workspace-write"]  # exec defaults to read-only sandbox
         return argv + [prompt]
     raise RuntimeError(f"unknown harness {h}")
+
+
+def harness_environment(entry, environ=None):
+    """Pin Claude's explicit effort against inherited effort overrides only."""
+    env = dict(os.environ if environ is None else environ)
+    if entry["harness"] == "claude-code" and entry.get("effort") is not None:
+        env["CLAUDE_CODE_EFFORT_LEVEL"] = entry["effort"]
+    return env
+
+
+def harness_version(binary):
+    """A bounded local --version probe. Unknown output is never published."""
+    try:
+        result = subprocess.run([binary, "--version"], text=True, capture_output=True, timeout=5)
+        if result.returncode == 0:
+            match = re.fullmatch(r"(?:codex-cli )?(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)(?: \(Claude Code\))?", result.stdout.strip())
+            if match:
+                return match.group(1)
+    except (OSError, subprocess.TimeoutExpired):
+        pass
+    return "unknown"
+
+
+def execution_metadata(entry, prompt, clone, binary):
+    """Requested settings are not proof of the provider's effective settings."""
+    source = run(["git", "rev-parse", "HEAD"], cwd=clone).stdout.strip()
+    if not re.fullmatch(r"[0-9a-f]{40,64}", source):
+        raise RuntimeError("source revision unavailable")
+    return [
+        f"requested_model: {entry['model']}",
+        f"requested_effort: {entry.get('effort', 'unset')}",
+        "effective_model: unknown", "effective_effort: unknown",
+        f"harness_version: {harness_version(binary)}",
+        f"source_revision: {source}",
+        f"runner_sha256: {hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}",
+        f"config_sha256: {hashlib.sha256((IVY / 'config.yml').read_bytes()).hexdigest()}",
+        f"prompt_sha256: {hashlib.sha256(prompt.encode()).hexdigest()}",
+        "context_capture: runner_prompt_only",
+        "usage_capture: unavailable",
+    ]
+
+
+def preview_routes(config_path):
+    """Inspect config-to-command resolution without a clone, lock or process."""
+    _, _, lanes = load_config(config_path)
+    profiles = []
+    failed = False
+    for lane, pools in lanes.items():
+        for pool, entry in pools.items():
+            result = {"lane": lane, "pool": pool, **entry}
+            try:
+                result["argv"] = harness_argv(entry, "<task prompt>", "review")
+                result["status"] = "valid_configuration"
+            except ValueError as error:
+                failed = True
+                result.update(status="invalid_configuration", reason=str(error))
+            result["availability"] = "not_checked"
+            result["effective_effort"] = "unknown"
+            profiles.append(result)
+    print(json.dumps(profiles, indent=2))
+    return int(failed)
 
 def build_prompt(cid, repo, ctype, body):
     head = (f"You are an Ivy dispatch worker executing contract {cid}. "
@@ -256,6 +343,12 @@ def finalize(qpath, cid, dest, state, outcome_lines, msg, extra_paths=()):
     log(f"{cid}: {state} -> dispatch/{dest}/")
 
 def main():
+    if "--preview-routes" in sys.argv:
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--preview-routes", action="store_true")
+        parser.add_argument("--config", type=Path, default=Path(__file__).resolve().parent.parent / "config.yml")
+        args = parser.parse_args()
+        return preview_routes(args.config)
     once = "--once" in sys.argv
     dry = "--dry-run" in sys.argv
     now = datetime.now().astimezone()
@@ -303,6 +396,18 @@ def main():
             log(f"{cid}: lane {fm['lane']}/{fm.get('pool') or 'anthropic'} unresolved (VERIFY) — skipping")
             skipped.append({"id": cid, "reason": "lane_unresolved"}); continue
 
+        prompt = build_prompt(cid, repo, ctype, body.split("outcome:")[0])
+        try:
+            argv = harness_argv(entry, prompt, ctype)
+        except ValueError as error:
+            log(f"{cid}: {error}; leaving open")
+            skipped.append({"id": cid, "reason": "invalid_harness_config"}); continue
+        resolved = resolve_harness(argv)
+        if not resolved:
+            log(f"{cid}: harness binary unavailable; leaving open")
+            skipped.append({"id": cid, "reason": "harness_missing"}); continue
+        argv = resolved
+
         clone = WORK / repo.split("/")[-1]
         ensure_clone(clone, f"https://github.com/{repo}.git")
         if ctype == "build":
@@ -315,22 +420,12 @@ def main():
                          f"dispatch: failed {cid} — attribution gate")
                 skipped.append({"id": cid, "reason": "attribution_gate"}); continue
 
-        prompt = build_prompt(cid, repo, ctype, body.split("outcome:")[0])
-        argv = harness_argv(entry, prompt, ctype)
-        resolved = resolve_harness(argv)
-        if not resolved:
-            # An environment fault, not a fault in the contract: leave it open
-            # so it runs untouched once the binary is reachable, rather than
-            # burning a good contract on a bad PATH.
-            log(f"{cid}: harness binary '{argv[0]}' not found on PATH — leaving open; "
-                f"PATH={os.environ.get('PATH', '')}")
-            skipped.append({"id": cid, "reason": "harness_missing"}); continue
-        argv = resolved
         if dry:
             log(f"{cid}: DRY RUN — would claim, then exec in {clone}:")
             log("  " + " ".join(shlex.quote(a if len(a) < 120 else a[:117] + "...") for a in argv))
             return 0
 
+        metadata = execution_metadata(entry, prompt, clone, argv[0])
         set_state(qpath, "claimed", f"claimed_at: {now.isoformat(timespec='seconds')}")
         if not bot_commit_push(f"dispatch: claim {cid}", [qpath]):
             log(f"{cid}: claim push lost a race; next tick retries")
@@ -340,12 +435,13 @@ def main():
         start = datetime.now()
         try:
             proc = subprocess.Popen(argv, cwd=clone, text=True, stdout=subprocess.PIPE,
-                                    stderr=subprocess.STDOUT, start_new_session=True)
+                                    stderr=subprocess.STDOUT, start_new_session=True,
+                                    env=harness_environment(entry))
         except OSError as e:
             # The contract is already claimed and pushed; an unhandled raise here
             # would strand it in `claimed` until expiry (2026-09-02: twice).
             finalize(qpath, cid, "failed", "failed",
-                     [f"claimed_at: {now.isoformat(timespec='seconds')}",
+                     metadata + [f"claimed_at: {now.isoformat(timespec='seconds')}",
                       "exit: harness_error", f"note: could not start {argv[0]}: {e}"],
                      f"dispatch: failed {cid} — harness would not start")
             publish_status(f"finished {cid}", skipped, True, now)
@@ -360,7 +456,7 @@ def main():
 
         m = re.search(re.escape(MARK_BEGIN) + r"\n(.*?)\n" + re.escape(MARK_END), out or "", re.S)
         report_rel = f"dispatch/reports/{cid}.md"
-        base = [f"claimed_at: {now.isoformat(timespec='seconds')}",
+        base = metadata + [f"claimed_at: {now.isoformat(timespec='seconds')}",
                 f"finished_at: {datetime.now().astimezone().isoformat(timespec='seconds')}",
                 f"harness: {entry['harness']} (dispatch-runner)",
                 f"model: {entry['model']}", f"wall_minutes: {wall}", f"exit: {code}"]
@@ -394,6 +490,8 @@ def guarded_main():
         return main()
     except Exception as e:  # noqa: BLE001 — the point is to catch everything
         log(f"runner error: {e!r}")
+        if "--preview-routes" in sys.argv:
+            return 1  # A failed inspect-only command must stay read-only too.
         try:
             publish_status(f"runner_error: {type(e).__name__}", [], True,
                            datetime.now().astimezone())
