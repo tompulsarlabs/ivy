@@ -235,10 +235,12 @@ that has persisted three days or more is written at the head of that
 section, above the candidate, every day it persists, however often it has
 been nudged. Whether the check spends its nudge on it is the check's call.
 
-**Queue contracts** for the top dispatchable candidates, up to
-`dispatch.daily_cap` minus the contracts already created today (by `created`
-date, across `queue/`, `done/`, and `failed/`), in the format of
-`dispatch/DESIGN.md` §2 and the vocabulary of `CONTEXT.md`. A contract is one
+**Queue contracts** for the top dispatchable candidates. Count the contracts
+already created today first (by `created` date, across `dispatch/queue/`,
+`done/`, and `failed/`, whoever wrote them): the day allows
+`dispatch.daily_cap` in all, and `scripts/dispatch-lint.sh` refuses a commit
+past it. Write them in the format of `dispatch/DESIGN.md` §2 and the
+vocabulary of `CONTEXT.md`. A contract is one
 vertical slice, complete and verifiable on its own and sized for one worker
 session; work that needs more publishes as a chain whose later contracts
 carry `blocked_by`. A review contract defaults to `lane: workhorse` and pins
@@ -291,8 +293,8 @@ grey, finish today's journal as a genuine engineering note (the day's
 candidates, what happened, streak state, tomorrow's top candidate, and how
 the day was verified under `## Verification`), commit that file alone,
 Tom-authored, push, and verify per the Immutable rule. Either way, write
-today's final row in `state.json` and bump or reset `streak` and
-`last_green`. `nudge_converted` is true when real activity landed on the
+today's final row in `state.json` in the short form (*`state.json` rows stay
+terse*) and bump or reset `streak` and `last_green`. `nudge_converted` is true when real activity landed on the
 nudged candidate within four hours of the nudge; for a blocker nudge it is
 also true when the blocker's own recovery signal arrives (a fresh
 `local-wip.json`, a resumed heartbeat), because an infrastructure fix rarely
