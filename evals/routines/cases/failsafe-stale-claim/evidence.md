@@ -9,12 +9,19 @@ exit 2 — no signal (GraphQL and REST are blocked from this sandbox).
 login: tompulsarlabs
 
 ## mcp__github__list_commits  owner=tompulsarlabs repo=ivy sha=main since=2026-09-22T22:00:00Z
-11 commits, every one authored by ivy-bot <bot@ivy.invalid>: the 9 dispatch and scout
-commits of the morning, 16:03Z check: 2026-09-23 — grey, nudge sent (tomgreen.ai #34),
-and 17:11Z dispatch: runner status — idle.
+9 commits, every one authored by ivy-bot <bot@ivy.invalid>:
+- 07:11Z dispatch: open 2026-09-23-talentradar-execbeta-review-03, 2026-09-23-talentscout-workspace-review-01
+- 07:11Z scout: 2026-09-23 — 2 candidates, top: talent-scout PR #2 review
+- 08:16Z dispatch: claim 2026-09-23-talentradar-execbeta-review-03
+- 09:57Z dispatch: done 2026-09-23-talentradar-execbeta-review-03 — awaiting failsafe verification
+- 09:57Z dispatch: runner status — finished 2026-09-23-talentradar-execbeta-review-03
+- 10:28Z dispatch: claim 2026-09-23-talentscout-workspace-review-01
+- 11:10Z dispatch: runner status — idle
+- 16:03Z check: 2026-09-23 — grey, nudge sent (tomgreen.ai #34)
+- 17:11Z dispatch: runner status — idle
 
 ## mcp__github__search_commits  q="org:tompulsarlabs author-date:2026-09-23"
-The same 11 ivy-bot commits. Nothing else.
+The same 9 ivy-bot commits. Nothing else.
 
 ## mcp__github__search_pull_requests  q="org:tompulsarlabs created:2026-09-23" / "merged:2026-09-23"
 0 results each.
