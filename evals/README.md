@@ -17,14 +17,22 @@ Each case is a directory in `evals/routines/cases/`:
   searches, `check.sh`, whether a push notification gets through). The
   sandbox has no network, so this file stands in for the tools.
 - `files/`: overlay files that make the one change the case is about (a stale
-  scan, a failed contract, a rewritten journal section). `json_merge` in
-  `case.json` patches a JSON file instead.
+  scan, a failed contract, a rewritten journal section). In `case.json`,
+  `json_merge` patches a JSON file instead and `delete` removes paths from
+  the replayed state.
 
 `scripts/eval-routines.py` builds the sandbox (the `state_rev` tree, the
 variant's steering files, the overlay, `eval/evidence.md`, and never
 `evals/`), runs the routine's prompt headless with `claude -p` and only the
 Read, Glob, and Grep tools, and asks for the run's decisions as JSON. Checks
 are deterministic assertions over that JSON; nothing is graded by a model.
+
+A case with `measures` is graded on the files it leaves instead of its own
+account, because a routine can label an append "update in place". Its run
+also gets Edit and Write. Each measure counts a regex in one file, optionally
+only above `above_heading` or below `below_heading`, before and after the
+run; checks read `_measures.<name>.before`, `.after`, and `.delta`. A run
+whose writes were denied is recorded as `denied`, not scored.
 
 ## Run it
 
@@ -61,8 +69,9 @@ empty answer (`eval-routines-test.py` enforces that), so "passed" never means
 
 The eval measures decisions given the evidence, not tool use: it cannot tell
 whether a routine would have made the right GitHub query, only what it
-concludes from the results. It also runs the routines read-only, so it grades
-the commits and notifications they report, not ones they made.
+concludes from the results. The sandbox cannot commit, push, or notify, so it
+grades the commits and notifications a routine reports; only a `measures`
+case is graded on edits it really made.
 
 ## Add a case
 
