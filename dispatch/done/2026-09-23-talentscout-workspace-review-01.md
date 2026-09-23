@@ -1,7 +1,7 @@
 ---
 id: 2026-09-23-talentscout-workspace-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-23T12:28:00+02:00
 repo: tompulsarlabs/talent-scout
 lane: workhorse
@@ -58,3 +58,13 @@ The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head (or, if the PR head is not directly readable
 from the verifying session, is corroborated against the PR's own body text
 per the established PR-body-corroboration method).
+
+outcome:
+  claimed_at: 2026-09-23T12:28:00+02:00
+  finished_at: 2026-09-23T12:40:32+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 12.4
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-23-talentscout-workspace-review-01.md
