@@ -15,6 +15,12 @@ Harness notes: `claude -p` flags are stable; `codex exec` flags are
 confirmed during the D2 smoke test — if the argv printed by --dry-run is
 wrong for your codex version, fix HARNESS_ARGV below.
 
+A lane's `effort` reaches the harness (`--effort` for Claude Code,
+`model_reasoning_effort` for Codex); before 2026-09-23 it was read and
+dropped, so frontier and workhorse ran identical commands. An effort Claude
+Code does not accept skips the contract as `lane_invalid` before it is
+claimed.
+
 The attribution gate tests membership in config.yml `connected_emails`
 (2026-09-01: equality against `commit_email` alone failed three build
 contracts on a clone correctly configured with the second connected
@@ -39,6 +45,7 @@ STATUS_REL = "dispatch/runner-status.json"
 STATUS_HEARTBEAT_HOURS = 6
 STATUS_KEYS = ("harness", "lint_ok", "result", "skipped")  # what a reader acts on
 MARK_BEGIN, MARK_END = "BEGIN_REPORT", "END_REPORT"
+CLAUDE_EFFORTS = ("low", "medium", "high", "xhigh", "max")   # claude --effort choices
 
 def log(msg):
     print(f"[{datetime.now().astimezone().isoformat(timespec='seconds')}] {msg}", flush=True)
@@ -208,10 +215,21 @@ def set_state(path, new_state, extra_fm=None):
         text = re.sub(r"^(state: .*)$", r"\1\n" + extra_fm, text, count=1, flags=re.M)
     path.write_text(text)
 
+def lane_problem(entry):
+    """Why a lane entry cannot run, or None. Checked before the claim, so a bad
+    config costs a skip rather than a contract."""
+    if not entry or entry.get("model") == "VERIFY":
+        return "lane_unresolved"
+    if entry.get("harness") == "claude-code" and entry.get("effort") not in (None, *CLAUDE_EFFORTS):
+        return "lane_invalid"
+    return None
+
 def harness_argv(entry, prompt, ctype):
-    h, model = entry.get("harness"), entry.get("model")
+    h, model, effort = entry.get("harness"), entry.get("model"), entry.get("effort")
     if h == "claude-code":
         argv = ["claude", "-p", prompt, "--model", model]
+        if effort:
+            argv += ["--effort", effort]
         if ctype in ("build", "chore"):
             # acceptEdits alone denies git push / gh pr create in -p mode
             # (verified 2026-08-28); the worker needs the shell for its DoD.
@@ -219,28 +237,43 @@ def harness_argv(entry, prompt, ctype):
         return argv
     if h == "codex":
         argv = ["codex", "exec", "--model", model]
+        if effort:
+            argv += ["-c", f'model_reasoning_effort="{effort}"']
         if ctype in ("build", "chore"):
             argv += ["-s", "workspace-write"]  # exec defaults to read-only sandbox
         return argv + [prompt]
     raise RuntimeError(f"unknown harness {h}")
 
 def build_prompt(cid, repo, ctype, body):
-    head = (f"You are an Ivy dispatch worker executing contract {cid}. "
-            f"Your working directory is a fresh checkout of {repo}.\n")
+    head = (f"You are an Ivy dispatch worker executing contract {cid} in a fresh checkout of "
+            f"{repo}. The run is unattended: nobody can answer questions, so make routine "
+            "judgment calls yourself, and if something only a person can decide blocks part of "
+            "the task, finish the rest and say what is missing. Ivy's failsafe checks your result "
+            "independently against the contract's Verification section; until then your report "
+            "is a claim.\n\n")
     if ctype == "review":
-        tail = ("\nSkills: if a `code-review` skill is installed in this harness, drive the review "
-                "with it (the Task above is the spec axis); if it is not, review without it.\n"
-                "\nRules: read-only — do not commit, push, or modify anything. "
-                f"Produce your complete findings as markdown and print them between two lines "
-                f"containing exactly {MARK_BEGIN} and {MARK_END}. Print nothing after {MARK_END}.")
+        tail = ("\n\nReview: report every issue you find, including uncertain and minor ones, "
+                "each with a severity and your confidence. Tom triages, so coverage matters more "
+                "than filtering. Tie each finding to file:line on the head you reviewed, with a "
+                "proposed fix, and confirm plainly the claims that hold. The review is read-only: "
+                "leave the checkout, its branches, and the pull request as they are.\n"
+                "Skills: if a `code-review` skill is installed in this harness, drive the review "
+                "with it (the Task above is the spec axis); otherwise review without it.\n"
+                "Output: print the complete findings as markdown between two lines containing "
+                f"exactly {MARK_BEGIN} and {MARK_END}, and nothing after {MARK_END}.")
     else:
-        tail = ("\nSkills: if `tdd` and `code-review` skills are installed in this harness, build "
-                "test-first at the seams the Task names and review the diff against the Task before "
-                "opening the PR; if they are not installed, proceed without them.\n"
-                "\nRules: do the work on a new branch named dispatch/" + cid + ", commit with the "
-                "repository's connected git identity, push the branch, and open a DRAFT pull "
-                "request. Never push to the default branch. When finished, print a short summary "
-                f"of what you did between two lines containing exactly {MARK_BEGIN} and {MARK_END}.")
+        tail = ("\n\nBuild: deliver what the Task asks, at the scope it intends; if you think the "
+                "Task is mistaken, say so in your summary and still do what it asks. Work on a new "
+                f"branch named dispatch/{cid}, commit with the clone's configured git identity "
+                "(already a connected address, so leave user.name and user.email as they are), "
+                "push that branch, and open a draft pull request. The default branch is Tom's: "
+                "never push to it.\n"
+                "Skills: if `tdd` and `code-review` skills are installed in this harness, build "
+                "test-first at the seams the Task names and review the diff against the Task "
+                "before opening the PR; otherwise proceed without them.\n"
+                "Output: when finished, print a short summary of what you did and what you "
+                "verified (the tests you ran and their result, anything skipped and why) between "
+                f"two lines containing exactly {MARK_BEGIN} and {MARK_END}.")
     return head + body.strip() + tail
 
 def finalize(qpath, cid, dest, state, outcome_lines, msg, extra_paths=()):
@@ -299,9 +332,10 @@ def main():
             log(f"{cid}: blocked by {', '.join(blockers)} (not in dispatch/done/) — skipping")
             skipped.append({"id": cid, "reason": "blocked_by"}); continue
         entry = lanes.get(fm["lane"], {}).get(fm.get("pool") or "anthropic")
-        if not entry or entry.get("model") == "VERIFY":
-            log(f"{cid}: lane {fm['lane']}/{fm.get('pool') or 'anthropic'} unresolved (VERIFY) — skipping")
-            skipped.append({"id": cid, "reason": "lane_unresolved"}); continue
+        problem = lane_problem(entry)
+        if problem:
+            log(f"{cid}: lane {fm['lane']}/{fm.get('pool') or 'anthropic'} {problem} — skipping")
+            skipped.append({"id": cid, "reason": problem}); continue
 
         clone = WORK / repo.split("/")[-1]
         ensure_clone(clone, f"https://github.com/{repo}.git")
@@ -336,7 +370,8 @@ def main():
             log(f"{cid}: claim push lost a race; next tick retries")
             publish_status("claim_race", skipped, True, now); return 0
 
-        log(f"{cid}: executing via {entry['harness']} ({entry['model']}), budget {fm['wall_minutes']}m")
+        log(f"{cid}: executing via {entry['harness']} ({entry['model']}, effort "
+            f"{entry.get('effort') or 'default'}), budget {fm['wall_minutes']}m")
         start = datetime.now()
         try:
             proc = subprocess.Popen(argv, cwd=clone, text=True, stdout=subprocess.PIPE,
@@ -363,7 +398,8 @@ def main():
         base = [f"claimed_at: {now.isoformat(timespec='seconds')}",
                 f"finished_at: {datetime.now().astimezone().isoformat(timespec='seconds')}",
                 f"harness: {entry['harness']} (dispatch-runner)",
-                f"model: {entry['model']}", f"wall_minutes: {wall}", f"exit: {code}"]
+                f"model: {entry['model']}", f"effort: {entry.get('effort') or 'default'}",
+                f"wall_minutes: {wall}", f"exit: {code}"]
         if code == 0 and m:
             (IVY / report_rel).write_text(
                 f"# Report — {cid}\n\nProduced by the {fm['lane']}/{fm.get('pool') or 'anthropic'} "

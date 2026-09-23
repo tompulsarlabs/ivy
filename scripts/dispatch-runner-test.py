@@ -66,6 +66,26 @@ with tempfile.TemporaryDirectory() as tmp:
         "249609836+tompulsarlabs@users.noreply.github.com", "tom@pulsarlabsai.com"])
     check("lanes parsed", lanes["frontier"]["openai"]["model"] == "gpt-5.6-sol")
 
+    # Red until 2026-09-23: harness_argv read `effort` and dropped it, so the
+    # frontier and workhorse lanes ran the identical Claude command.
+    fr = runner.harness_argv(lanes["frontier"]["anthropic"], "p", "review")
+    wh = runner.harness_argv(lanes["workhorse"]["anthropic"], "p", "review")
+    check("frontier and workhorse commands differ", fr != wh)
+    flag = lambda argv, f: argv[argv.index(f) + 1] if f in argv else None
+    check("claude gets the lane's effort", flag(fr, "--effort") == "xhigh" and flag(wh, "--effort") == "medium")
+    check("no effort configured -> no --effort flag",
+          "--effort" not in runner.harness_argv({"harness": "claude-code", "model": "m"}, "p", "review"))
+    cx = runner.harness_argv({"harness": "codex", "model": "m", "effort": "high"}, "p", "build")
+    check("codex gets effort as a config override", flag(cx, "-c") == 'model_reasoning_effort="high"')
+    check("codex prompt stays last", cx[-1] == "p")
+    check("codex without effort has no override",
+          "-c" not in runner.harness_argv(lanes["frontier"]["openai"], "p", "review"))
+    check("a configured lane runs", runner.lane_problem(lanes["workhorse"]["anthropic"]) is None)
+    check("a missing lane is unresolved", runner.lane_problem(None) == "lane_unresolved")
+    check("a VERIFY model is unresolved", runner.lane_problem({"harness": "codex", "model": "VERIFY"}) == "lane_unresolved")
+    check("an effort claude refuses is caught before the claim",
+          runner.lane_problem({"harness": "claude-code", "model": "m", "effort": "xHigh"}) == "lane_invalid")
+
     # The 2026-09-01 failure: a clone using the second connected address.
     ident_ok = "tompulsarlabs <tom@pulsarlabsai.com> 1756738878 +0200"
     ident_bad = "Tom Green <tom@C2-LAP32-TomGreen.local> 1756738878 +0200"
@@ -174,6 +194,13 @@ with tempfile.TemporaryDirectory() as tmp:
     check("review prompt names the code-review skill", "code-review" in review)
     check("build prompt names tdd and code-review", "tdd" in build and "code-review" in build)
     check("review prompt stays read-only", "read-only" in review)
+    check("review prompt asks for coverage with severity and confidence",
+          "every issue" in review and "severity" in review and "confidence" in review)
+    check("build prompt names its branch and a draft PR", "dispatch/c2" in build and "draft pull request" in build)
+    check("build prompt keeps the configured git identity", "leave user.name and user.email" in build)
+    check("both prompts say the run is unattended", all("unattended" in p for p in (review, build)))
+    check("both prompts carry the report markers", all(runner.MARK_BEGIN in p and runner.MARK_END in p
+                                                       for p in (review, build)))
 
 print()
 print("dispatch-runner-test: " + ("ok" if not failures else f"{len(failures)} failing"))
