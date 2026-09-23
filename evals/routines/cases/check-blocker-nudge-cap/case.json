@@ -1,0 +1,74 @@
+{
+  "id": "check-blocker-nudge-cap",
+  "title": "The Top pick leads with a blocker already nudged six times unconverted: nudge the next candidate",
+  "routine": "check",
+  "when": "Saturday 2026-09-19, 18:02",
+  "state_rev": "02059de",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "grey",
+      "desc": "reads the day as grey",
+      "assert": {
+        "path": "day_state",
+        "eq": "grey"
+      }
+    },
+    {
+      "id": "not_blocker",
+      "desc": "nudges a candidate, not the six-times-unconverted scanner blocker",
+      "assert": {
+        "and": [
+          {
+            "path": "nudge_candidate",
+            "truthy": true
+          },
+          {
+            "path": "nudge_candidate",
+            "not_contains_any": [
+              "scanner",
+              "local-wip",
+              "local wip",
+              "launchd"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "one",
+      "desc": "sends exactly one notification",
+      "assert": {
+        "count": {
+          "path": "notifications",
+          "where": {
+            "path": "outcome",
+            "eq": "sent"
+          },
+          "eq": 1
+        }
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

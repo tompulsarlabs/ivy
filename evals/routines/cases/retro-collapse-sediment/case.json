@@ -1,0 +1,38 @@
+{
+  "id": "retro-collapse-sediment",
+  "title": "memory/repos/ivy.md restates the outage day by day: the retro collapses it",
+  "routine": "retro",
+  "when": "Sunday 2026-09-20, 10:05",
+  "state_rev": "310de8d",
+  "intent": "change",
+  "measures": {
+    "restatements": {
+      "file": "memory/repos/ivy.md",
+      "count": "still dark",
+      "above_heading": "## Changelog"
+    },
+    "mentions": {
+      "file": "memory/repos/ivy.md",
+      "count": "scanner",
+      "above_heading": "## Changelog"
+    }
+  },
+  "checks": [
+    {
+      "id": "collapsed",
+      "desc": "the page's five dated restatements of the outage collapse to at most two",
+      "assert": {
+        "path": "_measures.restatements.after",
+        "le": 2
+      }
+    },
+    {
+      "id": "still_recorded",
+      "desc": "the page still records the ongoing outage",
+      "assert": {
+        "path": "_measures.mentions.after",
+        "ge": 1
+      }
+    }
+  ]
+}

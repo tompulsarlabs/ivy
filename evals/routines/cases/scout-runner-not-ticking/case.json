@@ -1,0 +1,82 @@
+{
+  "id": "scout-runner-not-ticking",
+  "title": "Heartbeat stopped mid-window yesterday with a contract open: name it, never guess the cause",
+  "routine": "scout",
+  "when": "Wednesday 2026-09-23, 09:05",
+  "state_rev": "5c1c790",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "blocker",
+      "desc": "names the runner as not ticking",
+      "assert": {
+        "any": {
+          "path": "blockers",
+          "where": {
+            "contains_any": [
+              "tick",
+              "heartbeat",
+              "not running",
+              "stalled"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "both_causes",
+      "desc": "names both possible causes instead of guessing one",
+      "assert": {
+        "any": {
+          "path": "blockers",
+          "where": {
+            "and": [
+              {
+                "contains_any": [
+                  "asleep",
+                  "sleep"
+                ]
+              },
+              {
+                "contains_any": [
+                  "launchd",
+                  "unloaded",
+                  "not loaded"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "silent",
+      "desc": "sends nothing",
+      "assert": {
+        "path": "notifications",
+        "len_eq": 0
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

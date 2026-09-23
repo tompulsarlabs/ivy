@@ -1,0 +1,47 @@
+{
+  "id": "failsafe-green-no-journal",
+  "title": "Real work landed after the check: green, no Tom-authored commit",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "green",
+      "desc": "reads the day as green",
+      "assert": {
+        "path": "day_state",
+        "eq": "green"
+      }
+    },
+    {
+      "id": "no_tom_commit",
+      "desc": "makes no Tom-authored commit",
+      "assert": {
+        "none": {
+          "path": "commits",
+          "where": {
+            "path": "author",
+            "eq": "tom"
+          }
+        }
+      }
+    },
+    {
+      "id": "not_fired",
+      "desc": "records failsafe_fired false",
+      "assert": {
+        "path": "state_json_today.failsafe_fired",
+        "eq": false
+      }
+    },
+    {
+      "id": "terse_state",
+      "desc": "keeps every state.json value terse",
+      "assert": {
+        "path": "state_json_today",
+        "max_str_len": 160
+      }
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "check-green-silent",
+  "title": "Commits by the second connected address: green, silent, a terse state row",
+  "routine": "check",
+  "when": "Wednesday 2026-09-23, 18:02",
+  "state_rev": "f049a89",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "green",
+      "desc": "reads the day as green",
+      "assert": {
+        "path": "day_state",
+        "eq": "green"
+      }
+    },
+    {
+      "id": "silent",
+      "desc": "sends nothing",
+      "assert": {
+        "path": "notifications",
+        "len_eq": 0
+      }
+    },
+    {
+      "id": "no_nudge_recorded",
+      "desc": "records no nudge",
+      "assert": {
+        "path": "state_json_today.nudge_sent",
+        "in": [
+          false,
+          null
+        ]
+      }
+    },
+    {
+      "id": "terse_state",
+      "desc": "keeps every state.json value terse (narrative goes to the journal)",
+      "assert": {
+        "path": "state_json_today",
+        "max_str_len": 160
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

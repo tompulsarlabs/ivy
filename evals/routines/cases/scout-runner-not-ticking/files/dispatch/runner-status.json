@@ -1,0 +1,12 @@
+{
+  "harness": {
+    "claude": true,
+    "codex": true
+  },
+  "last_tick": "2026-09-22T11:40:03+02:00",
+  "lint_ok": true,
+  "result": "idle",
+  "runner_sha": "59b6eac",
+  "since": "2026-09-22T10:10:25+02:00",
+  "skipped": []
+}

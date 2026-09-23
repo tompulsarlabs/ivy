@@ -1,0 +1,41 @@
+{
+  "id": "scout-revealed-focus",
+  "title": "A stale PR becomes one click from merge while Tom pushes daily elsewhere: rank the focus",
+  "routine": "scout",
+  "when": "Wednesday 2026-09-23, 09:05",
+  "state_rev": "5c1c790",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "not_stale_pick",
+      "desc": "does not rank the stale BrightPaws PR first",
+      "assert": {
+        "path": "top_pick",
+        "not_contains_any": [
+          "brightpaws"
+        ]
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "failsafe-timeout-promote",
+  "title": "A build contract recorded as a timeout had opened its draft PR: verify and promote",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "promoted",
+      "desc": "moves copy-03 to done with verified: true",
+      "assert": {
+        "any": {
+          "path": "contracts_changed",
+          "where": {
+            "and": [
+              {
+                "path": "id",
+                "contains": "copy-03"
+              },
+              {
+                "path": "to",
+                "contains": "done"
+              },
+              {
+                "path": "verified",
+                "eq": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
