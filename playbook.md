@@ -330,8 +330,11 @@ claim.
 
 - An ongoing condition (an outage, a stale PR, a running count) lives in one
   current-state line saying when it began, when it was last confirmed, and
-  what it blocks. Update that line in place; the day-by-day detail stays in
-  the journal.
+  what it blocks. When the day confirms it again, edit that line: move its
+  last-confirmed date, counts, and citation forward, so the page gains no
+  sentence and no `## Changelog` entry. The day-by-day detail stays in the
+  journal. On a page that still holds a run of dated restatements, edit the
+  latest one this way; collapsing the run is the retro's job.
 - Create a page only for a subject with durable signal (a first real
   commit, not one quiet day), and add it to `memory/INDEX.md` in the same
   commit.
