@@ -48,13 +48,13 @@ triggers ran until now are kept in `evals/routines/live-prompts/`.
 
 **Dispatch.** Effort reaches the harness (`claude --effort`, codex
 `model_reasoning_effort`); an effort `claude` refuses skips the contract as
-`lane_invalid` before the claim; outcomes record the effort. Anthropic lanes
-move to the newest Opus, workhorse at `medium` and frontier at `high` (on
-it, `medium` matches or beats the previous Opus at `high`; `xhigh` waits
-for a measured gain). The OpenAI pins stay until `codex` confirms the newer
-models. The worker prompt says the run is unattended, sets a concrete
-review bar with severity and confidence, and keeps the clone's git
-identity.
+`lane_invalid` before the claim; outcomes record the effort. The lanes keep
+their pins, so the configured efforts apply for the first time: frontier at
+`xhigh` and workhorse at `medium`. The newest Opus needs Claude Code 2.1.280
+or later on the Mac, which had 2.1.277; the move waits for that upgrade, and
+the OpenAI re-pin waits for `codex` to confirm the newer models. The worker
+prompt says the run is unattended, sets a concrete review bar with severity
+and confidence, and keeps the clone's git identity.
 
 **Eval.** `evals/routines/` replays 25 real days, each with one change,
 against a routine's prompt and the steering files, and grades the
@@ -68,9 +68,10 @@ playbook pass 21 of 23 and 1 of 2. Details in
 
 **For Tom.** Paste the four `routines/*.md` prompts into their triggers
 after merge (until then the triggers run the old prompts against the new
-playbook, which the eval covers too). Confirm frontier at `high`. Re-pin the
-OpenAI lanes once `codex` confirms. The retro on 2026-09-27 is the first to
-collapse `memory/repos/ivy.md`.
+playbook, which the eval covers too). Run `claude update` on the Mac, then
+move the Anthropic lanes to the newest Opus as the `config.yml` lanes comment
+says. Re-pin the OpenAI lanes once `codex` confirms. The retro on 2026-09-27
+is the first to collapse `memory/repos/ivy.md`.
 
 ## v9 — 2026-09-20
 
