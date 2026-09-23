@@ -68,3 +68,25 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-23-talentscout-workspace-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty, no actionable findings, five
+  confirmations each tied to file:line, PR #1's tracked findings correctly
+  left un-relitigated. This session's GitHub access is scoped to ivy
+  alone, so get_file_contents/pull_request_read against
+  tompulsarlabs/talent-scout are denied — could not check every
+  referenced path against the PR head file-by-file. Corroborated instead
+  against the PR's own body (per today's scout entry,
+  journal/2026-09-23.md ## Open PRs #2): body claims a unified
+  brief→market→people workspace with review priorities/notes persisting
+  per run independent of model scores — the report's isolation finding
+  cites the same per-run-keyed storage in
+  src/lib/scout/from-longlist.ts:69 and src/lib/scout/review-state.ts;
+  body claims no change to Notion artifacts/prompts/model
+  APIs/backend/outreach — the report confirms no API routes, model
+  clients, prompts, or Supabase provisioning changed in the diff; body
+  claims a "shared public-source equality check" against six files
+  mirrored into tomgreen.ai — the report confirms identical Git blob IDs
+  for all six via scripts/check-public-demo.mjs. No contradiction found
+  between the report and the PR body.

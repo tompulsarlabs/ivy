@@ -64,3 +64,24 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-23-talentradar-execbeta-review-03.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy, non-empty, two findings (P1 CSV dedupe,
+  P3 unreachable provider fallback) and five confirmations each tied to
+  file:line. This session's GitHub access is scoped to ivy alone, so
+  get_file_contents/pull_request_read against tompulsarlabs/talent-radar
+  are denied — could not check every referenced path against the PR head
+  file-by-file. Corroborated instead against the PR's own body (per
+  today's scout entry, journal/2026-09-23.md ## Open PRs #3): body claims
+  338 deterministic tests, up from 332 at the 09-17 review head — the
+  report confirms docs/BETA-READINESS.md:17 now states 338, resolving the
+  09-17 review's open "stale test count" finding; body describes the new
+  "Known live now" feature as read-only profile-derived title retrieval
+  with no ranking/extra model call — the report's confirmation cites the
+  same read-only behavior in src/app/api/pilot/route.ts and
+  src/lib/pilot/job-search.ts; the CSV dedupe P1 finding at
+  src/lib/market/import.ts:44 is the same open finding carried from
+  2026-09-17-talentradar-execbeta-review-02, consistent with the scout's
+  note that it "still cannot be confirmed resolved without diff access."
+  No contradiction found between the report and the PR body.
