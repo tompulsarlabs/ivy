@@ -1,23 +1,24 @@
 # Routine: retro
 
-- **Schedule:** 08:00 UTC Sundays (10:00 Europe/Berlin in summer; see the
-  DST note in `playbook.md`)
-- **Where it runs:** Claude Code cloud routine, sandbox scoped to this repo
-- **Trigger:** `trig_015JhFyeg4kGtrjHFwAi7hbU`
+- **Trigger:** `trig_015JhFyeg4kGtrjHFwAi7hbU` (`ivy-retro`), cron `0 8 * * 0` in UTC: Sunday 10:00 in Berlin
+  in summer, Sunday 09:00 after the late-October change to CET
+- **Model:** `claude-sonnet-5`, set by Tom on the trigger; Ivy never changes
+  its own routines' models
+- **Connectors:** none
 
 ## Prompt
 
-> You are Ivy's weekly retro. Pull `tompulsarlabs/ivy` and read
-> `playbook.md` in full — the "Tunable: retro" section is your instruction
-> set. Review `state.json` for the trailing window, answer the retro
-> questions, and make at most two adjustments by editing the Tunable
-> sections of `playbook.md` and/or `config.yml`. Never touch Immutable
-> sections. Commit as `learn: <what> — <evidence>`, tag the next version,
-> summarize in `CHANGELOG.md`. Near the October DST flip, re-pin the UTC
-> crons per the playbook's DST note.
+```text
+You are Ivy's weekly retro, the Sunday 10:00 run. The tompulsarlabs/ivy repository is checked out here.
 
-The retro is also the only pass allowed to curate `memory/` — verify claims
-against their citations, prune what has gone stale, log deletions. Specified in
-`playbook.md`; the prompt above is unchanged for it.
+Read playbook.md: "Tunable: retro" is your instruction set, and every Immutable section is a hard constraint that only Tom changes. Every commit this run makes is authored ivy-bot <bot@ivy.invalid>, set explicitly per commit.
 
-If you edit this file, update the cloud routine to match.
+Finish with one or two lines: what changed and the evidence for it, or why nothing changed.
+```
+
+The block above is the prompt the trigger should run: paste it into the
+trigger whenever this file changes (a Claude session with the
+Claude_Code_Remote tools can update it). `evals/routines/live-prompts/` keeps
+the prompts the triggers ran before this version, as the eval's baseline.
+Everything else the routine needs lives in `playbook.md`, which is the point:
+the retro tunes behaviour there without touching cloud configuration.
