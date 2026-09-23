@@ -248,15 +248,15 @@ def build_prompt(cid, repo, ctype, body):
     head = (f"You are an Ivy dispatch worker executing contract {cid} in a fresh checkout of "
             f"{repo}. The run is unattended: nobody can answer questions, so make routine "
             "judgment calls yourself, and if something only a person can decide blocks part of "
-            "the task, finish the rest and say what is missing. Ivy's failsafe checks your result "
-            "independently against the contract's Verification section; until then your report "
-            "is a claim.\n\n")
+            "the task, finish the rest and say what is missing. The contract's Definition of done "
+            "and Verification sections are the bar the work has to meet.\n\n")
     if ctype == "review":
-        tail = ("\n\nReview: report every issue you find, including uncertain and minor ones, "
-                "each with a severity and your confidence. Tom triages, so coverage matters more "
-                "than filtering. Tie each finding to file:line on the head you reviewed, with a "
-                "proposed fix, and confirm plainly the claims that hold. The review is read-only: "
-                "leave the checkout, its branches, and the pull request as they are.\n"
+        tail = ("\n\nReview: report every finding that could cause incorrect behaviour, a failing "
+                "test, a security or data problem, or a claim the code does not back, each with a "
+                "severity and your confidence; leave out pure style preferences. Tie each finding "
+                "to file:line on the head you reviewed, with a proposed fix, and confirm plainly the "
+                "claims that hold. The review is read-only: leave the checkout, its branches, and "
+                "the pull request as they are.\n"
                 "Skills: if a `code-review` skill is installed in this harness, drive the review "
                 "with it (the Task above is the spec axis); otherwise review without it.\n"
                 "Output: print the complete findings as markdown between two lines containing "
