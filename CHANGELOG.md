@@ -1,5 +1,77 @@
 # Changelog
 
+## v10 — 2026-09-23
+
+**Re-tuned for the current model generation, with a routine eval to hold
+the line.** A human change from an interactive session, reviewed as
+tompulsarlabs/ivy#21; the Immutable sections are byte-identical. Audited
+against the `claude-api` skill's prompt-audit guide and its migration notes
+for the newest models: current models follow instructions literally, so
+text written for older ones (pressure, step choreography, incident
+archaeology, contradictions) now costs behaviour, not just tokens.
+
+**What the audit found.** The four cloud triggers still ran their
+2026-08-24 prompts: step-by-step procedures that restated the playbook and
+had drifted from it (the check chose a nudge without the decay rule, the
+failsafe prompt never mentioned contract verification or memory, the retro
+prompt pushed a tag the cloud always refuses). `routines/*.md` documented
+thin prompts that were never deployed. The runner read each lane's `effort`
+and dropped it, so frontier and workhorse ran the identical `claude`
+command: no Anthropic outcome in `memory/models.md` reflects its lane's
+configured effort. `playbook.md` had grown by accretion (a 75-line scout
+bullet, 36 bold spans, eight dated incident references, relative phrasing
+such as "down from" and "also counts"), and two of its rules were visibly
+unenforced: `state.json` values are paragraphs despite "Keep
+`signal_source` to a short source label", and `memory/repos/ivy.md`
+restates the scanner outage once a day, in its body and again under
+`## Changelog`.
+
+**Playbook (Tunable sections rewritten, behaviour kept).** Each routine
+opens with its outcome; rules sit with their reasons; what all three daily
+routines share (push before the run ends, input shelf lives, deciding
+green, the `ALERT:` prefix, terse state rows) is stated once. Settled two
+ambiguities: a blocker persisting three days leads the Top pick section
+above the candidate, and outranks candidates for the nudge until its third
+unconverted send. Deliberate changes: the failsafe moves an ongoing
+condition's memory line forward instead of appending a restatement or a
+`## Changelog` entry; the scout counts today's contracts before queueing
+more; the retro collapses existing restatements, records the version here
+instead of pushing a tag (the preamble now says the same), notes the DST
+change instead of re-pinning triggers it cannot reach, writes
+Immutable-section proposals for Tom, and runs the `claude-api` prompt-audit
+over the steering files after a model change.
+
+**Routines.** `routines/*.md` now carry the prompt each trigger should run
+(who the run is, where its instructions live, the one hard constraint, the
+final line), plus the trigger's model and connectors. The prompts the
+triggers ran until now are kept in `evals/routines/live-prompts/`.
+
+**Dispatch.** Effort reaches the harness (`claude --effort`, codex
+`model_reasoning_effort`); an effort `claude` refuses skips the contract as
+`lane_invalid` before the claim; outcomes record the effort. Anthropic lanes
+move to the newest Opus, workhorse at `medium` and frontier at `high` (on
+it, `medium` matches or beats the previous Opus at `high`; `xhigh` waits
+for a measured gain). The OpenAI pins stay until `codex` confirms the newer
+models. The worker prompt says the run is unattended, sets a concrete
+review bar with severity and confidence, and keeps the clone's git
+identity.
+
+**Eval.** `evals/routines/` replays 25 real days, each with one change,
+against a routine's prompt and the steering files, and grades the
+decisions deterministically (`evals/README.md`). On the routines' model,
+two reps each, the new prompts and playbook pass 45 of 46 preserve runs and
+4 of 4 change runs, against 35 of 46 and 0 of 4 for the old ones; no case
+that passed before fails now. They cost 34% more at list price, spent
+reading the files the rules point at. The old prompts against the new
+playbook pass 21 of 23 and 1 of 2. Details in
+`evals/routines/results/2026-09-23.md`.
+
+**For Tom.** Paste the four `routines/*.md` prompts into their triggers
+after merge (until then the triggers run the old prompts against the new
+playbook, which the eval covers too). Confirm frontier at `high`. Re-pin the
+OpenAI lanes once `codex` confirms. The retro on 2026-09-27 is the first to
+collapse `memory/repos/ivy.md`.
+
 ## v9 — 2026-09-20
 
 **Retro: two adjustments — a repeat cap on unconverted blocker nudges, and
