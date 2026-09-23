@@ -16,23 +16,32 @@
     },
     {
       "id": "not_blocker",
-      "desc": "nudges a candidate, not the six-times-unconverted scanner blocker",
+      "desc": "the push names a candidate, not the six-times-unconverted scanner blocker",
       "assert": {
-        "and": [
-          {
-            "path": "nudge_candidate",
-            "truthy": true
-          },
-          {
-            "path": "nudge_candidate",
-            "not_contains_any": [
-              "scanner",
-              "local-wip",
-              "local wip",
-              "launchd"
+        "any": {
+          "path": "notifications",
+          "where": {
+            "and": [
+              {
+                "path": "outcome",
+                "eq": "sent"
+              },
+              {
+                "path": "text",
+                "matches": "#\\d+|unpushed|push "
+              },
+              {
+                "path": "text",
+                "not_contains_any": [
+                  "scanner",
+                  "local-wip",
+                  "local wip",
+                  "launchd"
+                ]
+              }
             ]
           }
-        ]
+        }
       }
     },
     {
