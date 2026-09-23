@@ -1,6 +1,6 @@
 # Skills audit: dated prompting patterns in the vendored mattpocock/skills
 
-Audit of `.claude/skills/` for the Claude Opus 5.5, Claude Sonnet 5 and Claude Fable 5.1 generation, done on 2026-09-23. It is read-only: nothing in the repository was changed. Each finding carries its proposed edit as replacement text (one hunk per finding). There is no separate patch file: the skills are vendored upstream material, and the branch this audit informed leaves them unforked. The Ivy-side changes are under "Ivy adapter gaps".
+Audit of `.claude/skills/` for the current model generation (the newest Opus, and the current Sonnet and Fable), done on 2026-09-23. Model names are generic here: "the previous Opus" is the generation before the newest one, and "the current Sonnet" is the routines' model. It is read-only: nothing in the repository was changed. Each finding carries its proposed edit as replacement text (one hunk per finding). There is no separate patch file: the skills are vendored upstream material, and the branch this audit informed leaves them unforked. The Ivy-side changes are under "Ivy adapter gaps".
 
 **State audited.** The skills tree matches `skills-lock.json` and current upstream. Ivy-side line numbers refer to commit `fbb846d` on branch `claude/skills-playbooks-refresh-784cgk`; the branch's later commits apply G1 to G6, G2's contract convention, and G9.
 
@@ -32,7 +32,7 @@ The totals are 1 High, 10 Medium, 3 Low and 2 out-of-group flags. 14 of the 25 s
 
 The three findings with the most impact:
 
-1. **code-review's sub-agent briefs end "Under 400 words."** (`code-review/SKILL.md:64`, `:70`). The Standards brief asks for "every place the diff violates a documented standard" and then caps the report. The migration notes document that Sonnet 5 and Opus 5 apply a review prompt's stated bar faithfully: they find the issues, then leave out whatever falls below the bar. A word ceiling is such a bar, so findings get dropped to fit. This skill is upstream's general review path, and it is the review discipline Ivy names for every review and build worker. Ivy's runner, new on this branch, gives the worker a concrete bar with severity and confidence, which is the form the review guidance recommends. That bar sits in the orchestrating prompt, though, and the skill still hands its sub-agents the capped brief (gap G1).
+1. **code-review's sub-agent briefs end "Under 400 words."** (`code-review/SKILL.md:64`, `:70`). The Standards brief asks for "every place the diff violates a documented standard" and then caps the report. The migration notes document that the current Sonnet and the previous Opus apply a review prompt's stated bar faithfully: they find the issues, then leave out whatever falls below the bar. A word ceiling is such a bar, so findings get dropped to fit. This skill is upstream's general review path, and it is the review discipline Ivy names for every review and build worker. Ivy's runner, new on this branch, gives the worker a concrete bar with severity and confidence, which is the form the review guidance recommends. That bar sits in the orchestrating prompt, though, and the skill still hands its sub-agents the capped brief (gap G1).
 2. **writing-for-agents says that when a word like "be thorough" is a no-op, "the fix is a stronger word (_relentless_)"** (`writing-for-agents/SKILL.md:81`). For that exact example, the audit guide's documented fix on current models is to delete the word, because intensity words over-apply. Ivy's Sunday retro loads this skill every week to prune playbook.md, the routines and procedures. That makes this the one line that can put the pressure register back into the files every Ivy run reads (gap G3).
 3. **Two model-invoked skills assume a person is present to answer** (outside the four groups). tdd says "confirm them with the user. No test is written at an unconfirmed seam" (`tdd/SKILL.md:22`). code-review asks the user for the fixed point and the spec, or sends them to run setup (`code-review/SKILL.md:13`, `:19`, `:32`). Both run under `claude -p` in Ivy's workers, where nobody answers. Upstream already has the fix pattern in two other skills (`diagnosing-bugs/SKILL.md:98`, `prototype/SKILL.md:17`). Ivy's runner, new on this branch, tells workers the run is unattended. The residue is that no build contract names its seams (gap G2).
 
@@ -40,11 +40,11 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 
 ## Method, inventory, provenance
 
-- **Method.** I followed `claude-api/shared/prompt-audit.md` Steps 0 to 5 and its keep list. For background I used the two sections of `model-migration.md` I was asked to read ("Migrating to Claude Opus 5 → Behavioral shifts" and "Migrating to Claude Opus 5.5"). I also read two short passages that findings depend on:
-  - "Migrating to Claude Sonnet 5 → Behavioral shifts", because Sonnet 5 is the routines' model (lines 1250-1282).
-  - The Opus 4.7 "Code review" paragraph, which the Opus 5 severity-filter note points to (lines 779-785).
+- **Method.** I followed `claude-api/shared/prompt-audit.md` Steps 0 to 5 and its keep list. For background I used the two sections of `model-migration.md` I was asked to read (the behavioral shifts of the previous Opus, and the migration section for the newest Opus). I also read two short passages that findings depend on:
+  - The behavioral shifts of the current Sonnet, because it is the routines' model (lines 1250-1282).
+  - An older Opus's "Code review" paragraph, which the previous Opus's severity-filter note points to (lines 779-785).
 
-  I did not read the Fable 5.1 sections. Their rows specific to Fable (rules against formatting, update suppressors, re-inserted instructions) matched nothing in the tree.
+  I did not read the current Fable's sections. Their rows specific to Fable (rules against formatting, update suppressors, re-inserted instructions) matched nothing in the tree.
 - **Signals grepped over the whole tree:**
   - emphasis: caps emphasis, `!!`, intensity words
   - hedges and trait claims: `try to` / `if possible` / `ideally` / `where possible`; trait claims about the model
@@ -60,11 +60,11 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
   - 14 are user-invoked: ask-matt, grill-me, grill-with-docs, handoff, implement, improve-codebase-architecture, setup-matt-pocock-skills, teach, to-questionnaire, to-spec, to-tickets, triage, wait-what, wayfinder.
   - The retro calls writing-for-agents and domain-modeling (playbook.md:381, :395).
   - Workers are told to use code-review for review contracts and tdd plus code-review for build contracts (`scripts/dispatch-runner.py:260-273`).
-  - Before this branch, the Anthropic worker lanes ran claude-opus-5. config.yml:72, :75 (new on this branch) moves them to claude-opus-5-5, at high and medium effort. The worker runs cited below all used claude-opus-5.
+  - The Anthropic worker lanes run the previous Opus, and every worker run cited below used it. This branch keeps them there until the Mac's Claude Code can run the newest Opus (the lanes comment in config.yml).
 - **Provenance.** Every line blames to a78bf80 (2026-09-02, the vendoring commit). I did not consult upstream history, so no finding rests on blame. Dating rests on target-model documentation and on idiom.
 - **Confidence scale.**
   - **High:** the migration notes document the target-model behaviour that makes the text harmful, for a model that actually runs it.
-  - **Medium:** the text matches a documented audit-guide row whose reason is the guide's general statement about current models, or the behaviour is documented for Opus 5 and carries to Opus 5.5 as its starting point (model-migration.md:1864, :2039).
+  - **Medium:** the text matches a documented audit-guide row whose reason is the guide's general statement about current models, or the behaviour is documented for the previous Opus and carries to the newest Opus as its starting point (model-migration.md:1864, :2039).
   - **Low:** heuristic or idiom-dating. Flagged, with no edit proposed.
 
 ## Findings
@@ -78,12 +78,12 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
   - Spec brief: "... Quote the spec line for each finding. Under 400 words."
 - Pattern: hard word caps (1b) and numeric output ceilings (1f). In a review brief, the cap acts as a severity filter.
 - Why obsolete for the target models:
-  - The migration notes document that Sonnet 5 and Opus 5 apply a review prompt's stated bar faithfully. They investigate just as thoroughly, then leave out what falls below the bar (model-migration.md:1128, :1272). A 400-word ceiling works as such a bar: on a diff with more findings than fit, the sub-agent has to drop some, and the brief's own "every place" loses to the cap.
+  - The migration notes document that the current Sonnet and the previous Opus apply a review prompt's stated bar faithfully. They investigate just as thoroughly, then leave out what falls below the bar (model-migration.md:1128, :1272). A 400-word ceiling works as such a bar: on a diff with more findings than fit, the sub-agent has to drop some, and the brief's own "every place" loses to the cap.
   - The documented fix asks for every finding with a confidence and a severity, filtered in a later step (:1274). The audit guide lists word caps among the scaffolds to delete, and says a stated operational reason doesn't turn a numeric clamp into a keeper.
   - The aggregation step (`:78`) wants "the worst issue within each axis", which needs severities that the briefs never ask for.
 - Confidence: High
 - Reach:
-  - Tom's interactive reviews (Opus 5.5).
+  - Tom's interactive reviews.
   - Any Ivy review worker that loads the skill. The runner (new on this branch) sets a concrete bar with severity and confidence in the orchestrating prompt, but that doesn't reach the sub-agent briefs (G1).
   - So far the skill's two-axis shape shows up in 1 of 22 worker reports, so the cap has not yet measurably cut Ivy's reviews.
 - Action (rewrite): in both briefs, replace "Under 400 words." with: "Report every finding, including ones you are unsure of or judge minor, with a confidence and a severity for each, so the aggregate can rank within the axis. Keep each finding to what a reader needs to act on it."
@@ -110,19 +110,19 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
   - The rest of the bullet is sound and agrees with the guide: delete no-ops, the test depends on the model, settle it by running the document. Only the repair is dated.
   - The skill's own "Demand" lever (`:50`, raising the completion criterion) is the current-model way to get more than the default.
 - Confidence: Medium
-- Reach: Ivy's weekly retro, running headless on Sonnet 5, applies this skill's tests to CLAUDE.md, playbook.md, routines/*.md and procedures/ (playbook.md:379-386). The playbook's new prompt-audit clause (:386-390) runs only after a model change, so the weekly pass still applies line 81. Ivy-side mitigation: G3.
+- Reach: Ivy's weekly retro, running headless on the current Sonnet, applies this skill's tests to CLAUDE.md, playbook.md, routines/*.md and procedures/ (playbook.md:379-386). The playbook's new prompt-audit clause (:386-390) runs only after a model change, so the weekly pass still applies line 81. Ivy-side mitigation: G3.
 - Action (rewrite the two sentences): "The test also grades leading words: a word too weak to beat the default (_be thorough_ when the agent is already thorough-ish) is a no-op, so delete it. If the behaviour it reached for still matters, state the target or raise the completion criterion's demand (see Steps and completion criteria). Reach for a stronger word only when running the document shows the plain statement falls short: current models over-apply intensity."
 
 **F4. Self-review sub-agents as the last step of every implementation**
 - Location: `implement/SKILL.md:13`, plus the matching description of the flow at `ask-matt/SKILL.md:26`
 - Evidence: "Once done, use /code-review to review the work." / "then closes out by running **`/code-review`**, a two-axis review (Standards + Spec) of the diff, before committing."
-- Pattern: verification scaffolding, i.e. behaviour the model already does unprompted (Step 3; the migration notes name it for Opus 5)
+- Pattern: verification scaffolding, i.e. behaviour the model already does unprompted (Step 3; the migration notes name it for the previous Opus)
 - Why obsolete:
-  - The notes say "Claude Opus 5 verifies its own work without being asked. Instructions that tell it to verify (... 'use a subagent to verify') now cause over-verification. Removing them reduces over-verification with no capability regression" (model-migration.md:1077).
+  - The notes say "[The previous Opus] verifies its own work without being asked. Instructions that tell it to verify (... 'use a subagent to verify') now cause over-verification. Removing them reduces over-verification with no capability regression" (model-migration.md:1077).
   - The delegation guidance lists "Review, verification, or to double check your work" as work not to hand to sub-agents (:1096).
   - /code-review at the end of /implement is two sub-agents reviewing the diff the same session just wrote.
-  - Opus 5.5 starts from the Opus 5 prompt patterns and asks for them to be re-tested (:1864, :2039). Sonnet 5 "will ... run self-verification loops more readily" (:1260).
-- Confidence: Medium. The behaviour is documented for Opus 5 and Sonnet 5; re-test on Opus 5.5.
+  - The newest Opus starts from the previous Opus's prompt patterns and asks for them to be re-tested (:1864, :2039). The current Sonnet "will ... run self-verification loops more readily" (:1260).
+- Confidence: Medium. The behaviour is documented for the previous Opus and the current Sonnet; re-test on the newest Opus.
 - Reach:
   - /implement is user-invoked, in Tom's sessions.
   - Ivy's build workers get the same shape from the runner: "review the diff against the Task before opening the PR" (`scripts/dispatch-runner.py:271-273`). See "Workflow observation".
@@ -148,7 +148,7 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Evidence: "When a frontier question needs a fact from the environment (filesystem, tools, etc.), dispatch a sub-agent to find it; don't ask the user for anything you could look up yourself."
 - Pattern: 1a "Default to [tool]", applied to delegation
 - Why obsolete:
-  - The Opus 5 notes document that it "reaches for [subagents] freely, which multiplies cost and latency". They list "a few file reads ... a simple search task" as work not to delegate (model-migration.md:1085, :1095), and Opus 5.5 starts from those patterns.
+  - The previous Opus's notes document that it "reaches for [subagents] freely, which multiplies cost and latency". They list "a few file reads ... a simple search task" as work not to delegate (model-migration.md:1085, :1095), and the newest Opus starts from those patterns.
   - The line's real reason, not blocking the interview on a slow lookup, holds only for long explorations.
 - Confidence: Medium
 - Reach: model-invoked. grilling also runs inside grill-me, grill-with-docs, triage, wayfinder and improve-codebase-architecture, in Tom's interactive sessions.
@@ -159,8 +159,8 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Evidence: "A LONG, numbered list of user stories." / "This list of user stories should be extremely extensive and cover all aspects of the feature."
 - Pattern: 1a pressure language (caps plus an intensifier), written against models that produced too little
 - Why obsolete:
-  - Opus 5 already writes longer deliverables to disk than earlier models. The documented calibration is "cover the substance, but do not pad documents with filler sections, redundant summaries, or boilerplate" (model-migration.md:1071-1073), and Opus 5.5 starts from Opus 5's patterns.
-  - Sonnet 5 calibrates length to the complexity of the task (:1254).
+  - The previous Opus already writes longer deliverables to disk than earlier models. The documented calibration is "cover the substance, but do not pad documents with filler sections, redundant summaries, or boilerplate" (model-migration.md:1071-1073), and the newest Opus starts from its patterns.
+  - The current Sonnet calibrates length to the complexity of the task (:1254).
   - The part that does the work is the coverage requirement. The volume words push toward near-duplicate stories.
 - Confidence: Medium
 - Reach: user-invoked, interactive.
@@ -172,7 +172,7 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Pattern: Group 2 volatile specifics, with the same fact duplicated across files
 - Why obsolete:
   - "On state-of-the-art models" ties an undated figure to one model generation.
-  - The target models have a 1M-token window (model-migration.md:1864), and Fable 5.1's documented gains include long-context retrieval deep in that window (:1750).
+  - The target models have a 1M-token window (model-migration.md:1864), and the current Fable's documented gains include long-context retrieval deep in that window (:1750).
   - I can't tell where the smart zone sits on these models. The finding is that the figure is undated and appears three times as two different numbers, so it will drift.
   - The figure drives compaction, which the skill itself calls lossy, and ticket sizing. to-tickets:33 already states the same constraint without a number ("sized to fit in a single fresh context window").
 - Confidence: Medium
@@ -188,7 +188,7 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Evidence: "No hedging, no throat-clearing, no "it's worth noting that…"."
 - Pattern: 1e, a style prohibition with no stated provenance (a list of tics)
 - Why obsolete:
-  - It names the tics of an older model. Opus 5.5's documented gain in writing is "less jargon and fewer stock phrases" (model-migration.md:2034).
+  - It names the tics of an older model. The newest Opus's documented gain in writing is "less jargon and fewer stock phrases" (model-migration.md:2034).
   - Naming the phrase can pull the model toward it (1c, prohibition lists).
 - Confidence: Medium
 - Reach: user-invoked, interactive.
@@ -207,7 +207,7 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Location: `teach/SKILL.md:41`
 - Evidence: "... storage strength is the real goal. Try to design lessons which build long-term retention by desirable difficulty:"
 - Pattern: 1a, a hedge attached to a requirement
-- Why obsolete: the same sentence calls retention "the real goal". Current models read "try to" literally, as permission to fall short, and Sonnet 5 interprets prompts literally (model-migration.md:1264).
+- Why obsolete: the same sentence calls retention "the real goal". Current models read "try to" literally, as permission to fall short, and the current Sonnet interprets prompts literally (model-migration.md:1264).
 - Confidence: Medium, with low impact
 - Reach: user-invoked; Ivy doesn't use it.
 - Action (rewrite): "Design lessons for long-term retention through desirable difficulty:"
@@ -220,7 +220,7 @@ There are 9 Ivy adapter gaps: 5 medium and 4 low. Seven are partly covered alrea
 - Pattern: 1a default-to-tool, applied to delegation
 - Why flagged:
   - When a user asks for research, the background agent is the point of the skill.
-  - The concern is model-invoked use. The description also triggers on "docs or API facts gathered", which turns a small lookup into a spawned agent plus a new file in the repo. The Opus 5 delegation note advises against that.
+  - The concern is model-invoked use. The description also triggers on "docs or API facts gathered", which turns a small lookup into a spawned agent plus a new file in the repo. The previous Opus's delegation note advises against that.
   - Callers that already run /research inside a sub-agent (wayfinder:77, :115) would spawn a second agent, or can't comply, depending on the harness.
 - Confidence: Low
 - Suggestion: "If you are already running as a sub-agent, do the research yourself." Ivy side: G5.
@@ -251,7 +251,7 @@ These aren't dated prompting. They are text that assumes a person will answer, i
 - Location: `tdd/SKILL.md:22`, `:24`
 - Evidence: "Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam." / "Ask: "What's the public interface, and which seams should we test?""
 - Why it matters on the target models:
-  - Sonnet 5 "interprets prompts literally ... does not infer requests that weren't made" (model-migration.md:1264).
+  - The current Sonnet "interprets prompts literally ... does not infer requests that weren't made" (model-migration.md:1264).
   - Under `claude -p`, a question ends the run. A literal reading of "no test at an unconfirmed seam" means no tests.
   - Build workers run this skill headless.
 - Confidence: Medium on the mechanism. Not observed: no build contract has named seams, and a killed `claude -p` run leaves no transcript.
@@ -352,12 +352,12 @@ Sessions and routines in the ivy repo take their adapters from `docs/agents/*.md
 - Before this branch, config.yml's lane `effort` was never passed to the CLI. The runner on this branch passes it (runner:227-241).
 
 **Workflow observation** (no change proposed):
-- Build workers are asked to "review the diff against the Task before opening the PR" (runner:271-273). That is the self-review shape in F4. It now runs on claude-opus-5-5, where the Opus 5 over-verification note carries over as something to re-test. Ivy already verifies externally (dispatch/DESIGN.md D5) and runs cross-family review contracts.
+- Build workers are asked to "review the diff against the Task before opening the PR" (runner:271-273). That is the self-review shape in F4. It runs on the previous Opus, where the over-verification note applies directly; on the newest Opus it is something to re-test. Ivy already verifies externally (dispatch/DESIGN.md D5) and runs cross-family review contracts.
 - Both Claude build runs to date used their whole budget:
   - `2026-09-02-tomgreenai-copy-02` opened its draft PR at minute 19 and was killed at 40.
   - `2026-09-02-tomgreenai-layout-02` was killed at 45.
 - `claude -p` prints only its final message, so a killed run leaves no output tail (runner:413 keeps the last 1,500 characters of stdout). What those workers did after opening the PR is unrecorded. A question would have ended the run early, so these were not stalls waiting on an answer.
-- The skill's two-axis report shape appears in 1 of 22 reports (a Codex run on an ivy PR). The three claude-opus-5 reports follow the contract Task's format. Whether workers load the skills at all isn't recorded anywhere.
+- The skill's two-axis report shape appears in 1 of 22 reports (a Codex run on an ivy PR). The three reports from the Anthropic lanes follow the contract Task's format. Whether workers load the skills at all isn't recorded anywhere.
 - Before deciding whether the review inside the worker is worth its minutes, the prerequisite is capturing worker transcripts.
 
 ## Clean skills
@@ -388,7 +388,7 @@ Considered and kept, with the keep-list reason, so these aren't raised again:
 - diagnosing-bugs' ordered phases and the bold stop at :66: a method whose order has reasons. :98 already lets the run proceed when the user is away.
 - Runs of prohibitions that each carry a reason (prototype/LOGIC.md:62-67, triage/AGENT-BRIEF.md:15-17), and deliberate recaps at the end of a file.
 - Format specs for output where format matters: HTML-REPORT.md:50-52 ("one sentence", "≤6 words"), CONTEXT-FORMAT.md:28, GLOSSARY-FORMAT.md:31, and grilling's round template.
-- HTML-REPORT's prescribed look (bg-stone-50, serif headings, monospace and uppercase-tracked labels, badges) resembles the defaults the Opus 5.5 notes list. But it is explicit design direction, which is the form those notes recommend, so it's a matter of taste rather than a finding.
+- HTML-REPORT's prescribed look (bg-stone-50, serif headings, monospace and uppercase-tracked labels, badges) resembles the defaults the newest Opus's notes list. But it is explicit design direction, which is the form those notes recommend, so it's a matter of taste rather than a finding.
 - Sections of general knowledge that state the author's quality bar: codebase-design:67-95 and tdd/mocking.md.
 - Tool-contract detail in the setup templates (gh and glab commands, GitHub's issue-dependency endpoint), kept under keep-list item 4. I didn't check it against the live APIs, because Ivy doesn't use those templates.
 - The CDN pins in HTML-REPORT.md:13 and :15: library versions, not text dated by model generation. Not checked.
