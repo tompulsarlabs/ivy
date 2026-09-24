@@ -9,15 +9,21 @@ exit 2 — no signal (GraphQL and REST are blocked from this sandbox).
 login: tompulsarlabs
 
 ## mcp__github__list_commits  owner=tompulsarlabs repo=ivy sha=main since=2026-09-22T22:00:00Z
-11 commits, every one authored by ivy-bot <bot@ivy.invalid>: the 9 dispatch and scout
-commits of the morning, 16:03Z check: 2026-09-23 — grey, nudge sent (tomgreen.ai #34),
+14 commits, every one authored by ivy-bot <bot@ivy.invalid>: the 9 dispatch and scout
+commits of the morning, 11:40Z dispatch: claim 2026-09-23-tomgreenai-copy-03, 12:20Z
+dispatch: failed 2026-09-23-tomgreenai-copy-03 — timeout, 12:20Z dispatch: runner status —
+finished 2026-09-23-tomgreenai-copy-03, 16:03Z check: 2026-09-23 — green (tomgreen.ai #67),
 and 17:11Z dispatch: runner status — idle.
 
 ## mcp__github__search_commits  q="org:tompulsarlabs author-date:2026-09-23"
-The same 11 ivy-bot commits. Nothing else.
+The same 14 ivy-bot commits. Nothing else.
 
-## mcp__github__search_pull_requests  q="org:tompulsarlabs created:2026-09-23" / "merged:2026-09-23"
-0 results each.
+## mcp__github__search_pull_requests  q="org:tompulsarlabs created:2026-09-23"
+1 result: tompulsarlabs/tomgreen.ai #67, "Tighten Scout demo copy (dispatch
+2026-09-23-tomgreenai-copy-03)", draft, opened 2026-09-23T14:05+02:00 by tompulsarlabs.
+
+## mcp__github__search_pull_requests  q="org:tompulsarlabs merged:2026-09-23"
+0 results.
 
 ## mcp__github__search_issues  q="org:tompulsarlabs is:issue created:2026-09-23"
 0 results.
@@ -47,6 +53,6 @@ first re-check.
 
 - search_pull_requests  q="repo:tompulsarlabs/tomgreen.ai is:pr 2026-09-23-tomgreenai-copy-03" → #67
   "Tighten Scout demo copy (dispatch 2026-09-23-tomgreenai-copy-03)", draft, opened
-  2026-09-23T10:41+02:00 by tompulsarlabs from branch dispatch/2026-09-23-tomgreenai-copy-03.
+  2026-09-23T14:05+02:00 by tompulsarlabs from branch dispatch/2026-09-23-tomgreenai-copy-03.
   Body: changes only src/app/demo/scout/page.tsx; lint, typecheck, unit and e2e tests pass;
   names the contract id. Checks green.
