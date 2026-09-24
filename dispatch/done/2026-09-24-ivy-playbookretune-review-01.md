@@ -77,3 +77,13 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-24-ivy-playbookretune-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy (commit b308367, confirmed matching
+  origin/main), non-empty (7385 bytes), verdict "block" with one P1 and
+  three P2 findings plus two confirmed claims (Immutable byte-identity,
+  eval arithmetic), each tied to file:line or a specific evals/ path.
+  Reviewed PR #21 confirmed still open (unmerged) as of this failsafe —
+  consistent with the report's "block" verdict having stood, not been
+  overridden by a merge. No contradiction found.
