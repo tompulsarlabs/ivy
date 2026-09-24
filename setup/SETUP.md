@@ -38,15 +38,43 @@ counts (no hostname, no paths) to `local-wip.json` so the morning scout
 sees work that only exists on the laptop.
 
 ```bash
-cp setup/ai.tomgreen.ivy-wip.plist ~/Library/LaunchAgents/
-launchctl load ~/Library/LaunchAgents/ai.tomgreen.ivy-wip.plist
+bash setup/install-wip-scanner.sh install
+bash setup/install-wip-scanner.sh status
 ```
 
 The plist runs `scripts/local-wip.sh` (a thin wrapper around
 `scripts/local-wip.py`) at 08:45 and 17:45 local — just before the scout
 and check routines fire. Adjust `local_wip.roots` in `config.yml` to
-choose which directories are scanned. Run `./scripts/local-wip.sh` once by
-hand to verify.
+choose which directories are scanned. The installer uses the stable `main`
+checkout and refuses a feature branch or uncommitted scanner edits. Installation
+loads the schedule without immediately publishing a scan.
+
+Preview with `bash scripts/local-wip.sh --dry-run` (local reads only), then run
+`bash scripts/local-wip.sh` to publish once. Publication is bot-authored and uses
+a temporary clone: the operator's index, branch and unpublished commits stay
+untouched. A failed read or publication exits nonzero; the next run rescans.
+Repository-scoped Git environment overrides are removed from scanner commands
+so an inherited checkout or index cannot redirect them. Publication also pins
+both author and committer to the bot identity and drops inherited commit dates;
+scan-time author checks retain the operator's identity overrides.
+Status reports an unloaded job explicitly. Uninstall with
+`bash setup/install-wip-scanner.sh uninstall`.
+
+Discovery includes existing registered worktrees outside the configured roots,
+deduplicates overlapping roots and skips deleted/prunable worktrees without
+changing Git's registry. `unpushed_commits` retains the repository-wide count;
+`checkout_unpushed_commits` identifies work reachable from that checkout's HEAD.
+Do not sum repository-wide counts across worktrees of the same repository.
+Counts use locally known remote refs; the scan does not fetch project remotes.
+
+Unchanged scans publish a heartbeat after six hours, so both scheduled daily
+runs normally refresh `generated_at`. Manual repeats inside that window do not
+create extra commits. Read failures preserve the last published snapshot rather
+than claiming a fresh empty/clean result. Local preview results include project
+names and branches; treat them as operational data.
+
+Run `python3 -B scripts/local-wip-test.py` for isolated local Git regression
+checks. They make no GitHub requests and do not execute an agent.
 
 ## 4. Nudges
 
