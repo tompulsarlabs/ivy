@@ -343,13 +343,15 @@ claim.
   what it blocks. When the day confirms it again, rewrite that line in
   place: today's date, counts, and citation replace the old ones, so "open
   since 08-30, 11 days, last confirmed 09-10 [cite:2026-09-10]" becomes
-  "open since 08-30, 12 days, last confirmed 09-11 [cite:2026-09-11]". The
-  page gains no sentence and no `## Changelog` entry, because a new count is
-  not a new fact; the day-by-day detail stays in the journal. Some pages
-  still hold a run of dated restatements, each logged in `## Changelog`,
-  written before this rule. Treat that run as history, not a format:
-  rewrite its latest restatement in place and leave the run for the retro
-  to collapse.
+  "open since 08-30, 12 days, last confirmed 09-11 [cite:2026-09-11]".
+- `## Changelog` records what a page gained or lost, with the date and why.
+  A confirmation, a higher count, and the day's own outcome (green or grey,
+  the streak, whether the nudge converted) are none of these: the journal
+  and `state.json` already hold them, so they get no entry.
+- Some pages still hold a run of dated restatements, each with its own
+  `## Changelog` entry, written before these rules. Treat the run as
+  history, not a format: rewrite its latest restatement in place, add no
+  entry, and leave the run for the retro to collapse.
 - Create a page only for a subject with durable signal (a first real
   commit, not one quiet day), and add it to `memory/INDEX.md` in the same
   commit.
