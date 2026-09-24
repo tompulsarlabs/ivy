@@ -55,11 +55,12 @@ python3 scripts/eval-routines.py run --label candidate --steering WORKTREE --pro
 python3 scripts/eval-routines.py compare <baseline results.jsonl> <candidate results.jsonl>
 ```
 
-Scope a run with `--cases 'check-*'`. The default model is `claude-sonnet-5`,
-the model the four triggers run; pass `--model` to try another and `--effort`
-only if the trigger sets one. A full pass is 25 runs per rep, roughly $0.20 to
-$0.60 each at list price and ten to twenty minutes at `--jobs 6`. `grade`
-re-scores saved answers after a check is edited, without re-running anything.
+Scope a run with `--cases 'check-*'`. The default model (`DEFAULT_MODEL` in
+the script) is the one the four triggers run; pass `--model` to try another
+and `--effort` only if the trigger sets one. A full pass is 27 runs per rep,
+roughly $0.30 to $1.10 each at list price and about 25 minutes a rep at
+`--jobs 5`. `grade` re-scores saved answers after a check is edited, without
+re-running anything.
 
 Results rows carry the served model (a run served by a different model is
 not scored), cost, turns, the files the routine read, and its full answer;
@@ -68,7 +69,7 @@ comparison lives in `evals/routines/results/`.
 
 ## Read the numbers
 
-Two reps per case is a smoke test, not a benchmark: with 25 cases a
+Two reps per case is a smoke test, not a benchmark: with 27 cases a
 difference of one or two cases is inside the noise. Read the per-check table,
 and open the answer of any check that flips between variants before believing
 it. A case passes only when every check passes, and every case fails on an

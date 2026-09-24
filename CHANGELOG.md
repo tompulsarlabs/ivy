@@ -29,15 +29,20 @@ restates the scanner outage once a day, in its body and again under
 **Playbook (Tunable sections rewritten, behaviour kept).** Each routine
 opens with its outcome; rules sit with their reasons; what all three daily
 routines share (push before the run ends, input shelf lives, deciding
-green, the `ALERT:` prefix, terse state rows) is stated once. Settled two
+green, the `ALERT:` prefix, terse state rows) is stated once. Settled
 ambiguities: a blocker persisting three days leads the Top pick section
 above the candidate, and outranks candidates for the nudge until its third
-unconverted send. Deliberate changes: the failsafe moves an ongoing
-condition's memory line forward instead of appending a restatement or a
-`## Changelog` entry; the scout counts today's contracts before queueing
-more; the retro collapses existing restatements, records the version here
-instead of pushing a tag (the preamble now says the same), notes the DST
-change instead of re-pinning triggers it cannot reach, writes
+unconverted send; a dispatch worker's draft PR counts toward green like one
+Tom opened, and a PR review never decides green on its own, because the
+cloud tools cannot date one outside this repo; a runner heartbeat is
+measured in window time; journals follow the playbook's structure, not an
+older entry's. Deliberate changes: the failsafe rewrites an ongoing
+condition's memory line in place instead of appending a restatement, and a
+page's `## Changelog` records what the page gained or lost, not
+confirmations or the day's outcome; the scout counts today's contracts
+before queueing more; the retro collapses existing restatements, records
+the version here instead of pushing a tag (the preamble now says the same),
+notes the DST change instead of re-pinning triggers it cannot reach, writes
 Immutable-section proposals for Tom, and runs the `claude-api` prompt-audit
 over the steering files after a model change.
 
@@ -56,15 +61,19 @@ Code 2.1.280 or later on the Mac, which had 2.1.277; the move waits for
 that upgrade and a `HARNESS_MODELS` entry, and the OpenAI re-pin waits for
 `codex` to confirm the newer models.
 
-**Eval.** `evals/routines/` replays 25 real days, each with one change,
+**Eval.** `evals/routines/` replays 27 real days, each with one change,
 against a routine's prompt and the steering files, and grades the
-decisions deterministically (`evals/README.md`). On the routines' model,
-two reps each, the new prompts and playbook pass 45 of 46 preserve runs and
-4 of 4 change runs, against 35 of 46 and 0 of 4 for the old ones; no case
-that passed before fails now. They cost 34% more at list price, spent
-reading the files the rules point at. The old prompts against the new
-playbook pass 21 of 23 and 1 of 2. Details in
-`evals/routines/results/2026-09-23.md`.
+decisions deterministically (`evals/README.md`). Sandboxes are named
+randomly, so no path a run sees names its case or variant. In a blind A/B
+on the routines' model, two reps each, the new prompts and playbook pass 41
+of 48 preserve runs and 3 of 4 change runs, against 36 of 48 and 0 of 4 for
+the old ones; no case passes less often. After the fixes that run
+prompted, they pass 47 of 48 and 3 of 4. They cost 26% more at list price,
+spent reading the files the rules point at. The failsafe's in-place memory
+rule holds in about one run in three on today's cluttered page and two in
+three on the collapsed page the retro leaves; the retro's collapse is the
+backstop. The old prompts against the new playbook miss both memory
+changes. Details in `evals/routines/results/2026-09-24.md`.
 
 **For Tom.** Paste the four `routines/*.md` prompts into their triggers
 after merge (until then the triggers run the old prompts against the new
