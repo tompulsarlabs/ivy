@@ -77,6 +77,8 @@ with tempfile.TemporaryDirectory() as tmp:
           "--effort" not in runner.harness_argv({"harness": "claude-code", "model": "m"}, "p", "review"))
     cx = runner.harness_argv({"harness": "codex", "model": "m", "effort": "high"}, "p", "build")
     check("codex gets effort as a config override", flag(cx, "-c") == 'model_reasoning_effort="high"')
+    odd = runner.harness_argv({"harness": "codex", "model": "m", "effort": 'high"\nx=1'}, "p", "review")
+    check("codex effort stays one quoted TOML string", flag(odd, "-c") == 'model_reasoning_effort="high\\"\\nx=1"')
     check("codex prompt stays last", cx[-1] == "p")
     check("codex without effort has no override",
           "-c" not in runner.harness_argv(lanes["frontier"]["openai"], "p", "review"))
@@ -84,7 +86,7 @@ with tempfile.TemporaryDirectory() as tmp:
     check("a missing lane is unresolved", runner.lane_problem(None) == "lane_unresolved")
     check("a VERIFY model is unresolved", runner.lane_problem({"harness": "codex", "model": "VERIFY"}) == "lane_unresolved")
     check("an effort claude refuses is caught before the claim",
-          runner.lane_problem({"harness": "claude-code", "model": "m", "effort": "xHigh"}) == "lane_invalid")
+          runner.lane_problem({"harness": "claude-code", "model": "m", "effort": "xHigh"}) == "invalid_harness_config")
 
     # The 2026-09-01 failure: a clone using the second connected address.
     ident_ok = "tompulsarlabs <tom@pulsarlabsai.com> 1756738878 +0200"

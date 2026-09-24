@@ -18,8 +18,8 @@ wrong for your codex version, fix HARNESS_ARGV below.
 A lane's `effort` reaches the harness (`--effort` for Claude Code,
 `model_reasoning_effort` for Codex); before 2026-09-23 it was read and
 dropped, so frontier and workhorse ran identical commands. An effort Claude
-Code does not accept skips the contract as `lane_invalid` before it is
-claimed.
+Code does not accept skips the contract as `invalid_harness_config` before
+it is claimed.
 
 The attribution gate tests membership in config.yml `connected_emails`
 (2026-09-01: equality against `commit_email` alone failed three build
@@ -221,7 +221,7 @@ def lane_problem(entry):
     if not entry or entry.get("model") == "VERIFY":
         return "lane_unresolved"
     if entry.get("harness") == "claude-code" and entry.get("effort") not in (None, *CLAUDE_EFFORTS):
-        return "lane_invalid"
+        return "invalid_harness_config"
     return None
 
 def harness_argv(entry, prompt, ctype):
@@ -238,7 +238,7 @@ def harness_argv(entry, prompt, ctype):
     if h == "codex":
         argv = ["codex", "exec", "--model", model]
         if effort:
-            argv += ["-c", f'model_reasoning_effort="{effort}"']
+            argv += ["-c", f"model_reasoning_effort={json.dumps(effort)}"]  # quoted as a TOML string
         if ctype in ("build", "chore"):
             argv += ["-s", "workspace-write"]  # exec defaults to read-only sandbox
         return argv + [prompt]

@@ -47,8 +47,9 @@ final line), plus the trigger's model and connectors. The prompts the
 triggers ran until now are kept in `evals/routines/live-prompts/`.
 
 **Dispatch.** Effort reaches the harness (`claude --effort`, codex
-`model_reasoning_effort`); an effort `claude` refuses skips the contract as
-`lane_invalid` before the claim; outcomes record the effort. The lanes keep
+`model_reasoning_effort`, quoted); an effort `claude` refuses skips the
+contract as `invalid_harness_config` before the claim, the name ivy#23 uses
+too; outcomes record the effort. The lanes keep
 their pins, so the configured efforts apply for the first time: frontier at
 `xhigh` and workhorse at `medium`. The newest Opus needs Claude Code 2.1.280
 or later on the Mac, which had 2.1.277; the move waits for that upgrade, and
