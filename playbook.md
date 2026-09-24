@@ -152,11 +152,16 @@ green if any of these shows a contribution:
 - (c) `search_issues` / `search_pull_requests`: an issue or PR opened by
   `tompulsarlabs` today.
 
-Bot-authored commits (`bot@ivy.invalid`, historically `bot@evergreen.invalid`)
-never count. Search indexing lags a push by about a minute, so verify a
-commit you just pushed with (a). If the MCP tools are unavailable as well,
-the day is unknown: alert. `memory/ops.md` records how the sandbox behaves
-and which query forms reach other repos.
+Bot-authored commits (`bot@ivy.invalid`, historically
+`bot@evergreen.invalid`) never count. A PR counts by who opened it: a
+dispatch worker's draft PR opened as `tompulsarlabs` counts like one Tom
+opened. A PR review counts on the graph too, but outside this repo the cloud
+tools cannot tell when one was submitted, so a review never decides green on
+its own: a day with only a review reads grey, and the failsafe's journal
+secures it. Search indexing lags a push by about a minute, so verify a commit
+you just pushed with (a). If the MCP tools are unavailable as well, the day
+is unknown: alert. `memory/ops.md` records how the sandbox behaves and which
+query forms reach other repos.
 
 **Alerts and nudges are pushes.** Send through PushNotification. An alert
 starts with `ALERT:` so it never reads as a nudge.
