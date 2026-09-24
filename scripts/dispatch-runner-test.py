@@ -66,28 +66,6 @@ with tempfile.TemporaryDirectory() as tmp:
         "249609836+tompulsarlabs@users.noreply.github.com", "tom@pulsarlabsai.com"])
     check("lanes parsed", lanes["frontier"]["openai"]["model"] == "gpt-5.6-sol")
 
-    # Red until 2026-09-23: harness_argv read `effort` and dropped it, so the
-    # frontier and workhorse lanes ran the identical Claude command.
-    fr = runner.harness_argv(lanes["frontier"]["anthropic"], "p", "review")
-    wh = runner.harness_argv(lanes["workhorse"]["anthropic"], "p", "review")
-    check("frontier and workhorse commands differ", fr != wh)
-    flag = lambda argv, f: argv[argv.index(f) + 1] if f in argv else None
-    check("claude gets the lane's effort", flag(fr, "--effort") == "xhigh" and flag(wh, "--effort") == "medium")
-    check("no effort configured -> no --effort flag",
-          "--effort" not in runner.harness_argv({"harness": "claude-code", "model": "m"}, "p", "review"))
-    cx = runner.harness_argv({"harness": "codex", "model": "m", "effort": "high"}, "p", "build")
-    check("codex gets effort as a config override", flag(cx, "-c") == 'model_reasoning_effort="high"')
-    odd = runner.harness_argv({"harness": "codex", "model": "m", "effort": 'high"\nx=1'}, "p", "review")
-    check("codex effort stays one quoted TOML string", flag(odd, "-c") == 'model_reasoning_effort="high\\"\\nx=1"')
-    check("codex prompt stays last", cx[-1] == "p")
-    check("codex without effort has no override",
-          "-c" not in runner.harness_argv(lanes["frontier"]["openai"], "p", "review"))
-    check("a configured lane runs", runner.lane_problem(lanes["workhorse"]["anthropic"]) is None)
-    check("a missing lane is unresolved", runner.lane_problem(None) == "lane_unresolved")
-    check("a VERIFY model is unresolved", runner.lane_problem({"harness": "codex", "model": "VERIFY"}) == "lane_unresolved")
-    check("an effort claude refuses is caught before the claim",
-          runner.lane_problem({"harness": "claude-code", "model": "m", "effort": "xHigh"}) == "invalid_harness_config")
-
     # The 2026-09-01 failure: a clone using the second connected address.
     ident_ok = "tompulsarlabs <tom@pulsarlabsai.com> 1756738878 +0200"
     ident_bad = "Tom Green <tom@C2-LAP32-TomGreen.local> 1756738878 +0200"

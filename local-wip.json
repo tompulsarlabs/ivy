@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-09-08T15:45:06Z",
+  "generated_at": "2026-09-24T08:43:47Z",
   "repos": [
     {
       "name": "Talent Radar",
       "remote": "tompulsarlabs/talent-radar",
       "branch": "main-wre2w1",
-      "dirty_files": 4,
+      "dirty_files": 0,
       "unpushed_commits": 2,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-03",
       "author_email_ok": true,
       "last_commit_email_ok": true
@@ -17,7 +18,41 @@
       "branch": "main",
       "dirty_files": 2,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-02",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "browser-harness",
+      "remote": "tompulsarlabs/browser-harness",
+      "branch": "safari-adapter",
+      "dirty_files": 10,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-21",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "browser-harness-contribution",
+      "remote": "tompulsarlabs/browser-harness",
+      "branch": "contrib/safari-adapter",
+      "dirty_files": 10,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-09",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "browser-harness-security",
+      "remote": "tompulsarlabs/browser-harness",
+      "branch": "fix/private-usage-analytics",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-21",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -27,7 +62,19 @@
       "branch": "main",
       "dirty_files": 1,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-08-26",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "gstack-security-patches",
+      "remote": "tompulsarlabs/gstack-security-patches",
+      "branch": "main",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-21",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -37,9 +84,10 @@
       "branch": "main",
       "dirty_files": 5,
       "unpushed_commits": 0,
-      "last_commit": "2026-09-07",
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
       "author_email_ok": true,
-      "last_commit_email_ok": false
+      "last_commit_email_ok": true
     },
     {
       "name": "ivy-cockpit",
@@ -47,6 +95,7 @@
       "branch": "codex/ivy-command-connection",
       "dirty_files": 0,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-07",
       "author_email_ok": true,
       "last_commit_email_ok": true
@@ -57,7 +106,8 @@
       "branch": "main",
       "dirty_files": 0,
       "unpushed_commits": 0,
-      "last_commit": "2026-09-08",
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-10",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -65,9 +115,10 @@
       "name": "safari-harness",
       "remote": "tompulsarlabs/safari-harness",
       "branch": "main",
-      "dirty_files": 0,
+      "dirty_files": 2,
       "unpushed_commits": 0,
-      "last_commit": "2026-09-08",
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-09",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -77,6 +128,7 @@
       "branch": "main",
       "dirty_files": 0,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-06-23",
       "author_email_ok": true,
       "last_commit_email_ok": true
@@ -87,17 +139,41 @@
       "branch": "main",
       "dirty_files": 0,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-08",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "talent-radar-pilot",
+      "remote": "tompulsarlabs/talent-radar",
+      "branch": "codex/executive-pilot",
+      "dirty_files": 0,
+      "unpushed_commits": 2,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
     {
       "name": "talent-scout",
       "remote": "tompulsarlabs/talent-scout",
-      "branch": "main",
+      "branch": "codex/scout-research-workspace",
+      "dirty_files": 2,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-22",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-demos",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/radar-recruiter-subtitle",
       "dirty_files": 0,
       "unpushed_commits": 0,
-      "last_commit": "2026-09-01",
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-10",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -105,9 +181,54 @@
       "name": "tomgreen.ai",
       "remote": "tompulsarlabs/tomgreen.ai",
       "branch": "codex/chapter-two-client-privacy",
-      "dirty_files": 1,
+      "dirty_files": 2,
       "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-07",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-builder-20260923",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "codex/ivy-scanner-reliability",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-harness-20260923",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "codex/ivy-harness-settings",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-paperclip-release",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "codex/ivy-acceptance-scaffold",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": false
+    },
+    {
+      "name": "tomgreen-colours-audibene-20260922",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/ivy-green-scout-blue",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-22",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }

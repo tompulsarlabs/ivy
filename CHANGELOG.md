@@ -46,16 +46,15 @@ over the steering files after a model change.
 final line), plus the trigger's model and connectors. The prompts the
 triggers ran until now are kept in `evals/routines/live-prompts/`.
 
-**Dispatch.** Effort reaches the harness (`claude --effort`, codex
-`model_reasoning_effort`, quoted); an effort `claude` refuses skips the
-contract as `invalid_harness_config` before the claim, the name ivy#23 uses
-too; outcomes record the effort. The lanes keep
-their pins, so the configured efforts apply for the first time: frontier at
-`xhigh` and workhorse at `medium`. The newest Opus needs Claude Code 2.1.280
-or later on the Mac, which had 2.1.277; the move waits for that upgrade, and
-the OpenAI re-pin waits for `codex` to confirm the newer models. The worker
-prompt says the run is unattended, sets a concrete review bar with severity
-and confidence, and keeps the clone's git identity.
+**Dispatch.** ivy#23, merged first, makes lane effort reach the harness and
+validates it; this change keeps that runner and changes only the worker
+prompt, which now says the run is unattended, sets a concrete review bar
+with severity and confidence, and keeps the clone's git identity. The lanes
+keep their pins, so the configured efforts apply for the first time:
+frontier at `xhigh` and workhorse at `medium`. The newest Opus needs Claude
+Code 2.1.280 or later on the Mac, which had 2.1.277; the move waits for
+that upgrade and a `HARNESS_MODELS` entry, and the OpenAI re-pin waits for
+`codex` to confirm the newer models.
 
 **Eval.** `evals/routines/` replays 25 real days, each with one change,
 against a routine's prompt and the steering files, and grades the

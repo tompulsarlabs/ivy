@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-22
+updated: 2026-09-23
 ---
 
 # ivy
@@ -112,6 +112,27 @@ run to a third day: `tomgreen.ai` PR #64 and #65 both merged before the
 18:00 check, the third real-work green day (with 09-18, 09-21) in the
 eleven days since 09-12 [cite:2026-09-22].
 
+**A fix for the outage itself landed 2026-09-23, though `local-wip.json`
+is still the last-known-dark 2026-09-08 snapshot as of tonight.** `ivy`
+PR #22 ("Restore local work visibility and isolate scanner publication"),
+opened 20:39 CEST, claims to discover registered worktrees (the prior
+scanner skipped linked worktrees), publish a six-hour heartbeat when work
+is unchanged instead of going silent, and stop publishing by
+rebasing/pushing the operator's own checkout (bot-authored snapshot
+commits from a temporary clone instead). Per its body, `launchd` remains
+unloaded and no live snapshot has been published yet — this is a fix
+landing, not the outage resolving; the scanner stays dark until the PR
+merges and the after-merge steps (install, one scan, verify) run
+[cite:2026-09-23]. Two companion PRs opened the same evening: **PR #21**
+re-tunes `playbook.md`'s Tunable sections, the four routine prompts, and
+dispatch lanes against the current model generation (every Immutable
+section stays byte-identical per its own claim) and adds a routine eval
+bank; **PR #23** wires configured lane `effort` through to the dispatch
+runner's CLI invocations, which the body says had been silently dropped
+so frontier and workhorse produced identical launch commands. All three
+opened draft, unmerged, by the connected account, same evening
+[cite:2026-09-23].
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -138,6 +159,13 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-23 (failsafe) — recorded three draft PRs opened on `ivy` itself
+  after the 18:00 check (#21 playbook/routine re-tune, #22 local-WIP
+  scanner publication fix, #23 dispatch harness-effort wiring), making
+  today the fourth real-work green day (with 09-18, 09-21, 09-22) in the
+  twelve days since 09-12; noted PR #22 is a fix for the standing scanner
+  outage, not yet its resolution (`local-wip.json` still dark, `launchd`
+  still unloaded per the PR's own body).
 - 2026-09-22 (failsafe) — recorded the local-WIP scanner outage's escalation
   to 28 missed windows / 14 calendar days, still open; noted today made it
   three real-work green days (09-18, 09-21, 09-22) in the eleven days

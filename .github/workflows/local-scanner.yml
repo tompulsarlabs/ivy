@@ -1,0 +1,28 @@
+name: Local scanner controls
+on:
+  pull_request:
+    paths:
+      - 'scripts/local-wip*'
+      - 'setup/*wip*'
+      - '.github/workflows/local-scanner.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/local-wip*'
+      - 'setup/*wip*'
+      - '.github/workflows/local-scanner.yml'
+permissions:
+  contents: read
+jobs:
+  scanner:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -B -W error::ResourceWarning scripts/local-wip-test.py
+      - run: bash -n scripts/local-wip.sh setup/install-wip-scanner.sh
