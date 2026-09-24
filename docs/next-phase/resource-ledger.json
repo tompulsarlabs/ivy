@@ -2,10 +2,10 @@
   "schema_version": 1,
   "stage": "scanner_and_harness_repair",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-23T18:54:08.299154+00:00",
+  "recorded_through": "2026-09-24T07:28:56.827196+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 27300,
-  "debit_method": "Prior 23700-second debit retained. Add conservative 3600-second single-primary implementation/local-test/CI/closeout allocation for scanner and harness repair; estimated engineering bookkeeping, not provider billing. No runtime/model grant renewal.",
+  "engineering_budget_debit_seconds": 28500,
+  "debit_method": "Prior 27300-second debit retained. Add conservative 1200-second single-primary review, regression repair, CI and closeout allocation; estimated engineering bookkeeping, not measured billing. No runtime/model grant renewal.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -57,11 +57,11 @@
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 19,
+    "participants": 20,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls. Plus one primary Paperclip hosting preparation and workflow evaluation continuation; no subagents, Docker launches, evaluated models or judges. Plus one primary board-build/hybrid-plan continuation with isolated Docker board rehearsal; no subagents, evaluated models or judges. Plus one primary product-direction documentation continuation; no subagents, evaluated models or judges. Plus one primary routing/harness reassessment; no subagents, evaluated models or judges. Plus one primary scanner/harness implementation continuation; no subagents or evaluated models/judges; fixed local subprocess only."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls. Plus one primary Paperclip hosting preparation and workflow evaluation continuation; no subagents, Docker launches, evaluated models or judges. Plus one primary board-build/hybrid-plan continuation with isolated Docker board rehearsal; no subagents, evaluated models or judges. Plus one primary product-direction documentation continuation; no subagents, evaluated models or judges. Plus one primary routing/harness reassessment; no subagents, evaluated models or judges. Plus one primary scanner/harness implementation continuation; no subagents or evaluated models/judges; fixed local subprocess only. Plus one primary scanner/harness review and regression-repair continuation; no subagents or evaluated models/judges."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
@@ -309,6 +309,30 @@
       "status": "two_draft_prs_ci_pass_rollout_pending",
       "scanner_cases": 23,
       "harness_cases": 16,
+      "pull_requests": [
+        "https://github.com/tompulsarlabs/ivy/pull/22",
+        "https://github.com/tompulsarlabs/ivy/pull/23"
+      ]
+    },
+    {
+      "id": "scanner-harness-review-fixes-20260924",
+      "authorization": "Tom: let's continue",
+      "scope": "Review the two repair PRs against current main; reproduce and fix inherited Git context and silent routing-parser failures; verify and update existing drafts. No production rollout.",
+      "engineering_debit_seconds": 1200,
+      "numeric_limit_origin": "Conservative engineering allocation for bookkeeping; not a new user-specified limit or measured account consumption.",
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false,
+      "production_changed": false,
+      "evaluated_model_calls": 0,
+      "model_judge_calls": 0,
+      "status": "review_fixes_pushed_ci_pass_required_github_reviews_missing",
+      "scanner_cases": 25,
+      "harness_cases": 19,
+      "new_regression_methods_failed_before_fix": 5,
+      "heads": {
+        "22": "dc236fc246e9b9d8dd9dc8191ce8d672909d871f",
+        "23": "413bb938acda8ef2c37728144055f49953f4c073"
+      },
       "pull_requests": [
         "https://github.com/tompulsarlabs/ivy/pull/22",
         "https://github.com/tompulsarlabs/ivy/pull/23"

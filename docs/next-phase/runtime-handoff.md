@@ -1,56 +1,57 @@
-# Current build — scanner and harness repairs ready for review, 23 September 2026
+# Current build — review fixes verified, 24 September 2026
 
-Tom authorized the two-day Ivy build to begin with local-work visibility and
-harness correctness. Two independent branches start from production main; the
-existing acceptance/Paperclip stack is not used as their release dependency.
+Tom continued the authorized Ivy build. Two independent repair branches remain
+separate from the acceptance/Paperclip stack. Today's primary review reproduced
+and fixed two defects; it is not an independent approval or model-quality eval.
 
 - [Draft PR #22](https://github.com/tompulsarlabs/ivy/pull/22),
-  `codex/ivy-scanner-reliability`, head `173a9e6`: discovers registered worktrees,
-  keeps repository-wide and per-checkout unpushed counts, refreshes unchanged
-  snapshots after six hours, refuses failed reads, and publishes bot-authored
-  snapshots from an invocation-owned temporary clone. No human index, branch or
-  unpushed commits are staged/rebased/pushed. Adds preview and stable-main-only
-  launchd install/status tooling. Twenty-three deterministic cases pass locally
-  and in Python 3.11/3.14 CI. The read-only Mac scan observed 20 checkouts,
-  including 3 Ivy checkouts, before creating the second repair worktree; the
-  payload contained no absolute paths. Live publication/install have not run.
+  `codex/ivy-scanner-reliability`, head `dc236fc`: discovers registered worktrees,
+  preserves repository-wide and per-checkout counts, refreshes unchanged snapshots
+  after six hours and publishes from an invocation-owned temporary clone. The
+  review proved inherited Git variables could select the wrong checkout or fail
+  publication. Commands now remove repository-scoped overrides; publication pins
+  both bot identities and drops inherited dates. Twenty-five deterministic cases
+  pass locally and in Python 3.11/3.14 CI, including staged-index preservation.
+  The read-only Mac preview at 07:26 UTC observed 21 checkouts with no absolute
+  user/temporary paths. Live publication and launchd installation have not run.
 - [Draft PR #23](https://github.com/tompulsarlabs/ivy/pull/23),
-  `codex/ivy-harness-settings`, head `e23037c`: applies Claude/Codex effort flags,
-  validates before task claim or project clone, captures requested settings and
-  source/config/runner/prompt identities, and adds a strictly inspect-only route
-  preview. Removes Haiku 4.5's unsupported effort field without changing model
-  selection. Sixteen deterministic cases pass locally and in Python 3.11/3.14
-  CI, including a real fixed local program that checks argv/environment and
-  returns a fixture report. No evaluated model was called; effective backend
-  model/effort stay unknown and context/usage coverage remains incomplete.
+  `codex/ivy-harness-settings`, head `413bb93`: applies native effort arguments,
+  validates model/settings before task claim or project clone, records requested
+  settings and source/config/runner/prompt identities, and adds inspect-only route
+  preview. The review proved blank lines/comments hid later routes and malformed
+  routes could pass preview. Parsing now preserves valid entries and rejects
+  malformed/duplicate/empty definitions. Nineteen deterministic cases pass locally
+  and in Python 3.11/3.14 CI. The existing runner suite, all five route previews,
+  dispatch lint (29 contracts), memory lint (21 pages), shell syntax where changed
+  and diff checks pass. Effective provider settings and model quality are untested.
 
-Four implementation commits use Tom's verified noreply attribution. This handoff
-and its engineering ledger update are bot-authored bookkeeping. New inventories
-were also placed in `~/Build/ivy/evals/` without replacing its pre-existing files.
-The existing runner suite, dispatch lint (29 contracts), memory lint (21 pages),
-shell syntax where changed and diff checks pass. CI results were read at the
-listed branch heads. No independent model-quality or semantic acceptance pass
-is claimed. Main checkout's existing untracked documents are preserved.
+Today's two implementation commits use Tom's verified noreply attribution,
+bringing these repairs to six implementation commits. All five added regression
+methods were observed failing before their fixes. The 44-case inventories exactly
+match executable test methods and their shared copies in `~/Build/ivy/evals/`.
+Existing untracked documents and unrelated evaluation files are preserved.
 
-Next: review the two repair PRs. After landing the scanner, update the stable
-main checkout, preview, install, publish one scan and verify its remote snapshot
-and next scheduled run. After landing the harness repair, the existing runner
-loads its synchronized script/config; prove one bounded task before broader
-model routing. Applying previously ignored effort can alter output and usage.
-Full structured event/context capture, disabled new-model profiles and comparative
-model evaluation remain follow-up work. CLI help/version inspection found Claude
-Code 2.1.277; current upstream docs require 2.1.280 for Opus 5.5. No upgrade ran.
+GitHub's active `Ivy main` ruleset requires one approving review; both PRs report
+`REVIEW_REQUIRED` with no reviews. The scout queued review contracts naming the
+previous heads (`173a9e6` / `e23037c`); their findings must be checked against the
+new heads before acceptance. No bypass, merge or production code update ran.
+[PR #21](https://github.com/tompulsarlabs/ivy/pull/21) also changes effort wiring:
+land #23 first, then reconcile #21 while retaining these controls and its separately
+reviewed prompt changes. PRs #18/#19/#20 remain unmerged.
 
-Both PRs remain draft. Production runner/scanner code and model routing are
-unchanged, the scanner job is still unloaded, no paid resources were created,
-and no provider auth was read/copied. PRs #18/#19/#20 remain unmerged. The board,
-Mac connection, real-agent acceptance and Milestone A retain their prior limits.
+After scanner review/merge: update stable main, preview, install, publish one scan
+and verify its remote snapshot and next scheduled run. After harness review/merge:
+prove a bounded real task before broader routing. Previously ignored effort can
+change output and usage. Full context/events, disabled candidate model profiles
+and comparative model evaluation remain follow-up work. No CLI upgrade, provider
+auth access/copy, evaluated model/judge call or paid resource creation occurred.
+The board, Mac connection, real-agent acceptance and Milestone A retain their
+prior limits; this continuation did not inspect or operate hosting.
 
-A conservative 3,600-second allocation for this single-primary implementation,
-local checks and closeout is appended to the engineering ledger: cumulative
-**27,300 seconds**. This is estimated engineering bookkeeping, not measured
-provider billing or a renewed runtime/model-evaluation grant. Historical runtime
-attempts, exhausted grants, failures and original timestamps are retained.
+A conservative 1,200-second allocation for this single-primary review, regression
+repairs and closeout is appended to the ledger: cumulative **28,500 seconds**.
+This is estimated engineering bookkeeping, not measured provider billing or a
+renewed runtime/model grant. Historical grants, attempts and failures remain.
 
 ## Previous checkpoint — retained
 
