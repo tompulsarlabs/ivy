@@ -1,15 +1,34 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-23
+updated: 2026-09-24
 ---
 
 # talent-radar
 
 **Private.** First seen in the 2026-08-26 watchlist sync, created the day
 before [cite:2026-08-26]. Dormant from the 2026-08-25 scaffold until PR #1
-opened 2026-09-03 — then became a substantial, still-unmerged feature
-build.
+opened 2026-09-03 — then became a substantial feature build, merged
+2026-09-24 (21 days open) [cite:2026-09-24].
+
+## PR #1 and PR #2 merged, 2026-09-24
+
+Both landed the same day, same merge-commit timestamp (17:24 CEST), each
+preserving its branch's individual commits rather than squashing — which
+is why `search_commits` also surfaces a run of `talent-radar` docs/feat
+commits timestamped hours earlier (10:53–13:19 CEST): authored on the
+branch, only default-branch-reachable once the merge landed.
+
+- **PR #1** (opened 09-03) — the Session 1 Supabase fetch layer, live with
+  38 boards / 4,271 postings polled, plus the read-only Radar UI. Reviewed
+  once, 09-05 ([[models]]).
+- **PR #2** (opened 09-06) — the private executive beta: confirmed intake,
+  company-fit research, outreach drafts, interview practice. Reviewed
+  twice (09-17, 09-23) with one finding surviving both cycles — see
+  below.
+
+A new PR #4 opened same evening (19:19 CEST, still open at the 22:30
+failsafe) records the beta's production promotion.
 
 As with [[repos/countersign]], private status means a green day resting on
 this repo alone is not independently confirmable — it depends on the profile's
@@ -134,6 +153,11 @@ repo access) [cite:2026-09-23] [[models]].
 
 ## Changelog
 
+- 2026-09-24 (failsafe) — recorded PR #1 and PR #2 both merged 17:24 CEST
+  (21 and 18 days open respectively), and a new PR #4 opened same evening
+  recording the beta's production promotion. The 09-23 P1 CSV-dedupe
+  finding was not re-verified against the merged head tonight — carries
+  forward as open until a fresh review runs against `main`.
 - 2026-09-23 (failsafe) — recorded the second PR #2 fresh review at its
   09-21 head: resolved the 09-17 stale-test-count finding, re-confirmed
   the CSV-dedupe finding (now P1, unfixed across two review cycles), found

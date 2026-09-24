@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-23
+updated: 2026-09-24
 ---
 
 # ivy
@@ -133,6 +133,26 @@ so frontier and workhorse produced identical launch commands. All three
 opened draft, unmerged, by the connected account, same evening
 [cite:2026-09-23].
 
+**PR #22 and #23 merged 2026-09-24, 08:42 CEST.** Both reviewed same day:
+`scannerfix` found four open items (bot-authored worktree HEADs misreport
+`last_commit_email_ok: false`; repo-wide unpushed counts duplicate across
+worktrees with no grouping key; one unreadable checkout can suppress the
+whole snapshot; a `git` version floor is unchecked) — none blocking, none
+fixed yet. `harnesseffort` found three (an inherited
+`CLAUDE_CODE_EFFORT_LEVEL` can still leak into effort-less lanes; a
+malformed `config.yml` now halts the whole tick while `runner-status.json`
+still reads healthy; a new tick-fatal raise in provenance capture) — same,
+none blocking, none fixed yet. **The outage itself shows its first real
+sign of clearing**: `local-wip.json` published twice today — once
+08:43 CEST (per the review, a manual run, `launchd` still unloaded at
+review time) and once 17:45:07 CEST, landing inside the scheduled window
+for the first time since 2026-09-08 (16 calendar days / 32 missed
+windows). Whether `launchd` is now loaded or this was a second manual run
+that happened to land on the window cannot be told from the cloud side —
+carry forward unresolved until a *second* scheduled-window publish
+confirms it, per the playbook's carry-forward rule for blockers
+[cite:2026-09-24].
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -159,6 +179,18 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-24 (failsafe) — **PR #22 and #23 merged** 08:42 CEST, both
+  reviewed and verified done tonight (four findings on #22, three on #23,
+  all tied to file:line, none blocking). **The scanner outage shows its
+  first scheduled-window publish since going dark**: `local-wip.json`
+  landed at 17:45:07 CEST, inside today's window, the first in 16
+  calendar days / 32 missed windows — see the dedicated section above.
+  **PR #21 reviewed and verdict block** (one P1: its own rewritten
+  cloud-green fallback can misclassify an already-green day as grey when
+  a same-day PR is missed by search and reviews aren't checked at all;
+  three P2s on eval rigor) — still open, unmerged. Today's real-work green
+  spread across three repos (`ivy`, `tomgreen.ai`, `talent-radar`) for the
+  first time since 09-10.
 - 2026-09-23 (failsafe) — recorded three draft PRs opened on `ivy` itself
   after the 18:00 check (#21 playbook/routine re-tune, #22 local-WIP
   scanner publication fix, #23 dispatch harness-effort wiring), making

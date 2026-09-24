@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-22
+updated: 2026-09-24
 ---
 
 # Models: lane × task-class outcomes
@@ -36,6 +36,11 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-11-tomgreenai-radarsubtitle-review-01 | review | workhorse / openai | yes | 1.8 | `tomgreen.ai` PR #58 one-line subtitle-copy review; both cited paths resolved on main (PR itself still open/draft) [cite:2026-09-11] |
 | 2026-09-17-talentradar-execbeta-review-02 | review | workhorse / openai | yes | 20.1 | `talent-radar` PR #2 fresh review at its 09-16 head (33 intervening commits since the 09-05 review); two real findings (CSV-dedup silently drops distinct undated funding rows, stale test-count doc) plus five sound confirmations; verified via PR-body corroboration [cite:2026-09-17] |
 | 2026-09-22-talentscout-research-review-01 | review | workhorse / openai | yes | 1.4 | First `talent-scout` review, PR #1's two commits; two P2 findings (overstated interaction-check count, unproven workspace isolation) plus five sound confirmations including no-runtime-backend-merged; verified via PR-body corroboration [cite:2026-09-22] |
+| 2026-09-23-talentradar-execbeta-review-03 | review | workhorse / openai | yes | 101.1 | `talent-radar` PR #2 second fresh review at its 09-21 head; resolved 09-17's stale-test-count P3, re-confirmed the CSV-dedupe finding (now P1, unfixed two cycles); verified via PR-body corroboration. **3.4x its 30-min budget while still completing (exit 0)** — worth a budget-sizing look if this class recurs [cite:2026-09-23] |
+| 2026-09-23-talentscout-workspace-review-01 | review | workhorse / openai | yes | 12.4 | Second `talent-scout` review, PR #1's current head; no actionable findings, five confirmations, correctly left the tracked findings un-relitigated; verified via PR-body corroboration [cite:2026-09-23] |
+| 2026-09-24-ivy-scannerfix-review-01 | review | workhorse / anthropic | yes | 18.2 | `ivy` PR #22 (merged same day); four findings (F1-F4) on `scripts/local-wip.py` attribution/grouping/failure-isolation gaps, none blocking; verified directly against the local clone (in-scope repo) [cite:2026-09-24] |
+| 2026-09-24-ivy-harnesseffort-review-01 | review | workhorse / anthropic | yes | 9.3 | `ivy` PR #23 (merged same day); three findings (F1-F3) on `scripts/dispatch-runner.py` effort-leak/malformed-config/provenance-raise gaps, none blocking; verified directly against the local clone [cite:2026-09-24] |
+| 2026-09-24-ivy-playbookretune-review-01 | review | frontier / openai | yes | 16.9 | `ivy` PR #21 (still open, unmerged); **verdict block** — one P1 (rewritten cloud green-path fallback can misclassify an already-green day as grey), three P2 (eval-rigor gaps); Immutable byte-identity and eval arithmetic both confirmed sound; verified directly against the local clone [cite:2026-09-24] |
 
 ## Pool health
 
@@ -101,6 +106,17 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-24 (failsafe) — backfilled 2 contracts verified 09-23 but never
+  recorded here (`talentradar-execbeta-review-03`, `talentscout-workspace-review-01`)
+  plus today's 3 (`ivy-scannerfix-review-01`, `ivy-harnesseffort-review-01`
+  workhorse/anthropic, `ivy-playbookretune-review-01` frontier/openai,
+  verdict block on the reviewed PR); n=21→26, `review` now 23. First two
+  `ivy`-self-review contracts verified directly against the local clone
+  rather than via PR-body corroboration, since this session's access
+  covers `ivy` itself. Noted `talentradar-execbeta-review-03` ran 101.1
+  wall-minutes against a 30-minute budget (3.4x) while still completing —
+  a budget-sizing signal for this contract class if it recurs, not yet
+  three data points.
 - 2026-09-22 (failsafe) — recorded `talentscout-research-review-01`,
   verified done via PR-body corroboration; n=20→21, `review` now 18. First
   verified outcome on `talent-scout`.
