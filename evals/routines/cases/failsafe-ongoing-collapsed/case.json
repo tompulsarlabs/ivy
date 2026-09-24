@@ -1,0 +1,85 @@
+{
+  "id": "failsafe-ongoing-collapsed",
+  "title": "The outage is already one current-state paragraph, as a retro leaves it: keep it one",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "change",
+  "measures": {
+    "restatements": {
+      "file": "memory/repos/ivy.md",
+      "count": "missed windows",
+      "above_heading": "## Changelog"
+    },
+    "log_entries": {
+      "file": "memory/repos/ivy.md",
+      "count": "\\n- \\d{4}-\\d{2}-\\d{2}",
+      "below_heading": "## Changelog"
+    },
+    "outage": {
+      "file": "memory/repos/ivy.md",
+      "count": "\\bdark\\b",
+      "above_heading": "## Changelog"
+    },
+    "confirmed": {
+      "file": "memory/repos/ivy.md",
+      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-23",
+      "above_heading": "## Changelog"
+    },
+    "began": {
+      "file": "memory/repos/ivy.md",
+      "count": "09-08",
+      "above_heading": "## Changelog"
+    }
+  },
+  "checks": [
+    {
+      "id": "no_restatement",
+      "desc": "memory/repos/ivy.md still states the outage's count once (no second dated restatement)",
+      "assert": {
+        "path": "_measures.restatements.delta",
+        "le": 0
+      }
+    },
+    {
+      "id": "no_log_entry",
+      "desc": "memory/repos/ivy.md gains no `## Changelog` entry for the confirmation",
+      "assert": {
+        "path": "_measures.log_entries.delta",
+        "le": 0
+      }
+    },
+    {
+      "id": "confirmed_today",
+      "desc": "today's citation sits in the outage's own paragraph",
+      "assert": {
+        "path": "_measures.confirmed.after",
+        "ge": 1
+      }
+    },
+    {
+      "id": "still_recorded",
+      "desc": "the page still says the scanner is dark, and since when",
+      "assert": {
+        "and": [
+          {
+            "path": "_measures.outage.after",
+            "ge": 1
+          },
+          {
+            "path": "_measures.began.after",
+            "ge": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "ran",
+      "desc": "secures the day (the run produced a real answer)",
+      "assert": {
+        "path": "state_json_today.failsafe_fired",
+        "eq": true
+      }
+    }
+  ]
+}
