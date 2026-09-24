@@ -1,7 +1,7 @@
 ---
 id: 2026-09-24-ivy-playbookretune-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-24T09:57:14+02:00
 repo: tompulsarlabs/ivy
 lane: frontier
@@ -67,3 +67,13 @@ The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head. This session's GitHub access is scoped to
 `ivy` itself, so `get_file_contents`/`pull_request_read` against this PR
 are directly checkable — no PR-body-corroboration fallback needed.
+
+outcome:
+  claimed_at: 2026-09-24T09:57:14+02:00
+  finished_at: 2026-09-24T10:14:10+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-sol
+  wall_minutes: 16.9
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-24-ivy-playbookretune-review-01.md
