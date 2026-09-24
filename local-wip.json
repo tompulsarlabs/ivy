@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T08:43:47Z",
+  "generated_at": "2026-09-24T15:45:07Z",
   "repos": [
     {
       "name": "Talent Radar",
@@ -229,6 +229,17 @@
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-22",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-homepage-context-20260924",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/homepage-company-context",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
