@@ -116,6 +116,48 @@ class HarnessSettingsTests(unittest.TestCase):
                 with self.subTest(replacement=replacement), self.assertRaises(ValueError):
                     runner.load_config(config)
 
+    def test_routing_comments_and_blank_lines_do_not_hide_later_lanes(self):
+        original = (Path(__file__).resolve().parent.parent / "config.yml").read_text()
+        with tempfile.TemporaryDirectory() as temp:
+            config = Path(temp) / "config.yml"
+            config.write_text(original.replace("  workhorse:\n", "\n# Workhorse routing\n  workhorse: # balanced tasks\n"))
+            _, _, lanes = runner.load_config(config)
+        self.assertEqual(set(lanes), {"frontier", "workhorse", "fast-cheap"})
+        self.assertEqual(lanes["frontier"]["anthropic"]["effort"], "xhigh")
+        self.assertEqual(lanes["workhorse"]["anthropic"]["effort"], "medium")
+
+    def test_malformed_and_duplicate_routes_fail_closed(self):
+        prefix = "commit_email: fixture@example.invalid\nlanes:\n"
+        route = "    openai: { harness: codex, model: gpt-5.6-sol }\n"
+        bad_blocks = ["", "  frontier:\n", "  frontier:\n" + route.replace("}", ""),
+                      "  frontier:\n" + route + route,
+                      "  frontier:\n" + route + "  frontier:\n" + route,
+                      "  frontier:\n" + route + "\n  workhorse:\n    openai: broken\n",
+                      "  frontier:\n" + route.rstrip() + " trailing\n",
+                      "  frontier:\n    openai: { effort: high }\n",
+                      route, "  frontier:\n" + route + "lanes:\n  workhorse:\n" + route]
+        with tempfile.TemporaryDirectory() as temp:
+            config = Path(temp) / "config.yml"
+            for block in bad_blocks:
+                config.write_text(prefix + block)
+                with self.subTest(block=block), self.assertRaises(ValueError):
+                    runner.load_config(config)
+
+    def test_malformed_preview_never_reports_partial_routes_as_valid(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config = Path(temp) / "config.yml"
+            config.write_text("commit_email: fixture@example.invalid\nlanes:\n  frontier:\n"
+                              "    openai: { harness: codex, model: gpt-5.6-sol\n")
+            with patch.object(sys, "argv", ["runner", "--preview-routes", "--config", str(config)]), \
+                 patch.object(runner.subprocess, "run") as run, \
+                 patch.object(runner, "ensure_clone") as clone, \
+                 patch.object(runner, "publish_status") as publish, \
+                 contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(runner.guarded_main(), 1)
+            run.assert_not_called()
+            clone.assert_not_called()
+            publish.assert_not_called()
+
     def test_version_capture_is_bounded_and_only_accepts_version_output(self):
         for output, expected in [("2.1.277 (Claude Code)\n", "2.1.277"),
                                  ("codex-cli 0.155.1\n", "0.155.1"),

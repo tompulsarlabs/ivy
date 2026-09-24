@@ -116,6 +116,27 @@
       "test_name": "test_fixed_worker_receives_effort_and_completion_retains_unknowns",
       "evidence_kind": "deterministic_software_controls",
       "model_quality_claim": false
+    },
+    {
+      "id": "HS17",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_routing_comments_and_blank_lines_do_not_hide_later_lanes",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS18",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_malformed_and_duplicate_routes_fail_closed",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS19",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_malformed_preview_never_reports_partial_routes_as_valid",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
     }
   ],
   "live_integration": {

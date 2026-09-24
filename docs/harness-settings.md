@@ -21,6 +21,12 @@ the task open with `invalid_harness_config`, before claiming it or preparing its
 project clone. Other eligible contracts may proceed. New models require explicit
 compatibility registration and evaluation; no Sol/Astra migration is included.
 
+The documented routing shape is a `lanes` block with lane names and inline
+pool maps. Blank lines and comments are allowed. Empty lanes, duplicate lane or
+pool names, incomplete maps, missing harness/model fields and unrecognized lines
+fail configuration loading. Preview cannot report success for a partially read
+configuration. A malformed live configuration stops that tick before task claim.
+
 Completed and failed started attempts record requested model/effort, a bounded
 CLI version probe, source revision and SHA-256 identities for the runner,
 configuration and constructed prompt. No raw prompt, environment, auth or CLI

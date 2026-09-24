@@ -8,8 +8,9 @@ tick, oldest first. State changes are bot-authored commits; the repo is the
 message bus and the cloud failsafe does verification — this script never
 stamps `verified:`.
 
-Flags: --once (ignore the window; single pass)  --dry-run (plan only,
-print the exact harness argv, change nothing).
+Flags: --once (ignore the window; single pass), --dry-run (sync disposable
+clones and print planned argv without executing a worker), --preview-routes
+(inspect configuration only; no clones, locks, network or harness calls).
 
 Harness notes: `claude -p` flags are stable; `codex exec` flags are
 confirmed during the D2 smoke test — if the argv printed by --dry-run is
@@ -106,23 +107,43 @@ def load_config(config_path=None):
     block = re.search(r"^connected_emails:[^\n]*\n((?:[ \t]+-[^\n]*\n?)*)", cfg, re.M)
     connected = re.findall(r"-\s*(\S+)", block.group(1)) if block else []
     connected = connected or [commit_email]
+    # Parse the documented inline-map shape strictly. A typo must not make a
+    # route disappear, overwrite another lane, or pass an empty preview.
+    lines = cfg.splitlines()
+    headers = [i for i, line in enumerate(lines) if re.match(r"^lanes:", line)]
+    if len(headers) != 1 or not re.fullmatch(r"lanes:\s*(?:#.*)?", lines[headers[0]]):
+        raise ValueError("exactly one lanes block is required")
     lanes = {}
-    lane_block = re.search(r"^lanes:[^\n]*\n((?:[ \t]+.*\n?)*)", cfg, re.M).group(1)
     current = None
-    for line in lane_block.splitlines():
-        m = re.match(r"^  ([a-z-]+):\s*$", line)
+    for raw in lines[headers[0] + 1:]:
+        if not raw.strip() or raw.lstrip().startswith("#"):
+            continue
+        if not raw.startswith((" ", "\t")):
+            break  # next top-level configuration section
+        line = re.split(r"\s+#", raw, maxsplit=1)[0].rstrip()
+        m = re.fullmatch(r"  ([a-z-]+):", line)
         if m:
+            if m.group(1) in lanes:
+                raise ValueError("duplicate routing lane")
             current = m.group(1); lanes[current] = {}
-        m = re.match(r"^    ([a-z]+):\s*\{(.*)\}", line)
-        if m and current:
-            pool, inner = m.group(1), m.group(2)
-            entry = {}
-            for item in inner.split(","):
-                setting = re.fullmatch(r"\s*(harness|model|effort):\s*([^,}\s]+)\s*", item)
-                if not setting or setting.group(1) in entry:
-                    raise ValueError("malformed or duplicate harness setting")
-                entry[setting.group(1)] = setting.group(2)
-            lanes[current][pool] = entry
+            continue
+        m = re.fullmatch(r"    ([a-z]+):\s*\{([^{}]*)\}", line)
+        if not m or current is None:
+            raise ValueError("malformed routing lane or pool")
+        pool, inner = m.group(1), m.group(2)
+        if pool in lanes[current]:
+            raise ValueError("duplicate routing pool")
+        entry = {}
+        for item in inner.split(","):
+            setting = re.fullmatch(r"\s*(harness|model|effort):\s*([^,}\s]+)\s*", item)
+            if not setting or setting.group(1) in entry:
+                raise ValueError("malformed or duplicate harness setting")
+            entry[setting.group(1)] = setting.group(2)
+        if not {"harness", "model"} <= entry.keys():
+            raise ValueError("routing pool requires harness and model")
+        lanes[current][pool] = entry
+    if not lanes or any(not pools for pools in lanes.values()):
+        raise ValueError("routing lanes must contain at least one pool")
     return commit_email, connected, lanes
 
 def author_connected(ident, connected):
