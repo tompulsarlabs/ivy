@@ -1,7 +1,7 @@
 ---
 id: 2026-09-24-ivy-scannerfix-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-24T10:44:16+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
@@ -52,3 +52,24 @@ The report file exists on main of ivy, is non-empty, and every referenced
 path exists on the PR head. This session's GitHub access is scoped to
 `ivy` itself, so `get_file_contents`/`pull_request_read` against this PR
 are directly checkable — no PR-body-corroboration fallback needed.
+
+outcome:
+  requested_model: claude-opus-5
+  requested_effort: medium
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 2.1.277
+  source_revision: 1c6da315cc9229d3529bfb563b725637a7553467
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 7d81b4aff8c3992d2a308591e6a44491131c486f6158d87a7492d9a58f1331c7
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-24T10:44:16+02:00
+  finished_at: 2026-09-24T11:02:34+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 18.2
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-24-ivy-scannerfix-review-01.md
