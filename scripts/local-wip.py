@@ -13,8 +13,7 @@ leak the machine name this file is careful never to carry.
 
 Robustness (replaces the original shell version):
 - JSON is generated with the json module, never string interpolation.
-- The output is written atomically (temp file + os.replace) under a lock,
-  so overlapping runs can't interleave.
+- A process lock serializes scans; publication uses Git's non-force ref update.
 - Registered worktrees are scanned even when they live outside the roots.
 - A six-hour publication heartbeat distinguishes unchanged work from no scan.
 - Publication uses a temporary clone; it never stages, rebases or pushes the
@@ -36,15 +35,40 @@ IVY = Path(os.environ.get("IVY_DIR", Path.home() / "Build" / "ivy"))
 LOCK = IVY / ".local-wip.lock"
 HEARTBEAT = timedelta(hours=6)
 BOT = ["-c", "user.name=ivy-bot", "-c", "user.email=bot@ivy.invalid"]
+# Repository-scoped environment (git rev-parse --local-env-vars), plus the
+# namespace override. `git -C` alone cannot isolate an inherited Git context.
+GIT_LOCAL_ENV = {
+    "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_CONFIG", "GIT_CONFIG_PARAMETERS",
+    "GIT_CONFIG_COUNT", "GIT_OBJECT_DIRECTORY", "GIT_DIR", "GIT_WORK_TREE",
+    "GIT_IMPLICIT_WORK_TREE", "GIT_GRAFT_FILE", "GIT_INDEX_FILE",
+    "GIT_NO_REPLACE_OBJECTS", "GIT_REPLACE_REF_BASE", "GIT_PREFIX",
+    "GIT_SHALLOW_FILE", "GIT_COMMON_DIR", "GIT_NAMESPACE",
+}
 
 
-def git(repo, *args):
+def git_environment(publishing=False):
+    env = {key: value for key, value in os.environ.items()
+           if key not in GIT_LOCAL_ENV
+           and not key.startswith(("GIT_CONFIG_KEY_", "GIT_CONFIG_VALUE_"))}
+    env["GIT_OPTIONAL_LOCKS"] = "0"
+    if publishing:
+        # Publication is bookkeeping even when launched from a developer shell
+        # with explicit author/committer overrides or dates. Scan identity checks
+        # retain those overrides to report the operator's actual next author.
+        for role in ("AUTHOR", "COMMITTER"):
+            env[f"GIT_{role}_NAME"] = "ivy-bot"
+            env[f"GIT_{role}_EMAIL"] = "bot@ivy.invalid"
+            env.pop(f"GIT_{role}_DATE", None)
+    return env
+
+
+def git(repo, *args, publishing=False):
     """Run git in `repo`; return stdout or None on failure."""
     try:
         r = subprocess.run(
             ["git", "-C", str(repo), *args],
             capture_output=True, text=True, timeout=60,
-            env={**os.environ, "GIT_OPTIONAL_LOCKS": "0"},
+            env=git_environment(publishing),
         )
     except (OSError, subprocess.TimeoutExpired):
         return None
@@ -53,8 +77,8 @@ def git(repo, *args):
     return r.stdout.strip()
 
 
-def required_git(repo, *args):
-    result = git(repo, *args)
+def required_git(repo, *args, publishing=False):
+    result = git(repo, *args, publishing=publishing)
     if result is None:
         # Do not log arguments, remote URLs or stderr: they can contain secrets.
         raise RuntimeError(f"git {args[0]} failed; snapshot not published")
@@ -232,12 +256,12 @@ def publish_snapshot(payload, remote):
     """Publish only this snapshot, retrying branch races without force pushes."""
     with tempfile.TemporaryDirectory(prefix="ivy-wip-publish-") as temp:
         clone = Path(temp) / "ivy"
-        required_git(Path(temp), "clone", "--quiet", "--single-branch", "--branch", "main", "--", remote, str(clone))
+        required_git(Path(temp), "clone", "--quiet", "--single-branch", "--branch", "main", "--", remote, str(clone), publishing=True)
         for attempt in range(3):
             if attempt:
-                required_git(clone, "fetch", "--quiet", "origin", "main")
+                required_git(clone, "fetch", "--quiet", "origin", "main", publishing=True)
                 # This clone is created and owned by this invocation only.
-                required_git(clone, "reset", "--hard", "--quiet", "origin/main")
+                required_git(clone, "reset", "--hard", "--quiet", "origin/main", publishing=True)
             target = clone / "local-wip.json"
             if target.is_symlink():
                 raise RuntimeError("snapshot target is a symbolic link; publication refused")
@@ -248,11 +272,11 @@ def publish_snapshot(payload, remote):
             if not should_publish(previous, payload):
                 return False
             target.write_text(json.dumps(payload, indent=2) + "\n")
-            required_git(clone, "add", "--", "local-wip.json")
+            required_git(clone, "add", "--", "local-wip.json", publishing=True)
             required_git(clone, *BOT, "-c", "commit.gpgsign=false", "commit", "--quiet", "-m",
                          f"wip: local scan — {len(payload['repos'])} checkouts",
-                         "--author=ivy-bot <bot@ivy.invalid>", "--", "local-wip.json")
-            if git(clone, "push", "--quiet", "origin", "HEAD:refs/heads/main") is not None:
+                         "--author=ivy-bot <bot@ivy.invalid>", "--", "local-wip.json", publishing=True)
+            if git(clone, "push", "--quiet", "origin", "HEAD:refs/heads/main", publishing=True) is not None:
                 return True
         raise RuntimeError("snapshot publication failed after 3 attempts; next run will rescan")
 

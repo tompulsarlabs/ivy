@@ -53,6 +53,10 @@ Preview with `bash scripts/local-wip.sh --dry-run` (local reads only), then run
 `bash scripts/local-wip.sh` to publish once. Publication is bot-authored and uses
 a temporary clone: the operator's index, branch and unpublished commits stay
 untouched. A failed read or publication exits nonzero; the next run rescans.
+Repository-scoped Git environment overrides are removed from scanner commands
+so an inherited checkout or index cannot redirect them. Publication also pins
+both author and committer to the bot identity and drops inherited commit dates;
+scan-time author checks retain the operator's identity overrides.
 Status reports an unloaded job explicitly. Uninstall with
 `bash setup/install-wip-scanner.sh uninstall`.
 

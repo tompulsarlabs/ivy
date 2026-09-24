@@ -123,7 +123,7 @@ class ScannerTests(unittest.TestCase):
     def test_git_failure_is_not_zero_dirty_files(self):
         repo = self.repo()
         real = wip.git
-        with patch.object(wip, "git", side_effect=lambda path, *args: None if args[0] == "status" else real(path, *args)):
+        with patch.object(wip, "git", side_effect=lambda path, *args, **kwargs: None if args[0] == "status" else real(path, *args, **kwargs)):
             with self.assertRaises(RuntimeError):
                 wip.scan_repo(repo, [IDENTITY])
 
@@ -139,6 +139,33 @@ class ScannerTests(unittest.TestCase):
         self.assertNotIn("secret", json.dumps(row))
         self.assertNotIn(str(self.base), json.dumps(row))
         self.assertNotIn(IDENTITY, json.dumps(row))
+
+    def test_inherited_git_repository_cannot_redirect_a_scan(self):
+        target = self.repo("target")
+        other = self.repo("other")
+        git(other, "checkout", "-qb", "wrong-checkout")
+        with patch.dict(os.environ, {"GIT_DIR": str(other / ".git"),
+                                     "GIT_WORK_TREE": str(other),
+                                     "GIT_INDEX_FILE": str(other / ".git/index")}):
+            row = wip.scan_repo(target, [IDENTITY])
+        self.assertEqual(row["branch"], "main")
+        self.assertEqual(row["dirty_files"], 0)
+
+    def test_publication_ignores_inherited_checkout_and_commit_identity(self):
+        source, remote = self.remote()
+        (source / "file.txt").write_text("staged human work\n")
+        git(source, "add", "file.txt")
+        before = (git(source, "rev-parse", "HEAD"), (source / ".git/index").read_bytes())
+        with patch.dict(os.environ, {"GIT_DIR": str(source / ".git"),
+                                     "GIT_WORK_TREE": str(source),
+                                     "GIT_INDEX_FILE": str(source / ".git/index"),
+                                     "GIT_AUTHOR_DATE": "2000-01-01T00:00:00Z",
+                                     "GIT_COMMITTER_DATE": "2000-01-01T00:00:00Z"}):
+            self.assertTrue(wip.publish_snapshot(self.payload(), str(remote)))
+        self.assertEqual(before, (git(source, "rev-parse", "HEAD"), (source / ".git/index").read_bytes()))
+        self.assertEqual(git(remote, "log", "-1", "--format=%an|%ae|%cn|%ce"),
+                         "ivy-bot|bot@ivy.invalid|ivy-bot|bot@ivy.invalid")
+        self.assertNotIn("2000-01-01", git(remote, "log", "-1", "--format=%aI|%cI"))
 
     def test_unchanged_snapshot_refreshes_at_six_hours(self):
         previous = self.payload("2026-09-23T06:00:00Z")
@@ -188,14 +215,14 @@ class ScannerTests(unittest.TestCase):
         real = wip.git
         races = []
 
-        def racing(path, *args):
+        def racing(path, *args, **kwargs):
             if args[0] == "push" and not races:
                 races.append(True)
                 (source / "cloud.txt").write_text("routine update\n")
                 git(source, "add", "cloud.txt")
                 git(source, "commit", "-qm", "cloud update")
                 git(source, "push", "--quiet", "origin", "main")
-            return real(path, *args)
+            return real(path, *args, **kwargs)
 
         with patch.object(wip, "git", side_effect=racing):
             self.assertTrue(wip.publish_snapshot(self.payload(), str(remote)))
@@ -205,7 +232,7 @@ class ScannerTests(unittest.TestCase):
     def test_failed_push_is_reported_and_future_run_can_publish(self):
         _, remote = self.remote()
         real = wip.git
-        with patch.object(wip, "git", side_effect=lambda path, *args: None if args[0] == "push" else real(path, *args)):
+        with patch.object(wip, "git", side_effect=lambda path, *args, **kwargs: None if args[0] == "push" else real(path, *args, **kwargs)):
             with self.assertRaises(RuntimeError):
                 wip.publish_snapshot(self.payload(), str(remote))
         self.assertTrue(wip.publish_snapshot(self.payload(), str(remote)))

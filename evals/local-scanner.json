@@ -165,6 +165,20 @@
       "test_name": "test_remote_symlink_cannot_write_outside_clone",
       "evidence_kind": "deterministic_software_controls",
       "model_quality_claim": false
+    },
+    {
+      "id": "WIP24",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_inherited_git_repository_cannot_redirect_a_scan",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "WIP25",
+      "test_file": "scripts/local-wip-test.py",
+      "test_name": "test_publication_ignores_inherited_checkout_and_commit_identity",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
     }
   ],
   "live_integration": {
