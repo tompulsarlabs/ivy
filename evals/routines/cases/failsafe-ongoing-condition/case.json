@@ -11,19 +11,24 @@
       "count": "still dark",
       "above_heading": "## Changelog"
     },
-    "mentions": {
-      "file": "memory/repos/ivy.md",
-      "count": "scanner",
-      "above_heading": "## Changelog"
-    },
     "log_entries": {
       "file": "memory/repos/ivy.md",
       "count": "\\n- \\d{4}-\\d{2}-\\d{2}",
       "below_heading": "## Changelog"
     },
+    "outage": {
+      "file": "memory/repos/ivy.md",
+      "count": "\\bdark\\b",
+      "above_heading": "## Changelog"
+    },
     "confirmed": {
       "file": "memory/repos/ivy.md",
-      "count": "cite:2026-09-23",
+      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-23",
+      "above_heading": "## Changelog"
+    },
+    "began": {
+      "file": "memory/repos/ivy.md",
+      "count": "09-08",
       "above_heading": "## Changelog"
     }
   },
@@ -46,7 +51,7 @@
     },
     {
       "id": "confirmed_today",
-      "desc": "the page cites today's confirmation of the outage",
+      "desc": "today's citation sits in the outage's own paragraph",
       "assert": {
         "path": "_measures.confirmed.after",
         "ge": 1
@@ -54,10 +59,18 @@
     },
     {
       "id": "still_recorded",
-      "desc": "the page still records the outage",
+      "desc": "the page still says the scanner is dark, and since when",
       "assert": {
-        "path": "_measures.mentions.after",
-        "ge": 1
+        "and": [
+          {
+            "path": "_measures.outage.after",
+            "ge": 1
+          },
+          {
+            "path": "_measures.began.after",
+            "ge": 1
+          }
+        ]
       }
     },
     {

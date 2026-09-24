@@ -11,9 +11,24 @@
       "count": "still dark",
       "above_heading": "## Changelog"
     },
-    "mentions": {
+    "outage": {
       "file": "memory/repos/ivy.md",
-      "count": "scanner",
+      "count": "\\bdark\\b",
+      "above_heading": "## Changelog"
+    },
+    "began": {
+      "file": "memory/repos/ivy.md",
+      "count": "09-08",
+      "above_heading": "## Changelog"
+    },
+    "first_cite": {
+      "file": "memory/repos/ivy.md",
+      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-(?:0\\d|1[0-3])",
+      "above_heading": "## Changelog"
+    },
+    "latest_cite": {
+      "file": "memory/repos/ivy.md",
+      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-(?:19|2\\d)",
       "above_heading": "## Changelog"
     }
   },
@@ -27,11 +42,35 @@
       }
     },
     {
-      "id": "still_recorded",
-      "desc": "the page still records the ongoing outage",
+      "id": "current_state",
+      "desc": "one current-state account remains: dark, since 2026-09-08",
       "assert": {
-        "path": "_measures.mentions.after",
-        "ge": 1
+        "and": [
+          {
+            "path": "_measures.outage.after",
+            "ge": 1
+          },
+          {
+            "path": "_measures.began.after",
+            "ge": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "citations_kept",
+      "desc": "the outage keeps a first citation (by 09-13) and a latest one (09-19 or later)",
+      "assert": {
+        "and": [
+          {
+            "path": "_measures.first_cite.after",
+            "ge": 1
+          },
+          {
+            "path": "_measures.latest_cite.after",
+            "ge": 1
+          }
+        ]
       }
     }
   ]
