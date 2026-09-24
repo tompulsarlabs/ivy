@@ -1,7 +1,8 @@
 ---
 id: 2026-09-24-ivy-scannerfix-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-24T10:44:16+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
 pool: anthropic
