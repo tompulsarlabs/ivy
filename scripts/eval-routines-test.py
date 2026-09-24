@@ -67,7 +67,7 @@ check("le / ge compare numbers", ev({"path": "n", "le": 0}, {"n": -1}) and ev({"
 check("le fails on a missing number", not ev({"path": "n", "le": 0}, {}))
 check("le does not treat a bool as a number", not ev({"path": "n", "le": 1}, {"n": True}))
 
-import tempfile
+import re, tempfile
 with tempfile.TemporaryDirectory() as tmp:
     (Path(tmp) / "memory").mkdir()
     (Path(tmp) / "memory" / "p.md").write_text("Still dark. still dark.\n## Changelog\n- still dark\n")
@@ -80,6 +80,14 @@ with tempfile.TemporaryDirectory() as tmp:
     check("measure below a missing heading is 0",
           evalr.measure(tmp, {"file": "memory/p.md", "count": "still dark", "below_heading": "## Nope"}) == 0)
     check("measure of a missing file is None", evalr.measure(tmp, {"file": "nope.md", "count": "x"}) is None)
+    d = evalr.file_diffs(Path(tmp), {"memory/p.md": "Still dark.\n## Changelog\n"})
+    check("file_diffs shows the edit a run made", "+- still dark" in d["memory/p.md"] and d["memory/p.md"].startswith("--- a/memory/p.md"))
+
+run_dir = Path("/tmp/ivy-eval/failsafe-ongoing-condition-candidate-20260101-000000")
+a, b = evalr.sandbox_for(run_dir), evalr.sandbox_for(run_dir)
+check("sandbox paths are fresh and opaque", a != b and re.fullmatch(r"[0-9a-f]{12}", a.name) is not None)
+check("a sandbox path names no case and no variant",
+      all(w not in str(a) for w in ("failsafe", "ongoing", "candidate", "baseline", "transition")))
 
 check("extract_json reads a bare object", evalr.extract_json('{"a": 1}') == {"a": 1})
 check("extract_json tolerates a fence and prose",

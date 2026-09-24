@@ -32,8 +32,15 @@ A case with `measures` is graded on the files it leaves instead of its own
 account, because a routine can label an append "update in place". Its run
 also gets Edit and Write. Each measure counts a regex in one file, optionally
 only above `above_heading` or below `below_heading`, before and after the
-run; checks read `_measures.<name>.before`, `.after`, and `.delta`. A run
-whose writes were denied is recorded as `denied`, not scored.
+run; checks read `_measures.<name>.before`, `.after`, and `.delta`. The
+row keeps a unified diff of each measured file under `diffs`, so a result
+can be read, not only counted. A run whose writes were denied is recorded
+as `denied`, not scored.
+
+The model sees its working directory, so each sandbox gets a random name
+under `<workdir>/sandboxes/`: no case id or variant label appears in any
+path the run can see. Transcripts, named by case and variant, stay in the
+run's own directory.
 
 ## Run it
 

@@ -27,7 +27,7 @@ Usage:
 
 Grading is pure and covered by scripts/eval-routines-test.py.
 """
-import argparse, fnmatch, io, json, re, shutil, subprocess, sys, tarfile, time
+import argparse, difflib, fnmatch, io, json, re, secrets, shutil, subprocess, sys, tarfile, time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
@@ -314,10 +314,26 @@ def routine_prompt(routine, prompts, steering):
 
 # ---------------------------------------------------------------- running
 
+def sandbox_for(workdir):
+    """A fresh sandbox path. The model sees its working directory, so the path
+    carries no case id and no variant label: those would name the behaviour
+    under test."""
+    return workdir.parent / "sandboxes" / secrets.token_hex(6)
+
+def file_diffs(sandbox, before_text):
+    """Unified diffs of the measured files, kept so an edit case's result can
+    be read, not only counted."""
+    out = {}
+    for rel, old in before_text.items():
+        f = sandbox / rel
+        new = f.read_text() if f.is_file() else ""
+        out[rel] = "".join(difflib.unified_diff(old.splitlines(True), new.splitlines(True),
+                                                f"a/{rel}", f"b/{rel}"))
+    return out
+
 def run_one(case, variant, rep, workdir):
     tag = f"{case['id']}.{variant['label']}.r{rep}"
-    sandbox = workdir / "sandboxes" / tag
-    remove(sandbox)
+    sandbox = sandbox_for(workdir)
     sandbox.mkdir(parents=True)
     build_sandbox(case, variant["steering"], sandbox)
     prompt = routine_prompt(case["routine"], variant["prompts"], variant["steering"])
@@ -325,6 +341,8 @@ def run_one(case, variant, rep, workdir):
     prompt += WRAPPER.format(when=case["when"], schema=SCHEMAS[case["routine"]],
                              edits=EDITS if edits else NO_EDITS)
     before = {k: measure(sandbox, m) for k, m in case.get("measures", {}).items()}
+    before_text = {m["file"]: ((sandbox / m["file"]).read_text() if (sandbox / m["file"]).is_file() else "")
+                   for m in case.get("measures", {}).values()}
     argv = ["claude", "-p", prompt, "--model", variant["model"],
             "--output-format", "stream-json", "--verbose", "--no-session-persistence",
             "--tools", EDIT_TOOLS if edits else TOOLS, "--strict-mcp-config",
@@ -335,7 +353,8 @@ def run_one(case, variant, rep, workdir):
         argv += ["--effort", variant["effort"]]
     row = {"case": case["id"], "routine": case["routine"], "intent": case.get("intent", "preserve"),
            "label": variant["label"], "steering": variant["steering_sha"], "prompts": variant["prompts"],
-           "model": variant["model"], "effort": variant.get("effort") or "default", "rep": rep}
+           "model": variant["model"], "effort": variant.get("effort") or "default", "rep": rep,
+           "sandbox": sandbox.name}
     start = time.time()
     try:
         proc = subprocess.run(argv, cwd=sandbox, capture_output=True, text=True,
@@ -389,6 +408,7 @@ def run_one(case, variant, rep, workdir):
         for m in answer["_measures"].values():
             if m["before"] is not None and m["after"] is not None:
                 m["delta"] = m["after"] - m["before"]
+        row["diffs"] = file_diffs(sandbox, before_text)
     checks = grade(case, answer)
     row.update(status="ok", answer=answer, checks=checks, passed=all(checks.values()))
     return row
