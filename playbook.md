@@ -136,8 +136,10 @@ run ends, with its author set explicitly per the attribution rule.
 **Inputs have a shelf life.** An input past its bound is unknown, never
 clean, because a sleeping Mac must not read as a quiet one: `local-wip.json`
 older than 36 hours; a runner heartbeat (`dispatch/runner-status.json`
-`last_tick`) older than 3 hours inside the runner window while contracts are
-open. Say so in the journal.
+`last_tick`) that fell more than 3 hours behind the runner window (09:15 to
+21:00) while a contract was open. Before 09:15, measure from 21:00
+yesterday: one that stopped at 16:00 yesterday is stale at 09:00 today. Say
+so in the journal.
 
 **Deciding green.** `scripts/check.sh` exits 2 in the cloud sandbox, whose
 github.com egress reaches only this repo; that is expected, never grounds to
@@ -255,7 +257,9 @@ pin `frontier` when the change itself carries the risk, such as credentials,
 auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as
 `dispatch: open <ids>`. The runner executes; the scout only queues.
 
-**Write the journal** as `journal/<today>.md` and commit it as
+**Write the journal** as `journal/<today>.md` in the structure this section
+gives, not an older entry's (earlier journals predate these rules, and some
+list the persisting blocker last), and commit it as
 `scout: <date> — <n> candidates, top: <one-liner>`.
 
 ### Check (18:00)
@@ -264,8 +268,8 @@ The check reads the day at 18:00: today's reading recorded, and on a grey day
 exactly one nudge naming one concrete next action.
 
 Decide the day per *Deciding green*. Green: record the reading on today's row
-of `state.json` and send nothing. Unknown: alert, and record nothing as green
-or grey. Grey: nudge.
+of `state.json` in the short form (*`state.json` rows stay terse*) and send
+nothing. Unknown: alert, and record nothing as green or grey. Grey: nudge.
 
 **Choose the nudge.** A blocker leading today's Top pick outranks the
 candidates until it has been nudged three times without converting; from
