@@ -2,10 +2,10 @@
   "schema_version": 1,
   "stage": "scanner_and_harness_repair",
   "tracked_started_at": "2026-09-05T13:14:03+00:00",
-  "recorded_through": "2026-09-24T07:28:56.827196+00:00",
+  "recorded_through": "2026-09-24T08:46:47.309932+00:00",
   "tracked_wall_seconds": 1251,
-  "engineering_budget_debit_seconds": 28500,
-  "debit_method": "Prior 27300-second debit retained. Add conservative 1200-second single-primary review, regression repair, CI and closeout allocation; estimated engineering bookkeeping, not measured billing. No runtime/model grant renewal.",
+  "engineering_budget_debit_seconds": 29100,
+  "debit_method": "Prior 28500-second debit retained. Add conservative 600-second single-primary authorized merge, scanner rollout, verification and closeout allocation; estimated engineering bookkeeping, not measured billing. No runtime/model grant renewal.",
   "limits": {
     "milestone_a_engineering_seconds": 9900,
     "total_proof_engineering_seconds": 43200,
@@ -57,11 +57,11 @@
   "evaluated_worker_attempts": 0,
   "model_judge_attempts": 0,
   "implementation_assistants": {
-    "participants": 20,
+    "participants": 21,
     "tokens": null,
     "billed_dollars": null,
     "usage_status": "per-call usage unavailable in this task",
-    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls. Plus one primary Paperclip hosting preparation and workflow evaluation continuation; no subagents, Docker launches, evaluated models or judges. Plus one primary board-build/hybrid-plan continuation with isolated Docker board rehearsal; no subagents, evaluated models or judges. Plus one primary product-direction documentation continuation; no subagents, evaluated models or judges. Plus one primary routing/harness reassessment; no subagents, evaluated models or judges. Plus one primary scanner/harness implementation continuation; no subagents or evaluated models/judges; fixed local subprocess only. Plus one primary scanner/harness review and regression-repair continuation; no subagents or evaluated models/judges."
+    "participants_note": "Six prior stage participants retained, plus this primary continuation and explicitly requested gpt-6-astra/high runtime extension lane. Count is stage participations, not unique humans/models. Current child sampled 18:35:36 through 18:41:26 UTC (350 seconds). Prior approval-wait history retained in stage records; per-agent token/cost accounting unavailable. Plus this single-primary system-only continuation; no child agents or evaluated worker/judge calls. Plus one primary preflight/session continuation; no child agents or evaluated model calls. Plus this primary reconciliation/design closeout and one explicitly requested Astra Ultra architecture agent. The architecture agent used two bounded turns; no evaluated worker or judge calls. Plus one primary High offline implementation continuation; no child agents, evaluated workers or judges. Plus one primary Paperclip fixture-integration continuation; no subagents or evaluated model/judge calls. Plus one primary Paperclip hosting preparation and workflow evaluation continuation; no subagents, Docker launches, evaluated models or judges. Plus one primary board-build/hybrid-plan continuation with isolated Docker board rehearsal; no subagents, evaluated models or judges. Plus one primary product-direction documentation continuation; no subagents, evaluated models or judges. Plus one primary routing/harness reassessment; no subagents, evaluated models or judges. Plus one primary scanner/harness implementation continuation; no subagents or evaluated models/judges; fixed local subprocess only. Plus one primary scanner/harness review and regression-repair continuation; no subagents or evaluated models/judges. Plus one primary authorized merge and scanner rollout continuation; no subagents or manually launched evaluated workers/judges."
   },
   "provider_execution_budget": {
     "billed_dollars": null,
@@ -337,6 +337,31 @@
         "https://github.com/tompulsarlabs/ivy/pull/22",
         "https://github.com/tompulsarlabs/ivy/pull/23"
       ]
+    },
+    {
+      "id": "scanner-harness-rollout-20260924",
+      "authorization": "Tom approved administrator override for PRs #22/#23 and specified tom@pulsarlabsai.com as author; scanner recovery continues the authorized build plan.",
+      "scope": "Merge the two verified heads, preserve local work while updating stable main, install scanner schedule, publish and remotely verify a snapshot, verify launchd execution and duplicate suppression.",
+      "engineering_debit_seconds": 600,
+      "numeric_limit_origin": "Conservative bookkeeping allocation; not a user-specified limit or measured consumption.",
+      "runtime_grants_renewed": false,
+      "api_spending_authorized": false,
+      "production_changed": true,
+      "manually_launched_evaluated_model_calls": 0,
+      "model_judge_calls": 0,
+      "status": "merged_main_ci_pass_scanner_published_launchd_pass_runner_completion_unverified",
+      "merge_commits": {
+        "22": "2524ad980c6910138ff7c9042d97d0c3a1b9d42c",
+        "23": "022dc24b3f36104e04318aa7459656aebee0d361"
+      },
+      "merge_author_email": "tom@pulsarlabsai.com",
+      "github_merge_signatures_verified": true,
+      "scanner_snapshot_commit": "1c6da31",
+      "scanner_snapshot_generated_at": "2026-09-24T08:43:47Z",
+      "scanner_checkouts": 21,
+      "launchd_test_exit_code": 0,
+      "next_calendar_scan_observed": false,
+      "completed_real_task_verified": false
     }
   ],
   "private_evidence_availability": {
