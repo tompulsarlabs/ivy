@@ -72,11 +72,11 @@ python3 scripts/eval-routines.py compare <baseline results.jsonl> <candidate res
 `run` needs a Claude Code with `--restricted` (2.1.282 has it) and stops
 before spending anything without it. Scope a run with `--cases 'check-*'`.
 The default model (`DEFAULT_MODEL` in the script) is the one the four
-triggers run; pass `--model` to try another
-and `--effort` only if the trigger sets one. A full pass is 29 runs per rep,
-roughly $0.30 to $1.10 each at list price and about 25 minutes a rep at
-`--jobs 5`. `grade` re-scores saved answers after a check is edited, without
-re-running anything.
+triggers run; pass `--model` to try another and `--effort` only if the
+trigger sets one. A full pass is 29 runs per rep, $0.15 to $1.70 each at
+list price (about $24 a rep for the candidate) and about 25 minutes a rep
+at `--jobs 5`. `grade` re-scores saved answers after a check is edited,
+without re-running anything.
 
 Results rows carry the served model (a run served by a different model is
 not scored), cost, turns, the files the routine read, and its full answer;

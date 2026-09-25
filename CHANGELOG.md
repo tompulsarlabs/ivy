@@ -33,18 +33,23 @@ green, the `ALERT:` prefix, terse state rows) is stated once. Settled
 ambiguities: a blocker persisting three days leads the Top pick section
 above the candidate, and outranks candidates for the nudge until its third
 unconverted send; a dispatch worker's draft PR counts toward green like one
-Tom opened, and a PR review never decides green on its own, because the
-cloud tools cannot date one outside this repo; a runner heartbeat is
+Tom opened; a review-only day reads grey to the routines while the graph
+may already be green, because the cloud tools cannot date a review outside
+this repo, and the journal secures it either way; a runner heartbeat is
 measured in window time; journals follow the playbook's structure, not an
-older entry's. Deliberate changes: the failsafe rewrites an ongoing
-condition's memory line in place instead of appending a restatement, and a
-page's `## Changelog` records what the page gained or lost, not
-confirmations or the day's outcome; the scout counts today's contracts
-before queueing more; the retro collapses existing restatements, records
-the version here instead of pushing a tag (the preamble now says the same),
-notes the DST change instead of re-pinning triggers it cannot reach, writes
-Immutable-section proposals for Tom, and runs the `claude-api` prompt-audit
-over the steering files after a model change.
+older entry's. Deliberate changes: before calling a day grey, the check and
+the failsafe search exactly for the PR behind each contract claimed today;
+lookups that disagree (a contract records a PR from today that no search
+returns) make the day unknown, which alerts, and the failsafe secures an
+unknown day with the journal; the failsafe rewrites an ongoing condition's
+memory line in place instead of appending a restatement, and a page's
+`## Changelog` records what the page gained or lost, not confirmations or
+the day's outcome; the scout counts today's contracts before queueing more;
+the retro collapses existing restatements, records the version here instead
+of pushing a tag (the preamble now says the same), notes the DST change
+instead of re-pinning triggers it cannot reach, writes Immutable-section
+proposals for Tom, and runs the `claude-api` prompt-audit over the steering
+files after a model change.
 
 **Routines.** `routines/*.md` now carry the prompt each trigger should run
 (who the run is, where its instructions live, the one hard constraint, the
@@ -61,19 +66,20 @@ Code 2.1.280 or later on the Mac, which had 2.1.277; the move waits for
 that upgrade and a `HARNESS_MODELS` entry, and the OpenAI re-pin waits for
 `codex` to confirm the newer models.
 
-**Eval.** `evals/routines/` replays 27 real days, each with one change,
+**Eval.** `evals/routines/` replays 29 real days, each with one change,
 against a routine's prompt and the steering files, and grades the
-decisions deterministically (`evals/README.md`). Sandboxes are named
-randomly, so no path a run sees names its case or variant. In a blind A/B
-on the routines' model, two reps each, the new prompts and playbook pass 41
-of 48 preserve runs and 3 of 4 change runs, against 36 of 48 and 0 of 4 for
-the old ones; no case passes less often. After the fixes that run
-prompted, they pass 47 of 48 and 3 of 4. They cost 26% more at list price,
-spent reading the files the rules point at. The failsafe's in-place memory
-rule holds in about one run in three on today's cluttered page and two in
-three on the collapsed page the retro leaves; the retro's collapse is the
-backstop. The old prompts against the new playbook miss both memory
-changes. Details in `evals/routines/results/2026-09-24.md`.
+decisions deterministically (`evals/README.md`). Each run is
+`--restricted` to its own temporary sandbox, whose path names no case or
+variant, and the memory cases are graded on the paragraph they leave, not
+word counts. At this version's playbook, on the routines' model, two reps
+each, the new prompts and playbook pass 43 of 48 preserve runs and 8 of 10
+change runs, against 35 of 48 and 1 of 10 for the old ones; no case passes
+less often. They cost 28% more at list price, spent reading the files the
+rules point at. The failsafe's in-place memory rule held in 3 of 6 runs on
+today's cluttered page across two days of runs, and the retro's collapse is
+the backstop. The old prompts against the new playbook pass 22 of 24 and 4
+of 5, but one explained away a journal commit that never counted instead of
+alerting. Details in `evals/routines/results/2026-09-25.md`.
 
 **For Tom.** Paste the four `routines/*.md` prompts into their triggers
 after merge (until then the triggers run the old prompts against the new
