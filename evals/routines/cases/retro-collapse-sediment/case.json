@@ -6,71 +6,57 @@
   "state_rev": "310de8d",
   "intent": "change",
   "measures": {
-    "restatements": {
+    "accounts": {
       "file": "memory/repos/ivy.md",
-      "count": "still dark",
-      "above_heading": "## Changelog"
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08|missed\\s+windows"
+      ]
     },
-    "outage": {
+    "window_counts": {
       "file": "memory/repos/ivy.md",
-      "count": "\\bdark\\b",
-      "above_heading": "## Changelog"
+      "above_heading": "## Changelog",
+      "count": "\\d+\\s+missed\\s+windows"
     },
-    "began": {
+    "account": {
       "file": "memory/repos/ivy.md",
-      "count": "09-08",
-      "above_heading": "## Changelog"
-    },
-    "first_cite": {
-      "file": "memory/repos/ivy.md",
-      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-(?:0\\d|1[0-3])",
-      "above_heading": "## Changelog"
-    },
-    "latest_cite": {
-      "file": "memory/repos/ivy.md",
-      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-(?:19|2\\d)",
-      "above_heading": "## Changelog"
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08",
+        "\\b(?:2[1-9]|3\\d)\\s+missed\\s+windows|\\b1[1-9]\\s+(?:calendar\\s+)?days",
+        "blind|block|clean tree|surface|invisible|unknowable",
+        "cite:2026-09-(?:0\\d|1[0-3])",
+        "cite:2026-09-(?:19|2\\d)"
+      ]
     }
   },
   "checks": [
     {
       "id": "collapsed",
-      "desc": "the page's five dated restatements of the outage collapse to at most two",
-      "assert": {
-        "path": "_measures.restatements.after",
-        "le": 2
-      }
-    },
-    {
-      "id": "current_state",
-      "desc": "one current-state account remains: dark, since 2026-09-08",
+      "desc": "the five dated restatements collapse to one paragraph stating one count",
       "assert": {
         "and": [
           {
-            "path": "_measures.outage.after",
-            "ge": 1
+            "path": "_measures.accounts.after",
+            "eq": 1
           },
           {
-            "path": "_measures.began.after",
-            "ge": 1
+            "path": "_measures.window_counts.after",
+            "le": 1
           }
         ]
       }
     },
     {
-      "id": "citations_kept",
-      "desc": "the outage keeps a first citation (by 09-13) and a latest one (09-19 or later)",
+      "id": "account",
+      "desc": "that paragraph keeps the start (09-08), the latest count, what the outage blocks, and a first (by 09-13) and a latest (09-19 or later) citation",
       "assert": {
-        "and": [
-          {
-            "path": "_measures.first_cite.after",
-            "ge": 1
-          },
-          {
-            "path": "_measures.latest_cite.after",
-            "ge": 1
-          }
-        ]
+        "path": "_measures.account.after",
+        "ge": 1
       }
     }
   ]

@@ -168,6 +168,79 @@ if os.environ.get("IVY_EVAL_LIVE"):
             if edits:
                 check("live edit: a write inside the sandbox lands", (sandbox / "note.txt").is_file())
 
+# The memory cases grade the page a run leaves. Each case's real fixture page,
+# edited the right way, passes its measure checks; each wrong edit below fails
+# the check named, including a deleted account replaced by unrelated text and a
+# restatement that avoids the words "still dark".
+by_id = {c["id"]: c for c in cases}
+OUTAGE = [r"scanner|local-wip", r"\bdark\b", r"09-08|missed\s+windows"]
+
+def outage_block(text):
+    found = [b for b in evalr.blocks(text) if all(re.search(rx, b, re.I) for rx in OUTAGE)]
+    assert len(found) == 1, len(found)
+    return found[0]
+
+def graded(case_id, edit):
+    """The case's measure checks on its fixture page after edit(text)."""
+    case = by_id[case_id]
+    with tempfile.TemporaryDirectory() as tmp:
+        sandbox = Path(tmp)
+        evalr.build_sandbox(case, "WORKTREE", sandbox)
+        before = {k: evalr.measure(sandbox, m) for k, m in case["measures"].items()}
+        page = sandbox / "memory" / "repos" / "ivy.md"
+        page.write_text(edit(page.read_text()))
+        answer = {"_measures": evalr.measured(case, before, sandbox),
+                  "state_json_today": {"failsafe_fired": True}}
+        return evalr.grade(case, answer)
+
+def expect(case_id, name, edit, failing):
+    g = graded(case_id, edit)
+    check(f"{case_id}: {name} fails exactly {failing or 'nothing'}", sorted(k for k, v in g.items() if not v) == failing)
+
+def moved_forward(text, old_date, old_count, new_count):
+    """The latest restatement rewritten in place for 09-23."""
+    block = outage_block(text)
+    new = (block.replace(f"{old_date} failsafe", "2026-09-23 failsafe")
+                .replace(old_count, new_count).replace("[cite:2026-09-22]", "[cite:2026-09-23]"))
+    assert new != block
+    return text.replace(block, new)
+
+LOG_ENTRY = "- 2026-09-23 (failsafe) — confirmed the outage.\n"
+def logged(text):
+    return text.replace("## Changelog\n\n", "## Changelog\n\n" + LOG_ENTRY, 1)
+
+for cid, old_count in (("failsafe-ongoing-condition", "28 missed windows /\n14 calendar days"),
+                       ("failsafe-ongoing-collapsed", "28 missed windows / 14 calendar days")):
+    fwd = lambda t, c=old_count: moved_forward(t, "2026-09-22", c, c.replace("28", "30").replace("14", "15"))
+    restated = ("Still dark at the 2026-09-23 failsafe: 30 missed windows / 15 calendar days since "
+                "09-08, and the carry-over pattern stays blind [cite:2026-09-23].")
+    reworded = restated.replace("Still dark", "The scanner is dark again")
+    one = "one_account" if cid.endswith("collapsed") else "no_restatement"
+    expect(cid, "an in-place rewrite", fwd, [])
+    after = lambda t, extra: fwd(t).replace(outage_block(fwd(t)), outage_block(fwd(t)) + extra)
+    expect(cid, "an appended restatement", lambda t: after(t, "\n\n" + restated), [one])
+    expect(cid, "a restatement in other words", lambda t: after(t, " " + reworded), [one])
+    expect(cid, "a changelog entry for the confirmation", lambda t: logged(fwd(t)), ["no_log_entry"])
+    expect(cid, "today's citation beside a stale account",
+           lambda t: t.replace("## Activity\n", "## Activity\n\nRe-checked tonight; dark still [cite:2026-09-23].\n"),
+           ["account"])
+    expect(cid, "the account deleted, unrelated text in its place",
+           lambda t: t.replace(outage_block(t), "The runner went dark on 09-08; 30 missed windows [cite:2026-09-23]."),
+           ["account", "one_account"] if cid.endswith("collapsed") else ["account"])
+
+collapsed = ("The scanner has been dark since `local-wip.json` last landed 2026-09-08T15:45 CEST: 21 missed "
+             "windows / 11 calendar days at the 2026-09-19 failsafe, eight days past the 3-day bar "
+             "[cite:2026-09-13] [cite:2026-09-19]. While it stays dark, the carry-over pattern above goes blind.")
+expect("retro-collapse-sediment", "a collapse to one paragraph", lambda t: t.replace(outage_block(t), collapsed), [])
+expect("retro-collapse-sediment", "the page left as it was", lambda t: t, ["collapsed"])
+expect("retro-collapse-sediment", "a collapse that keeps a second restatement",
+       lambda t: t.replace(outage_block(t), collapsed + "\n\nStill dark at the 2026-09-20 retro: 23 missed "
+                           "windows since 09-08 [cite:2026-09-20]."), ["collapsed"])
+expect("retro-collapse-sediment", "a collapse that drops the first citation",
+       lambda t: t.replace(outage_block(t), collapsed.replace("[cite:2026-09-13] ", "")), ["account"])
+expect("retro-collapse-sediment", "the account deleted", lambda t: t.replace(outage_block(t), "Nothing to report."),
+       ["account", "collapsed"])
+
 print()
 print("eval-routines-test: " + ("ok" if not failures else f"{len(failures)} failing"))
 sys.exit(1 if failures else 0)

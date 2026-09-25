@@ -8,28 +8,30 @@
   "measures": {
     "restatements": {
       "file": "memory/repos/ivy.md",
-      "count": "still dark",
-      "above_heading": "## Changelog"
+      "above_heading": "## Changelog",
+      "count": "still dark"
+    },
+    "window_counts": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "count": "\\d+\\s+missed\\s+windows"
     },
     "log_entries": {
       "file": "memory/repos/ivy.md",
-      "count": "\\n- \\d{4}-\\d{2}-\\d{2}",
-      "below_heading": "## Changelog"
+      "below_heading": "## Changelog",
+      "count": "\\n- \\d{4}-\\d{2}-\\d{2}"
     },
-    "outage": {
+    "account": {
       "file": "memory/repos/ivy.md",
-      "count": "\\bdark\\b",
-      "above_heading": "## Changelog"
-    },
-    "confirmed": {
-      "file": "memory/repos/ivy.md",
-      "count": "dark[^\\n]*(?:\\n[^\\n]+)*?cite:2026-09-23",
-      "above_heading": "## Changelog"
-    },
-    "began": {
-      "file": "memory/repos/ivy.md",
-      "count": "09-08",
-      "above_heading": "## Changelog"
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08",
+        "\\b(?:29|3\\d)\\s+missed\\s+windows|\\b1[5-9]\\s+(?:calendar\\s+)?days",
+        "blind|block|clean tree|surface|invisible|unknowable",
+        "cite:2026-09-23"
+      ]
     }
   },
   "checks": [
@@ -37,8 +39,16 @@
       "id": "no_restatement",
       "desc": "memory/repos/ivy.md gains no new dated restatement of the outage",
       "assert": {
-        "path": "_measures.restatements.delta",
-        "le": 0
+        "and": [
+          {
+            "path": "_measures.restatements.delta",
+            "le": 0
+          },
+          {
+            "path": "_measures.window_counts.delta",
+            "le": 0
+          }
+        ]
       }
     },
     {
@@ -50,27 +60,11 @@
       }
     },
     {
-      "id": "confirmed_today",
-      "desc": "today's citation sits in the outage's own paragraph",
+      "id": "account",
+      "desc": "one paragraph states the outage whole: its start (09-08), today's count, today's citation, and what it blocks",
       "assert": {
-        "path": "_measures.confirmed.after",
+        "path": "_measures.account.after",
         "ge": 1
-      }
-    },
-    {
-      "id": "still_recorded",
-      "desc": "the page still says the scanner is dark, and since when",
-      "assert": {
-        "and": [
-          {
-            "path": "_measures.outage.after",
-            "ge": 1
-          },
-          {
-            "path": "_measures.began.after",
-            "ge": 1
-          }
-        ]
       }
     },
     {

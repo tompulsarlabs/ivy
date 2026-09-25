@@ -200,10 +200,28 @@ def grade(case, answer):
     """{check_id: bool} for every check in the case."""
     return {c["id"]: bool(evaluate(c["assert"], answer)) for c in case["checks"]}
 
+def blocks(text):
+    """The paragraphs and list items of a Markdown text: the units a memory
+    line lives in."""
+    out, cur = [], []
+    for line in text.splitlines() + [""]:
+        heading = line.startswith("#")
+        if not line.strip() or heading or re.match(r"\s*(?:[-*+]|\d+\.)\s", line):
+            if cur:
+                out.append("\n".join(cur))
+            cur = []
+        if heading:
+            out.append(line)
+        elif line.strip():
+            cur.append(line)
+    return out
+
 def measure(sandbox, spec):
-    """Occurrences of spec['count'] (a regex) in a file, optionally only above
-    spec['above_heading'] or only below spec['below_heading'] (0 when that
-    heading is absent). None when the file is missing."""
+    """In a file, optionally only above spec['above_heading'] or only below
+    spec['below_heading'] (empty when that heading is absent): the
+    occurrences of spec['count'], a regex, or the paragraphs and list items
+    that match every regex in spec['blocks']. None when the file is
+    missing."""
     f = Path(sandbox) / spec["file"]
     if not f.is_file():
         return None
@@ -213,7 +231,17 @@ def measure(sandbox, spec):
     if spec.get("below_heading"):
         head = spec["below_heading"]
         text = text[text.index(head) + len(head):] if head in text else ""
+    if "blocks" in spec:
+        return sum(all(re.search(rx, b, re.I) for rx in spec["blocks"]) for b in blocks(text))
     return len(re.findall(spec["count"], text, re.I))
+
+def measured(case, before, sandbox):
+    """Each of the case's measures before the run, after it, and the change."""
+    out = {}
+    for k, b in before.items():
+        a = measure(sandbox, case["measures"][k])
+        out[k] = {"before": b, "after": a, "delta": None if a is None or b is None else a - b}
+    return out
 
 def extract_json(text):
     """The first JSON object in the model's final message, tolerating a fence."""
@@ -426,11 +454,7 @@ def run_in(sandbox, case, variant, rep, workdir):
         row.update(status="wrong_model")
         return row
     if edits:   # graded on the files the run left behind, not on its own account
-        answer["_measures"] = {k: {"before": b, "after": measure(sandbox, case["measures"][k]),
-                                   "delta": None} for k, b in before.items()}
-        for m in answer["_measures"].values():
-            if m["before"] is not None and m["after"] is not None:
-                m["delta"] = m["after"] - m["before"]
+        answer["_measures"] = measured(case, before, sandbox)
         row["diffs"] = file_diffs(sandbox, before_text)
     checks = grade(case, answer)
     row.update(status="ok", answer=answer, checks=checks, passed=all(checks.values()))

@@ -30,11 +30,17 @@ are deterministic assertions over that JSON; nothing is graded by a model.
 
 A case with `measures` is graded on the files it leaves instead of its own
 account, because a routine can label an append "update in place". Its run
-also gets Edit and Write. Each measure counts a regex in one file, optionally
-only above `above_heading` or below `below_heading`, before and after the
-run; checks read `_measures.<name>.before`, `.after`, and `.delta`. The
-row keeps a unified diff of each measured file under `diffs`, so a result
-can be read, not only counted. A run whose writes were denied is recorded
+also gets Edit and Write. Each measure reads one file, optionally only
+above `above_heading` or below `below_heading`, before and after the run.
+It counts a regex (`count`), or the paragraphs and list items that match
+every regex in `blocks`: that is how a case asks for one paragraph holding
+an ongoing condition's start, count, citation, and consequence together.
+Checks read `_measures.<name>.before`, `.after`, and `.delta`. The row keeps
+a unified diff of each measured file under `diffs`, so a result can be
+read, not only counted. `scripts/eval-routines-test.py` grades each memory
+case's real page after wrong edits (a restatement appended or reworded, a
+changelog entry, today's citation beside a stale account, the account
+deleted) and after the right one. A run whose writes were denied is recorded
 as `denied`, not scored.
 
 The model sees its working directory, so each sandbox is a fresh temporary
@@ -67,7 +73,7 @@ python3 scripts/eval-routines.py compare <baseline results.jsonl> <candidate res
 before spending anything without it. Scope a run with `--cases 'check-*'`.
 The default model (`DEFAULT_MODEL` in the script) is the one the four
 triggers run; pass `--model` to try another
-and `--effort` only if the trigger sets one. A full pass is 27 runs per rep,
+and `--effort` only if the trigger sets one. A full pass is 29 runs per rep,
 roughly $0.30 to $1.10 each at list price and about 25 minutes a rep at
 `--jobs 5`. `grade` re-scores saved answers after a check is edited, without
 re-running anything.
@@ -79,7 +85,7 @@ comparison lives in `evals/routines/results/`.
 
 ## Read the numbers
 
-Two reps per case is a smoke test, not a benchmark: with 27 cases a
+Two reps per case is a smoke test, not a benchmark: with 29 cases a
 difference of one or two cases is inside the noise. Read the per-check table,
 and open the answer of any check that flips between variants before believing
 it. A case passes only when every check passes, and every case fails on an
