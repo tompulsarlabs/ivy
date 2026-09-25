@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-24T15:45:07Z",
+  "generated_at": "2026-09-25T15:45:03Z",
   "repos": [
     {
       "name": "Talent Radar",
@@ -123,6 +123,17 @@
       "last_commit_email_ok": true
     },
     {
+      "name": "scout-hud-demo",
+      "remote": "tompulsarlabs/talent-scout",
+      "branch": "codex/hud-hiring-demo",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-25",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
       "name": "sybil",
       "remote": "tompulsarlabs/ai-capability-app",
       "branch": "main",
@@ -147,11 +158,11 @@
     {
       "name": "talent-radar-pilot",
       "remote": "tompulsarlabs/talent-radar",
-      "branch": "codex/executive-pilot",
+      "branch": "codex/production-release-record",
       "dirty_files": 0,
       "unpushed_commits": 2,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
+      "last_commit": "2026-09-25",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -222,6 +233,28 @@
       "last_commit_email_ok": false
     },
     {
+      "name": "radar-production-recovery-20260925",
+      "remote": "tompulsarlabs/talent-radar",
+      "branch": "(detached)",
+      "dirty_files": 0,
+      "unpushed_commits": 2,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-25",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "radar-production-release-20260924",
+      "remote": "tompulsarlabs/talent-radar",
+      "branch": "(detached)",
+      "dirty_files": 0,
+      "unpushed_commits": 2,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
       "name": "tomgreen-colours-audibene-20260922",
       "remote": "tompulsarlabs/tomgreen.ai",
       "branch": "codex/ivy-green-scout-blue",
@@ -240,6 +273,39 @@
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-lab-route-20260924",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/lab-canonical-route",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-latest-substack-20260924",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/latest-substack",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-24",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-nabu-20260925",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/rename-scout-nabu",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-25",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
