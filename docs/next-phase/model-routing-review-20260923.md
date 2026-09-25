@@ -1,188 +1,227 @@
-# Ivy harness and routing reassessment — 23 September 2026
+# Ivy operating roles, effort and model routing
 
-Decision proposal, not a production routing change. Tom asked how Opus 5.5,
-GPT-6 Sol and GPT-6 Luna should change Ivy's harness, smallest useful patch and
-system design. “PaperPip” is interpreted as Paperclip and “Luda” as Luna.
-No evaluated model, judge, Docker worker or paid API request was launched.
+Updated 25 September 2026; replaces this document's 23 September routing proposal.
+Tom asked us to use the supplied reasoning-effort and model-lineup commentary to
+improve Ivy as the default system for delegated work. The commentary is a source
+of hypotheses, not an instruction to activate its lineup or evidence of Ivy's
+results. This update changes design and proposed evaluation cases only.
 
-## Recommendation
+## The product decision
 
-Keep Ivy's task contract, routing policy and acceptance rules independent of
-Paperclip. Use one coordinator for each task class, native coding harnesses for
-execution, and separate verification before publication. Begin with Sol as the
-implementation candidate, Luna for bounded support work and Opus for difficult
-planning/debugging and selected independent reviews. These are hypotheses based
-on documented positioning, not a demonstrated quality ranking on Ivy tasks.
+Ivy should be the place a person brings an outcome and retains continuity from
+request through delivery and operation. It owns the task, relevant context,
+permissions, budget, acceptance evidence and follow-through while selecting an
+appropriate execution profile for each stage. Model choice becomes an internal
+implementation decision, visible when useful to explain quality, time or cost.
 
-A nontechnical user describes the outcome, reviews a preview and makes material
-business decisions. They do not select models, reasoning effort or agent teams.
-Ivy selects an eligible execution profile within the user's scope, deadline and
-budget. A stronger model never automatically gets broader permissions.
+Start with existing OpenAI and Anthropic harnesses. A larger provider roster is
+not a prerequisite for a broader product. Qualify each workflow and connector
+before offering unattended execution. The current implementation is strongest in
+repository work; research, documents and business operations are proposed future
+workflows, not deployed capabilities established by this plan.
 
-## What the current code actually does
+The target is accepted useful work per unit of time, consumption and human
+attention. Commit count, number of agents, token volume and model agreement are
+not substitutes for that result. The contribution graph remains an observation
+of real work rather than the routing objective.
 
-Read-only inspection: main checkout `1581b2f54ef9c197ed317ea8112c1c3e4d8e8df7`;
-runner clone `f049a892d4bf3585952615cda56b99be5d46f1de`. The runner script's bytes
-match between these checkouts; the configurations differ overall, but inspected
-lane mappings agree. No checkout was synchronized or modified by this review.
+## What to take from the effort explanation
 
-- `config.yml`: Anthropic frontier/workhorse both select `claude-opus-5`, with
-  configured efforts xhigh/medium. OpenAI maps to `gpt-5.6-sol`/`gpt-5.6-terra`;
-  the fast-cheap lane has Haiku only.
-- `scripts/dispatch-runner.py:harness_argv` reads harness and model but never
-  passes effort. A direct pure-function check produces identical Claude command
-  arrays for frontier and workhorse. Neither command pins effective effort.
-  This is a confirmed launcher defect, not a model-quality finding.
-- Current capture records requested model, harness name, wall time and exit;
-  it does not establish effective effort, harness version or all loaded context.
-  The acceptance scaffold already models requested runtime/instruction identity;
-  reuse it rather than inventing a second evidence scheme.
-- A zero exit plus report delimiters enters `done` pending external verification.
-  Preserve the distinction between a completed attempt and an accepted outcome,
-  and make it explicit in any replacement coordinator.
-- `memory/models.md` contains fifteen historically verified records dominated
-  by reviews, plus separate failure commentary. Broad lane labels, non-paired
-  tasks, mixed verification strength and selection of successful records cannot
-  establish a comparative model win or a new model's reliability.
-- Local help inspected: Codex CLI 0.155.1 and Claude Code 2.1.277. Claude exposes
-  `--effort`; Codex exposes config overrides and structured JSON events. Help
-  confirms interface shape, not access to the proposed model or effective run
-  settings. No auth files were opened. Codex help emitted a sandbox PATH-alias
-  warning; no agent session was started.
+The useful intuition is that higher effort gives the model more room to work;
+it does not require equally long deliberation on every input. OpenAI documents
+adaptive reasoning at different effort levels. Supported values and defaults are
+model-specific. [OpenAI reasoning](https://developers.openai.com/api/docs/guides/reasoning).
 
-## Candidate routes
+However, "ceiling" is a metaphor, not an enforceable budget. Anthropic explicitly
+describes effort as a behavioral signal, and it can affect response and tool-call
+tokens as well as thinking. Opus 5.5 uses adaptive thinking at every effort level;
+`max` is not a universal switch that first enables thinking.
+[Claude effort](https://platform.claude.com/docs/en/build-with-claude/effort).
 
-| Work | Initial candidate | Qualification / escalation |
+The supplied explanation of post-training token penalties is not established by
+these documentation sources. Ivy must not depend on that proposed mechanism.
+Use externally enforced task/time/spend limits where available, and record gaps
+in enforcement; effort alone cannot enforce any of them.
+
+Use medium as the initial setting for well-defined work. For ambiguous work,
+select a capable profile and compare high with xhigh rather than assuming xhigh
+wins. Anthropic recommends calibrating Opus 5.5 from medium and measuring the
+benefit of xhigh/max. [Opus calibration](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5).
+Do not transfer a level's observed behavior across model generations or providers.
+
+## Candidate roles and profiles
+
+These are initial candidates for evaluation, not active assignments or measured
+winners. A role is a responsibility or stage, not a requirement to launch another
+agent. A small clear task may complete in one session plus ordinary checks.
+
+| Responsibility | Initial candidate | Effort and handoff |
 | --- | --- | --- |
-| Exact checks, budgets, file hashes, CI state | Ordinary code | No model needed for a deterministic decision |
-| Extract fields, categorize known requests, summarize verified progress | Luna low/medium | Schema and source checks; ambiguous or consequential decisions go to a stronger route |
-| Bounded bug fix, ordinary feature, tests | Sol medium | High effort for demonstrably difficult reasoning; inspect failure cause before escalating |
-| Ambiguous product/design problem, difficult debugging | Opus medium/high, compared with Sol high | Test on the same cases; do not assume Opus is always better |
-| Material auth/data/security change | Capable builder plus independent review | Route directly; do not first burn a cheap attempt. Human decision for material unresolved risk |
-| Routine code review | Sol or Opus in a fresh reviewer context | Prefer another provider for selected critical cases, not mandatory double review of everything |
+| Interactive coordinator: understand intent, maintain the task, explain progress | Opus 5.5; compare Sol 6 as the eligible alternative | Medium; retain ownership while difficult investigation runs separately when justified |
+| Planner / investigator: resolve uncertainty and produce an executable brief | Opus 5.5; compare Sol 6 on the same difficult cases | Compare medium/high; qualify xhigh for difficult classes rather than enabling it for every unclear request |
+| Implementer: deliver against a clear brief | GPT-6 Sol; Opus 5.5 as a qualified alternative | Medium; return to planning if material assumptions break |
+| Adversarial reviewer: try to falsify correctness claims | GPT-6 Sol in a fresh review context | High initially; compare xhigh for difficult or consequential reviews; findings need evidence |
+| Exact, low-consequence repair or extraction | Ordinary code first; GPT-6 Luna when judgment is still needed | Low/medium; narrow permitted actions and explicit checks |
+| Premium escalation: resolve repeated failure, conflicting evidence or architectural uncertainty | GPT-6 Astra | High/xhigh candidate; one bounded diagnostic decision, then return routine work to its owner |
 
-Keep existing lane names compatible while introducing explicit task/risk profiles.
-Provider-specific effort levels are not interchangeable quality units. Separate
-complexity from consequence: a one-line access-control change may deserve more
-review than a large cosmetic edit. Model self-confidence cannot lower risk.
+OpenAI's current guidance positions Luna for scoped work, Sol for everyday work
+requiring judgment, and Astra for demanding work. It also recommends comparing
+settings on common inputs. This supports the candidate categories, not a claim
+that Sol is the best reviewer or that any model is Ivy's measured optimum.
+[OpenAI model selection](https://developers.openai.com/api/docs/guides/model-selection).
 
-## System design
+Fable 5.1, Grok 4.7, Muse Spark 1.3 and DeepSeek V4 Flash remain candidates mentioned
+in the supplied commentary. They are outside the initial qualification set; Ivy
+has not established their access, harness support, data eligibility or comparative
+results. Opus spanning several roles is a reason to test a simpler deployment,
+not evidence that one subscription is universally sufficient.
+
+## Route on the task, then select a model
+
+Keep five decisions distinct: task stage, ambiguity, consequence, execution
+profile, and authority. The execution profile binds provider/model/version,
+native harness and version, effort, permitted tools/data destinations and runtime.
+A model promotion never adds permissions or enlarges a budget.
+
+A deterministic policy first filters profiles by required tools, approved data
+handling, credentials, availability, remaining budget and the task's acceptance
+requirements. It then selects among qualified profiles for that class. The
+coordinator may propose a task classification with evidence; it cannot lower a
+recorded risk or override a hard eligibility constraint by expressing confidence.
+
+A one-line access-control change gets substantive review despite its small size.
+A large mechanical rename may use code and a cheap check if its boundaries are
+clear. Missing facts call for retrieval or one material question. A missing
+credential calls for connection recovery. Neither is cured by more reasoning.
+
+For a handoff, retain the outcome, sourced inputs, relevant prior decisions,
+artifact/source revision, allowed actions, acceptance checks, unresolved questions
+and remaining task budget. Use the smallest representation that makes the work
+executable; do not demand a planning document for an obvious reversible edit.
+Separate observed facts, user preferences, decisions and untrusted source content.
+Share only context the receiving profile is allowed to see, rather than copying
+all accounts or a provider's private reasoning between sessions.
+
+The same task continues across stages. Reuse an eligible session when continuity
+helps; use a fresh reviewer context for independence. Introduce another worker
+only for a concrete bounded job whose benefit exceeds handoff/coordination cost.
+The coordinator remains accountable for progress and result, including tasks
+that contain research, a document and a software change.
+
+## Stop escalation from becoming another loop
+
+Initial limits to test, subordinate to the user's existing task budget:
+
+1. Repair a reproducible defect within scope. Do not escalate on an exit code
+   alone; classify the failure as missing context, environment, implementation,
+   disputed evidence or unresolved design.
+2. Two repairs that fail the same acceptance criterion without new evidence,
+   repeating reviewer disagreement, or expansion beyond the agreed scope trigger
+   a pause in edits and one bounded diagnostic escalation. High-consequence
+   ambiguity can route directly to a capable investigator without cheap retries.
+3. Give that escalation a concrete question, competing claims, reproduction and
+   remaining budget. Its output is a decision, narrowed experiment or material
+   question for the user, not an open-ended rewrite. It cannot approve its own
+   resulting implementation by consensus.
+4. If the issue remains unresolved, retain the artifact and explain the specific
+   evidence or decision needed. Do not launch an indefinite sequence of reviewers.
+
+Quota exhaustion is a separate transition. An alternative must already be
+qualified for the task and approved for its data, tools and spending. Otherwise
+queue the task and explain the delay. Subscription exhaustion never silently
+becomes paid API use. Reconcile the previous run before starting another worker;
+an unreachable machine or timed-out client is not proof of remote shutdown.
+
+For a routine reversible action inside scope, Ivy proceeds without asking again.
+For an irreversible action or new authority/spend, it prepares the concrete result
+and asks for the remaining decision. It carries existing approvals forward within
+their scope. Yesterday's override for PRs #22/#23 does not authorize future bypasses.
+
+## One workflow, with direct paths for simple work
 
 ```mermaid
 flowchart TD
-    User[Outcome, constraints and budget] --> Contract[Ivy task contract and acceptance checks]
-    Contract --> Router[Ivy routing policy and eligibility checks]
-    Router --> Coordinator[One coordinator: current runner or Paperclip]
-    Coordinator --> Harness[Approved Codex or Claude Code profile]
-    Harness --> Artifacts[Code, preview, events and test evidence]
-    Artifacts --> Verify[Independent acceptance and release checks]
-    Verify --> Result[Working result and ongoing operation]
-    Verify -->|repair within the original budget| Router
+    User[Outcome and constraints] --> Task[One task and accountable coordinator]
+    Task --> Context[Relevant context, authority and acceptance]
+    Context --> Route[Eligible execution profile]
+    Route -->|clear work| Execute[Code, tools or a scoped worker]
+    Route -->|material ambiguity| Plan[Investigation and executable brief]
+    Plan --> Execute
+    Execute --> Verify[Independent checks proportional to consequence]
+    Verify -->|accepted| Deliver[Deliver and operate within scope]
+    Verify -->|bounded repair| Execute
+    Verify -->|repeated failure or disputed evidence| Diagnose[Bounded escalation]
+    Diagnose --> Route
 ```
 
-Keep the first router a small deterministic module and versioned configuration,
-not another always-running reasoning agent or a new microservice. Decide using
-task class, ambiguity, risk, required tools, permitted data destinations, runtime
-availability, quota and budget. The coordinator manages queue ownership and run
-lifecycle; the harness manages tool use and model sessions; Ivy owns acceptance.
-Paperclip already has Codex/Claude adapters. Its current docs do not prove new
-model support in our pinned 2026.916.1 installation: validate that exact adapter
-and CLI combination before promoting a route.
+Ivy owns the contract and acceptance policy. One coordinator owns dispatch for
+that task class; Paperclip is the proposed private coordination foundation, not a
+second concurrent dispatcher. Native harnesses own model sessions and tool use.
+A successful provider response is only an attempt result. Checks must establish
+the actual promised outcome: code behavior, supported research claims, a correct
+document, or the intended effect in a connected application.
 
-On a handoff, pass a versioned task, pinned commit/artifact references, test
-results, known blockers and remaining budget. Start a fresh provider session;
-do not splice private reasoning or incompatible session tokens across models.
-Keep task input/tool policy stable within a continuing provider session.
+A status card should show what is being delivered, what is working, what is
+blocked, the next action and any decision required from the person. Model labels
+and token counters are secondary details. Slow investigation should not make the
+interactive coordinator appear abandoned; it should report progress and accept
+corrections without losing work or changing the agreed outcome silently.
 
-Retries retain one task budget and all attempts. A missing credential, broken
-network or uncertain remote shutdown is an environment/lifecycle problem, not
-an instruction to buy a different model. Before a second worker starts, reconcile
-ownership and confirm the prior attempt cannot continue. Infrastructure backoff
-and reasoning escalation are separate mechanisms. Never silently fall back from
-subscription execution to paid API execution.
+## Current evidence and the next build
 
-## Smallest useful patch and rollout
+Read-only snapshot on 25 September: `origin/main` at `d85d1ae`. PRs #22/#23 are
+merged; native effort translation, compatibility validation, route preview and
+requested execution provenance exist. Active lanes still use Opus 5 and GPT-5.6
+Sol/Terra, with Haiku for fast-cheap work. Opus 5.5 and GPT-6 profiles are not live.
 
-1. **Make configuration effective.** Add provider-specific effort translation and
-   validation, explicit supported model IDs and an inspect-only route preview.
-   Test full config-to-command resolution. Reject unsupported combinations before
-   claiming a task. Do not assume fixing ignored effort is behavior-neutral: it
-   can increase consumption and change output even with the same model ID.
-2. **Capture what ran.** Record requested settings, effective settings when the
-   harness exposes them, CLI/adapter version, policy/context/tool manifest,
-   source commit, attempts and usage. Mark unavailable fields unknown. Preserve
-   raw structured events privately and publish sanitized evidence. Never log
-   secrets or present an API estimate as a subscription bill.
-3. **Register disabled candidate profiles.** Sol, Luna and Opus profiles can be
-   reviewed without changing the active dispatcher. Keep an explicit rollback
-   profile. Use current native CLIs first; a custom API agent loop adds migration
-   and authentication work without yet demonstrating a product benefit.
-4. **Run a bounded comparison, then promote one task class.** Confirm isolated
-   auth/model availability first. Replay representative tasks with common inputs,
-   acceptance criteria and total budgets, then verify a fresh task. Change active
-   routing only after reviewing the evidence. No live comparison is authorized
-   by this document, and prior exhausted acceptance grants remain exhausted.
+The shared scanner snapshot is fresh at 15:45:03 UTC with 28 checkouts. A real
+25 September dispatch record now contains requested settings and runner/config/
+prompt hashes, but still marks effective settings unknown and usage unavailable.
+This proves the metadata path ran; it does not prove review quality or compare
+models. The reports on #22/#23 contain follow-up findings that need triage against
+current code. A report's existence and a `verified: true` stamp do not establish
+that every finding is correct or that every reported defect has been repaired.
+[Recorded dispatch](https://github.com/tompulsarlabs/ivy/blob/d85d1ae/dispatch/done/2026-09-25-talentradar-productionpromo-review-01.md).
 
-This can be prepared independently of the Paperclip deployment. Adding a second
-scheduler, automatic cloud fallback, a learned router or a full agent hierarchy
-is outside the first patch. The production checkout and dispatch remain untouched.
+Next implementation slice:
 
-## Evaluation contract — proposed, not executed
+1. Triage the new scanner/harness review findings against the merged code before
+   treating these controls as a settled baseline.
+2. Add versioned, disabled candidate profiles and a pure routing preview showing
+   the proposed stage, model, effort, eligibility decision and escalation reason.
+   Keep current lane compatibility and a rollback profile. No second scheduler.
+3. Implement the proposed routing controls in the shared inventory. Keep schema/
+   policy tests separate from model performance and real provider availability.
+4. Run a bounded comparison of Sol implementation/review, Opus planning and Luna
+   narrow repairs, plus a held-out premium-escalation case. Validate exact native
+   CLI compatibility, account access and required evidence first. Use existing
+   authorized limits; this design does not create a new model/runtime spend grant.
+5. Qualify one task class for a canary, then consider promotion through the
+   repository's existing policy. Broader workflows and providers follow evidence.
 
-Use the shared inventory at `~/Build/ivy/evals/` when implementing the routing
-patch, respecting its current untracked content. Define cases for narrow repair,
-ordinary build, ambiguous requirements, security review with seeded defects and
-clean controls, long-context work, and failed/disconnected execution. Assess
-Luna on eligible support tasks; compare Sol and Opus directly for builds/reviews.
-Freeze common context and equivalent permitted tools; record unavoidable native
-harness differences. That comparison measures the full model+harness profile,
-not the isolated model weights. Repeat stochastic cases and retain all failures.
+The first routing module should remain ordinary code plus versioned profiles.
+Do not build a learned router, new agent framework or large model leaderboard
+before completing this slice. Full context/event capture and usage visibility
+remain follow-up work; the missing evidence must remain visible.
 
-Measure accepted outcomes, escaped defects, review precision/recall, human
-interventions, repair count, total elapsed time and usage per accepted result.
-Seeded controls can establish whether defects were found; citation validity
-alone cannot. Use held-out cases and human calibration, not another model's
-agreement as ground truth. Publish the sample size and uncertainty. A small
-campaign qualifies a canary; it does not establish universal reliability.
+## Evaluation and success measures
 
-Deterministic patch cases: effort actually applied; unknown model/effort rejected;
-critical risk cannot select the cheap route; provider pins honored; unavailable
-Mac/auth blocks execution; no subscription-to-API fallback; retry budget not
-reset; unknown shutdown prevents duplicate dispatch; worker claims never set
-accepted; effective metadata missing stays unknown. Existing 121 software tests
-are historical evidence and were not rerun for this documentation-only review.
+[Proposed routing inventory](../../evals/routing-policy.json) defines scenarios,
+expected decisions and evidence requirements. It is not executable yet, has not
+been run and contains no passes. A shared copy is maintained at `~/Build/ivy/evals/`.
 
-## Costs and compatibility
+Compare complete profiles with common tasks, equivalent permitted tools, pinned
+inputs and total task budgets. First vary effort within a model; then compare
+models at qualified settings. Count planning, handoffs, failed attempts, repairs
+and reviews in the full result. Include seeded defects and clean controls, repeated
+runs and held-out cases. Explain native-harness differences and sample uncertainty.
+An independent assessor must calibrate outcome judgments; model agreement is not
+the ground truth. Higher effort must justify itself by useful results.
 
-Standard API prices checked 2026-09-23, USD per million tokens, uncached short
-context: Luna $0.10 input/$0.50 output; Sol $2/$10; Opus $4/$20. A hypothetical
-40,000 input + 5,000 output-token request costs $0.0065/$0.13/$0.26 respectively,
-before tools, cache writes, long-context/region premiums and additional requests.
-This is arithmetic, not a task-cost forecast. Reasoning and repeated tool turns
-change total consumption; compare cost per accepted result. Subscription routes
-instead need measured quota pressure, latency and availability. Railway hosting
-and the previously approved $40 compute cap do not fund model API calls.
-
-Opus 5.5 Messages API always uses adaptive thinking, rejects forced tool choice,
-and constrains thinking-block reuse. Its computer-use interface also changed on
-Claude API/Google Cloud. Native Claude Code manages parts of this itself; those
-API breaking changes are not proof our CLI adapter fails. Validate CLI parsing,
-progress and final output rather than applying API flags to a CLI command.
-Sol/Luna support explicit reasoning effort; Responses is the appropriate OpenAI
-API path for built-in tools if API integration is later chosen. Account access
-and subscription availability have not been validated in this assessment.
-
-Sources (official, accessed 2026-09-23):
-- [Sol model](https://developers.openai.com/api/docs/models/gpt-6-sol)
-- [Luna model](https://developers.openai.com/api/docs/models/gpt-6-luna)
-- [OpenAI pricing](https://developers.openai.com/api/docs/pricing)
-- [Opus 5.5 overview](https://platform.claude.com/docs/en/models/opus-5-5/overview)
-- [Opus migration](https://platform.claude.com/docs/en/models/opus-5-5/migration-guide)
-- [Paperclip adapters](https://docs.paperclip.ing/reference/adapters/overview/)
-
-## Decision
-
-Ship the harness/config correctness and evidence patch first, with new routing
-profiles disabled. Evaluate candidate roles, then enable one proven task class.
-Keep Paperclip's hosting work separate. Milestone A, isolated real-agent auth,
-new-model quality and unattended remote lifecycle guarantees remain unverified.
+Measure independently accepted outcomes, escaped defects, reviewer false alarms,
+latency to first useful response and to completion, human decisions, repair count,
+quota pressure, usage and cost per accepted outcome where accounting is complete.
+Missing usage is unknown, not zero; API list-price arithmetic is not a subscription
+bill. Zero accepted outcomes has no finite cost-per-success. Keep engineering and
+hosting costs separate from model execution. No comparative results are claimed
+by this design update.

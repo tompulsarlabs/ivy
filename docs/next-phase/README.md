@@ -1,5 +1,12 @@
 # Ivy next phase: evidence for agent release decisions
 
+**Current direction, 25 September:** Ivy is intended to become the default place
+to delegate outcomes across projects. The [operating roles and routing proposal](model-routing-review-20260923.md)
+and [nontechnical product journey](hybrid-worker-plan.md) describe that direction.
+The [runtime handoff](runtime-handoff.md) records current implementation and limits.
+The initial release-evidence proof below remains a bounded supporting workstream;
+it is not the full product definition or proof of general-purpose capability.
+
 Direction approved · 5 September 2026 · architecture scaffold implemented; live execution pending.
 Tom authorized system design after the housekeeping handoff and selected teams
 shipping coding or internal-workflow agents as the first customer group.

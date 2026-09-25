@@ -1,5 +1,10 @@
 # Explicit evaluation inventory
 
+[routing-policy.json](routing-policy.json) contains proposed scenarios for task
+roles, effort selection, escalation, budget/authority boundaries and outcome
+verification. These cases are not executable yet and have not run. They are
+requirements for a future routing implementation, not passing agent evaluations.
+
 [evidence-quality.json](evidence-quality.json) records the twelve controls for the
 offline probe assessment and resource report. Each case names executable tests and
 its expected outcome. Run them through `python3 -B -m unittest discover -s tests -v`.

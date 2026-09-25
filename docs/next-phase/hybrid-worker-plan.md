@@ -56,6 +56,32 @@ current deployment remains a foundation milestone; it does not demonstrate this
 product requirement. Do not broaden the ongoing release into a complete new
 interface before selecting and proving one end-to-end use case.
 
+### Ivy as the default place to delegate work
+
+Tom extended the direction on 25 September: Ivy should become the default system
+for running work across his projects. The [role and routing design](model-routing-review-20260923.md)
+separates an interactive coordinator, investigation, implementation, adversarial
+review, narrow repairs and premium escalation. These are responsibilities within
+one task; simple work should not pass through a mandatory team of agents.
+
+The person describes the result, provides relevant context and delegates a scope.
+Ivy keeps that context and approval history, chooses an eligible execution profile,
+verifies the result and follows through on operation. The coordinator remains
+responsive while difficult work proceeds. Model, effort, permissions and budget
+are separate controls, and changing one never silently widens the others.
+
+For example, an enquiry-page task can need investigation of requirements, a short
+brief, implementation, a review of data handling and an observed test delivery.
+The person should make the business choices about the enquiry and destination;
+Ivy handles ordinary implementation and repairs within that authority. An existing
+clear brief can skip investigation. A typo can take a direct edit-and-check path.
+
+This applies the same task and evidence model to future research, documents and
+connected operations. Each workflow still needs its own qualified tools, access
+and outcome checks before unattended use. The existing engineering acceptance
+proof is a supporting capability; it does not by itself establish a working
+general-purpose assistant or a validated broader customer market.
+
 ### First journey and acceptance cases — proposed, not yet run
 
 Candidate journey: a small-business operator asks for an enquiry page that
