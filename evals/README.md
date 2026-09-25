@@ -37,10 +37,18 @@ row keeps a unified diff of each measured file under `diffs`, so a result
 can be read, not only counted. A run whose writes were denied is recorded
 as `denied`, not scored.
 
-The model sees its working directory, so each sandbox gets a random name
-under `<workdir>/sandboxes/`: no case id or variant label appears in any
-path the run can see. Transcripts, named by case and variant, stay in the
-run's own directory.
+The model sees its working directory, so each sandbox is a fresh temporary
+directory with a random name, outside the work directory: no case id or
+variant label appears in any path the run can see. The run is
+`--restricted`, which keeps the file tools inside the sandbox, so the
+work directory's transcripts and results, named by case and variant, stay
+out of reach. Restricted mode also ignores every settings file,
+so a machine's allow rules, hooks, and personal CLAUDE.md reach no run.
+It skips the sandbox's own CLAUDE.md too; `--add-dir` of the sandbox
+restores it, and the model's context is then byte for byte an unrestricted
+run's. A sandbox is deleted once its run is graded; the row keeps the answer
+and the diffs. `IVY_EVAL_LIVE=1 python3 scripts/eval-routines-test.py` checks
+the confinement with two real runs, for a few cents.
 
 ## Run it
 
@@ -55,8 +63,10 @@ python3 scripts/eval-routines.py run --label candidate --steering WORKTREE --pro
 python3 scripts/eval-routines.py compare <baseline results.jsonl> <candidate results.jsonl>
 ```
 
-Scope a run with `--cases 'check-*'`. The default model (`DEFAULT_MODEL` in
-the script) is the one the four triggers run; pass `--model` to try another
+`run` needs a Claude Code with `--restricted` (2.1.282 has it) and stops
+before spending anything without it. Scope a run with `--cases 'check-*'`.
+The default model (`DEFAULT_MODEL` in the script) is the one the four
+triggers run; pass `--model` to try another
 and `--effort` only if the trigger sets one. A full pass is 27 runs per rep,
 roughly $0.30 to $1.10 each at list price and about 25 minutes a rep at
 `--jobs 5`. `grade` re-scores saved answers after a check is edited, without

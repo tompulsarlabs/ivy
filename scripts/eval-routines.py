@@ -8,9 +8,9 @@ evidence.md (the results of the external lookups the routine would make), and
 files/ (overlay files that change the replayed state: a stale scan, a failed
 contract, a rewritten journal section). The harness builds that repository
 in a sandbox, runs the routine's prompt headless and read-only
-(`claude -p`, no MCP, no shell, no network), asks for its decisions as JSON,
-and grades them with deterministic checks. The model under test never sees
-the cases.
+(`claude -p --restricted`, no MCP, no shell, no network, file tools confined
+to the sandbox), asks for its decisions as JSON, and grades them with
+deterministic checks. The model under test never sees the cases.
 
 A variant is (steering files, routine prompts):
   --steering REV|WORKTREE   where playbook.md, CLAUDE.md, routines/ ... come from
@@ -27,7 +27,7 @@ Usage:
 
 Grading is pure and covered by scripts/eval-routines-test.py.
 """
-import argparse, difflib, fnmatch, io, json, re, secrets, shutil, subprocess, sys, tarfile, time
+import argparse, difflib, fnmatch, io, json, os, re, shutil, subprocess, sys, tarfile, tempfile, time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
@@ -314,11 +314,35 @@ def routine_prompt(routine, prompts, steering):
 
 # ---------------------------------------------------------------- running
 
-def sandbox_for(workdir):
-    """A fresh sandbox path. The model sees its working directory, so the path
-    carries no case id and no variant label: those would name the behaviour
-    under test."""
-    return workdir.parent / "sandboxes" / secrets.token_hex(6)
+def new_sandbox():
+    """A fresh, empty sandbox directory. The model sees its working directory,
+    so the path carries no case id and no variant label: those would name the
+    behaviour under test. Each sandbox is its own temporary directory, never
+    under the work directory, whose transcripts are named by case and
+    variant; --restricted (claude_argv) keeps the file tools inside it."""
+    return Path(tempfile.mkdtemp(prefix="")).resolve()
+
+def claude_argv(prompt, variant, edits, sandbox):
+    """The headless run. --restricted confines the file tools to the sandbox
+    and ignores every settings file, so no machine's allow rules, hooks, or
+    personal CLAUDE.md reach a run. It skips the project CLAUDE.md too;
+    --add-dir of the sandbox, with claude_env(), restores it, and the model's
+    context is then byte for byte an unrestricted run's.
+    --strict-mcp-config leaves out every MCP server."""
+    argv = ["claude", "-p", prompt, "--model", variant["model"],
+            "--restricted", "--add-dir", str(sandbox),
+            "--output-format", "stream-json", "--verbose", "--no-session-persistence",
+            "--tools", EDIT_TOOLS if edits else TOOLS, "--strict-mcp-config",
+            "--max-budget-usd", str(variant["budget_usd"])]
+    if edits:   # -p denies file writes unless edits are accepted up front
+        argv += ["--permission-mode", "acceptEdits"]
+    if variant.get("effort"):
+        argv += ["--effort", variant["effort"]]
+    return argv
+
+def claude_env():
+    """--add-dir loads a directory's CLAUDE.md only with this set."""
+    return dict(os.environ, CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD="1")
 
 def file_diffs(sandbox, before_text):
     """Unified diffs of the measured files, kept so an edit case's result can
@@ -332,9 +356,14 @@ def file_diffs(sandbox, before_text):
     return out
 
 def run_one(case, variant, rep, workdir):
+    sandbox = new_sandbox()
+    try:
+        return run_in(sandbox, case, variant, rep, workdir)
+    finally:   # the row keeps the answer and the diffs; the tree is disposable
+        shutil.rmtree(sandbox, ignore_errors=True)
+
+def run_in(sandbox, case, variant, rep, workdir):
     tag = f"{case['id']}.{variant['label']}.r{rep}"
-    sandbox = sandbox_for(workdir)
-    sandbox.mkdir(parents=True)
     build_sandbox(case, variant["steering"], sandbox)
     prompt = routine_prompt(case["routine"], variant["prompts"], variant["steering"])
     edits = bool(case.get("measures"))
@@ -343,25 +372,19 @@ def run_one(case, variant, rep, workdir):
     before = {k: measure(sandbox, m) for k, m in case.get("measures", {}).items()}
     before_text = {m["file"]: ((sandbox / m["file"]).read_text() if (sandbox / m["file"]).is_file() else "")
                    for m in case.get("measures", {}).values()}
-    argv = ["claude", "-p", prompt, "--model", variant["model"],
-            "--output-format", "stream-json", "--verbose", "--no-session-persistence",
-            "--tools", EDIT_TOOLS if edits else TOOLS, "--strict-mcp-config",
-            "--max-budget-usd", str(variant["budget_usd"])]
-    if edits:   # -p denies file writes unless edits are accepted up front
-        argv += ["--permission-mode", "acceptEdits"]
-    if variant.get("effort"):
-        argv += ["--effort", variant["effort"]]
+    argv = claude_argv(prompt, variant, edits, sandbox)
     row = {"case": case["id"], "routine": case["routine"], "intent": case.get("intent", "preserve"),
            "label": variant["label"], "steering": variant["steering_sha"], "prompts": variant["prompts"],
            "model": variant["model"], "effort": variant.get("effort") or "default", "rep": rep,
            "sandbox": sandbox.name}
     start = time.time()
     try:
-        proc = subprocess.run(argv, cwd=sandbox, capture_output=True, text=True,
-                              timeout=variant["timeout_s"])
-        stream = proc.stdout
+        proc = subprocess.run(argv, cwd=sandbox, env=claude_env(), capture_output=True,
+                              text=True, timeout=variant["timeout_s"])
+        stream, stderr = proc.stdout, proc.stderr
     except subprocess.TimeoutExpired as e:
         stream = e.stdout.decode() if isinstance(e.stdout, bytes) else (e.stdout or "")
+        stderr = ""
         row.update(status="timeout")
     row["duration_s"] = round(time.time() - start, 1)
     (workdir / "transcripts").mkdir(exist_ok=True)
@@ -382,7 +405,7 @@ def run_one(case, variant, rep, workdir):
     row["files_read"] = [str(f).replace(str(sandbox) + "/", "") for f in files_read]
     if result is None:
         row.setdefault("status", "error")
-        row["error"] = stream[-600:]
+        row["error"] = (stream or stderr)[-600:]
         return row
     denials = result.get("permission_denials") or []
     row.update(cost_usd=result.get("total_cost_usd"), turns=result.get("num_turns"),
@@ -438,6 +461,9 @@ def summarize(rows):
     return "\n".join(lines)
 
 def cmd_run(args):
+    if "--restricted" not in subprocess.run(["claude", "--help"], capture_output=True, text=True).stdout:
+        sys.exit("this claude has no --restricted, which keeps each run inside its sandbox; "
+                 "run `claude update` (2.1.282 has it)")
     cases = load_cases(args.cases)
     variant = {"label": args.label, "steering": args.steering, "prompts": args.prompts,
                "steering_sha": git_sha(args.steering), "model": args.model, "effort": args.effort,

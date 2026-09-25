@@ -67,7 +67,7 @@ check("le / ge compare numbers", ev({"path": "n", "le": 0}, {"n": -1}) and ev({"
 check("le fails on a missing number", not ev({"path": "n", "le": 0}, {}))
 check("le does not treat a bool as a number", not ev({"path": "n", "le": 1}, {"n": True}))
 
-import re, tempfile
+import os, re, secrets, subprocess, tempfile
 with tempfile.TemporaryDirectory() as tmp:
     (Path(tmp) / "memory").mkdir()
     (Path(tmp) / "memory" / "p.md").write_text("Still dark. still dark.\n## Changelog\n- still dark\n")
@@ -83,11 +83,44 @@ with tempfile.TemporaryDirectory() as tmp:
     d = evalr.file_diffs(Path(tmp), {"memory/p.md": "Still dark.\n## Changelog\n"})
     check("file_diffs shows the edit a run made", "+- still dark" in d["memory/p.md"] and d["memory/p.md"].startswith("--- a/memory/p.md"))
 
-run_dir = Path("/tmp/ivy-eval/failsafe-ongoing-condition-candidate-20260101-000000")
-a, b = evalr.sandbox_for(run_dir), evalr.sandbox_for(run_dir)
-check("sandbox paths are fresh and opaque", a != b and re.fullmatch(r"[0-9a-f]{12}", a.name) is not None)
-check("a sandbox path names no case and no variant",
-      all(w not in str(a) for w in ("failsafe", "ongoing", "candidate", "baseline", "transition")))
+a, b = evalr.new_sandbox(), evalr.new_sandbox()
+try:
+    check("sandboxes are fresh, empty directories", a != b and a.is_dir() and not any(a.iterdir()))
+    check("a sandbox sits in the temp directory, never under the work directory",
+          a.parent == Path(tempfile.gettempdir()).resolve() and Path("/tmp/ivy-eval") not in a.parents)
+    check("a sandbox path names no case and no variant",
+          all(w not in str(a) for w in ("failsafe", "ongoing", "candidate", "baseline", "transition", "ivy-eval")))
+finally:
+    for d in (a, b):
+        d.rmdir()
+
+variant, box = {"model": "m", "budget_usd": 1.0}, Path("/tmp/k2j3h4g5")
+for edits in (False, True):
+    argv = evalr.claude_argv("p", variant, edits, box)
+    mode = "edit" if edits else "read-only"
+    check(f"{mode} runs are restricted and skip MCP", "--restricted" in argv and "--strict-mcp-config" in argv)
+    check(f"{mode} runs get file tools only",
+          argv[argv.index("--tools") + 1] == (evalr.EDIT_TOOLS if edits else evalr.TOOLS)
+          and "Bash" not in evalr.EDIT_TOOLS)
+    check(f"{mode} runs add only the sandbox and never bypass permissions",
+          [argv[i + 1] for i, a in enumerate(argv) if a == "--add-dir"] == [str(box)]
+          and "bypassPermissions" not in argv and not any("dangerously" in a for a in argv))
+    check(f"{mode} runs accept edits only when the case measures them",
+          ("acceptEdits" in argv) == edits)
+
+kept = {}
+def fake_run_in(sandbox, case, variant, rep, workdir):
+    (sandbox / "memory.md").write_text("edited")
+    kept["path"] = sandbox
+    return {"status": "ok"}
+real_run_in, evalr.run_in = evalr.run_in, fake_run_in
+try:
+    evalr.run_one({"id": "c"}, {"label": "l"}, 1, Path("/nonexistent"))
+    check("a sandbox is deleted once its run is graded", not kept["path"].exists())
+finally:
+    evalr.run_in = real_run_in
+check("runs load the sandbox's CLAUDE.md through --add-dir",
+      evalr.claude_env().get("CLAUDE_CODE_ADDITIONAL_DIRECTORIES_CLAUDE_MD") == "1")
 
 check("extract_json reads a bare object", evalr.extract_json('{"a": 1}') == {"a": 1})
 check("extract_json tolerates a fence and prose",
@@ -105,6 +138,35 @@ for case in cases:
     for null in ({}, {"notifications": [], "commits": [], "contracts_opened": [], "memory_edits": []}):
         graded = evalr.grade(case, null)
         check(f"{case['id']}: an empty answer fails the case ({len(null)} keys)", not all(graded.values()))
+
+# One real run per mode, a few cents, only with IVY_EVAL_LIVE=1: the file
+# tools stay inside the sandbox even when the directory beside it holds
+# transcripts named by case and variant, and CLAUDE.md still loads.
+if os.environ.get("IVY_EVAL_LIVE"):
+    with tempfile.TemporaryDirectory() as tmp:
+        root, token = Path(tmp).resolve(), secrets.token_hex(8)
+        leak = root / "candidate-20260101-000000" / "transcripts" / "scout-daily-cap.candidate.r1.jsonl"
+        leak.parent.mkdir(parents=True)
+        leak.write_text(f"LEAKED-{token}\n")
+        sandbox = root / "sandbox"
+        sandbox.mkdir()
+        (sandbox / "CLAUDE.md").write_text("The project word is MARIGOLD.\n")
+        (sandbox / "inside.txt").write_text("INSIDE-OK\n")
+        prompt = ("State the project word from your instructions. Read inside.txt. Then try each of "
+                  f"these and report what it returned: Read ../{leak.relative_to(root)}; Read {leak}; "
+                  "Glob **/*.jsonl with path ..; Grep LEAKED with path ..")
+        for edits in (False, True):
+            mode = "edit" if edits else "read-only"
+            ask = prompt + ("; then write the word DONE to note.txt here." if edits else ".")
+            out = subprocess.run(evalr.claude_argv(ask, {"model": evalr.DEFAULT_MODEL, "budget_usd": 0.5},
+                                                   edits, sandbox),
+                                 cwd=sandbox, env=evalr.claude_env(), capture_output=True, text=True,
+                                 timeout=300).stdout
+            check(f"live {mode}: a file inside the sandbox is readable", "INSIDE-OK" in out)
+            check(f"live {mode}: CLAUDE.md loads", "MARIGOLD" in out)
+            check(f"live {mode}: nothing beside the sandbox is readable", token not in out)
+            if edits:
+                check("live edit: a write inside the sandbox lands", (sandbox / "note.txt").is_file())
 
 print()
 print("eval-routines-test: " + ("ok" if not failures else f"{len(failures)} failing"))

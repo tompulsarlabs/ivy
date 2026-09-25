@@ -1,0 +1,27 @@
+name: Routine eval grader
+on:
+  pull_request:
+    paths:
+      - 'scripts/eval-routines*'
+      - 'evals/**'
+      - '.github/workflows/routine-eval.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/eval-routines*'
+      - 'evals/**'
+      - '.github/workflows/routine-eval.yml'
+permissions:
+  contents: read
+jobs:
+  grader:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -B -W error::ResourceWarning scripts/eval-routines-test.py
