@@ -1,7 +1,7 @@
 ---
 id: 2026-09-25-ivy-playbookretune-review-02
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-25T09:33:57+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
@@ -58,3 +58,24 @@ review. Findings as file:line with a proposed fix each.
 
 The report file exists on main of ivy, is non-empty, and every referenced
 path and commit sha exists on the PR's current head.
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: e0363e7f4eced5ef8432c698bb800b84651210e7
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 8ee855fd6442fd7876d0936a57719dc6deea0a377d4bf0921f59c6c2583f0317
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-25T09:33:57+02:00
+  finished_at: 2026-09-25T09:43:19+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 9.3
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-25-ivy-playbookretune-review-02.md
