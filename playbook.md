@@ -152,18 +152,34 @@ green if any of these shows a contribution:
 - (b) `search_commits`: a commit authored by `tompulsarlabs` today on a
   default branch, outside forks;
 - (c) `search_issues` / `search_pull_requests`: an issue or PR opened by
-  `tompulsarlabs` today.
+  `tompulsarlabs` today;
+- (d) the PR behind each contract claimed today, searched exactly, since a
+  broad search can miss one: a build worker opens its PR from
+  `dispatch/<id>`, and a contract's `outcome` or report may record a PR's
+  URL. Put `repo:<owner>/<name>` and `head:dispatch/<id>` (or the recorded
+  number) in the `search_pull_requests` query, since the repo-scoped tools
+  refuse other repos, and count a hit by the test in (c).
 
 Bot-authored commits (`bot@ivy.invalid`, historically
 `bot@evergreen.invalid`) never count. A PR counts by who opened it: a
 dispatch worker's draft PR opened as `tompulsarlabs` counts like one Tom
-opened. A PR review counts on the graph too, but outside this repo the cloud
-tools cannot tell when one was submitted, so a review never decides green on
-its own: a day with only a review reads grey, and the failsafe's journal
-secures it. Search indexing lags a push by about a minute, so verify a commit
-you just pushed with (a). If the MCP tools are unavailable as well, the day
-is unknown: alert. `memory/ops.md` records how the sandbox behaves and which
-query forms reach other repos.
+opened. Search indexing lags a push by about a minute, so verify a commit
+you just pushed with (a).
+
+The day is grey when every lookup ran and none shows a contribution. It is
+unknown when the MCP tools are unavailable, or when the lookups disagree: a
+contract records a PR from today that no search returns. An unknown day
+gets an alert, and the failsafe secures it with the journal as it would a
+grey day: the entry is genuine either way, and a day the lookups cannot
+read still needs securing.
+
+A PR review counts on the graph too, but no lookup can date one from here:
+outside this repo `pull_request_read` refuses, and a search dates only the
+PR's last change. A day whose only contribution is a review therefore reads
+grey to the routines while the graph may already be green; the failsafe's
+journal secures it either way and names the review under `## Verification`.
+`memory/ops.md` records how the sandbox behaves and which query forms reach
+other repos.
 
 **Alerts and nudges are pushes.** Send through PushNotification. An alert
 starts with `ALERT:` so it never reads as a nudge.
@@ -297,8 +313,8 @@ The failsafe closes the day in three steps, each started only once the step
 before it is done: secure and record the day, verify dispatch contracts,
 synthesize memory. A failure in a later step never costs an earlier one.
 
-**1. Secure the day.** Decide the day per *Deciding green*. If it is still
-grey, finish today's journal as a genuine engineering note (the day's
+**1. Secure the day.** Decide the day per *Deciding green*. If it is grey
+or unknown, finish today's journal as a genuine engineering note (the day's
 candidates, what happened, streak state, tomorrow's top candidate, and how
 the day was verified under `## Verification`), commit that file alone,
 Tom-authored, push, and verify per the Immutable rule. If the commit does not

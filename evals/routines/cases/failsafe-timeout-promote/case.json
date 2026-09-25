@@ -7,6 +7,50 @@
   "intent": "preserve",
   "checks": [
     {
+      "id": "green",
+      "desc": "decides the day green",
+      "assert": {
+        "path": "day_state",
+        "eq": "green"
+      }
+    },
+    {
+      "id": "by_the_pr",
+      "desc": "keeps PR #67 as what made the day green",
+      "assert": {
+        "or": [
+          {
+            "path": "state_json_today.green_by",
+            "is_null": true
+          },
+          {
+            "path": "state_json_today.green_by",
+            "contains_any": [
+              "#67",
+              "pr 67",
+              "pull/67"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "real_work",
+      "desc": "keeps the day recorded as real work",
+      "assert": {
+        "or": [
+          {
+            "path": "state_json_today.method",
+            "is_null": true
+          },
+          {
+            "path": "state_json_today.method",
+            "contains": "real"
+          }
+        ]
+      }
+    },
+    {
       "id": "promoted",
       "desc": "moves copy-03 to done with verified: true",
       "assert": {
