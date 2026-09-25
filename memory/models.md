@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-24
+updated: 2026-09-25
 ---
 
 # Models: lane × task-class outcomes
@@ -41,6 +41,7 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-24-ivy-scannerfix-review-01 | review | workhorse / anthropic | yes | 18.2 | `ivy` PR #22 (merged same day); four findings (F1-F4) on `scripts/local-wip.py` attribution/grouping/failure-isolation gaps, none blocking; verified directly against the local clone (in-scope repo) [cite:2026-09-24] |
 | 2026-09-24-ivy-harnesseffort-review-01 | review | workhorse / anthropic | yes | 9.3 | `ivy` PR #23 (merged same day); three findings (F1-F3) on `scripts/dispatch-runner.py` effort-leak/malformed-config/provenance-raise gaps, none blocking; verified directly against the local clone [cite:2026-09-24] |
 | 2026-09-24-ivy-playbookretune-review-01 | review | frontier / openai | yes | 16.9 | `ivy` PR #21 (still open, unmerged); **verdict block** — one P1 (rewritten cloud green-path fallback can misclassify an already-green day as grey), three P2 (eval-rigor gaps); Immutable byte-identity and eval arithmetic both confirmed sound; verified directly against the local clone [cite:2026-09-24] |
+| 2026-09-25-ivy-playbookretune-review-02 | review | workhorse / openai | yes | 9.3 | `ivy` PR #21 follow-up at head `e2d21c3` (still open, unmerged); **verdict block again** — the 09-24 P1 and one P2 not closed despite two commits claiming to fix them, one P2 partially closed, the #18-coverage claim closed by narrowing; every cited commit sha and referenced path confirmed present on the branch [cite:2026-09-25] |
 
 ## Pool health
 
@@ -58,7 +59,7 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 
 ## Reading
 
-n=21 now (1 chore, 18 review, 2 build), all first-pass. `review` cleared
+n=27 now (1 chore, 24 review, 2 build), all first-pass. `review` cleared
 the Pareto bar on 2026-09-06 (five straight frontier/openai first-pass
 outcomes) — **retro decision, 2026-09-06:** `playbook.md`'s scout section
 now defaults new `review` contracts to `lane: workhorse`; `frontier` stays
@@ -106,6 +107,11 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-25 (failsafe) — recorded `ivy-playbookretune-review-02`
+  (workhorse/openai, verified true, block verdict again); n=26→27, `review`
+  now 24. `talentradar-productionpromo-review-01` verified **false**
+  (PR #4 retitled/rewritten past the review) and does not land a row here
+  per this page's own rule — claimed-done, not verified-done.
 - 2026-09-24 (failsafe) — backfilled 2 contracts verified 09-23 but never
   recorded here (`talentradar-execbeta-review-03`, `talentscout-workspace-review-01`)
   plus today's 3 (`ivy-scannerfix-review-01`, `ivy-harnesseffort-review-01`

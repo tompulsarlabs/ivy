@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-24
+updated: 2026-09-25
 ---
 
 # Patterns: how the work actually happens
@@ -16,17 +16,19 @@ Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
 That ended 2026-09-12 and has since become the norm, not the exception:
 the failsafe fired 09-12, 13, 14, 15, 16, 17, 19, and 20 — eight of the
-thirteen days since, with 09-18, 09-21, 09-22, 09-23 and 09-24 breaking
-the run on real work (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits
-on 09-18; `gstack-security-patches` + `talent-scout` PR #1 + `tomgreen.ai`
-PR #63 on 09-21; `tomgreen.ai` PR #64 + #65 on 09-22; three draft PRs
-opened on `ivy` itself, #21/#22/#23, on 09-23; `ivy` PR #22/#23 +
+fourteen days since, with 09-18, 09-21, 09-22, 09-23, 09-24 and 09-25
+breaking the run on real work (`tomgreen.ai` PR #61/#62 + `tompulsarlabs`
+commits on 09-18; `gstack-security-patches` + `talent-scout` PR #1 +
+`tomgreen.ai` PR #63 on 09-21; `tomgreen.ai` PR #64 + #65 on 09-22; three
+draft PRs opened on `ivy` itself, #21/#22/#23, on 09-23; `ivy` PR #22/#23 +
 `tomgreen.ai` PR #66/#67/#68 + `talent-radar` PR #1/#2 merged on 09-24,
-the widest repo spread of any day since 09-10)
+the widest repo spread of any day since 09-10; `tomgreen.ai` PR #69 merged
++ `talent-scout` PR #3 + `talent-radar` PR #5/#6 opened on 09-25, the
+fifth consecutive real-work green day, 09-21 through 09-25)
 [cite:2026-09-12][cite:2026-09-13][cite:2026-09-14][cite:2026-09-15]
 [cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19]
 [cite:2026-09-20][cite:2026-09-21][cite:2026-09-22][cite:2026-09-23]
-[cite:2026-09-24].
+[cite:2026-09-24][cite:2026-09-25].
 Every one of those eight fires falls inside the local-WIP scanner outage.
 **The outage itself showed its first scheduled-window publish on 09-24**,
 16 calendar days / 32 missed windows after going dark, following the
@@ -161,6 +163,11 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-25 (failsafe) — updated the fire-rate note: 8 of the last 14
+  days since 09-12 (was 8/13), with 09-25 joining 09-18, 09-21 through
+  09-24 as a real-work green day — the fifth consecutive such day,
+  09-21 through 09-25. No nudge sent today (green all day), so the
+  nudge-conversion count is unchanged.
 - 2026-09-24 (failsafe) — updated the fire-rate note: 8 of the last 13
   days since 09-12 (was 8/12), with 09-24 joining 09-18, 09-21, 09-22 and
   09-23 as a real-work green day breaking the run — widest repo spread

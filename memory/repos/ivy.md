@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-24
+updated: 2026-09-25
 ---
 
 # ivy
@@ -153,6 +153,24 @@ carry forward unresolved until a *second* scheduled-window publish
 confirms it, per the playbook's carry-forward rule for blockers
 [cite:2026-09-24].
 
+**PR #21 — second review, 2026-09-25, still block.**
+`2026-09-25-ivy-playbookretune-review-02` reviewed head `e2d21c3` (18
+commits past the 09-24 `5937264` head the first review saw). Of the first
+review's four findings: the PR #18-coverage claim closed (narrowed rather
+than fixed); the green-fallback P1 and the blind-comparison P2 **not
+closed** — the actual green/grey lookup ladder was unchanged from `5937264`
+despite two commits claiming to fix it, and the new eval sandboxes still sat
+under a shared, label-bearing parent directory without `--restricted`; the
+memory-grader P2 **partially closed** (diffs now retained, but the graders
+still count regex matches rather than validating structure). Confirmed
+sound: the Immutable-section byte-identity claim, and that every cited fix
+commit is a real ancestor of the reviewed head. **The PR moved again before
+this failsafe**, to head `c78f8c8` (5 more commits), whose body now claims
+all three still-open findings are fixed there too — the identical
+claim-then-drift pattern the first review already showed once. Not
+re-verified tonight; a third review against `c78f8c8` is the open item
+[cite:2026-09-25].
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -179,6 +197,10 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-25 (failsafe) — recorded PR #21's second review (block, one P1 +
+  one P2 not closed, one P2 partially closed, #18-coverage claim closed);
+  noted the PR moved to a new head same evening claiming the remaining
+  findings fixed there too, not yet re-verified.
 - 2026-09-24 (failsafe) — **PR #22 and #23 merged** 08:42 CEST, both
   reviewed and verified done tonight (four findings on #22, three on #23,
   all tied to file:line, none blocking). **The scanner outage shows its

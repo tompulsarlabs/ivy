@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-24
+updated: 2026-09-25
 ---
 
 # talent-radar
@@ -29,6 +29,33 @@ branch, only default-branch-reachable once the merge landed.
 
 A new PR #4 opened same evening (19:19 CEST, still open at the 22:30
 failsafe) records the beta's production promotion.
+
+## PR #4 — reviewed, then rewritten past the review, 2026-09-25
+
+`2026-09-25-talentradar-productionpromo-review-01` reviewed PR #4 at head
+`6534feec` (title then "Record Radar production promotion and remaining
+beta gates"): the promotion record does **not** acknowledge the still-open
+CSV-dedupe P1 (`src/lib/market/import.ts:44`, unfixed across two prior
+review cycles [cite:2026-09-23]), and the stated "remaining beta gates"
+list omits the documented-but-unreachable row-level CSV provider fallback
+(`docs/MARKET-DATA.md:7` vs `src/app/api/pilot/market/route.ts:5`).
+**Same day, after the review ran**, PR #4's title and body were both
+replaced wholesale — now "Recover expired Google sign-ins and record
+production verification," a live sign-in bug fix that mentions the
+promotion record only in passing (`updated_at` moved to
+2026-09-25T16:35:40Z, well past the review's 08:16:58Z finish). The
+failsafe could not confirm the reviewed findings still describe the
+PR's current content and stamped the contract **unverified**
+[cite:2026-09-25] — the third time this repo's fast-moving PRs have
+outrun a same-day review (see PR #3, 2026-09-08, below). The CSV-dedupe
+P1 itself is unaffected either way — it lives in `main`, not this PR, and
+stays open regardless of what PR #4 says.
+
+Two more PRs opened later the same evening, both draft, both stacked:
+**PR #5** ("Prepare interviews automatically when the pipeline reaches
+Interviewing," 19:15:57 CEST) — explicitly **not deployed or activated**
+per its own body, stacked on PR #4. **PR #6** ("Make Radar personal and
+native, with optional Notion," 19:46:39 CEST) [cite:2026-09-25].
 
 As with [[repos/countersign]], private status means a green day resting on
 this repo alone is not independently confirmable — it depends on the profile's
@@ -153,6 +180,11 @@ repo access) [cite:2026-09-23] [[models]].
 
 ## Changelog
 
+- 2026-09-25 (failsafe) — recorded PR #4 reviewed then rewritten past the
+  review same day (review found the CSV-dedupe P1 unacknowledged and the
+  beta-gates list incomplete; PR then retitled/rebodied to a Google-sign-in
+  fix, contract left unverified); recorded PR #5 and PR #6 opened, both
+  draft, both stacked on PR #4.
 - 2026-09-24 (failsafe) — recorded PR #1 and PR #2 both merged 17:24 CEST
   (21 and 18 days open respectively), and a new PR #4 opened same evening
   recording the beta's production promotion. The 09-23 P1 CSV-dedupe
