@@ -1,3 +1,54 @@
+# Current direction — Ivy owns outcomes, roles select execution, 25 September 2026
+
+Tom supplied reasoning-effort guidance and a role-based model lineup, and asked
+us to use it to improve Ivy as the default system for delegated work. The updated
+[operating/routing proposal](model-routing-review-20260923.md) and
+[product journey](hybrid-worker-plan.md) record the direction. The dated routing
+filename is retained for existing links; its current content supersedes the
+23 September proposal. This is design work, not an active routing-policy change.
+
+Ivy owns one task, relevant context, delegated authority, budget and acceptance
+through delivery and operation. Coordinator, planner, builder, reviewer, narrow
+repair and premium escalation are responsibilities; simple work need not launch
+a team. Proposed candidates are Opus 5.5 for coordination/planning, GPT-6 Sol for
+implementation/adversarial review, Luna for narrow work and Astra for bounded
+escalation. These assignments are hypotheses, not measured model rankings.
+
+Official sources confirm adaptive effort rather than a fixed minimum or hard
+budget. Medium is the initial setting for clear work; compare higher levels for
+difficult classes. No universal post-training penalty mechanism or special
+`max` behavior is assumed. Model, effort, permissions and budget stay separate.
+The proposal defines spec handoffs, bounded repair/escalation, eligible quota
+fallback and independent checks of the promised result across future workflows.
+
+Sixteen proposed scenarios are registered in `evals/routing-policy.json` and
+mirrored into the shared `~/Build/ivy/evals/` inventory. They are not executable
+and none has run. JSON/status/ID consistency, local document links and diff checks
+passed; no runtime tests or model comparison ran for this documentation change.
+The substantive design commit is `403712d`, authored with Tom's business email.
+
+Read-only refresh of production main `d85d1ae` found the scanner snapshot at
+25 September 15:45:03 UTC (28 checkouts). Real dispatch records now include the
+new requested settings and hashes, with effective settings/usage still unknown.
+Existing report-verification stamps establish narrower criteria than semantic
+review correctness. New scanner/harness review findings need triage against
+current code before treating the baseline as settled. No operational defect was
+fixed or agent policy changed in this continuation.
+
+Next build: triage those findings, then add disabled versioned profiles and a
+pure routing preview; implement the proposed controls and qualify one task class
+through a bounded comparison before promotion. Active lanes remain Opus 5 and
+GPT-5.6 Sol/Terra plus Haiku. PR #21 is still open; this work did not reconcile or
+merge it. PRs #18/#19/#20 remain unmerged, and no new provider, account, API spend,
+CLI upgrade, deployment or runtime grant was introduced. Private board, isolated
+Mac worker, real-agent acceptance and Milestone A retain their previous limits.
+
+A conservative 900-second single-primary research/design/closeout allocation
+brings the engineering ledger to **30,000 seconds**. This is estimated engineering
+bookkeeping, not measured provider consumption. Earlier grants and failures remain.
+
+## Previous checkpoint — retained
+
 # Current build — repairs merged; scanner restored, 24 September 2026
 
 Tom explicitly approved the administrator merge of PRs #22 and #23 after GitHub
