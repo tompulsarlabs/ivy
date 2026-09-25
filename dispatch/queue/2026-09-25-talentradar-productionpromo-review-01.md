@@ -1,7 +1,8 @@
 ---
 id: 2026-09-25-talentradar-productionpromo-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-25T10:13:25+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
