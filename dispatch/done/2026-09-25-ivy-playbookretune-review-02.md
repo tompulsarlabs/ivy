@@ -79,3 +79,12 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-25-ivy-playbookretune-review-02.md
+
+verified: true
+verified_note: >
+  Report exists on main (non-empty). Every cited commit sha (e2d21c3, a6b020a,
+  d40e6da, 7121c3b, b46cf8b, da3cc49, 6b59878, f5eefba, 4b3a413, 45abc4d,
+  14d3685, 471336a) confirmed present on PR #21's branch via list_commits.
+  Referenced paths (playbook.md, scripts/eval-routines.py) confirmed present
+  at the branch head. PR #21 confirmed still open, draft, mergeable_state
+  blocked (consistent with the report's block verdict).

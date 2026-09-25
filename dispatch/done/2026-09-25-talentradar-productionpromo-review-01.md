@@ -74,3 +74,18 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-25-talentradar-productionpromo-review-01.md
+
+verified: false
+verified_note: >
+  Report exists on main and is non-empty, but its Verification clause
+  requires the quoted PR-body text to match PR #4 as fetched now via
+  search_pull_requests, and it no longer does: PR #4 was retitled and its
+  body fully rewritten between the review (finished 10:16:58+02:00,
+  reviewed head 6534feec) and this check (repo:tompulsarlabs/talent-radar,
+  updated_at 2026-09-25T16:35:40Z) — title now "Recover expired Google
+  sign-ins and record production verification", body no longer contains the
+  reviewed "authorised promotion of merged main" / beta-readiness passages.
+  The review itself may have been an accurate read of the head it reviewed;
+  the specified cloud-checkable method just can't confirm that against the
+  PR's current state. Not treated as a runner failure — no re-run scheduled
+  here. See journal ## Dispatch verification.
