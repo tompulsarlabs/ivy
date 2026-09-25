@@ -3,6 +3,16 @@
   "last_green": "2026-09-24",
   "memory_last_synthesized": "2026-09-24",
   "days": {
+    "2026-09-25": {
+      "green_by": "tompulsarlabs/tomgreen.ai PR #69 (merged 16:23:24 CEST, Rename Scout to Nabu) + tompulsarlabs/talent-scout PR #3 (opened 14:14:54 CEST, draft, 40-profile HUD hiring workspace)",
+      "method": "real-work",
+      "contributions": 2,
+      "signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-25 + search_pull_requests(created/merged):2026-09-25 + search_issues(created):2026-09-25 (18:00 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — tomgreen.ai PR #69 merged as a single commit 7a379c78, tom@pulsarlabsai.com, resolves author.login tompulsarlabs, default branch, non-fork, OWNER association; talent-scout PR #3 opened 12:14:54Z (14:14:54 CEST), draft, same author/association, non-fork; zero issues opened; ivy's own commits today all bot-authored (scout + dispatch claim/done/runner-status x2 + local-wip scan), correctly excluded; dispatch/done/ holds two contracts today (playbookretune-review-02, productionpromo-review-01) awaiting failsafe verification, not yet stamped",
+      "cite": "journal/2026-09-25.md",
+      "nudge_sent": false,
+      "nudge_converted": null,
+      "failsafe_fired": false
+    },
     "2026-09-24": {
       "green_by": "tompulsarlabs/ivy PR #22 (merged 08:42:22 CEST, local-WIP scanner reliability fix) + PR #23 (merged 08:42:25 CEST, dispatch harness effort settings) + tompulsarlabs/tomgreen.ai PR #66 (merged 10:44:31 CEST, homepage company/role context) + PR #67 (merged 17:34:52 CEST, canonical /lab route) + PR #68 (merged 19:39:41 CEST, Substack essay to Lab) + tompulsarlabs/talent-radar PR #1 (merged 17:24:31 CEST, Cowork history restore + Session 1 fetch layer live on Supabase + Radar UI) + PR #2 (merged 17:24:29 CEST, private executive beta) + PR #4 (opened 19:19:30 CEST, draft, production promotion record)",
       "method": "real-work",
