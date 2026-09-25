@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-25T09:33:57+02:00",
+  "last_tick": "2026-09-25T10:13:25+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-25-ivy-playbookretune-review-02",
-  "runner_sha": "cc01b6c",
-  "since": "2026-09-25T09:33:57+02:00",
+  "result": "finished 2026-09-25-talentradar-productionpromo-review-01",
+  "runner_sha": "f0e12f6",
+  "since": "2026-09-25T10:13:25+02:00",
   "skipped": []
 }
