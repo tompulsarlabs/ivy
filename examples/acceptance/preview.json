@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "comparison_id": "review-scaffold-preview",
+  "workflow_id": "pr-review",
+  "cases": [
+    {"id": "R1", "worker_dir": "acceptance_fixtures/review/R1/worker", "grader_dir": "acceptance_fixtures/review/R1/grader"},
+    {"id": "R3", "worker_dir": "acceptance_fixtures/review/R3/worker", "grader_dir": "acceptance_fixtures/review/R3/grader"}
+  ],
+  "variants": {
+    "baseline": {"instructions_dir": "examples/acceptance/instructions/baseline"},
+    "changed": {"instructions_dir": "examples/acceptance/instructions/changed"}
+  },
+  "runtime": {
+    "harness": "codex",
+    "harness_version": null,
+    "requested_model": null,
+    "requested_effort": null,
+    "environment_sha256": null,
+    "tools": ["read-fixture-files"],
+    "visibility_gaps": ["Harness settings, imports and permissions require real preflight."]
+  },
+  "repetitions": 2,
+  "order_seed": 19,
+  "budget": {"max_attempts": 32, "per_attempt_seconds": 90, "total_seconds": 3600}
+}

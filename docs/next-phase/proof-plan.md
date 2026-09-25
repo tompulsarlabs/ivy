@@ -1,7 +1,8 @@
 # Bounded proof and demo acceptance
 
-Proposed build contract · not queued or executed. The limits below are recommended
-starting limits for Tom to accept or adjust when authorizing implementation. A limit
+Approved bounded direction · architecture scaffold implemented; live proof not run.
+Tom selected Ultra for scaffolding, Extra High for implementation and High for debugging.
+The agreed starting limits below continue across those handoffs. A limit
 is a stop point, not a promise that the work will finish within it.
 
 ## What the demo must prove
@@ -131,8 +132,9 @@ agents do not multiply the allowance, and a new task does not reset it.
 
 ## Engineering acceptance tests
 
-These are tests to implement and run with the proof. None has been newly executed
-by this design. Existing housekeeping checks cover a subset of earlier infrastructure.
+These are full-proof acceptance tests. The architecture scaffold covers local planning,
+identity and reservation invariants; it does not satisfy the live execution, capture
+or semantic assessment checks. See `build-handoff.md` for actual checks run.
 
 | ID | Test | Pass condition |
 |---|---|---|

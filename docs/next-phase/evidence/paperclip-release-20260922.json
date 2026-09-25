@@ -1,0 +1,62 @@
+{
+  "schema": "ivy-paperclip-release-preparation/v1",
+  "recorded_at": "2026-09-22T09:22:13.120146+00:00",
+  "status": "prepared_not_deployed",
+  "image": {
+    "image": "ghcr.io/paperclipai/paperclip",
+    "tag": "2026.916.1",
+    "digest": "sha256:a02ac35ac41df911af477422ea0e781cf41d2b2c600c66f0a5ac9d8c63f52c2c",
+    "platforms": [
+      {
+        "architecture": "amd64",
+        "os": "linux"
+      },
+      {
+        "architecture": "unknown",
+        "os": "unknown"
+      },
+      {
+        "architecture": "arm64",
+        "os": "linux"
+      },
+      {
+        "architecture": "unknown",
+        "os": "unknown"
+      }
+    ]
+  },
+  "upstream_release_commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+  "previous_fixture_version": "2026.831.1",
+  "source_inspection": {
+    "Dockerfile": "8ed76fb05d238e64f4bfc6e69419c14fc6ba1a8a4bab308a24e460efd6acfbfe",
+    "scripts/docker-entrypoint.sh": "366d2f5edba2d11feacad01c7da35f9fde2c8e289a9315c5c0b16e53de53cca6",
+    "docker/docker-compose.yml": "6bedbbb7acd350bca730d7e53d0f4b9ae1946258821e9a7cf824aa97d723e13e",
+    "config.ts": "e33e2aa1fae18e9543e1a17443d8bf59efdbe131a8656b61d8dcd2d67a63035f",
+    "health.ts": "8f2074e8f101abd4ac0b050391c4e5bcc944e7833387f52ca461a09b795aa84b",
+    "docker-workflow.yml": "d6c085b3904c7278742b7b2a94c399a906272faf97af4a551d66dcb0f7f9ab66"
+  },
+  "checks": {
+    "deterministic_tests": {
+      "passed": 102,
+      "python": "3.14",
+      "command": "python3 -B -W always::ResourceWarning -m unittest discover -s tests -q",
+      "resource_warnings_observed": 0
+    },
+    "railway_json": "parsed; configured fields inspected against official schema; full schema validator unavailable",
+    "image_manifest": "public registry manifest resolved without pulling or running image",
+    "new_image_execution": "not_run",
+    "authenticated_login": "not_run",
+    "restart_persistence": "not_run",
+    "backup_restore": "not_run",
+    "remote_worker_auth": "not_run",
+    "representative_contract_paperclip_replay": "not_run"
+  },
+  "source_reassessment": "contract-readiness-20260922/assessment.json",
+  "hosting_authorized": false,
+  "hosting_resources_created": 0,
+  "docker_launches": 0,
+  "evaluated_model_calls": 0,
+  "judge_calls": 0,
+  "paid_provider_calls": 0,
+  "source_lookup_failure_retained": "First registry lookup failed because Python lacked a trusted issuer certificate; retried using curl with normal system TLS verification. No runtime attempt was created."
+}

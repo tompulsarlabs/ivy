@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scope": "Board deployment and prepared Mac connection; production agents unchanged",
+  "model_quality": "unverified",
+  "cases": [
+    {
+      "id": "PH01",
+      "expectation": "Unsafe startup environment is refused",
+      "verification": "tests/test_paperclip_deploy.py",
+      "status": "deterministic_pass"
+    },
+    {
+      "id": "PH02",
+      "expectation": "Private config persists and canonical auth/CSRF origins match",
+      "verification": "tests/test_paperclip_deploy.py",
+      "status": "deterministic_and_local_live_pass"
+    },
+    {
+      "id": "PH03",
+      "expectation": "Anonymous/unrelated user denied; owner signup locked after bootstrap",
+      "verification": "local release rehearsal",
+      "status": "local_live_pass"
+    },
+    {
+      "id": "PH04",
+      "expectation": "Task and owner session survive restart and separate restore",
+      "verification": "local release rehearsal",
+      "status": "local_live_pass"
+    },
+    {
+      "id": "PH05",
+      "expectation": "Public HTTPS, browser owner flow, attachment and scheduled backups",
+      "verification": "provider deployment",
+      "status": "unverified"
+    },
+    {
+      "id": "PH06",
+      "expectation": "Native SSH configuration rejects unsafe host/account/workspace/pins",
+      "verification": "tests/test_paperclip_mac.py",
+      "status": "deterministic_pass"
+    },
+    {
+      "id": "PH07",
+      "expectation": "Mac connection, disconnect reconciliation and duplicate prevention",
+      "verification": "future isolated Mac connection",
+      "status": "unverified"
+    }
+  ],
+  "observations": "docs/next-phase/evidence/paperclip-board-build-20260922.json"
+}

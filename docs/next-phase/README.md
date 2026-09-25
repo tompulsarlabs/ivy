@@ -1,6 +1,13 @@
 # Ivy next phase: evidence for agent release decisions
 
-Design proposal · 5 September 2026 · implementation has not started.
+**Current direction, 25 September:** Ivy is intended to become the default place
+to delegate outcomes across projects. The [operating roles and routing proposal](model-routing-review-20260923.md)
+and [nontechnical product journey](hybrid-worker-plan.md) describe that direction.
+The [runtime handoff](runtime-handoff.md) records current implementation and limits.
+The initial release-evidence proof below remains a bounded supporting workstream;
+it is not the full product definition or proof of general-purpose capability.
+
+Direction approved · 5 September 2026 · architecture scaffold implemented; live execution pending.
 Tom authorized system design after the housekeeping handoff and selected teams
 shipping coding or internal-workflow agents as the first customer group.
 
@@ -11,6 +18,12 @@ using the team's actual agent and inspectable evidence.
 The first proof compares two instruction revisions of one PR-review agent on six
 frozen repository scenarios. It produces a comparison and a reviewable decision
 record. It does not deploy the agent or approve the code being reviewed.
+
+## Current handoff
+
+[Ultra → Extra High → High](build-handoff.md) records the implemented scaffold, exact
+commands, remaining build interfaces and resource limits. The [package README](../../ivy_acceptance/README.md)
+describes what works now. No model-quality eval has run in this stage.
 
 ## Read and decide
 

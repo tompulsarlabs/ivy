@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "sanitized_observations_of_real_runtime_probes_not_model_evaluation",
+  "observed_at": "2026-09-05T18:41:13+00:00",
+  "source_record_sha256": "2e6e203f8df5012373cc7668823115fafe6ed312154deee8df0b4a5409420781",
+  "portability": "Allowlisted summary only. Private original receipts and inspections are not bundled. Hash references are not signatures or independently replayable evidence.",
+  "base_image": "python@sha256:78387bc3881b8273120a12ebe6c1ab22b018ccc2c9adf565ae1ac9b536e184ea",
+  "attempts": [
+    {
+      "id": "extension-complete-1",
+      "receipt_record_sha256": "deadd7d66945d877661dc1896fd39d7f730c08626a4f618063d0356a303fff2c",
+      "execution_state": "execution_error",
+      "image_build_succeeded": true,
+      "worker_started": false,
+      "error": "Docker local logging compression cannot be enabled with max-file=1",
+      "termination_confirmed": true,
+      "capture_complete": true,
+      "capture_note": "Complete Docker error stream is not successful worker execution."
+    },
+    {
+      "id": "extension-cancel-2",
+      "receipt_record_sha256": "ea0f8179ef8dc84e5e66334ac7b4cd6d722c43d00761e19e1e9b944c5def2993",
+      "execution_state": "canceled",
+      "worker_started": true,
+      "stop_requested_run_elapsed_seconds": 2.0168304159888066,
+      "termination_confirmed": true,
+      "capture_complete": false,
+      "final_container_status": "exited",
+      "final_exit_code": 137
+    },
+    {
+      "id": "extension-deadline-3",
+      "receipt_record_sha256": "4aa631e9562cb01c05351a63fce93f05bed77c70c12f6be956df95a2bd565cc4",
+      "execution_state": "timed_out",
+      "worker_started": true,
+      "preparation_and_run_deadline_seconds": 10,
+      "stop_requested_run_elapsed_seconds": 9.782284916029312,
+      "termination_confirmed": true,
+      "capture_complete": false,
+      "final_container_status": "exited",
+      "final_exit_code": 137
+    }
+  ],
+  "running_probe_observations": {
+    "uid": 65534,
+    "credential_environment_present": false,
+    "fixture_hashes_match_selected_snapshot": true,
+    "visible_instruction_files": ["AGENTS.md"],
+    "fixture_write_result": "OSError",
+    "absent_supervisor_namespace_write_result": "FileNotFoundError",
+    "read_only_root": true,
+    "network_mode": "none",
+    "host_mount_count": 0,
+    "privileged": false,
+    "cap_drop": ["ALL"],
+    "no_new_privileges": true,
+    "memory_bytes": 268435456,
+    "cpu_limit": 1,
+    "pids_limit": 64,
+    "log_compression": false
+  },
+  "controls": {
+    "all_three_receipts_verify": true,
+    "raw_receipt_change_rejected": true,
+    "capture_change_rejected": true,
+    "missing_capture_rejected": true,
+    "checksum_valid_inconsistent_image_rejected": true,
+    "real_wrong_owner_rejected": true,
+    "fourth_reservation_refused": true,
+    "ledger_unchanged_by_refusal": true,
+    "running_containers_in_final_inventory": 0,
+    "known_stopped_containers_in_final_inventory": 4
+  },
+  "ledger": {
+    "original_start_epoch_retained": 1788617072.661142,
+    "extension_start_epoch": 1788633511.286298,
+    "extension_window_seconds": 1200,
+    "fresh_probes_consumed": 3,
+    "fresh_probe_limit": 3,
+    "total_consumed_attempts": 4,
+    "original_failed_attempt_retained": true,
+    "reserved_seconds_total": 200,
+    "original_limits_retained": true,
+    "unresolved_final_container_reservations": 0,
+    "budget_reset": false
+  },
+  "deterministic_tests_passed": 45,
+  "model_attempts": 0,
+  "judge_attempts": 0,
+  "benchmark_status": "evidence_incomplete",
+  "milestone_a": "not_passed",
+  "unverified": [
+    "Natural completion after logging correction",
+    "Interrupted daemon build shutdown and failure before final-container creation",
+    "Hard end-to-end wall ceiling including filesystem work and final client cleanup",
+    "Measured offline network behavior of the builder",
+    "Isolated authenticated real-agent run with frozen effective harness metadata",
+    "Human-approved neutral case and independent semantic assessment"
+  ]
+}

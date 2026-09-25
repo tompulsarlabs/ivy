@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-10T13:38:53.021433+00:00",
+  "evidence_kind": "observed_real_paperclip_with_fixed_process_fixtures_not_model_evaluation",
+  "paperclip_version": "2026.831.1",
+  "npm_lock_sha256": "62df83b3115e2f8a27aab5195662650ce858c350e5fe53b2991d340d481386a3",
+  "final_campaign": "campaign-11",
+  "python_optimization": "-O; controls remain active",
+  "controls": [
+    {
+      "automatic_retry_records": 0,
+      "cancelled_completion_claim_refused": null,
+      "capture_sha256": "94096e42322ddef343f88528c8b8c748f888db78b2fd8fb15f838b31bc3600c9",
+      "case": "valid",
+      "control_passed": true,
+      "delivery": {
+        "delivery": "recorded",
+        "issue_status": "done"
+      },
+      "duplicate_dispatch_refused": null,
+      "final_issue_status": "done",
+      "fixture_status": "pass",
+      "issue_id": "0dcdbfa1-2e7f-44a3-9671-b52c3a7aebb3",
+      "model_quality": "unverified",
+      "paperclip_run_records": 1,
+      "process_termination": "paperclip_report_only",
+      "run_id": "3a661e50-2669-4758-a7ff-635642c214d9",
+      "run_status": "succeeded",
+      "tampered_copy_rejected": null,
+      "worker_processes_observed": 1
+    },
+    {
+      "automatic_retry_records": 0,
+      "cancelled_completion_claim_refused": null,
+      "capture_sha256": "713c5f16ae18c82d8b06c4418dae44ce2917955b8295c48b5409b96c533c5f39",
+      "case": "false_completion",
+      "control_passed": true,
+      "delivery": {
+        "delivery": "recorded",
+        "issue_status": "in_review"
+      },
+      "duplicate_dispatch_refused": null,
+      "final_issue_status": "in_review",
+      "fixture_status": "fail",
+      "issue_id": "e3f7f713-90b5-47b3-ac53-b08cb0923c88",
+      "model_quality": "unverified",
+      "paperclip_run_records": 1,
+      "process_termination": "paperclip_report_only",
+      "run_id": "ed99636a-0ac8-44c8-87d4-c3ae5ffbabe9",
+      "run_status": "succeeded",
+      "tampered_copy_rejected": null,
+      "worker_processes_observed": 1
+    },
+    {
+      "automatic_retry_records": 0,
+      "cancelled_completion_claim_refused": null,
+      "capture_sha256": "021a418d83eff4a4e84040856ca09b8254ecb2dc399e90c64b426701298c3d55",
+      "case": "tampered",
+      "control_passed": true,
+      "delivery": {
+        "delivery": "recorded",
+        "issue_status": "in_review"
+      },
+      "duplicate_dispatch_refused": null,
+      "final_issue_status": "in_review",
+      "fixture_status": "fail",
+      "issue_id": "ac4f0aac-a2ff-41ef-9701-74f7e5fa8e7b",
+      "model_quality": "unverified",
+      "paperclip_run_records": 1,
+      "process_termination": "paperclip_report_only",
+      "run_id": "8e97eab9-7667-405a-a57a-f48345134b0d",
+      "run_status": "succeeded",
+      "tampered_copy_rejected": true,
+      "worker_processes_observed": 1
+    },
+    {
+      "automatic_retry_records": 0,
+      "cancelled_completion_claim_refused": null,
+      "capture_sha256": "364823aa0d0c269191478e97607360bd269fc7fdabd7f8597809508aa33c9610",
+      "case": "duplicate_delivery",
+      "control_passed": true,
+      "delivery": {
+        "delivery": "recorded",
+        "issue_status": "done"
+      },
+      "duplicate_dispatch_refused": true,
+      "final_issue_status": "done",
+      "fixture_status": "pass",
+      "issue_id": "16c16f2a-c6aa-4184-ae6e-59ae9674e8af",
+      "model_quality": "unverified",
+      "paperclip_run_records": 1,
+      "process_termination": "paperclip_report_only",
+      "run_id": "18c1b787-9119-453d-acc6-d71d6cfd3802",
+      "run_status": "succeeded",
+      "tampered_copy_rejected": null,
+      "worker_processes_observed": 1
+    },
+    {
+      "automatic_retry_records": 1,
+      "cancelled_completion_claim_refused": true,
+      "capture_sha256": "42b3264767f9ad7ff69cb11cd2b7fcccc03c8b844fb9036710144822516c79ef",
+      "case": "interrupted",
+      "control_passed": true,
+      "delivery": {
+        "delivery": "cancelled_executor_completion_refused",
+        "issue_status": "in_progress"
+      },
+      "duplicate_dispatch_refused": null,
+      "final_issue_status": "in_progress",
+      "fixture_status": "unverified",
+      "issue_id": "60b07ff4-8f3d-4ef7-87c2-99fb5dd33da5",
+      "model_quality": "unverified",
+      "paperclip_run_records": 2,
+      "process_termination": "observed_worker_pid_absent_after_cancel",
+      "run_id": "6fba4f84-d070-4583-bfc5-5db7d4774005",
+      "run_status": "cancelled",
+      "tampered_copy_rejected": null,
+      "worker_processes_observed": 1
+    }
+  ],
+  "development_history": [
+    {
+      "campaign": "campaign-01",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 0,
+      "failure": {
+        "completed_cases": 0,
+        "error_type": "EvidenceError",
+        "reason": "paperclip_http_401"
+      },
+      "paperclip_run_records": 0,
+      "process_pids_observed": 0,
+      "agents_paused": 2,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 1
+    },
+    {
+      "campaign": "campaign-02",
+      "retained": true,
+      "status": "passed",
+      "completed_cases": 1,
+      "paperclip_run_records": 2,
+      "process_pids_observed": 2,
+      "agents_paused": 2,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 1
+    },
+    {
+      "campaign": "campaign-03",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 0,
+      "failure": {
+        "reason": "manifest_tuple_serialization_before_dispatch"
+      },
+      "reservations": 0
+    },
+    {
+      "campaign": "campaign-04",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 4,
+      "failure": {
+        "completed_cases": 4,
+        "error_type": "EvidenceError",
+        "reason": "paperclip_http_409"
+      },
+      "paperclip_run_records": 10,
+      "process_pids_observed": 9,
+      "agents_paused": 10,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 5
+    },
+    {
+      "campaign": "campaign-05",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 0,
+      "failure": {
+        "completed_cases": 0,
+        "error_type": "AssertionError",
+        "reason": "pilot_assertion_or_setup_failure"
+      },
+      "paperclip_run_records": 2,
+      "process_pids_observed": 1,
+      "agents_paused": 2,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 1
+    },
+    {
+      "campaign": "campaign-06",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 4,
+      "failure": {
+        "completed_cases": 4,
+        "error_type": "AssertionError",
+        "reason": "pilot_assertion_or_setup_failure"
+      },
+      "paperclip_run_records": 10,
+      "process_pids_observed": 10,
+      "agents_paused": 10,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 5
+    },
+    {
+      "campaign": "campaign-07",
+      "retained": true,
+      "status": "failed",
+      "completed_cases": 0,
+      "failure": {
+        "completed_cases": 0,
+        "error_type": "AssertionError",
+        "reason": "pilot_assertion_or_setup_failure"
+      },
+      "paperclip_run_records": 2,
+      "process_pids_observed": 1,
+      "agents_paused": 2,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 1
+    },
+    {
+      "campaign": "campaign-08",
+      "retained": true,
+      "status": "passed",
+      "completed_cases": 1,
+      "paperclip_run_records": 2,
+      "process_pids_observed": 1,
+      "agents_paused": 2,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 1
+    },
+    {
+      "campaign": "campaign-09",
+      "retained": true,
+      "status": "passed",
+      "completed_cases": 5,
+      "paperclip_run_records": 10,
+      "process_pids_observed": 9,
+      "agents_paused": 10,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 5
+    },
+    {
+      "campaign": "campaign-10",
+      "retained": true,
+      "status": "passed",
+      "completed_cases": 5,
+      "paperclip_run_records": 10,
+      "process_pids_observed": 9,
+      "agents_paused": 10,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 5
+    },
+    {
+      "campaign": "campaign-11",
+      "retained": true,
+      "status": "passed",
+      "completed_cases": 5,
+      "paperclip_run_records": 10,
+      "process_pids_observed": 9,
+      "agents_paused": 10,
+      "active_keys": 0,
+      "queued_or_running": 0,
+      "reservations": 5
+    }
+  ],
+  "startup_failures": [
+    {
+      "log": "server.log",
+      "reason": "embedded_postgres_library_symlinks_absent_after_ignore_scripts",
+      "retained": true,
+      "sha256": "c25bd116d26424b8d73c0b0a359f232e79686e92e9b20a1f8fa9fcc4f5888c14"
+    }
+  ],
+  "cleanup": {
+    "agents_paused": 60,
+    "queued_or_running": 0,
+    "active_agent_keys": 0,
+    "server_and_database_listeners_stopped": true,
+    "fixture_process_inventory_empty": true,
+    "verified_at": "2026-09-10T13:42:36.406985+00:00"
+  },
+  "aggregate_paperclip_run_records": 58,
+  "aggregate_process_pids_observed": 51,
+  "deterministic_tests_passed": 102,
+  "model_calls": 0,
+  "judge_calls": 0,
+  "provider_credentials_used": false,
+  "historical_runtime_store_opened": false,
+  "milestone_a": "not_passed",
+  "private_evidence_root": "/tmp/ivy-paperclip-pilot-20260910",
+  "limitations": [
+    "trusted local supervisor and database; no OS worker isolation",
+    "reviewer noop run establishes context; supervisor performs assessment",
+    "no native runner bundle importer",
+    "no paid or subscription model execution",
+    "no hard lifecycle or descendant process guarantee",
+    "concurrent review publication and server crash recovery unverified"
+  ]
+}

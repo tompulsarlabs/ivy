@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "sanitized_real_runtime_validation_not_model_evaluation",
+  "observed_at": "2026-09-06T08:18:48.591709+00:00",
+  "attempts": [
+    {
+      "id": "validation-complete-20260906",
+      "integrity": "verified",
+      "execution_state": "completed",
+      "termination_confirmed": true,
+      "capture_complete": true,
+      "model_evaluation": false,
+      "benchmark_status": "evidence_incomplete",
+      "whole_command_observed_seconds": 0.5031652910402045,
+      "receipt_sha256": "d6efd9c8b6047ff844a7398ba11736620ae7b083542f77df2039d73dd09a132e",
+      "final_container_status": "exited",
+      "final_exit_code": 0
+    },
+    {
+      "id": "validation-cancel-20260906",
+      "integrity": "verified",
+      "execution_state": "canceled",
+      "termination_confirmed": true,
+      "capture_complete": false,
+      "model_evaluation": false,
+      "benchmark_status": "evidence_incomplete",
+      "whole_command_observed_seconds": 2.4279460829566233,
+      "receipt_sha256": "6ab850b039ffb82ccf26047235cf1575a759f9a29b727424d041c322d02d8ddc",
+      "final_container_status": "exited",
+      "final_exit_code": 137
+    },
+    {
+      "id": "validation-deadline-20260906",
+      "integrity": "verified",
+      "execution_state": "timed_out",
+      "termination_confirmed": true,
+      "capture_complete": false,
+      "model_evaluation": false,
+      "benchmark_status": "evidence_incomplete",
+      "whole_command_observed_seconds": 10.190394665987696,
+      "receipt_sha256": "fb5d3317c704b0c6c84bbbae4b677834d349ca5b462bfe76ce85f2ecb61d5b66",
+      "final_container_status": "exited",
+      "final_exit_code": 137
+    }
+  ],
+  "controls": {
+    "completed_capture_tamper_rejected": true,
+    "fourth_session_reservation_refused": true,
+    "history_preserved": true,
+    "ledger_byte_identical_after_refusal": true,
+    "initial_successful_preflight_ledger_byte_identical": true,
+    "real_sandbox_denied_preflight_ledger_byte_identical": true,
+    "real_sandbox_denied_preflight_created_no_attempt": true
+  },
+  "completion_worker_observations": {
+    "uid": 65534,
+    "credential_environment_present": false,
+    "fixture_hashes_match_selected_snapshot": true,
+    "visible_instruction_files": [
+      "AGENTS.md"
+    ],
+    "read_only_root": true,
+    "network_mode": "none",
+    "host_mount_count": 0
+  },
+  "ledger": {
+    "original_start_epoch_retained": 1788617072.661142,
+    "original_limits_preserved": true,
+    "first_five_attempt_rows_and_prior_grants_unchanged": true,
+    "total_consumed_attempts": 8,
+    "reserved_seconds_total": 480,
+    "session_fresh_attempts_consumed": 3,
+    "session_fresh_attempt_limit": 3,
+    "session_window_seconds": 600,
+    "unresolved_reservations": 0,
+    "prior_ledger_sha256": "d4028d06c8c4c65c898fd270f6d8dcafdea324cd277b5420f30a2b1d44c88d1e",
+    "budget_reset": false
+  },
+  "final_inventory": {
+    "known_stopped_containers": 7,
+    "running_containers": 0
+  },
+  "deterministic_tests_passed": 59,
+  "model_attempts": 0,
+  "judge_attempts": 0,
+  "milestone_a": "not_passed",
+  "limitations": [
+    "Observed durations are measurements, not a hard wall-time guarantee.",
+    "Interrupted daemon-side build shutdown and live post-build preparation failures remain unverified.",
+    "Filesystem operations and daemon-side build lifetime prevent a hard whole-lifecycle ceiling claim.",
+    "Offline builder network behavior remains unmeasured.",
+    "Real-agent authentication, effective harness metadata and approved neutral-case assessment are deferred."
+  ],
+  "portability": "Allowlisted observations; private original records and tampered copy retained in the existing store. Hashes are not signatures."
+}

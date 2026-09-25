@@ -1,9 +1,10 @@
 # System design: one agent acceptance workflow
 
-Proposed architecture · 2026-09-05. This document specifies a buildable proof; it
-is not a claim that the components below exist. Product scope is in [product.md](product.md).
-The user has authorized design; no new provider calls, deployment or dispatch are
-part of this pass.
+Accepted architecture · 2026-09-05. This document specifies the target proof;
+current implementation status is in [the build handoff](build-handoff.md). Product scope is in [product.md](product.md).
+Tom authorized the architecture/scaffolding stage, followed by Extra High implementation
+and High debugging. No evaluated-worker calls, deployment or dispatch occurred in
+the scaffold stage.
 
 ## 1. System boundary
 

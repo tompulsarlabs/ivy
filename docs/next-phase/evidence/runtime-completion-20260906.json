@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "sanitized_observations_of_real_preparation_failure_not_model_evaluation",
+  "observed_at": "2026-09-06T08:04:06.334817+00:00",
+  "portability": "Allowlisted observations only. Private original records remain in the existing store; hashes are not signatures.",
+  "attempt_id": "completion-20260906-1",
+  "execution_state": "execution_error",
+  "failure_phase": "before_build",
+  "failure_reason": "Sandbox denied access to the dedicated Docker socket during pinned image inspection.",
+  "command_elapsed_seconds": 0.11799620796227828,
+  "image_build_submitted": false,
+  "worker_started": false,
+  "termination_confirmed": true,
+  "termination_basis": "no_workload_submitted",
+  "worker_capture_present": false,
+  "preparation_failure_sha256": "eaae6053966843fd936c3222537ade18f8beebb6d5dd230cc4133150b4fb79f0",
+  "ledger": {
+    "original_start_epoch_retained": 1788617072.661142,
+    "original_limits_preserved": true,
+    "original_three_probe_authorization_preserved": true,
+    "first_four_attempt_rows_unchanged": true,
+    "completion_authorization_prior_ledger_sha256": "86eb592c5e780ef03468290b3cc70c39a6a884315d8f0aad3fd69795bb77bd09",
+    "completion_authorization_window_seconds": 600,
+    "completion_authorization_attempts_consumed": 1,
+    "completion_authorization_attempt_limit": 1,
+    "total_consumed_attempts": 5,
+    "reserved_seconds_total": 290,
+    "unresolved_reservations": 0,
+    "budget_reset": false
+  },
+  "controls": {
+    "fresh_cli_reservation_refused": true,
+    "ledger_byte_identical_after_refusal": true,
+    "refused_attempt_directory_absent": true,
+    "separate_escalated_read_only_image_inspection_succeeded": true,
+    "preview_execution_ready": false
+  },
+  "deterministic_tests_passed": 54,
+  "model_attempts": 0,
+  "judge_attempts": 0,
+  "milestone_a": "not_passed",
+  "unverified": [
+    "Natural worker completion after logging correction",
+    "Live interrupted daemon-side build shutdown and preparation failures after build submission",
+    "Hard end-to-end ceiling including filesystem operations and daemon-side build lifetime",
+    "Measured offline builder network behavior",
+    "Real-agent authentication, effective harness metadata and approved neutral-case assessment (deferred)"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "status": "draft_requires_owner_review",
+  "synthetic": true,
+  "acceptance_owner": null,
+  "cases": [
+    "review/R1",
+    "review/R3"
+  ],
+  "worker_root": "review/<case>/worker",
+  "grader_root": "review/<case>/grader",
+  "isolation_notice": "Directory separation is not a security boundary. Materialize only the selected worker case into an isolated worker environment; never mount this parent directory or grader tree.",
+  "review_status": "DRAFT_REQUIRES_OWNER_REVIEW"
+}

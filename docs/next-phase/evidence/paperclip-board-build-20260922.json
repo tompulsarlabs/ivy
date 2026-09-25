@@ -1,0 +1,435 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-22",
+  "scope": "Isolated board release rehearsal; no model execution or historical acceptance grant renewal",
+  "upstream_version": "2026.916.1",
+  "upstream_commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+  "upstream_oci_index": "sha256:a02ac35ac41df911af477422ea0e781cf41d2b2c600c66f0a5ac9d8c63f52c2c",
+  "docker_context": "colima-ivy-acceptance",
+  "local_images": {
+    "ivy-paperclip-board:20260922": "sha256:71ce55cc6a19fd837edf3b2cfa57392c8f5fe01cf9edee905335b3f4e25370d6",
+    "ivy-paperclip-board:20260922-r2": "sha256:015d50995463a138bafaf76fef44a1f84426b0562dd5e36e04f40292d2ebdbfe",
+    "ivy-paperclip-board:20260922-r3": "sha256:1dbab7935fa704c0f1e1311564dea889326fa09f9da77dd436af32a52b63d8ee"
+  },
+  "containers": [
+    {
+      "name": "ivy-pc-restore-app-20260922",
+      "id": "22f103e8a0a589fee1e98e13d8da7478368b39d3db78bf9124783c3e9155b71d",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-restore-files-helper-20260922",
+      "id": "701efd2640fe18f375738e73aadc4c65d235a9c7216fc48a7428c2e41fb4040e",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-restore-db-20260922",
+      "id": "abf4aa221a17bd51eb2115115f10486409d4ddf154866a6b5e4fa7d5819c2114",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-backup-helper-20260922",
+      "id": "bbcfe92a1987c253b5206df01bb4a51ad19d05089b1f658965ffe4613251030f",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-app-locked-20260922",
+      "id": "4553974fd63bc95881d4416b220fdf9c9e355af52dd9275bd2076caf080b6707",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-app-r3-20260922",
+      "id": "859566c16e39da7e87224b3317e499a7556049d53ebedd59e516b6e9d6e3aff5",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-app-r2-20260922",
+      "id": "7805147dc73c9d212f5db3f31192d5887e4803c9503dbb72e2f2787b0944c686",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-app-20260922",
+      "id": "5c0cb85a475e8f411dd6489fc72bdab8cecefb44f344c27da019b4261584e766",
+      "status": "exited",
+      "running": false
+    },
+    {
+      "name": "ivy-pc-release-db-20260922",
+      "id": "68cbccc6cd7cfa08f1c73b7dd7e1e7687fc4a95bc0fe2a953f37ef46202a3c05",
+      "status": "exited",
+      "running": false
+    }
+  ],
+  "events": [
+    {
+      "at": "2026-09-22T09:46:06.731976+00:00",
+      "event": "release_rehearsal_reserved",
+      "scope": "new board release only; no historical proof-store access or model execution",
+      "context": "colima-ivy-acceptance"
+    },
+    {
+      "at": "2026-09-22T09:46:06.865093+00:00",
+      "event": "database_start_requested"
+    },
+    {
+      "at": "2026-09-22T09:46:08.125689+00:00",
+      "event": "board_start_requested"
+    },
+    {
+      "at": "2026-09-22T09:47:38.602750+00:00",
+      "event": "rehearsal_failure",
+      "error_type": "RuntimeError"
+    },
+    {
+      "event": "rehearsal_resume_requested",
+      "at": "2026-09-22T09:49:40.196395+00:00",
+      "reason": "App logs show healthy startup; investigate VM loopback forwarding. Preserve failed host-reachability observation."
+    },
+    {
+      "at": "2026-09-22T09:55:17.388627+00:00",
+      "event": "corrected_image_start_requested",
+      "image": "ivy-paperclip-board:20260922-r2",
+      "prior_container_retained": true
+    },
+    {
+      "at": "2026-09-22T09:55:24.352480+00:00",
+      "event": "internal_health_pass",
+      "health": {
+        "status": "ok",
+        "deploymentMode": "authenticated",
+        "deploymentExposure": "public",
+        "localAiLoginSupported": false,
+        "commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+        "bootstrapStatus": "bootstrap_pending",
+        "bootstrapInviteActive": false,
+        "databaseBackup": {
+          "enabled": true,
+          "status": "warning",
+          "warnings": [
+            {
+              "code": "database_backup_missing",
+              "message": "No recent database backup was found."
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "code": "database_backup_missing",
+            "message": "No recent database backup was found."
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T09:55:24.419343+00:00",
+      "event": "anonymous_access",
+      "status": 403
+    },
+    {
+      "at": "2026-09-22T09:55:24.419735+00:00",
+      "event": "corrected_rehearsal_failure",
+      "error_type": "AssertionError"
+    },
+    {
+      "at": "2026-09-22T09:56:04.265505+00:00",
+      "event": "auth_retry_existing_r2",
+      "reason": "Anonymous access correctly refused with 403; prior harness incorrectly required 401. Prior failure retained."
+    },
+    {
+      "at": "2026-09-22T09:56:04.330415+00:00",
+      "event": "internal_health_pass",
+      "health": {
+        "status": "ok",
+        "deploymentMode": "authenticated",
+        "deploymentExposure": "public",
+        "localAiLoginSupported": false,
+        "commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+        "bootstrapStatus": "bootstrap_pending",
+        "bootstrapInviteActive": false,
+        "databaseBackup": {
+          "enabled": true,
+          "status": "warning",
+          "warnings": [
+            {
+              "code": "database_backup_missing",
+              "message": "No recent database backup was found."
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "code": "database_backup_missing",
+            "message": "No recent database backup was found."
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T09:56:04.383904+00:00",
+      "event": "anonymous_access",
+      "status": 403
+    },
+    {
+      "at": "2026-09-22T09:56:06.433327+00:00",
+      "event": "test_owner_signup",
+      "status": 200
+    },
+    {
+      "at": "2026-09-22T09:56:06.650875+00:00",
+      "event": "bootstrap_accept",
+      "status": 403,
+      "accepted": null
+    },
+    {
+      "at": "2026-09-22T09:56:06.651162+00:00",
+      "event": "corrected_rehearsal_failure",
+      "error_type": "AssertionError"
+    },
+    {
+      "at": "2026-09-22T09:57:27.475201+00:00",
+      "event": "auth_retry_with_session_evidence",
+      "reason": "Anonymous access correctly refused with 403; prior harness incorrectly required 401. Prior failure retained."
+    },
+    {
+      "at": "2026-09-22T09:57:27.629840+00:00",
+      "event": "internal_health_pass",
+      "health": {
+        "status": "ok",
+        "deploymentMode": "authenticated",
+        "deploymentExposure": "public",
+        "localAiLoginSupported": false,
+        "commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+        "bootstrapStatus": "bootstrap_pending",
+        "bootstrapInviteActive": true,
+        "databaseBackup": {
+          "enabled": true,
+          "status": "warning",
+          "warnings": [
+            {
+              "code": "database_backup_missing",
+              "message": "No recent database backup was found."
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "code": "database_backup_missing",
+            "message": "No recent database backup was found."
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T09:57:27.695433+00:00",
+      "event": "anonymous_access",
+      "status": 403
+    },
+    {
+      "at": "2026-09-22T09:57:28.876703+00:00",
+      "event": "test_owner_signup",
+      "status": 200
+    },
+    {
+      "at": "2026-09-22T09:57:28.938223+00:00",
+      "event": "test_session_check",
+      "status": 200,
+      "present": true
+    },
+    {
+      "at": "2026-09-22T09:57:29.002782+00:00",
+      "event": "bootstrap_accept",
+      "status": 403,
+      "accepted": null
+    },
+    {
+      "at": "2026-09-22T09:57:29.003168+00:00",
+      "event": "corrected_rehearsal_failure",
+      "error_type": "AssertionError"
+    },
+    {
+      "at": "2026-09-22T09:59:27.867549+00:00",
+      "event": "canonical_origin_correction_start",
+      "image": "ivy-paperclip-board:20260922-r3"
+    },
+    {
+      "at": "2026-09-22T09:59:34.794440+00:00",
+      "event": "internal_health_pass",
+      "health": {
+        "status": "ok",
+        "deploymentMode": "authenticated",
+        "deploymentExposure": "public",
+        "localAiLoginSupported": false,
+        "commit": "d554c4789ed3930f8a53ac9fdf6503b3187097da",
+        "bootstrapStatus": "bootstrap_pending",
+        "bootstrapInviteActive": true,
+        "databaseBackup": {
+          "enabled": true,
+          "status": "warning",
+          "warnings": [
+            {
+              "code": "database_backup_missing",
+              "message": "No recent database backup was found."
+            }
+          ]
+        },
+        "warnings": [
+          {
+            "code": "database_backup_missing",
+            "message": "No recent database backup was found."
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-22T09:59:34.861316+00:00",
+      "event": "anonymous_access",
+      "status": 403
+    },
+    {
+      "at": "2026-09-22T09:59:34.982101+00:00",
+      "event": "bootstrap_accept",
+      "status": 202,
+      "accepted": true
+    },
+    {
+      "at": "2026-09-22T09:59:35.069898+00:00",
+      "event": "company_create",
+      "status": 201
+    },
+    {
+      "at": "2026-09-22T09:59:35.200622+00:00",
+      "event": "manual_task_create",
+      "status": 201
+    },
+    {
+      "at": "2026-09-22T09:59:42.564055+00:00",
+      "event": "restart_persistence_pass",
+      "issue_id": "e5d75d62-8291-43b5-a50c-1fb581e0ee29",
+      "title_matches": true
+    },
+    {
+      "at": "2026-09-22T09:59:42.624911+00:00",
+      "event": "agent_runs_after_manual_test",
+      "status": 200,
+      "count": 0
+    },
+    {
+      "at": "2026-09-22T10:01:27.143490+00:00",
+      "event": "unrelated_user_task_access",
+      "status": 404
+    },
+    {
+      "at": "2026-09-22T10:01:27.273162+00:00",
+      "event": "signup_locked_start_requested",
+      "image": "ivy-paperclip-board:20260922-r3"
+    },
+    {
+      "at": "2026-09-22T10:01:33.144452+00:00",
+      "event": "new_signup_after_lock",
+      "status": 400
+    },
+    {
+      "at": "2026-09-22T10:01:33.319904+00:00",
+      "event": "anonymous_access_after_owner_bootstrap",
+      "status": 403
+    },
+    {
+      "at": "2026-09-22T10:01:35.364193+00:00",
+      "event": "idle_resource_sample",
+      "samples": [
+        {
+          "BlockIO": "65.5kB / 7.26MB",
+          "CPUPerc": "2.57%",
+          "Container": "ivy-pc-release-app-locked-20260922",
+          "ID": "4553974fd63b",
+          "MemPerc": "67.55%",
+          "MemUsage": "743.1MiB / 1.074GiB",
+          "Name": "ivy-pc-release-app-locked-20260922",
+          "NetIO": "271kB / 235kB",
+          "PIDs": "19"
+        },
+        {
+          "BlockIO": "9.6MB / 1.08MB",
+          "CPUPerc": "5.51%",
+          "Container": "ivy-pc-release-db-20260922",
+          "ID": "68cbccc6cd7c",
+          "MemPerc": "24.52%",
+          "MemUsage": "62.78MiB / 256MiB",
+          "Name": "ivy-pc-release-db-20260922",
+          "NetIO": "32.9MB / 10.5MB",
+          "PIDs": "16"
+        }
+      ]
+    },
+    {
+      "at": "2026-09-22T10:01:35.801833+00:00",
+      "event": "backup_captured",
+      "database_sha256": "502868332ee58546d758156f80e1345c58117684a926816edfae45aae9646e2f",
+      "app_data_sha256": "0fe41bb5e4426437136f4a0becb92b742cf52afc4fe10c064b5a2c5340d3cc8b"
+    },
+    {
+      "at": "2026-09-22T10:01:43.770529+00:00",
+      "event": "separate_restore_pass",
+      "task_readable": true,
+      "owner_session_valid": true,
+      "agent_runs": 0
+    }
+  ],
+  "private_evidence_directory": "/tmp/ivy-paperclip-release-proof-20260922",
+  "retained_private_artifacts": {
+    "database.dump": "502868332ee58546d758156f80e1345c58117684a926816edfae45aae9646e2f",
+    "ivy-paperclip-release-auth-v2-20260922.py": "e09ea34bdc076b29b4960577005818fd988ccbbf0cc28be2c0dbebbc051e19b9",
+    "ivy-paperclip-release-auth-v4-20260922.py": "867cb67f9ba0cd290f1a6481c6352631f053cf2186e64dbcb3139664490a1356",
+    "ivy-paperclip-release-auth-v3-20260922.py": "86a41c780fdd737218fd82b6e7cde4b0410c28c143ae547d01ccb242021e7fe8",
+    "ivy-paperclip-release-probe-20260922.py": "3f9f3057889db3888e252ff0dd1a9db74670518a0c829b68e2217b4b25ab7652",
+    "restore-check.py": "bb437b09daf94fab0f218478562e0d218681b32fc10688e11821976277bc9540",
+    "app-data.tar.gz": "0fe41bb5e4426437136f4a0becb92b742cf52afc4fe10c064b5a2c5340d3cc8b",
+    "ivy-paperclip-release-auth-20260922.py": "91cf87e36b230f44b25be73ca00092b17a96245fb3466085952b44d4967f514d",
+    "helpers.py": "a2ee8a95b3cd2eb0f88e5a36ca98350b00f745014072a8e40dcd2f2cf27af288"
+  },
+  "deterministic_tests": {
+    "command": "python3 -W always::ResourceWarning -m unittest discover -s tests -v",
+    "passed": 121
+  },
+  "verified": [
+    "internal authenticated health with pinned commit",
+    "anonymous company access refused",
+    "owner signup, session and bootstrap",
+    "manual company/task creation",
+    "task and owner session survive restart",
+    "unrelated user cannot read task",
+    "new signup refused after lock",
+    "database and entire app-data volume restored to new isolated volumes",
+    "restored task readable with owner session",
+    "zero agent runs after manual test and restore",
+    "all release and restore containers stopped"
+  ],
+  "failures_retained": [
+    "Host loopback HTTP polling timed out; internal container HTTP worked; host forwarding not resolved",
+    "Bootstrap CLI initially had no config; startup now writes private config",
+    "Harness initially required 401; actual anonymous refusal was 403",
+    "Bootstrap mutation 403 twice until canonical origin was supplied to both authentication and CSRF guard"
+  ],
+  "unverified": [
+    "Railway provisioning, enforced budget, public HTTPS and browser login",
+    "uploaded attachment round trip",
+    "scheduled provider backup and restoration",
+    "Mac private network and SSH connection",
+    "real-agent authentication, execution, cancellation and duplicate handling on this version",
+    "hard historical build-daemon lifecycle deadline",
+    "model quality, judge evaluation and Milestone A"
+  ],
+  "paid_resources_created": false,
+  "evaluated_model_calls": 0,
+  "judge_calls": 0,
+  "milestone_a_passed": false,
+  "resource_sample_note": "One post-start sample, not steady-state load or a measured monthly bill.",
+  "colima_final_state": "stopped; colima stop --profile ivy-acceptance completed 2026-09-22T10:07:33Z"
+}

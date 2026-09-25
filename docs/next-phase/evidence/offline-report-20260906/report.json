@@ -1,0 +1,672 @@
+{
+  "title": "Infrastructure proof — no model evaluation",
+  "schema_version": 1,
+  "command_status": "rendered",
+  "evidence_kind": "recorded_infrastructure_assessment",
+  "model_evaluation": false,
+  "benchmark_status": "unavailable",
+  "source_manifest_sha256": "e23af357fee3559032b0a32f6280dec44bb382fb915f99908ef64d7a4b66df6f",
+  "assessments": [
+    {
+      "id": "complete",
+      "assessment": {
+        "schema_version": 1,
+        "kind": "probe-assessment",
+        "receipt_sha256": "d6efd9c8b6047ff844a7398ba11736620ae7b083542f77df2039d73dd09a132e",
+        "capture_sha256": "061236d9ad9e1a1769a9ad32ec4430fd0d797b881cded26ba75be50f1e5cde1d",
+        "policy_sha256": "0f9106a66df476157f4c6f54dd5c9800db15667c2b6ad19556cda9d77d3edc83",
+        "normalization_version": 1,
+        "program_sha256": "ff5d328717984c218110e0815d2bda951321983a853140da119b8c5e352fdd4e",
+        "program_identity": "recognized",
+        "artifact_integrity": "verified",
+        "execution_state": "completed",
+        "probe_assertions_status": "pass",
+        "natural_completion_status": "pass",
+        "control_expectation": "completion",
+        "control_status": "pass",
+        "benchmark_status": "unavailable",
+        "model_evaluation": false,
+        "assertions": [
+          {
+            "id": "capture_structure",
+            "status": "pass",
+            "reason": "parsed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "worker_event_shapes",
+            "status": "pass",
+            "reason": "supported",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "no_duplicate_observations",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_bytes",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "preparation.json",
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "nonroot",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "checked_credentials_absent",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "instruction_inventory",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "evidence_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "isolation_0",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "prepared.json"
+            ]
+          },
+          {
+            "id": "isolation_1",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "termination",
+            "status": "pass",
+            "reason": "confirmed_stopped",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "start_identity",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "expected_completion",
+            "status": "pass",
+            "reason": "natural_completion_requirements",
+            "evidence": [
+              "events.jsonl",
+              "stop_evidence"
+            ]
+          }
+        ],
+        "reasons": [],
+        "run_capture_elapsed_seconds": 0.16085375001421198,
+        "stderr_bytes": 0,
+        "coverage": {
+          "pass": 14,
+          "fail": 0,
+          "unverified": 0
+        }
+      }
+    },
+    {
+      "id": "cancel",
+      "assessment": {
+        "schema_version": 1,
+        "kind": "probe-assessment",
+        "receipt_sha256": "6ab850b039ffb82ccf26047235cf1575a759f9a29b727424d041c322d02d8ddc",
+        "capture_sha256": "59a47e1a7846d55f7c6152a6cf97fde02ef1f147b29df4496846b2b10106fcab",
+        "policy_sha256": "0f9106a66df476157f4c6f54dd5c9800db15667c2b6ad19556cda9d77d3edc83",
+        "normalization_version": 1,
+        "program_sha256": "ff5d328717984c218110e0815d2bda951321983a853140da119b8c5e352fdd4e",
+        "program_identity": "recognized",
+        "artifact_integrity": "verified",
+        "execution_state": "canceled",
+        "probe_assertions_status": "pass",
+        "natural_completion_status": "fail",
+        "control_expectation": "cancellation",
+        "control_status": "pass",
+        "benchmark_status": "unavailable",
+        "model_evaluation": false,
+        "assertions": [
+          {
+            "id": "capture_structure",
+            "status": "pass",
+            "reason": "parsed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "worker_event_shapes",
+            "status": "pass",
+            "reason": "supported",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "no_duplicate_observations",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_bytes",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "preparation.json",
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "nonroot",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "checked_credentials_absent",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "instruction_inventory",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "evidence_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "isolation_0",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "prepared.json"
+            ]
+          },
+          {
+            "id": "isolation_1",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "termination",
+            "status": "pass",
+            "reason": "confirmed_stopped",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "start_identity",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "expected_stop_request",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "expected_terminal_state",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "receipt.json"
+            ]
+          }
+        ],
+        "reasons": [],
+        "run_capture_elapsed_seconds": 2.0317130830371752,
+        "stderr_bytes": 0,
+        "coverage": {
+          "pass": 15,
+          "fail": 0,
+          "unverified": 0
+        }
+      }
+    },
+    {
+      "id": "deadline",
+      "assessment": {
+        "schema_version": 1,
+        "kind": "probe-assessment",
+        "receipt_sha256": "fb5d3317c704b0c6c84bbbae4b677834d349ca5b462bfe76ce85f2ecb61d5b66",
+        "capture_sha256": "7eb2ea152646b98b431889492622a08f32f969c35c807b2a425481615d5c76e9",
+        "policy_sha256": "0f9106a66df476157f4c6f54dd5c9800db15667c2b6ad19556cda9d77d3edc83",
+        "normalization_version": 1,
+        "program_sha256": "ff5d328717984c218110e0815d2bda951321983a853140da119b8c5e352fdd4e",
+        "program_identity": "recognized",
+        "artifact_integrity": "verified",
+        "execution_state": "timed_out",
+        "probe_assertions_status": "pass",
+        "natural_completion_status": "fail",
+        "control_expectation": "deadline",
+        "control_status": "pass",
+        "benchmark_status": "unavailable",
+        "model_evaluation": false,
+        "assertions": [
+          {
+            "id": "capture_structure",
+            "status": "pass",
+            "reason": "parsed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "worker_event_shapes",
+            "status": "pass",
+            "reason": "supported",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "no_duplicate_observations",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_bytes",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "preparation.json",
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "nonroot",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "checked_credentials_absent",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "instruction_inventory",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "fixture_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "evidence_write",
+            "status": "pass",
+            "reason": "write_did_not_succeed",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "isolation_0",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "prepared.json"
+            ]
+          },
+          {
+            "id": "isolation_1",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "termination",
+            "status": "pass",
+            "reason": "confirmed_stopped",
+            "evidence": [
+              "stop_evidence"
+            ]
+          },
+          {
+            "id": "start_identity",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "expected_stop_request",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "events.jsonl"
+            ]
+          },
+          {
+            "id": "expected_terminal_state",
+            "status": "pass",
+            "reason": "matched",
+            "evidence": [
+              "receipt.json"
+            ]
+          }
+        ],
+        "reasons": [],
+        "run_capture_elapsed_seconds": 9.749831791035831,
+        "stderr_bytes": 0,
+        "coverage": {
+          "pass": 15,
+          "fail": 0,
+          "unverified": 0
+        }
+      }
+    }
+  ],
+  "resources": {
+    "schema_version": 1,
+    "scope": "declared_exclusive_components_only",
+    "groups": {
+      "execution": {
+        "expected_scope_ids": [
+          "cancel",
+          "complete",
+          "deadline"
+        ],
+        "missing_scope_ids": [],
+        "metrics": {
+          "request_count": {
+            "unit": "count",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          },
+          "input_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          },
+          "output_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          },
+          "cached_input_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          },
+          "billed_amount": {
+            "unit": null,
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          },
+          "run_capture_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": 11.942398624087218,
+            "estimated_subtotal": null,
+            "reported_scope_count": 3,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 0,
+            "complete_reported_total": 11.942398624087218
+          },
+          "whole_command_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": 13.121506039984524,
+            "estimated_subtotal": null,
+            "reported_scope_count": 3,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 0,
+            "complete_reported_total": 13.121506039984524
+          },
+          "reserved_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": 190,
+            "estimated_subtotal": null,
+            "reported_scope_count": 3,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 0,
+            "complete_reported_total": 190
+          },
+          "engineering_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 3,
+            "complete_reported_total": null
+          }
+        }
+      },
+      "engineering": {
+        "expected_scope_ids": [
+          "engineering"
+        ],
+        "missing_scope_ids": [],
+        "metrics": {
+          "request_count": {
+            "unit": "count",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "input_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "output_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "cached_input_tokens": {
+            "unit": "tokens",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "billed_amount": {
+            "unit": null,
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "run_capture_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "whole_command_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "reserved_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": null,
+            "estimated_subtotal": null,
+            "reported_scope_count": 0,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 1,
+            "complete_reported_total": null
+          },
+          "engineering_elapsed_seconds": {
+            "unit": "seconds",
+            "reported_subtotal": 11700,
+            "estimated_subtotal": null,
+            "reported_scope_count": 1,
+            "estimated_scope_count": 0,
+            "unknown_scope_count": 0,
+            "complete_reported_total": 11700
+          }
+        }
+      }
+    },
+    "cost_per_accepted_primary_task": {
+      "value": null,
+      "reason": "no_model_primary_assessments"
+    }
+  },
+  "source_sha256": [
+    "10eba23e4790ee4843026c87eb425fd9314a8c6acd00c5a89bbc128c0e42a9ac",
+    "a9415a0a68eef3ff25899a8d95455e13a62471e826ec3876bda17f673b686d7b",
+    "f1e920edb9a8190f13504b8162ad33c9098bd71d51126becfaede113dd69b5a6"
+  ],
+  "resource_record_sha256": [
+    "18b83e5792dbcb606751e812621ae72cb0136825954289322938ce5ce50e07db",
+    "47378732f01aa4817b609447485fb07c97fd788603a5d548b55775deb09ea1c4",
+    "a59664026ce2e55110bba6200a242b486af5a71ec8c082aee5e0b8efc2ee3e47",
+    "df293712ff27a7b77347fbba97b984c3944bdb5dcd492bb206896ba90def8079"
+  ],
+  "status_counts": {
+    "pass": 3,
+    "fail": 0,
+    "unverified": 0
+  },
+  "limitations": [
+    "Trusted local supervisor; hashes are not signatures.",
+    "Fixed-probe observations are not agent quality or instruction-following evidence.",
+    "Observed capture time excludes preparation and cleanup; no hard lifecycle guarantee.",
+    "Resource totals cover declared exclusive scopes only; unavailable billing is not zero."
+  ]
+}
