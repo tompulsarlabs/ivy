@@ -168,12 +168,27 @@ if os.environ.get("IVY_EVAL_LIVE"):
             if edits:
                 check("live edit: a write inside the sandbox lands", (sandbox / "note.txt").is_file())
 
+# grade re-measures a stored memory row by applying its diff to the case's page.
+old_text, new_text = "a\nb\nc\n", "a\nB\nc\nd\n"
+check("apply_diff inverts file_diffs",
+      evalr.apply_diff(old_text, "".join(evalr.difflib.unified_diff(old_text.splitlines(True), new_text.splitlines(True),
+                                                                     "a/x", "b/x"))) == new_text)
+check("apply_diff builds a file from nothing",
+      evalr.apply_diff("", "".join(evalr.difflib.unified_diff([], ["a\n"], "a/x", "b/x"))) == "a\n")
+try:
+    evalr.apply_diff(old_text, "--- a/x\n+++ b/x\n@@ -1,2 +1,2 @@\n a\n-x\n+y\n")
+    check("apply_diff refuses a diff that does not fit", False)
+except ValueError:
+    check("apply_diff refuses a diff that does not fit", True)
+
 # The memory cases grade the page a run leaves. Each case's real fixture page,
 # edited the right way, passes its measure checks; each wrong edit below fails
-# the check named, including a deleted account replaced by unrelated text and a
-# restatement that avoids the words "still dark".
+# the check named, including a deleted account replaced by unrelated text and
+# restatements that avoid the words "still dark" and "missed windows". Each
+# edit also grades the same when grade rebuilds the page from the row's diff.
 by_id = {c["id"]: c for c in cases}
 OUTAGE = [r"scanner|local-wip", r"\bdark\b", r"09-08|missed\s+windows"]
+PAGE = "memory/repos/ivy.md"
 
 def outage_block(text):
     found = [b for b in evalr.blocks(text) if all(re.search(rx, b, re.I) for rx in OUTAGE)]
@@ -181,21 +196,24 @@ def outage_block(text):
     return found[0]
 
 def graded(case_id, edit):
-    """The case's measure checks on its fixture page after edit(text)."""
+    """The case's measure checks on its fixture page after edit(text), and
+    whether remeasured, rebuilding the page from the diff, measures the same."""
     case = by_id[case_id]
     with tempfile.TemporaryDirectory() as tmp:
         sandbox = Path(tmp)
         evalr.build_sandbox(case, "WORKTREE", sandbox)
         before = {k: evalr.measure(sandbox, m) for k, m in case["measures"].items()}
-        page = sandbox / "memory" / "repos" / "ivy.md"
-        page.write_text(edit(page.read_text()))
-        answer = {"_measures": evalr.measured(case, before, sandbox),
-                  "state_json_today": {"failsafe_fired": True}}
-        return evalr.grade(case, answer)
+        old = (sandbox / PAGE).read_text()
+        (sandbox / PAGE).write_text(edit(old))
+        measures = evalr.measured(case, before, sandbox)
+        row = {"diffs": evalr.file_diffs(sandbox, {PAGE: old})}
+    answer = {"_measures": measures, "state_json_today": {"failsafe_fired": True}}
+    return evalr.grade(case, answer), evalr.remeasured(case, row) == measures
 
 def expect(case_id, name, edit, failing):
-    g = graded(case_id, edit)
+    g, same = graded(case_id, edit)
     check(f"{case_id}: {name} fails exactly {failing or 'nothing'}", sorted(k for k, v in g.items() if not v) == failing)
+    check(f"{case_id}: {name} measures the same from its diff", same)
 
 def moved_forward(text, old_date, old_count, new_count):
     """The latest restatement rewritten in place for 09-23."""
@@ -209,6 +227,12 @@ LOG_ENTRY = "- 2026-09-23 (failsafe) — confirmed the outage.\n"
 def logged(text):
     return text.replace("## Changelog\n\n", "## Changelog\n\n" + LOG_ENTRY, 1)
 
+# Ivy's third review of PR #21 appended this before `## Changelog`, leaving the
+# stale account as it was.
+IN_DAYS = ("At the 2026-09-23 failsafe, the scanner remains dark since 09-08: 15 calendar days. The outage "
+           "blocks the clean-tree signal and leaves local work invisible [cite:2026-09-23].")
+CONFIRMED = "Re-checked tonight; dark still [cite:2026-09-23]."
+
 for cid, old_count in (("failsafe-ongoing-condition", "28 missed windows /\n14 calendar days"),
                        ("failsafe-ongoing-collapsed", "28 missed windows / 14 calendar days")):
     fwd = lambda t, c=old_count: moved_forward(t, "2026-09-22", c, c.replace("28", "30").replace("14", "15"))
@@ -220,13 +244,22 @@ for cid, old_count in (("failsafe-ongoing-condition", "28 missed windows /\n14 c
     after = lambda t, extra: fwd(t).replace(outage_block(fwd(t)), outage_block(fwd(t)) + extra)
     expect(cid, "an appended restatement", lambda t: after(t, "\n\n" + restated), [one])
     expect(cid, "a restatement in other words", lambda t: after(t, " " + reworded), [one])
+    expect(cid, "a restatement in calendar days, appended",
+           lambda t: t.replace("\n## Changelog", "\n" + IN_DAYS + "\n\n## Changelog", 1), [one])
+    expect(cid, "the same restatement inside the account",
+           lambda t: t.replace(outage_block(t), outage_block(t) + " " + IN_DAYS), [one])
+    expect(cid, "a restatement with no count",
+           lambda t: after(t, "\n\nAt the 2026-09-23 failsafe the scanner remains dark since 09-08, and local "
+                              "work stays invisible [cite:2026-09-23]."), [one])
+    expect(cid, "a confirmation beside the rewritten account",
+           lambda t: fwd(t).replace("## Activity\n", "## Activity\n\n" + CONFIRMED + "\n"), [one])
+    expect(cid, "a second complete account", lambda t: after(t, "\n\n" + outage_block(fwd(t))), ["account", one])
     expect(cid, "a changelog entry for the confirmation", lambda t: logged(fwd(t)), ["no_log_entry"])
     expect(cid, "today's citation beside a stale account",
-           lambda t: t.replace("## Activity\n", "## Activity\n\nRe-checked tonight; dark still [cite:2026-09-23].\n"),
-           ["account"])
+           lambda t: t.replace("## Activity\n", "## Activity\n\n" + CONFIRMED + "\n"), ["account"])
     expect(cid, "the account deleted, unrelated text in its place",
            lambda t: t.replace(outage_block(t), "The runner went dark on 09-08; 30 missed windows [cite:2026-09-23]."),
-           ["account", "one_account"] if cid.endswith("collapsed") else ["account"])
+           ["account", one])
 
 collapsed = ("The scanner has been dark since `local-wip.json` last landed 2026-09-08T15:45 CEST: 21 missed "
              "windows / 11 calendar days at the 2026-09-19 failsafe, eight days past the 3-day bar "
@@ -236,6 +269,8 @@ expect("retro-collapse-sediment", "the page left as it was", lambda t: t, ["coll
 expect("retro-collapse-sediment", "a collapse that keeps a second restatement",
        lambda t: t.replace(outage_block(t), collapsed + "\n\nStill dark at the 2026-09-20 retro: 23 missed "
                            "windows since 09-08 [cite:2026-09-20]."), ["collapsed"])
+expect("retro-collapse-sediment", "a collapse that keeps an older count in other words",
+       lambda t: t.replace(outage_block(t), collapsed + " By 09-13 it had missed 14 straight windows."), ["collapsed"])
 expect("retro-collapse-sediment", "a collapse that drops the first citation",
        lambda t: t.replace(outage_block(t), collapsed.replace("[cite:2026-09-13] ", "")), ["account"])
 expect("retro-collapse-sediment", "the account deleted", lambda t: t.replace(outage_block(t), "Nothing to report."),

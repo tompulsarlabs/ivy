@@ -37,11 +37,14 @@ every regex in `blocks`: that is how a case asks for one paragraph holding
 an ongoing condition's start, count, citation, and consequence together.
 Checks read `_measures.<name>.before`, `.after`, and `.delta`. The row keeps
 a unified diff of each measured file under `diffs`, so a result can be
-read, not only counted. `scripts/eval-routines-test.py` grades each memory
-case's real page after wrong edits (a restatement appended or reworded, a
-changelog entry, today's citation beside a stale account, the account
-deleted) and after the right one. A run whose writes were denied is recorded
-as `denied`, not scored.
+read, not only counted, and `grade` rebuilds each measured file from the
+case and that diff, so a changed measure re-scores old runs.
+`scripts/eval-routines-test.py` grades each memory case's real page after
+wrong edits (a restatement appended, reworded, or counted in days instead of
+windows; a confirmation beside the account; a second account; a changelog
+entry; today's citation beside a stale account; the account deleted) and
+after the right one. A run whose writes were denied is recorded as `denied`,
+not scored.
 
 The model sees its working directory, so each sandbox is a fresh temporary
 directory with a random name, outside the work directory: no case id or
@@ -75,8 +78,8 @@ The default model (`DEFAULT_MODEL` in the script) is the one the four
 triggers run; pass `--model` to try another and `--effort` only if the
 trigger sets one. A full pass is 29 runs per rep, $0.15 to $1.70 each at
 list price (about $24 a rep for the candidate) and about 25 minutes a rep
-at `--jobs 5`. `grade` re-scores saved answers after a check is edited,
-without re-running anything.
+at `--jobs 5`. `grade` re-scores saved answers after a check or measure is
+edited, without re-running anything.
 
 Results rows carry the served model (a run served by a different model is
 not scored), cost, turns, the files the routine read, and its full answer;

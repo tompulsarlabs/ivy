@@ -18,7 +18,7 @@
     "window_counts": {
       "file": "memory/repos/ivy.md",
       "above_heading": "## Changelog",
-      "count": "\\d+\\s+missed\\s+windows"
+      "count": "\\b\\d+\\s+(?:[a-z-]+\\s+){0,2}?windows?\\b"
     },
     "account": {
       "file": "memory/repos/ivy.md",
@@ -37,7 +37,7 @@
   "checks": [
     {
       "id": "collapsed",
-      "desc": "the five dated restatements collapse to one paragraph stating one count",
+      "desc": "the five dated restatements collapse to one paragraph stating one count of windows",
       "assert": {
         "and": [
           {
@@ -53,10 +53,10 @@
     },
     {
       "id": "account",
-      "desc": "that paragraph keeps the start (09-08), the latest count, what the outage blocks, and a first (by 09-13) and a latest (09-19 or later) citation",
+      "desc": "exactly one paragraph keeps the start (09-08), the latest count, what the outage blocks, and a first (by 09-13) and a latest (09-19 or later) citation",
       "assert": {
         "path": "_measures.account.after",
-        "ge": 1
+        "eq": 1
       }
     }
   ]

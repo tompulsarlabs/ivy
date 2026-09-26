@@ -383,6 +383,45 @@ def file_diffs(sandbox, before_text):
                                                 f"a/{rel}", f"b/{rel}"))
     return out
 
+def apply_diff(old, diff):
+    """old with a diff from file_diffs applied. ValueError when a hunk does not
+    fit, so a regrade never measures a page the run did not leave."""
+    src, out, i = old.splitlines(True), [], 0
+    for line in diff.splitlines(True)[2:]:   # past the ---/+++ header
+        hunk = re.match(r"@@ -(\d+)(?:,(\d+))? \+\d+(?:,\d+)? @@", line)
+        if hunk:
+            start = int(hunk[1]) - (hunk[2] != "0")
+            if start < i:
+                raise ValueError(f"hunks overlap at line {start + 1}")
+            out += src[i:start]
+            i = start
+        elif line[:1] in (" ", "-"):
+            if src[i:i + 1] != [line[1:]]:
+                raise ValueError(f"diff does not fit at line {i + 1}")
+            if line[0] == " ":
+                out.append(line[1:])
+            i += 1
+        elif line[:1] == "+":
+            out.append(line[1:])
+        else:
+            raise ValueError(f"not a diff line: {line!r}")
+    return "".join(out + src[i:])
+
+def remeasured(case, row):
+    """A stored edit row's measures, taken with the case's measures as they are
+    now: each measured file is the case's own (its state_rev and files, never
+    a steering file) with the row's diff applied."""
+    sandbox = new_sandbox()
+    try:
+        build_sandbox(case, "WORKTREE", sandbox)
+        before = {k: measure(sandbox, m) for k, m in case["measures"].items()}
+        for rel, diff in row["diffs"].items():
+            f = sandbox / rel
+            f.write_text(apply_diff(f.read_text() if f.is_file() else "", diff))
+        return measured(case, before, sandbox)
+    finally:
+        shutil.rmtree(sandbox, ignore_errors=True)
+
 def run_one(case, variant, rep, workdir):
     sandbox = new_sandbox()
     try:
@@ -515,7 +554,10 @@ def cmd_grade(args):
     rows = [json.loads(l) for l in Path(args.results).read_text().splitlines() if l.strip()]
     for r in rows:
         if r["status"] == "ok":
-            r["checks"] = grade(cases[r["case"]], r["answer"])
+            case = cases[r["case"]]
+            if case.get("measures") and r.get("diffs") is not None:
+                r["answer"]["_measures"] = remeasured(case, r)
+            r["checks"] = grade(case, r["answer"])
             r["passed"] = all(r["checks"].values())
     Path(args.results).write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows))
     print(summarize(rows))

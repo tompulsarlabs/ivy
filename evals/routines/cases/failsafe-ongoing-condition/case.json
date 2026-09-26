@@ -14,12 +14,34 @@
     "window_counts": {
       "file": "memory/repos/ivy.md",
       "above_heading": "## Changelog",
-      "count": "\\d+\\s+missed\\s+windows"
+      "count": "\\b\\d+\\s+(?:[a-z-]+\\s+){0,2}?windows?\\b"
+    },
+    "day_counts": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "count": "\\b\\d+\\s+(?:[a-z-]+\\s+){0,2}?days?\\b"
     },
     "log_entries": {
       "file": "memory/repos/ivy.md",
       "below_heading": "## Changelog",
       "count": "\\n- \\d{4}-\\d{2}-\\d{2}"
+    },
+    "accounts": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08|missed\\s+windows"
+      ]
+    },
+    "today": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "blocks": [
+        "cite:2026-09-23",
+        "\\bdark\\b|scanner|local-wip"
+      ]
     },
     "account": {
       "file": "memory/repos/ivy.md",
@@ -37,7 +59,7 @@
   "checks": [
     {
       "id": "no_restatement",
-      "desc": "memory/repos/ivy.md gains no new dated restatement of the outage",
+      "desc": "the outage stays one paragraph and gains no restatement: no new count of windows or days, no new \"still dark\", and one paragraph cites today for it",
       "assert": {
         "and": [
           {
@@ -47,6 +69,18 @@
           {
             "path": "_measures.window_counts.delta",
             "le": 0
+          },
+          {
+            "path": "_measures.day_counts.delta",
+            "le": 0
+          },
+          {
+            "path": "_measures.accounts.after",
+            "eq": 1
+          },
+          {
+            "path": "_measures.today.after",
+            "le": 1
           }
         ]
       }
@@ -61,10 +95,10 @@
     },
     {
       "id": "account",
-      "desc": "one paragraph states the outage whole: its start (09-08), today's count, today's citation, and what it blocks",
+      "desc": "exactly one paragraph states the outage whole: its start (09-08), today's count, today's citation, and what it blocks",
       "assert": {
         "path": "_measures.account.after",
-        "ge": 1
+        "eq": 1
       }
     },
     {
