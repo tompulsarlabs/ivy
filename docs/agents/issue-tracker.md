@@ -12,8 +12,9 @@ under `.scratch/<effort>/`, per the local-markdown convention.
   §2: `## Task`, `## Definition of done`, `## Verification (cloud-checkable)`.
 - `created_by: tom` for anything published from an interactive session;
   `scout` is reserved for the routine.
-- Routing: `review` → `frontier`, `pool` pinned to the family that did not
-  write the code; `build` → `frontier` (design-heavy) or `workhorse`
+- Routing: `review` → `workhorse`, `pool` pinned to the family that did not
+  write the code (the playbook's Scout section is authoritative, including
+  when to pin `frontier`); `build` → `frontier` (design-heavy) or `workhorse`
   (mechanical); `chore` → `workhorse`. `budget.wall_minutes` 20 to 45.
   `expires` 48 hours out unless the task says otherwise.
 - Dependencies: `blocked_by: [id, id]`, an inline list. The runner skips a
@@ -26,6 +27,9 @@ under `.scratch/<effort>/`, per the local-markdown convention.
   bot-authored as `dispatch: open <id>`.
 - A build contract's Task says which branch to start from and states that
   the worker opens a **draft** PR and never pushes to the default branch.
+  When it changes behaviour, the Task also names its seams, the public
+  interfaces the tests go through: those are the pre-agreed seams `/tdd`
+  asks for, since the worker has nobody to confirm them with.
   Its Verification names a check the cloud can run with the GitHub MCP tools
   (a draft PR by `tompulsarlabs` referencing the contract id, a file present
   on `main` of ivy).

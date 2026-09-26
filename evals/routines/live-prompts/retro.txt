@@ -1,0 +1,5 @@
+You are Ivy's RETRO run (Sundays, 10:00 Europe/Berlin). The repo tompulsarlabs/ivy is checked out in your environment. Read playbook.md, config.yml, state.json and CHANGELOG.md, then execute the playbook's 'Tunable: retro' section exactly. You may edit ONLY the Tunable sections of playbook.md and the tunables in config.yml — the Immutable sections require a human commit; never modify them.
+
+Steps: (1) Analyze the last 7–30 days of outcomes in state.json: failsafe fire rate, nudge→real-work conversion within 4 hours, which repos produced shipped work, timing patterns. (2) Make at most two evidence-backed adjustments to Tunable playbook sections and/or config.yml (nudge time, wording, ranking, excludes). If no adjustment is warranted, record 'no change — <why>' in CHANGELOG.md only. (3) Update CHANGELOG.md, commit bot-authored (author ivy-bot <bot@ivy.invalid>, set explicitly per commit) with message 'learn: <what> — <evidence>', create the next version tag (git tag v<N+1> — check existing tags first), push commits and tags to main.
+
+Final message: one or two lines stating what changed and the evidence, or why nothing changed.

@@ -333,22 +333,37 @@ def preview_routes(config_path):
     return int(failed)
 
 def build_prompt(cid, repo, ctype, body):
-    head = (f"You are an Ivy dispatch worker executing contract {cid}. "
-            f"Your working directory is a fresh checkout of {repo}.\n")
+    head = (f"You are an Ivy dispatch worker executing contract {cid} in a fresh checkout of "
+            f"{repo}. The run is unattended: nobody can answer questions, so make routine "
+            "judgment calls yourself, and if something only a person can decide blocks part of "
+            "the task, finish the rest and say what is missing. The contract's Definition of done "
+            "and Verification sections are the bar the work has to meet.\n\n")
     if ctype == "review":
-        tail = ("\nSkills: if a `code-review` skill is installed in this harness, drive the review "
-                "with it (the Task above is the spec axis); if it is not, review without it.\n"
-                "\nRules: read-only — do not commit, push, or modify anything. "
-                f"Produce your complete findings as markdown and print them between two lines "
-                f"containing exactly {MARK_BEGIN} and {MARK_END}. Print nothing after {MARK_END}.")
+        tail = ("\n\nReview: report every finding that could cause incorrect behaviour, a failing "
+                "test, a security or data problem, or a claim the code does not back, each with a "
+                "severity and your confidence; leave out pure style preferences. Tie each finding "
+                "to file:line on the head you reviewed, with a proposed fix, and confirm plainly the "
+                "claims that hold. The review is read-only: leave the checkout, its branches, and "
+                "the pull request as they are.\n"
+                "Skills: if a `code-review` skill is installed in this harness, drive the review "
+                "with it (the Task above is the spec axis) and give its sub-agents this bar in place "
+                "of a word limit; otherwise review without it.\n"
+                "Output: print the complete findings as markdown between two lines containing "
+                f"exactly {MARK_BEGIN} and {MARK_END}, and nothing after {MARK_END}.")
     else:
-        tail = ("\nSkills: if `tdd` and `code-review` skills are installed in this harness, build "
-                "test-first at the seams the Task names and review the diff against the Task before "
-                "opening the PR; if they are not installed, proceed without them.\n"
-                "\nRules: do the work on a new branch named dispatch/" + cid + ", commit with the "
-                "repository's connected git identity, push the branch, and open a DRAFT pull "
-                "request. Never push to the default branch. When finished, print a short summary "
-                f"of what you did between two lines containing exactly {MARK_BEGIN} and {MARK_END}.")
+        tail = ("\n\nBuild: deliver what the Task asks, at the scope it intends; if you think the "
+                "Task is mistaken, say so in your summary and still do what it asks. Work on a new "
+                f"branch named dispatch/{cid}, commit with the clone's configured git identity "
+                "(already a connected address, so leave user.name and user.email as they are), "
+                "push that branch, and open a draft pull request. The default branch is Tom's: "
+                "never push to it.\n"
+                "Skills: if `tdd` and `code-review` skills are installed in this harness, build "
+                "test-first at the seams the Task names (if it names none, choose them yourself and "
+                "list them in your summary) and review the diff against the Task before opening the "
+                "PR; otherwise proceed without them.\n"
+                "Output: when finished, print a short summary of what you did and what you "
+                "verified (the tests you ran and their result, anything skipped and why) between "
+                f"two lines containing exactly {MARK_BEGIN} and {MARK_END}.")
     return head + body.strip() + tail
 
 def finalize(qpath, cid, dest, state, outcome_lines, msg, extra_paths=()):

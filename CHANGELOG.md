@@ -1,5 +1,93 @@
 # Changelog
 
+## v10 — 2026-09-23
+
+**Re-tuned for the current model generation, with a routine eval to hold
+the line.** A human change from an interactive session, reviewed as
+tompulsarlabs/ivy#21; the Immutable sections are byte-identical. Audited
+against the `claude-api` skill's prompt-audit guide and its migration notes
+for the newest models: current models follow instructions literally, so
+text written for older ones (pressure, step choreography, incident
+archaeology, contradictions) now costs behaviour, not just tokens.
+
+**What the audit found.** The four cloud triggers still ran their
+2026-08-24 prompts: step-by-step procedures that restated the playbook and
+had drifted from it (the check chose a nudge without the decay rule, the
+failsafe prompt never mentioned contract verification or memory, the retro
+prompt pushed a tag the cloud always refuses). `routines/*.md` documented
+thin prompts that were never deployed. The runner read each lane's `effort`
+and dropped it, so frontier and workhorse ran the identical `claude`
+command: no Anthropic outcome in `memory/models.md` reflects its lane's
+configured effort. `playbook.md` had grown by accretion (a 75-line scout
+bullet, 36 bold spans, eight dated incident references, relative phrasing
+such as "down from" and "also counts"), and two of its rules were visibly
+unenforced: `state.json` values are paragraphs despite "Keep
+`signal_source` to a short source label", and `memory/repos/ivy.md`
+restates the scanner outage once a day, in its body and again under
+`## Changelog`.
+
+**Playbook (Tunable sections rewritten, behaviour kept).** Each routine
+opens with its outcome; rules sit with their reasons; what all three daily
+routines share (push before the run ends, input shelf lives, deciding
+green, the `ALERT:` prefix, terse state rows) is stated once. Settled
+ambiguities: a blocker persisting three days leads the Top pick section
+above the candidate, and outranks candidates for the nudge until its third
+unconverted send; a dispatch worker's draft PR counts toward green like one
+Tom opened; a review-only day reads grey to the routines while the graph
+may already be green, because the cloud tools cannot date a review outside
+this repo, and the journal secures it either way; a runner heartbeat is
+measured in window time; journals follow the playbook's structure, not an
+older entry's. Deliberate changes: before calling a day grey, the check and
+the failsafe search exactly for the PR behind each contract claimed today;
+lookups that disagree (a contract records a PR from today that no search
+returns) make the day unknown, which alerts, and the failsafe secures an
+unknown day with the journal; the failsafe rewrites an ongoing condition's
+memory line in place instead of appending a restatement, and a page's
+`## Changelog` records what the page gained or lost, not confirmations or
+the day's outcome; the scout counts today's contracts before queueing more;
+the retro collapses existing restatements, records the version here instead
+of pushing a tag (the preamble now says the same), notes the DST change
+instead of re-pinning triggers it cannot reach, writes Immutable-section
+proposals for Tom, and runs the `claude-api` prompt-audit over the steering
+files after a model change.
+
+**Routines.** `routines/*.md` now carry the prompt each trigger should run
+(who the run is, where its instructions live, the one hard constraint, the
+final line), plus the trigger's model and connectors. The prompts the
+triggers ran until now are kept in `evals/routines/live-prompts/`.
+
+**Dispatch.** ivy#23, merged first, makes lane effort reach the harness and
+validates it; this change keeps that runner and changes only the worker
+prompt, which now says the run is unattended, sets a concrete review bar
+with severity and confidence, and keeps the clone's git identity. The lanes
+keep their pins, so the configured efforts apply for the first time:
+frontier at `xhigh` and workhorse at `medium`. The newest Opus needs Claude
+Code 2.1.280 or later on the Mac, which had 2.1.277; the move waits for
+that upgrade and a `HARNESS_MODELS` entry, and the OpenAI re-pin waits for
+`codex` to confirm the newer models.
+
+**Eval.** `evals/routines/` replays 29 real days, each with one change,
+against a routine's prompt and the steering files, and grades the
+decisions deterministically (`evals/README.md`). Each run is
+`--restricted` to its own temporary sandbox, whose path names no case or
+variant, and the memory cases are graded on the paragraph they leave, not
+word counts. At this version's playbook, on the routines' model, two reps
+each, the new prompts and playbook pass 43 of 48 preserve runs and 8 of 10
+change runs, against 35 of 48 and 1 of 10 for the old ones; no case passes
+less often. They cost 28% more at list price, spent reading the files the
+rules point at. The failsafe's in-place memory rule held in 3 of 6 runs on
+today's cluttered page across two days of runs, and the retro's collapse is
+the backstop. The old prompts against the new playbook pass 22 of 24 and 4
+of 5, but one explained away a journal commit that never counted instead of
+alerting. Details in `evals/routines/results/2026-09-25.md`.
+
+**For Tom.** Paste the four `routines/*.md` prompts into their triggers
+after merge (until then the triggers run the old prompts against the new
+playbook, which the eval covers too). Run `claude update` on the Mac, then
+move the Anthropic lanes to the newest Opus as the `config.yml` lanes comment
+says. Re-pin the OpenAI lanes once `codex` confirms. The retro on 2026-09-27
+is the first to collapse `memory/repos/ivy.md`.
+
 ## v9 — 2026-09-20
 
 **Retro: two adjustments — a repeat cap on unconverted blocker nudges, and

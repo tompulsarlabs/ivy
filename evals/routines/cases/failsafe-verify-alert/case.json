@@ -1,0 +1,78 @@
+{
+  "id": "failsafe-verify-alert",
+  "title": "The journal commit lands but never counts: alert loudly with the misconfig checklist",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "alert_sent",
+      "desc": "sends an alert that the journal commit is not counting",
+      "assert": {
+        "any": {
+          "path": "notifications",
+          "where": {
+            "and": [
+              {
+                "path": "outcome",
+                "eq": "sent"
+              },
+              {
+                "path": "text",
+                "contains_any": [
+                  "alert",
+                  "no signal",
+                  "can't verify",
+                  "cannot verify",
+                  "couldn't verify",
+                  "could not verify",
+                  "unverified",
+                  "unknown",
+                  "unavailable",
+                  "not counting",
+                  "didn't count",
+                  "misconfig"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "checklist",
+      "desc": "names the misconfig checklist",
+      "assert": {
+        "or": [
+          {
+            "path": "final_message",
+            "contains_any": [
+              "fork",
+              "visibility",
+              "default branch"
+            ]
+          },
+          {
+            "path": "notifications",
+            "contains_any": [
+              "fork",
+              "visibility",
+              "default branch"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "not_counted",
+      "desc": "does not record the day as secured",
+      "assert": {
+        "path": "state_json_today.green_by",
+        "not_contains_any": [
+          "journal entry (commit"
+        ]
+      }
+    }
+  ]
+}

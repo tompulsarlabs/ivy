@@ -1,0 +1,17 @@
+{
+  "harness": {
+    "claude": false,
+    "codex": true
+  },
+  "last_tick": "2026-09-22T20:40:11+02:00",
+  "lint_ok": true,
+  "result": "idle",
+  "runner_sha": "59b6eac",
+  "since": "2026-09-22T15:10:02+02:00",
+  "skipped": [
+    {
+      "id": "2026-09-22-tomgreenai-hero-01",
+      "reason": "harness_missing"
+    }
+  ]
+}

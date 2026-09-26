@@ -22,14 +22,16 @@ languages, Claude Code, Codex, and gstack, then arrives here.
 
 Create one scheduled routine per file in [`routines/`](../routines/) —
 scout, check, failsafe, retro. Each file records the schedule (UTC cron +
-local intent), the prompt text, and the live trigger ID. The prompts are
-deliberately thin pointers into `playbook.md`, which is the single source
-of operating truth; the retro tunes behavior by editing the playbook, so
-the cloud configuration rarely needs touching.
+local intent), the model, the connectors, the live trigger ID, and the
+prompt to paste. The prompts are deliberately thin pointers into
+`playbook.md`, which is the single source of operating truth; the retro
+tunes behavior by editing the playbook, so the cloud configuration rarely
+needs touching. When a routine file's prompt changes, paste it into the
+trigger again.
 
-The routine sandbox is repo-scoped (see the ops notes in `playbook.md`):
-no `gh`, no GraphQL, only this repo's git remote plus the built-in GitHub
-MCP tools. The playbook's cloud verification path exists because of this.
+The routine sandbox is repo-scoped (`memory/ops.md`): no `gh`, no GraphQL,
+only this repo's git remote plus the built-in GitHub MCP tools. The
+playbook's *Deciding green* rule exists because of this.
 
 ## 3. Local WIP scanner
 

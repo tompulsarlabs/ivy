@@ -1,0 +1,97 @@
+{
+  "id": "failsafe-pr-lead-found",
+  "title": "Grey at the check and the org-wide searches still empty, but an exact search finds the timed-out worker's PR: green, no journal",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "change",
+  "checks": [
+    {
+      "id": "green",
+      "desc": "decides the day green",
+      "assert": {
+        "path": "day_state",
+        "eq": "green"
+      }
+    },
+    {
+      "id": "by_the_pr",
+      "desc": "records PR #67 as what made the day green",
+      "assert": {
+        "path": "state_json_today.green_by",
+        "contains_any": [
+          "#67",
+          "pr 67",
+          "pull/67"
+        ]
+      }
+    },
+    {
+      "id": "real_work",
+      "desc": "records the day as real work",
+      "assert": {
+        "path": "state_json_today.method",
+        "contains": "real"
+      }
+    },
+    {
+      "id": "no_journal",
+      "desc": "adds no Tom-authored journal to a day the worker's PR already made green",
+      "assert": {
+        "none": {
+          "path": "commits",
+          "where": {
+            "path": "author",
+            "eq": "tom"
+          }
+        }
+      }
+    },
+    {
+      "id": "not_fired",
+      "desc": "records that the failsafe did not fire",
+      "assert": {
+        "path": "state_json_today.failsafe_fired",
+        "ne": true
+      }
+    },
+    {
+      "id": "silent",
+      "desc": "sends nothing",
+      "assert": {
+        "path": "notifications",
+        "len_eq": 0
+      }
+    },
+    {
+      "id": "promoted",
+      "desc": "moves copy-03 to done with verified: true",
+      "assert": {
+        "any": {
+          "path": "contracts_changed",
+          "where": {
+            "and": [
+              {
+                "path": "id",
+                "contains": "copy-03"
+              },
+              {
+                "path": "to",
+                "contains": "done"
+              },
+              {
+                "path": "verified",
+                "eq": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "json_merge": {
+    "dispatch/runner-status.json": {
+      "since": "2026-09-23T14:20:12+02:00"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+You are Ivy's SCOUT run (daily, 09:00 Europe/Berlin). The repo tompulsarlabs/ivy is checked out in your environment. Read playbook.md, config.yml and state.json first, then execute the Scout item of the playbook's 'Tunable: the daily ladder' exactly, honoring every Immutable section — especially commit attribution: this run's commits are system bookkeeping, so author them as ivy-bot <bot@ivy.invalid>, set explicitly per commit (git -c user.name=ivy-bot -c user.email=bot@ivy.invalid commit ...), never inherited from environment git config.
+
+Environment note (see playbook ops note): no gh CLI, REST/GraphQL proxy-restricted — do NOT install or auth gh. Use the built-in GitHub MCP tools instead: load via ToolSearch (e.g. 'select:mcp__github__get_me' or search 'mcp__github__'), then use them to list tompulsarlabs' repos, open PRs, assigned issues, and recent branches.
+
+Steps: (1) Sync the watchlist in config.yml from the repo list (drop forks, archived, and config excludes). (2) Gather today's shippable candidates across watchlist repos per the playbook — including local WIP from local-wip.json per the playbook's staleness rule. (3) Write journal/<today>.md (today per config timezone) listing candidates with one concrete top pick. (4) Commit bot-authored with message 'scout: <today> — <n> candidates, top: <one-liner>' and push to main.
+
+If anything blocks you, still commit what you can and state the blocker plainly in your final message. Final message: one line, e.g. 'scout: 3 candidates, top: sybil #12 review'.

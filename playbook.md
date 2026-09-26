@@ -1,8 +1,9 @@
 # Ivy Playbook
 
 Operating instructions for Ivy's routines. The weekly retro may edit the
-**Tunable** sections (commit as `learn:`, tag a new version). The **Immutable**
-sections may only be changed by a human commit.
+**Tunable** sections (commit as `learn:`, record the version in
+`CHANGELOG.md`). The **Immutable** sections may only be changed by a human
+commit.
 
 ---
 
@@ -120,261 +121,354 @@ to execution lanes. Non-negotiables:
 
 ## Tunable: the daily ladder
 
-- **Scout (09:00)** — **orient first:** read `memory/INDEX.md`, then
-  `memory/ops.md` and the `memory/repos/<name>.md` page for every repo that
-  produces a candidate. That is the standing context — what this repo is, what
-  has been tried, what the environment will refuse to do — and it is much
-  cheaper than re-deriving it from journal history. Follow a `[cite:...]` down
-  to the journal only when a claim is decision-critical or looks stale; adopt
-  it directly otherwise.
-  Then sync watchlist (`search_repositories org:<login>`, minus
-  forks/archived/excludes — `gh` is not available in the cloud sandbox,
-  `memory/ops.md`).
-  Gather candidates: open PRs close to merge, assigned issues, branches with recent
-  pushes but no PR, yesterday's carry-over.
-  **Rank by value, not by cheapness.** Tom's focus is revealed, not declared:
-  repos with Tom-authored commits in the last 7 days, local WIP, and draft
-  PRs he updated this week rank above any "cheapest ship" on a stale PR.
-  A repo in `config.yml` `watchlist.parked` is watched only — its
-  contributions count and its attribution is scanned — and produces no
-  candidate, contract, or audit; it leaves `parked` by Tom's commit or a
-  retro `learn:`. Evidence: `c2-client-matrix` #1 was the fallback pick for
-  eight runs with zero conversions before Tom parked it (2026-09-03).
-  **Also hunt blockers, not just candidates.** A candidate produces a
-  contribution today; a blocker stops future work from happening at all —
-  a dead runner, an expired credential, a queue nothing is draining, a
-  broken local scan, an unmerged fix everything else waits on. Blockers are
-  invisible to a "cheapest ship today" ranking because their contribution
-  count is zero, which is exactly why they rot. **Read
-  `dispatch/runner-status.json`** — the Mac runner's heartbeat, committed when
-  its state changes and at least every 6 hours inside the window. `harness`
-  false or `lint_ok` false is a blocker from the first morning: every
-  contract waits on it. `last_tick` older than 3 hours inside the runner
-  window with contracts open means the runner is not ticking — a sleeping
-  Mac or an unloaded launchd job; name it, never guess which. `skipped`
-  says why each open contract was passed over. Name any blocker in the
-  journal under `## Blockers` with what it stops and the smallest next
-  action; carry it forward every day until it clears or is explicitly
-  declined. A blocker that has persisted three days outranks the day's
-  cheapest ship in the nudge — in the journal's Top Pick and Blockers
-  section, every day, regardless of nudge history. Whether the *check*
-  spends its one nudge repeating it is a separate call, governed by the
-  decay rule below: persistence outranks ranking, not repetition.
-  **Also read `local-wip.json`** (pushed by
-  the Mac's launchd scanner at 08:45/17:45): repos with `unpushed_commits > 0` or
-  `remote: none` are first-class candidates — "push X (N unpushed commits)" is often
-  the cheapest real ship of the day. Staleness rule: if its `generated_at` is older
-  than 36h, treat local WIP as *unknown* (say so in the journal), never as "nothing
-  pending" — a sleeping Mac must not lie to the scout.
-  **Attribution check (outranks every other candidate):** any repo with
-  `author_email_ok: false` will author its next commit as an address that is not
-  connected to the account, so that work cannot count (rule 2) no matter how real
-  it is. `last_commit_email_ok: false` means it has already happened. Lead the
-  journal with it and nudge immediately rather than waiting for the 18:00 check —
-  the fix is one `git config` line while it's cheap, and a history rewrite once
-  the commits are pushed. This is the one scout finding that breaks the "silent"
-  rule, because by 18:00 a whole day of real work may already be uncountable.
-  Draft `journal/<today>.md`
-  and commit it **bot-authored** (`scout: <date> — <n> candidates, top:
-  <one-liner>`). Silent.
-  **Emit dispatch contracts** for the top candidates: up to
-  `dispatch.daily_cap` minus contracts already created today, using the
-  contract format in `dispatch/DESIGN.md` §2. Review contracts pin the
-  family that did not author the PR and default to `lane: workhorse` (down
-  from `frontier`, retro 2026-09-06: five straight verified first-pass
-  frontier/openai review outcomes met the Pareto bar for a lane-move trial,
-  `memory/models.md`) — pin `frontier` explicitly only when a candidate's
-  own signal calls for it. Run `scripts/dispatch-lint.sh`, commit
-  bot-authored (`dispatch: open <id>`). Execution is the runner's job — the
-  scout only queues. A contract is a ticket in the `to-tickets` sense: one
-  vertical slice, complete and verifiable on its own, sized for a single
-  worker session. Work that needs more than one slice is published as a
-  chain — later contracts carry `blocked_by` with the earlier ids — never as
-  one oversized contract. Write contracts in `CONTEXT.md` vocabulary.
-  Anything learned along the way — a repo that has gone quiet, a new access
-  limit, a candidate that keeps resurfacing — goes in the journal entry, not
-  into `memory/`. The failsafe folds it in tonight; the scout never edits
-  memory pages.
-- **Check (18:00)** — run `scripts/check.sh`. Green → record outcome in state
-  (bot-authored commit), stay silent. Grey → nudge with the single most concrete
-  candidate. **Before picking that candidate, read its
-  `memory/repos/<name>.md`** — nudge history and conversion record live there.
-  A candidate carrying recorded unconverted nudges is a weaker pick than a
-  fresh one of similar cost; say so in the journal when you pick it anyway.
-  This decay applies to a standing blocker's nudge too: after 3 identical
-  unconverted nudges on one blocker, nudge the next-best candidate instead
-  and just name the blocker in the journal — it still leads `## Blockers`
-  and the Top Pick every day, only the push stops repeating. Evidence:
-  the local-WIP-scanner nudge repeated verbatim 6 times (2026-09-12→17, 0
-  conversions) before 09-19's switch to a fresh candidate (`memory/patterns.md`).
-  Note open/claimed contract states (`dispatch/queue/`) when recording the
-  check — a claimed contract may land before failsafe.
-  Nudge channel: **PushNotification** (verified working from cloud runs
-  2026-08-23, "Mobile push requested"). Fallback if PushNotification reports
-  not-sent/unavailable: a Google Calendar event ~15 min out titled with the
-  candidate. Send through exactly one of the two.
-- **Failsafe (22:30)** — still grey → finalize today's journal entry, commit it
-  **Tom-authored** per the attribution rule, push, verify per the immutable rule.
-  Record outcome either way — `state.json` gets `{date: {green_by, method,
-  contributions: <final count from check>, signal_source, cite, nudge_sent,
-  nudge_converted, failsafe_fired}}` (bot-authored); bump or reset `streak`.
-  For a blocker nudge, `nudge_converted` also goes true on the blocker's
-  own recovery signal (a fresh `local-wip.json`, a resumed runner
-  heartbeat), not only a GitHub contribution — an infra fix rarely
-  produces a commit of its own, so scoring it against contributions alone
-  reads every blocker nudge as unconverted by construction (six straight
-  `false` rows on the same outage, 2026-09-12→17, `memory/patterns.md`).
-  Keep `signal_source` to a short source label and put the verification
-  narrative in the journal entry under `## Verification`, with `cite` pointing
-  at that file.
+Three routines secure each day: the scout plans it, the check nudges if it
+is still grey at 18:00, and the failsafe closes it. Each runs unattended in a
+cloud sandbox that is discarded afterwards, so nobody can answer a question
+mid-run and nothing survives that is not pushed. Make the routine judgment
+calls yourself; when only Tom can unblock part of the work, finish the rest
+and name what is missing in the journal and in your final message.
 
-  **Then verify dispatch contracts** — after the day is secured, never
-  before: for each contract in `dispatch/done/` without a `verified:` stamp,
-  run its Verification section via cloud-checkable means and stamp
-  `verified: true|false`; move contracts past `expires` to `dispatch/failed/`
-  with `state: expired`. Two more cases, because the runner's bookkeeping is
-  a claim like any worker's:
-  - A contract in `dispatch/failed/` whose outcome says `exit: timeout` or
-    `no_report` may have finished the work and only missed printing the
-    report (2026-09-03: `copy-02` opened its draft PR at 10:32 and was
-    recorded as a 40-minute timeout at 10:53). Run its Verification too. If
-    it passes, set `state: done`, move it to `dispatch/done/`, stamp
-    `verified: true` with a `verified_note` saying the report never landed,
-    and count its wall-minutes as work, not waste. If it fails, leave it.
-  - A contract in `dispatch/queue/` with `state: claimed` and no outcome
-    whose `claimed_at` is older than `budget.wall_minutes × 3` is a runner
-    that died mid-task: set `state: open`, drop `claimed_at`, and say so in
-    the journal. It runs again on the next tick.
-  Run `scripts/dispatch-lint.sh`; commit bot-authored
-  (`dispatch: verify <ids>`). Verified outcomes feed `memory/models.md` in
-  the synthesis pass below.
+### Rules every run follows
 
-  **Then synthesize memory** — always *after* the day is green and recorded,
-  never before: a memory problem must never eat the failsafe window. This is
-  the daily pass that keeps `memory/` current:
-  1. **Attach facts to subjects.** Every observation from today worth keeping
-     goes to its page — repo facts to `memory/repos/<name>.md`, environment
-     behavior to `memory/ops.md`, rhythm and conversion to
-     `memory/patterns.md`. Write the citation as you write the claim.
-  2. **Create a page** only for a subject with real, durable signal, and add it
-     to `memory/INDEX.md` in the same commit. One quiet day does not earn a
-     repo a page; a first real commit does.
-     If the day involved a non-obvious operational sequence that will recur,
-     write the recipe to `procedures/` while the details are exact — a
-     memory page saying "someone should run the same recipe we used for X"
-     means that recipe should have been written down.
-  3. **Making no change is a valid outcome.** If the wiki is already correct,
-     write nothing — an unchanged page is a stronger signal than a page
-     restated daily.
-     A concept today's journal needed that `CONTEXT.md` lacks, or used
-     against its definition, goes in the journal under `## Vocabulary gaps`.
-     The failsafe never edits the glossary; the retro does.
-  4. Run `scripts/memory-lint.sh`; it must pass before committing. Commit
-     bot-authored as `memory: <what changed>` and set
-     `memory_last_synthesized` in `state.json` to today.
+**Commit, then push.** Every commit goes to `main` and is pushed before the
+run ends, with its author set explicitly per the attribution rule.
 
-**Ops note (cloud environment, mapped live 2026-08-23, two test runs):** the routine
-sandbox has no `gh` preinstalled and ALL github.com egress is proxy-scoped to this
-repo — GraphQL is blocked, unscoped REST is blocked, and even the public
-contributions HTML 403s ("sessions are bound to their configured repositories").
-`scripts/check.sh` therefore exits 2 (no signal) in the cloud; that is expected,
-never a reason to guess. What works: (1) git push/pull to this repo via the
-credential proxy; (2) the **built-in GitHub MCP tools** (`mcp__github__*`, load via
-ToolSearch), which are user-scoped — `get_me` confirms identity, `list_commits` reads
-this repo, and `search_commits` / `search_issues` / `search_pull_requests` see
-cross-repo activity. Don't waste run time installing or authenticating `gh`.
+**Inputs have a shelf life.** An input past its bound is unknown, never
+clean, because a sleeping Mac must not read as a quiet one: `local-wip.json`
+older than 36 hours; a runner heartbeat (`dispatch/runner-status.json`
+`last_tick`) that fell more than 3 hours behind the runner window (09:15 to
+21:00) while a contract was open. Before 09:15, measure from 21:00
+yesterday: one that stopped at 16:00 yesterday is stale at 09:00 today. Say
+so in the journal.
 
-**Cloud verification path (when check.sh exits 2):** today is GREEN if any of:
-(a) `mcp__github__list_commits` on this repo shows a commit on `main` today
-(Europe/Berlin) whose author email is the connected `commit_email`;
-(b) `mcp__github__search_commits` finds commits by `author:tompulsarlabs` today
-(search covers default branches only, matching counting rule 1 — ignore hits in
-forks);
-(c) `search_issues` / `search_pull_requests` show an issue or PR opened by
-`tompulsarlabs` today.
-Bot-authored commits (`bot@ivy.invalid`; historical `bot@evergreen.invalid`) NEVER
-count as green — they don't light the graph. If the MCP tools are also unavailable, ALERT; never guess.
-Note search indexing can lag a fresh push by a minute — prefer (a) for verifying a
-failsafe commit you just made.
+**Deciding green.** `scripts/check.sh` exits 2 in the cloud sandbox, whose
+github.com egress reaches only this repo; that is expected, never grounds to
+guess. Decide from the built-in GitHub MCP tools (load them with ToolSearch;
+`gh` is not installed and not worth installing). Today in Europe/Berlin is
+green if any of these shows a contribution:
 
-**Ops note (DST):** cron schedules are pinned in UTC (07:00 / 16:00 / 20:30). When
-Berlin flips CEST→CET in late October, local fire times shift to 08:00 / 17:00 /
-21:30 — a safe direction (failsafe moves *earlier*). The retro nearest the flip
-should re-pin the UTC crons if the original local times matter.
+- (a) `list_commits` on this repo: a commit on `main` today whose author is a
+  connected address (`config.yml` `connected_emails`);
+- (b) `search_commits`: a commit authored by `tompulsarlabs` today on a
+  default branch, outside forks;
+- (c) `search_issues` / `search_pull_requests`: an issue or PR opened by
+  `tompulsarlabs` today;
+- (d) the PR behind each contract claimed today, searched exactly, since a
+  broad search can miss one: a build worker opens its PR from
+  `dispatch/<id>`, and a contract's `outcome` or report may record a PR's
+  URL. Put `repo:<owner>/<name>` and `head:dispatch/<id>` (or the recorded
+  number) in the `search_pull_requests` query, since the repo-scoped tools
+  refuse other repos, and count a hit by the test in (c).
+
+Bot-authored commits (`bot@ivy.invalid`, historically
+`bot@evergreen.invalid`) never count. A PR counts by who opened it: a
+dispatch worker's draft PR opened as `tompulsarlabs` counts like one Tom
+opened. Search indexing lags a push by about a minute, so verify a commit
+you just pushed with (a).
+
+The day is grey when every lookup ran and none shows a contribution. It is
+unknown when the MCP tools are unavailable, or when the lookups disagree: a
+contract records a PR from today that no search returns. An unknown day
+gets an alert, and the failsafe secures it with the journal as it would a
+grey day: the entry is genuine either way, and a day the lookups cannot
+read still needs securing.
+
+A PR review counts on the graph too, but no lookup can date one from here:
+outside this repo `pull_request_read` refuses, and a search dates only the
+PR's last change. A day whose only contribution is a review therefore reads
+grey to the routines while the graph may already be green; the failsafe's
+journal secures it either way and names the review under `## Verification`.
+`memory/ops.md` records how the sandbox behaves and which query forms reach
+other repos.
+
+**Alerts and nudges are pushes.** Send through PushNotification. An alert
+starts with `ALERT:` so it never reads as a nudge.
+
+**`state.json` rows stay terse.** Each value is a short label, count, or
+flag, such as `"green_by": "tomgreen.ai: 3 commits"`,
+`"signal_source": "github-mcp:search_commits"`, and
+`"cite": "journal/2026-09-23.md"`. The narrative (which lookups ran, commit
+titles, what was excluded) goes in the journal under `## Verification`. Many
+existing rows are paragraphs; write new ones in the short form. The day's row
+carries `green_by`, `method`, `contributions`, `signal_source`, `cite`,
+`nudge_sent`, `nudge_sent_at`, `nudge_channel`, `nudge_candidate`,
+`nudge_converted`, and `failsafe_fired`.
+
+**The journal holds what the run learned.** A repo gone quiet, a new access
+limit, a candidate that keeps resurfacing: write it in today's entry and the
+failsafe folds it into memory. A concept the entry needed that `CONTEXT.md`
+lacks, or used against its definition, goes under `## Vocabulary gaps` for the
+retro.
+
+### Scout (09:00)
+
+The scout plans the day: today's journal drafted with ranked candidates,
+named blockers, and a Top pick; contracts queued for the best dispatchable
+candidates; all of it bot-authored. It sends nothing, except for an
+attribution risk.
+
+**Orient from memory.** Read `memory/INDEX.md`, `memory/ops.md`, and the
+`memory/repos/<name>.md` page of every repo that produces a candidate: what
+the repo is, what has been tried, what the environment refuses. It is
+cheaper than re-deriving the same from journals. Adopt a claim directly, and
+follow its `[cite:...]` down to the journal only when it is decision-critical
+or looks stale.
+
+**Sync the watchlist** with `search_repositories org:<login>`, minus forks,
+archived repos, and `config.yml` excludes, and commit a changed list as
+`config: sync watchlist — <what changed>`. A repo in `watchlist.parked` is
+watched only: its contributions count and its attribution is scanned, but it
+produces no candidate, contract, or audit. It leaves `parked` by Tom's commit
+or a retro `learn:`.
+
+**Gather candidates** from what the tools can see: open PRs close to merge,
+assigned issues, yesterday's carry-over, and from `local-wip.json` every repo
+with `unpushed_commits > 0` or `remote: none` ("push X (N unpushed commits)"
+is often the cheapest real ship). Branches pushed without a PR are invisible
+from the cloud, because `search_commits` sees default branches only.
+
+**Rank by revealed focus, not cheapness.** Repos with Tom-authored commits in
+the last 7 days, local WIP, and draft PRs he updated this week rank above a
+cheap ship on a stale PR. Tom's focus shows in what he touches; a stale PR one
+click from merge has been declining that click.
+
+**An attribution risk comes first.** `author_email_ok: false` in
+`local-wip.json` means that repo's next commit will be authored by an address
+that is not connected, so the work cannot count however real it is;
+`last_commit_email_ok: false` means it already happened. When work is at stake
+(recent or unpushed commits), lead the journal with it and send a push nudge
+now, naming the repo and the fix: one `git config` line before a push,
+`procedures/recover-attribution.md` after one. By 18:00 a whole day of work
+could be uncountable. A dormant repo whose only bad commit is old goes in the
+journal without a nudge.
+
+**Hunt blockers as well as candidates.** A candidate produces a contribution
+today; a blocker (a dead runner, an expired credential, a queue nothing
+drains, a broken local scan, an unmerged fix other work waits on) stops
+future work and scores zero on any cheapest-ship ranking, which is why it
+rots. Read `dispatch/runner-status.json`: `harness` or `lint_ok` false is a
+blocker from the first morning, since every contract waits on it; a stale
+`last_tick` means the runner is not ticking, which is either a sleeping Mac
+or an unloaded launchd job (name both rather than guess); `skipped` says why
+each open contract was passed over. Write each blocker under `## Blockers`
+with what it stops and the smallest next action, and carry it every day
+until it clears or Tom declines it.
+
+**Top pick.** `## Top pick` names the one candidate ranked first. A blocker
+that has persisted three days or more is written at the head of that
+section, above the candidate, every day it persists, however often it has
+been nudged. Whether the check spends its nudge on it is the check's call.
+
+**Queue contracts** for the top dispatchable candidates. Count the contracts
+already created today first (by `created` date, across `dispatch/queue/`,
+`done/`, and `failed/`, whoever wrote them): the day allows
+`dispatch.daily_cap` in all, and `scripts/dispatch-lint.sh` refuses a commit
+past it. Write them in the format of `dispatch/DESIGN.md` §2 and the
+vocabulary of `CONTEXT.md`. A contract is one vertical slice, complete and
+verifiable on its own and sized for one worker session; work that needs more
+publishes as a chain whose later contracts carry `blocked_by`. A review
+contract defaults to `lane: workhorse` and pins `pool` to the family that did
+not write the code (the head branch and commit trailers usually say which);
+pin `frontier` when the change itself carries the risk, such as credentials,
+auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as
+`dispatch: open <ids>`. The runner executes; the scout only queues.
+
+**Write the journal** as `journal/<today>.md` in the structure this section
+gives, not an older entry's (earlier journals predate these rules, and some
+list the persisting blocker last), and commit it as
+`scout: <date> — <n> candidates, top: <one-liner>`.
+
+### Check (18:00)
+
+The check reads the day at 18:00: today's reading recorded, and on a grey day
+exactly one nudge naming one concrete next action.
+
+Decide the day per *Deciding green*. Green: record the reading on today's row
+of `state.json` in the short form (*`state.json` rows stay terse*) and send
+nothing. Unknown: alert, and record nothing as green or grey. Grey: nudge.
+
+**Choose the nudge.** A blocker leading today's Top pick outranks the
+candidates until it has been nudged three times without converting; from
+then on, nudge the next-best candidate while the blocker keeps leading the
+journal. Otherwise name the most concrete candidate in today's journal: a
+repo and a PR, commit, or push, never a generic "ship something". First read
+that candidate's `memory/repos/<name>.md` and the recent `nudge_*` fields in
+`state.json`: a candidate already nudged without converting is a weaker pick
+than a fresh one of similar cost, and if you pick it anyway, say why in the
+journal.
+
+**Send it** as one line through PushNotification. If PushNotification
+reports it was not sent, create a Google Calendar event about 15 minutes out,
+titled with the candidate, instead: exactly one of the two. Record
+`nudge_sent`, `nudge_sent_at`, `nudge_channel`, and `nudge_candidate` on
+today's row.
+
+Write the reading and the choice under `## Check` in today's journal,
+including the state of any contract in `dispatch/queue/`, since a claimed
+contract may still land before the failsafe.
+
+### Failsafe (22:30)
+
+The failsafe closes the day in three steps, each started only once the step
+before it is done: secure and record the day, verify dispatch contracts,
+synthesize memory. A failure in a later step never costs an earlier one.
+
+**1. Secure the day.** Decide the day per *Deciding green*. If it is grey
+or unknown, finish today's journal as a genuine engineering note (the day's
+candidates, what happened, streak state, tomorrow's top candidate, and how
+the day was verified under `## Verification`), commit that file alone,
+Tom-authored, push, and verify per the Immutable rule. If the commit does not
+verify, send the alert push: `ALERT:` and the misconfig checklist. Either
+way, write today's final row in `state.json` in the short form (*`state.json`
+rows stay terse*): `signal_source` is the name of one lookup, never the list
+of queries or what they returned, which go under the journal's
+`## Verification`. Then bump or reset `streak` and `last_green`.
+`nudge_converted` is true when real activity landed on the nudged candidate
+within four hours of the nudge; for a blocker nudge it is also true when the
+blocker's own recovery signal arrives (a fresh `local-wip.json`, a resumed
+heartbeat), because an infrastructure fix rarely produces a commit of its
+own.
+
+**2. Verify contracts.** For each contract in `dispatch/done/` without a
+`verified:` stamp, run its Verification section with cloud-checkable means
+and stamp `verified: true|false`. The runner's bookkeeping is a claim like
+any worker's, so check three more cases:
+
+- A contract in `dispatch/failed/` with `exit: timeout` or `no_report` may
+  have finished and only missed printing its report. Run its Verification;
+  if it passes, set `state: done`, move it to `dispatch/done/`, stamp
+  `verified: true` with a `verified_note` that the report never landed, and
+  count its minutes as work, not waste.
+- A contract in `dispatch/queue/` with `state: claimed`, no outcome, and a
+  `claimed_at` older than `budget.wall_minutes × 3` belongs to a runner that
+  died mid-task: set `state: open`, drop `claimed_at`, and say so in the
+  journal. The next tick runs it again.
+- A contract past `expires` moves to `dispatch/failed/` with
+  `state: expired`.
+
+Run `scripts/dispatch-lint.sh` and commit as `dispatch: verify <ids>`.
+
+**3. Synthesize memory.** Move the day's durable facts onto their pages:
+repo facts to `memory/repos/<name>.md`, environment behaviour to
+`memory/ops.md`, rhythm and conversion to `memory/patterns.md`, verified
+contract outcomes to `memory/models.md`. Write each citation as you write the
+claim.
+
+- An ongoing condition (an outage, a stale PR, a running count) lives in one
+  current-state line saying when it began, when it was last confirmed, and
+  what it blocks. When the day confirms it again, rewrite that line in
+  place: today's date, counts, and citation replace the old ones, so "open
+  since 08-30, 11 days, last confirmed 09-10 [cite:2026-09-10]" becomes
+  "open since 08-30, 12 days, last confirmed 09-11 [cite:2026-09-11]".
+- `## Changelog` records what a page gained or lost, with the date and why.
+  A confirmation, a higher count, and the day's own outcome (green or grey,
+  the streak, whether the nudge converted) are none of these: the journal
+  and `state.json` already hold them, so they get no entry.
+- Some pages still hold a run of dated restatements, each with its own
+  `## Changelog` entry, written before these rules. Treat the run as
+  history, not a format: rewrite its latest restatement in place, add no
+  entry, and leave the run for the retro to collapse.
+- Create a page only for a subject with durable signal (a first real
+  commit, not one quiet day), and add it to `memory/INDEX.md` in the same
+  commit.
+- A sequence the day showed will recur goes to `procedures/` as a recipe
+  while the details are exact.
+- Writing nothing is a valid outcome: an unchanged page is a stronger signal
+  than a restated one.
+
+Run `scripts/memory-lint.sh`; it must pass (after `git fetch --unshallow` if
+it names a citation today's edits did not touch). Commit as
+`memory: <what changed>` and set `memory_last_synthesized` to today.
 
 ## Tunable: retro (Sunday 10:00)
 
-Read `memory/INDEX.md` and the pages it lists first — that is the synthesized
-view of the trailing window, and cheaper than re-mining raw history. Then read
-the last 7–30 days of `state.json` for the numbers. Answer: how often did the
-failsafe fire? Did nudges convert to real activity within 4 hours? Which repos
-produced shipped work?
+Start from `memory/INDEX.md` and the pages it lists: the synthesized view of
+the trailing weeks, cheaper than re-mining raw history. Then read 7 to 30
+days of `state.json` for the numbers and answer: how often did the failsafe
+fire? Did nudges convert to real activity within four hours? Which repos
+produced shipped work? Every commit the retro makes is bot-authored and pushed
+to `main` before the run ends. The run is unattended: where a skill would stop
+to ask the user, decide, and record the decision in `CHANGELOG.md`.
 
-The retro then has two jobs.
+**Tune behaviour.** Make at most two adjustments (nudge time, wording,
+ranking, excludes, lane policy) by editing the Tunable sections of this file
+or `config.yml`, each backed by evidence you can name. Commit each as
+`learn: <what> — <evidence>`, naming the page or journal entry the evidence
+came from, and summarize the week in `CHANGELOG.md` under the next version
+number. No change is a valid outcome; record `no change — <why>` in
+`CHANGELOG.md`. A cloud session cannot push tags (`memory/ops.md`), so the
+version lives in `CHANGELOG.md` and tagging is Tom's. When evidence says an
+Immutable section is wrong, write the proposal for Tom in the `CHANGELOG.md`
+entry: an Immutable section changes only by his commit.
 
-**Tune behavior.** At most two adjustments (nudge time, wording, ranking,
-excludes) by editing the Tunable sections of this file and/or `config.yml`.
-Commit as `learn: <what> — <evidence>`, naming the page or journal entry the
-evidence came from; tag the next version; summarize in `CHANGELOG.md`.
+**Curate memory.** The failsafe adds and updates; the retro is the only pass
+that removes or rewrites a page wholesale.
 
-**Curate memory.** The daily pass only adds — this is the only pass that
-removes, and the only one allowed to rewrite a page wholesale:
-
-- **Verify** a sample of claims against their citations, weighted toward the
-  ones that have been influencing candidate ranking. A claim its evidence no
-  longer supports gets corrected or dropped, never left standing. Contradictions
-  between sources are worth recording explicitly rather than silently resolving.
-- **Prune** what has stopped being true: a repo gone dormant, an access limit
-  that no longer applies, an open thread that closed. Outdated context is worse
+- Verify a sample of claims against their citations, weighted toward the
+  ones that have been steering candidate ranking. Correct or drop a claim its
+  evidence no longer supports; record a contradiction between sources
+  explicitly rather than resolving it silently.
+- Prune what has stopped being true: a repo gone dormant, an access limit
+  that no longer applies, a thread that closed. Outdated context is worse
   than missing context, because it reads as current.
-- **Log** every removal in that page's `## Changelog` with the date and reason.
-  Git holds the diff; the changelog line is what makes it findable without
-  archaeology.
-- **Merge or split** pages when a subject has outgrown or emptied its page, and
-  keep `memory/INDEX.md` inside its line budget — it is read on every run, so
+- Collapse day-by-day restatements into the condition's current-state line,
+  keeping the first and latest citations.
+- Merge or split pages when a subject has outgrown or emptied its page, and
+  keep `memory/INDEX.md` inside its line budget: it is read on every run, so
   it stays a map, not a summary.
-- Re-run `scripts/memory-lint.sh`, then commit bot-authored as
-  `memory: retro — <what changed>`.
+- Log every removal in the page's `## Changelog` with the date and reason.
 
-**Prune the steering files.** `CLAUDE.md`, `playbook.md`, `routines/*.md`,
-and `procedures/` are read on every run, so every line costs on every run.
-Once a week, call the Skill tool with `writing-for-agents` and apply its
-tests to them: delete no-ops (instructions the agent already follows by
-default), collapse restatements into a leading word, state a target
-positively where a prohibition is not a hard guardrail, and push reference
-that only some runs need behind a pointer. A deletion that provably changes
-no behaviour does not count toward the two adjustments; a wording change
-that does, does. Immutable sections stay untouched. Then curate
-`CONTEXT.md`: call the Skill tool with `domain-modeling`, resolve the week's
-`## Vocabulary gaps` from the journals, correct any page or journal that used
-a term against its definition, and record in `docs/adr/` any decision that
-is hard to reverse, surprising without context, and the result of a real
-trade-off — all three, or no ADR.
+Run `scripts/memory-lint.sh`, then commit as `memory: retro — <what changed>`.
 
-**Run the fleet, not the sessions.** The retro optimizes lane *policy* against
-per-class targets, never individual runs (adapted from Uber's software-factory
-findings, 2026-08-28):
+**Prune the steering files.** `CLAUDE.md`, this file, `routines/*.md`, and
+`procedures/` are read on every run, so every line costs on every run. Call
+the Skill tool with `writing-for-agents` and apply its tests: delete no-ops
+(instructions the model follows by default), collapse restatements into a
+leading word, state targets positively where a prohibition is not a hard
+guardrail, and push reference that only some runs need behind a pointer. When
+a word is too weak to change behaviour, delete it or state the target plainly
+instead of reaching for a stronger one: intensity words over-apply on current
+models. A deletion that provably changes no behaviour does not count toward
+the two adjustments; a wording change that does, does. After a lane's model
+changes or Tom moves a routine to a new model, also audit these files and the
+worker prompt in `scripts/dispatch-runner.py` against that model with the
+`claude-api` skill's `prompt-audit`, since text tuned for one model
+generation turns into dead weight on the next. The routine eval
+(`evals/README.md`) is the regression check for any such change. Keep section
+headings stable, because the routine prompts cite them, and leave the
+Immutable sections untouched.
 
-- **Per-class target metrics** — review: share of findings that survive
-  triage; build: first-pass verified-done rate; chore: wall-minutes per
-  verified-done; every class: zero waste. Judge lanes on these, not vibes.
-- **Waste is the first lever, model choice the last.** Waste = wall-minutes
-  on `dispatch/failed/` contracts + contracts that expired unexecuted +
-  repeated unresolvable-lane skips. Compute it weekly before touching lane
-  assignments — eliminating zero-value consumption beats downgrading a lane
-  and losing quality.
-- **Pareto rule for lane moves.** Step a task class down to a cheaper lane
-  only when its target metric held there (experiment evidence or ≥3 verified
-  outcomes); step it up when failures show quality is the binding
-  constraint. Never trade a target metric for cost — flat-rate pools make
-  that a bad trade by definition.
-- **Experiments are the benchmark instrument.** When a lane decision is
-  pending and the evidence is thin, spend that week's one `experiment`
-  contract on exactly that comparison rather than waiting for organic
-  volume.
-- **Record fleet metrics weekly** in `memory/models.md` (verified-done
-  count, waste minutes, per-class rates, throttles) so trends are one page,
-  not an archaeology dig.
+**Curate `CONTEXT.md`.** Call the Skill tool with `domain-modeling`, resolve
+the week's `## Vocabulary gaps`, correct any page or journal that used a term
+against its definition, and record in `docs/adr/` any decision that is hard to
+reverse, surprising without context, and the result of a real trade-off: all
+three, or no ADR.
+
+**Run the fleet, not the sessions.** Optimize lane policy against per-class
+targets, never individual runs.
+
+- Per-class target metrics: review, the share of findings that survive
+  triage; build, the first-pass verified-done rate; chore, wall-minutes per
+  verified-done; every class, zero waste.
+- Waste is the first lever and model choice the last. Waste is wall-minutes
+  on `dispatch/failed/` contracts, contracts that expired unexecuted, and
+  repeated skips of an unresolvable lane. Compute it before touching lanes:
+  removing zero-value consumption beats downgrading a lane and losing
+  quality.
+- Step a task class down to a cheaper lane only when its target metric held
+  there (an experiment, or at least three verified outcomes at that lane);
+  step it up when failures show quality is the binding constraint. Flat-rate
+  pools make trading a target metric for cost a bad trade by definition.
+- When a lane decision is pending and the evidence is thin, spend the week's
+  one `experiment` contract on exactly that comparison.
+- Record the week's fleet metrics in `memory/models.md` (verified-done count,
+  waste minutes, per-class rates, throttles), so trends read from one page.
+
+**Daylight saving.** The routine crons are pinned in UTC (07:00, 16:00,
+20:30). After Berlin moves from CEST to CET on the last Sunday of October,
+they fire at 08:00, 17:00, and 21:30 local: a safe direction, since the
+failsafe moves away from midnight. The retro nearest the change notes it in
+`CHANGELOG.md`; re-pinning a trigger is Tom's.
 
 ## Tunable: commit message conventions
 

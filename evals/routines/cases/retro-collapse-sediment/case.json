@@ -1,0 +1,63 @@
+{
+  "id": "retro-collapse-sediment",
+  "title": "memory/repos/ivy.md restates the outage day by day: the retro collapses it",
+  "routine": "retro",
+  "when": "Sunday 2026-09-20, 10:05",
+  "state_rev": "310de8d",
+  "intent": "change",
+  "measures": {
+    "accounts": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08|missed\\s+windows"
+      ]
+    },
+    "window_counts": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "count": "\\b\\d+\\s+(?:[a-z-]+\\s+){0,2}?windows?\\b"
+    },
+    "account": {
+      "file": "memory/repos/ivy.md",
+      "above_heading": "## Changelog",
+      "blocks": [
+        "scanner|local-wip",
+        "\\bdark\\b",
+        "09-08",
+        "\\b(?:2[1-9]|3\\d)\\s+missed\\s+windows|\\b1[1-9]\\s+(?:calendar\\s+)?days",
+        "blind|block|clean tree|surface|invisible|unknowable",
+        "cite:2026-09-(?:0\\d|1[0-3])",
+        "cite:2026-09-(?:19|2\\d)"
+      ]
+    }
+  },
+  "checks": [
+    {
+      "id": "collapsed",
+      "desc": "the five dated restatements collapse to one paragraph stating one count of windows",
+      "assert": {
+        "and": [
+          {
+            "path": "_measures.accounts.after",
+            "eq": 1
+          },
+          {
+            "path": "_measures.window_counts.after",
+            "le": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "account",
+      "desc": "exactly one paragraph keeps the start (09-08), the latest count, what the outage blocks, and a first (by 09-13) and a latest (09-19 or later) citation",
+      "assert": {
+        "path": "_measures.account.after",
+        "eq": 1
+      }
+    }
+  ]
+}

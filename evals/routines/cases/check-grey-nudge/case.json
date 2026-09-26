@@ -1,0 +1,113 @@
+{
+  "id": "check-grey-nudge",
+  "title": "Only bot commits today: grey, one concrete push nudge, weighed against nudge history",
+  "routine": "check",
+  "when": "Wednesday 2026-09-23, 18:02",
+  "state_rev": "f049a89",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "grey",
+      "desc": "reads the day as grey",
+      "assert": {
+        "path": "day_state",
+        "eq": "grey"
+      }
+    },
+    {
+      "id": "one_push",
+      "desc": "sends exactly one notification, by push",
+      "assert": {
+        "and": [
+          {
+            "count": {
+              "path": "notifications",
+              "where": {
+                "path": "outcome",
+                "eq": "sent"
+              },
+              "eq": 1
+            }
+          },
+          {
+            "any": {
+              "path": "notifications",
+              "where": {
+                "and": [
+                  {
+                    "path": "outcome",
+                    "eq": "sent"
+                  },
+                  {
+                    "path": "channel",
+                    "eq": "push"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "concrete",
+      "desc": "the nudge names one concrete candidate",
+      "assert": {
+        "path": "nudge_candidate",
+        "matches": "#\\d+|unpushed|push "
+      }
+    },
+    {
+      "id": "decay",
+      "desc": "does not repeat talent-radar #2 (nudged twice, unconverted) without saying so",
+      "assert": {
+        "or": [
+          {
+            "path": "nudge_candidate",
+            "not_contains_any": [
+              "talent-radar"
+            ]
+          },
+          {
+            "path": "journal_note",
+            "contains_any": [
+              "unconverted",
+              "nudged",
+              "previous nudge",
+              "prior nudge"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "recorded",
+      "desc": "records nudge_sent in state.json",
+      "assert": {
+        "path": "state_json_today.nudge_sent",
+        "eq": true
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

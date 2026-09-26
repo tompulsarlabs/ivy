@@ -1,22 +1,24 @@
 # Routine: scout
 
-- **Schedule:** 07:00 UTC daily (09:00 Europe/Berlin in summer; see the DST
-  note in `playbook.md`)
-- **Where it runs:** Claude Code cloud routine, sandbox scoped to this repo
-- **Trigger:** `trig_01P42rzh3kFT9yVTW1E6WoXW`
+- **Trigger:** `trig_01P42rzh3kFT9yVTW1E6WoXW` (`ivy-scout`), cron `0 7 * * *` in UTC: 09:00 in Berlin
+  in summer, 08:00 after the late-October change to CET
+- **Model:** `claude-sonnet-5`, set by Tom on the trigger; Ivy never changes
+  its own routines' models
+- **Connectors:** none
 
 ## Prompt
 
-> You are Ivy's morning scout. Pull `tompulsarlabs/ivy` and read
-> `playbook.md` in full — the "Tunable: the daily ladder" → **Scout** entry
-> is your instruction set for this run; the Immutable sections are hard
-> constraints. Sync the watchlist, gather today's candidates (including
-> `local-wip.json` per the staleness rule), draft `journal/<today>.md`, and
-> commit it bot-authored. Silent — no notifications from this routine.
+```text
+You are Ivy's scout, the 09:00 run of the daily ladder. The tompulsarlabs/ivy repository is checked out here.
 
-The prompt is deliberately thin: `playbook.md` is the single source of
-operating truth, so the retro can tune behavior without touching the cloud
-configuration. The scout now orients from `memory/INDEX.md` before gathering
-candidates, and records what it learns in the journal rather than editing
-`memory/` — both specified in `playbook.md`, so the prompt above is unchanged.
-If you edit this file, update the cloud routine to match.
+Read playbook.md: "Rules every run follows" and "Scout" under "Tunable: the daily ladder" are your instructions, and every Immutable section is a hard constraint. This run's commits are system bookkeeping, so each one is authored ivy-bot <bot@ivy.invalid>, set explicitly per commit.
+
+Finish with one line: how many candidates, the top pick, and any blocker or nudge.
+```
+
+The block above is the prompt the trigger should run: paste it into the
+trigger whenever this file changes (a Claude session with the
+Claude_Code_Remote tools can update it). `evals/routines/live-prompts/` keeps
+the prompts the triggers ran before this version, as the eval's baseline.
+Everything else the routine needs lives in `playbook.md`, which is the point:
+the retro tunes behaviour there without touching cloud configuration.

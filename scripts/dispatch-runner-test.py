@@ -174,6 +174,15 @@ with tempfile.TemporaryDirectory() as tmp:
     check("review prompt names the code-review skill", "code-review" in review)
     check("build prompt names tdd and code-review", "tdd" in build and "code-review" in build)
     check("review prompt stays read-only", "read-only" in review)
+    check("review prompt sets a concrete bar with severity and confidence",
+          "every finding" in review and "severity" in review and "confidence" in review)
+    check("worker prompts state the bar, not the grader",
+          all("Definition of done" in p and "failsafe" not in p for p in (review, build)))
+    check("build prompt names its branch and a draft PR", "dispatch/c2" in build and "draft pull request" in build)
+    check("build prompt keeps the configured git identity", "leave user.name and user.email" in build)
+    check("both prompts say the run is unattended", all("unattended" in p for p in (review, build)))
+    check("both prompts carry the report markers", all(runner.MARK_BEGIN in p and runner.MARK_END in p
+                                                       for p in (review, build)))
 
 print()
 print("dispatch-runner-test: " + ("ok" if not failures else f"{len(failures)} failing"))
