@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-26T10:00:38+02:00",
+  "last_tick": "2026-09-26T10:39:53+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-26-talentradar-interviewprep-review-01",
-  "runner_sha": "47d71b6",
-  "since": "2026-09-26T10:00:38+02:00",
+  "result": "finished 2026-09-26-talentradar-personalworkspace-review-01",
+  "runner_sha": "af1d732",
+  "since": "2026-09-26T10:39:53+02:00",
   "skipped": []
 }
