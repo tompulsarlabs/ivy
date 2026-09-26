@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-25
+updated: 2026-09-26
 ---
 
 # talent-radar
@@ -178,8 +178,49 @@ fail-closed migration-compatibility path, and CSV provenance scoping.
 Verified via PR-body corroboration (still outside this session's direct
 repo access) [cite:2026-09-23] [[models]].
 
+## PR #4, #5, #6 — three fresh reviews, 2026-09-26
+
+`2026-09-26-talentradar-productionpromo-review-02` reviewed PR #4 at its
+post-rewrite head `8a66eda` (Google sign-in recovery, not the old
+documentation-only scope): the sign-in recovery fix itself passes source
+review (no open-redirect path, callback cleanup sound), but the
+**CSV-dedupe P1 is still unacknowledged** in the inherited promotion
+claim this PR folds in — the same finding that has now survived three
+review cycles (09-17, 09-23, and this one) without a fix
+[cite:2026-09-26].
+
+`2026-09-26-talentradar-interviewprep-review-01` reviewed PR #5 (first
+review, "automatic interview preparation"): the database lease is real
+(not advisory) and blocks normal concurrent workers, but does not fully
+fence external Notion effects — a stale worker can still publish before
+its lease-expiry checkpoint fails, leaving an orphaned competing page.
+The private/public boundary (`roundContext`) is structurally sound.
+Notion reconciliation handles sequential interruption but not a genuine
+concurrent edit/retry conflict. The "not deployed or activated" release
+claim does not hold as an enforceable gate: no preparation-specific
+disabled-by-default flag exists, and Vercel cron schedules are added
+unconditionally [cite:2026-09-26].
+
+`2026-09-26-talentradar-personalworkspace-review-01` reviewed PR #6
+(first review, "personal entrance and native workspace"): the new
+voice-intake route requires an enabled member but does **not** check a
+verified Google identity, unlike every other admission-gated route in
+this repo — an enabled email-only member could reach it directly.
+Profile-extraction and call-ID-privacy claims both pass. The
+`INTAKE_VOICE_ENABLED` preview-only scope claim cannot be independently
+confirmed from a static diff (no branch/environment predicate in code,
+only a documented claim) [cite:2026-09-26].
+
 ## Changelog
 
+- 2026-09-26 (failsafe) — recorded three fresh reviews: PR #4's rewritten
+  scope (sign-in fix passes, inherited CSV-dedupe P1 still unacknowledged
+  — now three review cycles unfixed), PR #5's first review (lease sound
+  for normal concurrency but not external Notion races; release-boundary
+  claim unenforced), PR #6's first review (missing verified-Google check
+  on the new voice-intake route; preview-flag scope unconfirmable
+  statically). All three verified per their Verification sections
+  tonight.
 - 2026-09-25 (failsafe) — recorded PR #4 reviewed then rewritten past the
   review same day (review found the CSV-dedupe P1 unacknowledged and the
   beta-gates list incomplete; PR then retitled/rebodied to a Google-sign-in

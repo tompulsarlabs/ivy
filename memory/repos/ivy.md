@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-25
+updated: 2026-09-26
 ---
 
 # ivy
@@ -153,6 +153,16 @@ carry forward unresolved until a *second* scheduled-window publish
 confirms it, per the playbook's carry-forward rule for blockers
 [cite:2026-09-24].
 
+**Local-WIP scanner: recovery confirmed a third consecutive day.**
+`local-wip.json` landed inside its scheduled window again on 2026-09-26
+(08:45 and 17:46 CEST), the third straight scheduled-window publish after
+2026-09-24 and 2026-09-25 — the strongest signal yet that PR #22's fix
+resolved the outage rather than one or two lucky manual runs. 30
+checkouts now tracked (was 22 on 09-24). Not yet fully retired: the
+playbook's own carry-forward rule wants a longer clean run before calling
+it closed for good; the retro should confirm a full week clean
+[cite:2026-09-26].
+
 **PR #21 — second review, 2026-09-25, still block.**
 `2026-09-25-ivy-playbookretune-review-02` reviewed head `e2d21c3` (18
 commits past the 09-24 `5937264` head the first review saw). Of the first
@@ -170,6 +180,21 @@ all three still-open findings are fixed there too — the identical
 claim-then-drift pattern the first review already showed once. Not
 re-verified tonight; a third review against `c78f8c8` is the open item
 [cite:2026-09-25].
+
+**PR #21 — third review, 2026-09-26, still block on one finding.**
+`2026-09-26-ivy-playbookretune-review-03` reviewed head `c78f8c8` (7
+commits past `e2d21c3`) and, reading the commits' own diffs directly
+(this repo is not access-scoped away), closed two of the three
+carried-forward findings: the green-decision P1 and the blind-comparison
+P2. The memory-grader P2 stayed open — the graders still accept an
+appended restatement worded in calendar days rather than the two exact
+phrasings they measured. Immutable byte-identity re-confirmed (5,951
+bytes, same SHA-256 on `main` and the head). **The PR moved twice more
+the same morning** (`cdd97b2`, `e466bb3`, ~40 minutes after the review
+finished) whose commit messages claim to fix exactly this remaining
+finding — the same claim-then-drift pattern as the first and second
+reviews, now three reviews running. Not re-verified against the new head
+tonight [cite:2026-09-26].
 
 ## Activity
 
@@ -197,6 +222,16 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-26 (failsafe) — recorded PR #21's third review (block on one
+  finding: the memory-grader P2; green-decision P1 and blind-comparison
+  P2 closed); noted the PR moved twice more the same morning claiming to
+  fix that finding too, not yet re-verified. Recorded the local-WIP
+  scanner's third consecutive scheduled-window publish (09-24, 09-25,
+  09-26) as the strongest recovery signal yet, still short of the
+  playbook's full-week bar. Verified all four of today's dispatch
+  contracts (three `talent-radar` reviews + this PR's third review);
+  today itself grey (zero connected-author commits/PRs/issues
+  org-wide), streak secured at 34 by journal entry.
 - 2026-09-25 (failsafe) — recorded PR #21's second review (block, one P1 +
   one P2 not closed, one P2 partially closed, #18-coverage claim closed);
   noted the PR moved to a new head same evening claiming the remaining
