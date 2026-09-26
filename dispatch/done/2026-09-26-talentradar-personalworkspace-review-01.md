@@ -86,3 +86,22 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-26-talentradar-personalworkspace-review-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-26T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-26-talentradar-personalworkspace-review-01.md
+    (51 lines), non-empty. Re-fetched PR #6's body via `search_pull_requests
+    repo:tompulsarlabs/talent-radar` — every quoted passage ("Existing
+    Google sign-in and beta admission remain required; recording starts
+    only after a tap", "Profile extraction preserves corrections and
+    uncertainty and does not confirm the profile or start matching",
+    "Selected documents only; provider call IDs stay off the public
+    workspace response", "INTAKE_VOICE_ENABLED is enabled only for this
+    branch preview") matches the current body verbatim. Note: `updated_at`
+    has moved to 2026-09-26T20:20:01Z, well after this review's claimed
+    head (08:39-08:46 CEST) — the PR gained further commits today (matches
+    the fresh local-WIP branches the scout found on talent-radar-pilot
+    this morning); the quoted body text held unchanged through that push,
+    but the diff itself is not re-reviewed at the new head, noted for
+    tomorrow's scout.

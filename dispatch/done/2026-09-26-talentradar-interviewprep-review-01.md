@@ -88,3 +88,16 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-26-talentradar-interviewprep-review-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-26T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-26-talentradar-interviewprep-review-01.md (39
+    lines), non-empty. Re-fetched PR #5's body via `search_pull_requests
+    repo:tompulsarlabs/talent-radar` — every quoted passage ("persistent,
+    leased workflow", "Private tracker notes stay outside public search and
+    interviewer context", "Notion writes preserve user edits and reconcile
+    interrupted requests", "Previously prepared interviews can be adopted
+    before backfill to avoid competing packs", "Not deployed or activated")
+    matches the current body verbatim; `updated_at` unchanged
+    (2026-09-25T17:16:07Z) since the report's claimed head.

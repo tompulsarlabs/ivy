@@ -80,3 +80,22 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-26-ivy-playbookretune-review-03.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-26T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-26-ivy-playbookretune-review-03.md (61 lines),
+    non-empty. `list_commits` on PR #21 confirms every cited sha present on
+    the branch: e2d21c3, 4b3a413, 45abc4d, 14d3685, 471336a, c78f8c8 (plus
+    two commits after the reviewed head, cdd97b2 and e466bb3, which the PR
+    body's own "Third review" section explains fix the exact still-open
+    finding this report flagged — the PR moved past what was reviewed the
+    same morning, same pattern as 2026-09-25's productionpromo-review-01).
+    `get_file_contents` confirms every path the report cites exists at the
+    branch's current head (e466bb36): scripts/eval-routines.py,
+    scripts/eval-routines-test.py,
+    evals/routines/cases/failsafe-ongoing-condition/case.json; and
+    playbook.md's Immutable sections read byte-identical on main, matching
+    the report's SHA-256 claim. Report's findings (memory-grader P2 still
+    open at the reviewed head) hold against that head; PR is not yet
+    reviewed at its current head, noted for tomorrow's scout.

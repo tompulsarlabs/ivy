@@ -87,3 +87,15 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-26-talentradar-productionpromo-review-02.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-26T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-26-talentradar-productionpromo-review-02.md
+    (59 lines), non-empty. Re-fetched PR #4's body via `search_pull_requests
+    repo:tompulsarlabs/talent-radar` — every quoted passage (Supabase
+    fallback/callback-parameter text, "production promotion record from 24
+    September and the verified owner login from 25 September", "382 tests,
+    typecheck, lint and production build pass") matches the current body
+    verbatim; `updated_at` unchanged (2026-09-26T02:41:15Z) since the
+    report's claimed head.
