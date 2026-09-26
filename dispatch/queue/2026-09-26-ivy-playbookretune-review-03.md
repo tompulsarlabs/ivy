@@ -1,7 +1,8 @@
 ---
 id: 2026-09-26-ivy-playbookretune-review-03
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-26T09:18:08+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
 pool: openai
