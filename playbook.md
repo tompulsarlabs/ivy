@@ -270,7 +270,11 @@ publishes as a chain whose later contracts carry `blocked_by`. A review
 contract defaults to `lane: workhorse` and pins `pool` to the family that did
 not write the code (the head branch and commit trailers usually say which);
 pin `frontier` when the change itself carries the risk, such as credentials,
-auth, or data loss. Run `scripts/dispatch-lint.sh` and commit as
+auth, or data loss. Once three review cycles have found the same finding
+unfixed, queue a `build` contract for exactly that fix, citing the confirming
+reports, instead of a fourth review on the same evidence. Review's job is to
+find; a finding it keeps finding is a supply gap for `build`, not a reason to
+ask again. Run `scripts/dispatch-lint.sh` and commit as
 `dispatch: open <ids>`. The runner executes; the scout only queues.
 
 **Write the journal** as `journal/<today>.md` in the structure this section

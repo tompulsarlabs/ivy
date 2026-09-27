@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/tomgreen.ai
 type: repo
-updated: 2026-09-05
+updated: 2026-09-24
 ---
 
 # tomgreen.ai
@@ -21,6 +21,7 @@ the usual reason a day is green.
 | 2026-08-28 | 46 (org total) | 3 merged PRs (#3/#4/#5) + direct pushes; largest day recorded so far [cite:2026-08-28] |
 | 2026-08-29→30 | — | PR #6 ("solar system becomes the site") opened 08-28, drafted through 08-29, merged 2026-08-30T00:10 CEST after an 18:09→00:10 run [cite:2026-08-29][cite:2026-08-30] |
 | 2026-09-05 | 14 PRs merged | New record: PR #16 (carried from 09-04) through #29, one continuous 08:20→19:30 CEST run — "planetary capture engine," mobile CV/nav/hover fixes, copy clarity, home/lab role split [cite:2026-09-05] |
+| 2026-09-24 | 3 PRs merged | PR #66 (10:44 CEST, homepage company/role context), #67 (17:35 CEST, `/lab` made canonical), #68 (19:40 CEST, Substack essay) — spread across the day rather than one run, only one of the day's five merged PRs org-wide [cite:2026-09-24] |
 
 The 2026-08-26 run covered a full design-system round trip (white primary
 ground, twilight planetary map, career corridor walkthrough, per-stop company
@@ -67,6 +68,11 @@ any stale clone needs `git fetch && git reset --hard origin/main`.
 
 ## Changelog
 
+- 2026-09-24 (failsafe) — recorded PR #66/#67/#68 merged, spread across
+  10:44→19:40 CEST rather than one continuous run; same day `talent-radar`
+  landed its first two merges ([[repos/talent-radar]]), so this repo was
+  one contributor to a green day rather than the sole one, for the first
+  time since 09-10.
 - 2026-09-05 — recorded the highest single-day PR-merge count yet: 14 PRs
   (#16→#29) merged in one continuous 08:20→19:30 CEST run, extending well
   past the 18:00 check. Two review contracts also verified done tonight,

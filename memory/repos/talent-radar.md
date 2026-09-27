@@ -1,15 +1,61 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-23
+updated: 2026-09-26
 ---
 
 # talent-radar
 
 **Private.** First seen in the 2026-08-26 watchlist sync, created the day
 before [cite:2026-08-26]. Dormant from the 2026-08-25 scaffold until PR #1
-opened 2026-09-03 — then became a substantial, still-unmerged feature
-build.
+opened 2026-09-03 — then became a substantial feature build, merged
+2026-09-24 (21 days open) [cite:2026-09-24].
+
+## PR #1 and PR #2 merged, 2026-09-24
+
+Both landed the same day, same merge-commit timestamp (17:24 CEST), each
+preserving its branch's individual commits rather than squashing — which
+is why `search_commits` also surfaces a run of `talent-radar` docs/feat
+commits timestamped hours earlier (10:53–13:19 CEST): authored on the
+branch, only default-branch-reachable once the merge landed.
+
+- **PR #1** (opened 09-03) — the Session 1 Supabase fetch layer, live with
+  38 boards / 4,271 postings polled, plus the read-only Radar UI. Reviewed
+  once, 09-05 ([[models]]).
+- **PR #2** (opened 09-06) — the private executive beta: confirmed intake,
+  company-fit research, outreach drafts, interview practice. Reviewed
+  twice (09-17, 09-23) with one finding surviving both cycles — see
+  below.
+
+A new PR #4 opened same evening (19:19 CEST, still open at the 22:30
+failsafe) records the beta's production promotion.
+
+## PR #4 — reviewed, then rewritten past the review, 2026-09-25
+
+`2026-09-25-talentradar-productionpromo-review-01` reviewed PR #4 at head
+`6534feec` (title then "Record Radar production promotion and remaining
+beta gates"): the promotion record does **not** acknowledge the still-open
+CSV-dedupe P1 (`src/lib/market/import.ts:44`, unfixed across two prior
+review cycles [cite:2026-09-23]), and the stated "remaining beta gates"
+list omits the documented-but-unreachable row-level CSV provider fallback
+(`docs/MARKET-DATA.md:7` vs `src/app/api/pilot/market/route.ts:5`).
+**Same day, after the review ran**, PR #4's title and body were both
+replaced wholesale — now "Recover expired Google sign-ins and record
+production verification," a live sign-in bug fix that mentions the
+promotion record only in passing (`updated_at` moved to
+2026-09-25T16:35:40Z, well past the review's 08:16:58Z finish). The
+failsafe could not confirm the reviewed findings still describe the
+PR's current content and stamped the contract **unverified**
+[cite:2026-09-25] — the third time this repo's fast-moving PRs have
+outrun a same-day review (see PR #3, 2026-09-08, below). The CSV-dedupe
+P1 itself is unaffected either way — it lives in `main`, not this PR, and
+stays open regardless of what PR #4 says.
+
+Two more PRs opened later the same evening, both draft, both stacked:
+**PR #5** ("Prepare interviews automatically when the pipeline reaches
+Interviewing," 19:15:57 CEST) — explicitly **not deployed or activated**
+per its own body, stacked on PR #4. **PR #6** ("Make Radar personal and
+native, with optional Notion," 19:46:39 CEST) [cite:2026-09-25].
 
 As with [[repos/countersign]], private status means a green day resting on
 this repo alone is not independently confirmable — it depends on the profile's
@@ -132,8 +178,66 @@ fail-closed migration-compatibility path, and CSV provenance scoping.
 Verified via PR-body corroboration (still outside this session's direct
 repo access) [cite:2026-09-23] [[models]].
 
+## PR #4, #5, #6 — three fresh reviews, 2026-09-26
+
+`2026-09-26-talentradar-productionpromo-review-02` reviewed PR #4 at its
+post-rewrite head `8a66eda` (Google sign-in recovery, not the old
+documentation-only scope): the sign-in recovery fix itself passes source
+review (no open-redirect path, callback cleanup sound), but the
+**CSV-dedupe P1 is still unacknowledged** in the inherited promotion
+claim this PR folds in — the same finding that has now survived three
+review cycles (09-17, 09-23, and this one) without a fix
+[cite:2026-09-26].
+
+`2026-09-26-talentradar-interviewprep-review-01` reviewed PR #5 (first
+review, "automatic interview preparation"): the database lease is real
+(not advisory) and blocks normal concurrent workers, but does not fully
+fence external Notion effects — a stale worker can still publish before
+its lease-expiry checkpoint fails, leaving an orphaned competing page.
+The private/public boundary (`roundContext`) is structurally sound.
+Notion reconciliation handles sequential interruption but not a genuine
+concurrent edit/retry conflict. The "not deployed or activated" release
+claim does not hold as an enforceable gate: no preparation-specific
+disabled-by-default flag exists, and Vercel cron schedules are added
+unconditionally [cite:2026-09-26].
+
+`2026-09-26-talentradar-personalworkspace-review-01` reviewed PR #6
+(first review, "personal entrance and native workspace"): the new
+voice-intake route requires an enabled member but does **not** check a
+verified Google identity, unlike every other admission-gated route in
+this repo — an enabled email-only member could reach it directly.
+Profile-extraction and call-ID-privacy claims both pass. The
+`INTAKE_VOICE_ENABLED` preview-only scope claim cannot be independently
+confirmed from a static diff (no branch/environment predicate in code,
+only a documented claim) [cite:2026-09-26].
+
 ## Changelog
 
+- 2026-09-27 (retro) — the CSV-dedupe P1 (`src/lib/market/import.ts:44`)
+  is this retro's evidence for a `playbook.md` change: having survived
+  four review cycles unfixed (09-17, 09-23, 09-25, 09-26) with `build`
+  otherwise idle since 09-02, a finding unfixed past 3 review cycles now
+  promotes directly to a `build` contract instead of a fifth review
+  [[models]]. This finding is the trigger case; tomorrow's scout is where
+  the resulting contract should first appear.
+- 2026-09-26 (failsafe) — recorded three fresh reviews: PR #4's rewritten
+  scope (sign-in fix passes, inherited CSV-dedupe P1 still unacknowledged
+  — now three review cycles unfixed), PR #5's first review (lease sound
+  for normal concurrency but not external Notion races; release-boundary
+  claim unenforced), PR #6's first review (missing verified-Google check
+  on the new voice-intake route; preview-flag scope unconfirmable
+  statically). All three verified per their Verification sections
+  tonight.
+- 2026-09-25 (failsafe) — recorded PR #4 reviewed then rewritten past the
+  review same day (review found the CSV-dedupe P1 unacknowledged and the
+  beta-gates list incomplete; PR then retitled/rebodied to a Google-sign-in
+  fix, contract left unverified); recorded PR #5 and PR #6 opened, both
+  draft, both stacked on PR #4.
+- 2026-09-24 (failsafe) — recorded PR #1 and PR #2 both merged 17:24 CEST
+  (21 and 18 days open respectively), and a new PR #4 opened same evening
+  recording the beta's production promotion. The 09-23 P1 CSV-dedupe
+  finding was not re-verified against the merged head tonight — carries
+  forward as open until a fresh review runs against `main`.
 - 2026-09-23 (failsafe) — recorded the second PR #2 fresh review at its
   09-21 head: resolved the 09-17 stale-test-count finding, re-confirmed
   the CSV-dedupe finding (now P1, unfixed across two review cycles), found

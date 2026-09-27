@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-23
+updated: 2026-09-25
 ---
 
 # Patterns: how the work actually happens
@@ -10,35 +10,40 @@ Observations about the rhythm of real work, drawn from outcome history. These
 are findings, not directives — the retro decides whether any of them should
 change the ladder, and `playbook.md` is the only place behavior lives.
 
-## The failsafe fire rate stepped from 0/20 to 7/8, entirely inside the scanner outage
+## The failsafe fire rate stepped from 0/20 to 9/15, then dropped after the scanner recovered — but didn't hit zero
 
 Real work carried every one of the first 20 recorded days (2026-08-23→11):
 never once did the floor need to fire [cite:2026-08-28][cite:2026-08-29].
-That ended 2026-09-12 and has since become the norm, not the exception:
-the failsafe fired 09-12, 13, 14, 15, 16, 17, 19, and 20 — eight of the
-twelve days since, with 09-18, 09-21, 09-22 and 09-23 breaking the run on
-real work (`tomgreen.ai` PR #61/#62 + `tompulsarlabs` commits on 09-18;
-`gstack-security-patches` + `talent-scout` PR #1 + `tomgreen.ai` PR #63 on
-09-21; `tomgreen.ai` PR #64 + #65 on 09-22; three draft PRs opened on
-`ivy` itself, #21/#22/#23, on 09-23)
+That ended 2026-09-12: the failsafe fired 09-12, 13, 14, 15, 16, 17, 19,
+20, and 26 — nine of the fifteen days since, with 09-18 and 09-21 through
+09-25 breaking the run on real work (`tomgreen.ai` PR #61/#62 +
+`tompulsarlabs` commits on 09-18; `gstack-security-patches` +
+`talent-scout` PR #1 + `tomgreen.ai` PR #63 on 09-21; `tomgreen.ai` PR #64
++ #65 on 09-22; three draft PRs opened on `ivy` itself, #21/#22/#23, on
+09-23; `ivy` PR #22/#23 + `tomgreen.ai` PR #66/#67/#68 + `talent-radar`
+PR #1/#2 merged on 09-24; `tomgreen.ai` PR #69 merged + `talent-scout`
+PR #3 + `talent-radar` PR #5/#6 opened on 09-25 — six real-work green
+days running, 09-18 and 09-21 through 09-25)
 [cite:2026-09-12][cite:2026-09-13][cite:2026-09-14][cite:2026-09-15]
 [cite:2026-09-16][cite:2026-09-17][cite:2026-09-18][cite:2026-09-19]
-[cite:2026-09-20][cite:2026-09-21][cite:2026-09-22][cite:2026-09-23].
-Every one of those eight fires falls inside the local-WIP scanner outage,
-still dark as of 2026-09-23 at 15 calendar days / 29 missed windows, though
-a fix for the scanner itself (`ivy` PR #22) opened the same evening
-[[repos/ivy]]. This is now a large enough, tight enough coincidence to be
-a real candidate explanation, not just a thin correlation: a dark scanner
-means "push X (N unpushed commits)" — the cheapest real ship on a quiet
-day, per the pattern below — cannot surface as a candidate at all, so a
-day that would have gone green on a two-minute local push instead runs
-the full grey-check-nudge-fail-safe ladder. Still not provable causally
-(the counterfactual "would he have pushed" is unknowable without the
-scanner), and not something a playbook/config tune can fix directly — the
-scanner is Mac-side infra, the same category as the D1-era dispatch-runner
-gap below. Worth flagging loudly to Tom rather than tuning around: 12 days
-is long past the point a launchd job "hasn't gotten to it yet" explains —
-now partly acted on, pending the fix PR merging and actually running.
+[cite:2026-09-20][cite:2026-09-21][cite:2026-09-22][cite:2026-09-23]
+[cite:2026-09-24][cite:2026-09-25][cite:2026-09-26].
+Eight of those nine fires fall inside the local-WIP scanner outage
+(09-12→20); **the ninth, 09-26, falls after three consecutive
+scheduled-window publishes had already confirmed the scanner recovered**
+(09-24, 09-25, 09-26) [[repos/ivy]] — the day's own nudge was in fact
+sourced from the recovered scanner (`talent-radar-pilot`
+`codex/naboo-first-meeting`, 2 unpushed commits, pushed nowhere by 22:30)
+[cite:2026-09-26]. This is useful evidence in both directions: the
+five real-work days immediately following the 09-24 fix (09-21 through
+09-25, three of them post-recovery) support the causal read that a dark
+scanner suppressed the cheapest daily ship; but 09-26 shows a live
+scanner surfacing a fresh, genuinely cheap candidate is still not
+sufficient for same-day conversion — the outage was *a* driver of the
+fire-rate step, not the only one. Not a reason to tune nudge wording or
+timing off one occurrence; worth tracking whether 09-26 is noise or the
+start of a new baseline once the scanner has a full clean week
+[[repos/ivy]].
 
 ## Volume is bursty, not steady
 
@@ -71,21 +76,23 @@ This matters for candidate ranking: `c2-client-matrix` #1 has been the scout's
 "cheapest real contribution" pick repeatedly and has never been taken
 [[repos/c2-client-matrix]].
 
-## Nudge conversion is 0 for 9 — but the metric can't score a blocker fix
+## Nudge conversion is 0 for 10 — but the metric can't score a blocker fix
 
-Nine *grey-check* nudges have ever been sent, all push channel, all
+Ten *grey-check* nudges have ever been sent, all push channel, all
 recorded `nudge_converted: false`: 2026-08-24 (`c2-client-matrix #1`)
 [cite:2026-08-24]; six identical repeats of the local-WIP scanner outage,
 2026-09-12 through 2026-09-17 [cite:2026-09-12][cite:2026-09-13]
-[cite:2026-09-14][cite:2026-09-15][cite:2026-09-16][cite:2026-09-17]; and
+[cite:2026-09-14][cite:2026-09-15][cite:2026-09-16][cite:2026-09-17];
 2026-09-19 and 2026-09-20 (both `talent-radar` PR #2's two open review
 findings, a fresh candidate, sent verbatim a second day)
-[cite:2026-09-19][cite:2026-09-20]. Every other day through 09-11, and
-09-18, was green before the 18:00 check, so no grey-check nudge fired on
-those days.
+[cite:2026-09-19][cite:2026-09-20]; and 2026-09-26 (`talent-radar-pilot`
+`codex/naboo-first-meeting`, a same-day local push surfaced by the
+now-recovered scanner) [cite:2026-09-26]. Every other day through 09-11,
+and 09-18 and 09-21 through 09-25, was green before the 18:00 check, so
+no grey-check nudge fired on those days.
 
-n=9 is enough to stop reading this as "too thin," but not to conclude
-"nudging doesn't work" — 6 of the 9 rows are the *same* blocker, and
+n=10 is enough to stop reading this as "too thin," but not to conclude
+"nudging doesn't work" — 6 of the 10 rows are the *same* blocker, and
 `nudge_converted` is scored against GitHub contributions, which a Mac
 `launchd` fix would never produce even if Tom acted on every single one.
 Retro 2026-09-20 read this as a measurement gap, not proof of an ignored
@@ -93,7 +100,12 @@ nudge, and changed `playbook.md`'s failsafe bullet so a blocker nudge also
 counts as converted on the blocker's own recovery signal (a fresh
 `local-wip.json`, a resumed runner heartbeat) — future rows on this page
 should be readable against that corrected definition, not the old
-GitHub-only one this count used.
+GitHub-only one this count used. The 09-26 row is a different case worth
+tracking separately: a genuine candidate-class nudge (not a blocker), the
+cheapest kind this page's own patterns rank highest — a same-day local
+push — and it still didn't convert by 22:30, scored on the ordinary
+GitHub metric with no measurement gap to explain it away. n=1 for that
+specific case, too thin to read as anything but a data point yet.
 
 Separately, six identical repeats of the same unconverted blocker nudge
 (09-12→17) before the check switched to a fresh candidate on 09-19 is
@@ -157,6 +169,31 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-27 (retro) — rewrote both sections against 09-21→09-26: fire
+  rate now 9/15 since 09-12 (was 8/9 read from the 09-20 retro), with six
+  real-work days (09-18, 09-21→09-25) then a ninth fire on 09-26 *after*
+  the scanner's recovery was already confirmed — read as evidence the
+  outage was a driver, not the only one, since a live scanner still
+  didn't convert its own fresh candidate that day. Nudge conversion now
+  n=10 (was 9): the new row is the first candidate-class (non-blocker)
+  nudge sourced from the recovered scanner, scored on the ordinary
+  GitHub metric with no measurement gap to explain the miss — flagged as
+  a distinct, still-thin (n=1) sub-case rather than folded into the
+  blocker-nudge reading. No playbook change from either reading alone;
+  see `CHANGELOG.md` v10 for this week's actual adjustment (dispatch
+  supply, not nudging).
+- 2026-09-25 (failsafe) — updated the fire-rate note: 8 of the last 14
+  days since 09-12 (was 8/13), with 09-25 joining 09-18, 09-21 through
+  09-24 as a real-work green day — the fifth consecutive such day,
+  09-21 through 09-25. No nudge sent today (green all day), so the
+  nudge-conversion count is unchanged.
+- 2026-09-24 (failsafe) — updated the fire-rate note: 8 of the last 13
+  days since 09-12 (was 8/12), with 09-24 joining 09-18, 09-21, 09-22 and
+  09-23 as a real-work green day breaking the run — widest repo spread
+  (`ivy`, `tomgreen.ai`, `talent-radar`) of any day since 09-10; recorded
+  the scanner outage's first scheduled-window publish, 16 days after going
+  dark. No nudge sent today (green all day), so the nudge-conversion count
+  is unchanged.
 - 2026-09-23 (failsafe) — updated the fire-rate note: 8 of the last 12
   days since 09-12 (was 8/11), with 09-23 joining 09-18, 09-21 and 09-22
   as a real-work green day breaking the run — this time on `ivy` itself

@@ -61,3 +61,13 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-24-ivy-harnesseffort-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy (commit c6a67b6, confirmed matching
+  origin/main), non-empty (13837 bytes), five confirmations plus three
+  findings (F1-F3) each tied to file:line in scripts/dispatch-runner.py.
+  Reviewed paths spot-checked against the local clone. PR #23 (the
+  reviewed PR) is confirmed merged to main this same day (022dc24,
+  08:42:25 CEST) — consistent with the report's read of the pre-merge
+  head e23037c. No contradiction found.

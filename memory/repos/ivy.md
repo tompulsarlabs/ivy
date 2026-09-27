@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-23
+updated: 2026-09-26
 ---
 
 # ivy
@@ -133,6 +133,69 @@ so frontier and workhorse produced identical launch commands. All three
 opened draft, unmerged, by the connected account, same evening
 [cite:2026-09-23].
 
+**PR #22 and #23 merged 2026-09-24, 08:42 CEST.** Both reviewed same day:
+`scannerfix` found four open items (bot-authored worktree HEADs misreport
+`last_commit_email_ok: false`; repo-wide unpushed counts duplicate across
+worktrees with no grouping key; one unreadable checkout can suppress the
+whole snapshot; a `git` version floor is unchecked) — none blocking, none
+fixed yet. `harnesseffort` found three (an inherited
+`CLAUDE_CODE_EFFORT_LEVEL` can still leak into effort-less lanes; a
+malformed `config.yml` now halts the whole tick while `runner-status.json`
+still reads healthy; a new tick-fatal raise in provenance capture) — same,
+none blocking, none fixed yet. **The outage itself shows its first real
+sign of clearing**: `local-wip.json` published twice today — once
+08:43 CEST (per the review, a manual run, `launchd` still unloaded at
+review time) and once 17:45:07 CEST, landing inside the scheduled window
+for the first time since 2026-09-08 (16 calendar days / 32 missed
+windows). Whether `launchd` is now loaded or this was a second manual run
+that happened to land on the window cannot be told from the cloud side —
+carry forward unresolved until a *second* scheduled-window publish
+confirms it, per the playbook's carry-forward rule for blockers
+[cite:2026-09-24].
+
+**Local-WIP scanner: recovery confirmed a third consecutive day.**
+`local-wip.json` landed inside its scheduled window again on 2026-09-26
+(08:45 and 17:46 CEST), the third straight scheduled-window publish after
+2026-09-24 and 2026-09-25 — the strongest signal yet that PR #22's fix
+resolved the outage rather than one or two lucky manual runs. 30
+checkouts now tracked (was 22 on 09-24). Not yet fully retired: the
+playbook's own carry-forward rule wants a longer clean run before calling
+it closed for good; the retro should confirm a full week clean
+[cite:2026-09-26].
+
+**PR #21 — second review, 2026-09-25, still block.**
+`2026-09-25-ivy-playbookretune-review-02` reviewed head `e2d21c3` (18
+commits past the 09-24 `5937264` head the first review saw). Of the first
+review's four findings: the PR #18-coverage claim closed (narrowed rather
+than fixed); the green-fallback P1 and the blind-comparison P2 **not
+closed** — the actual green/grey lookup ladder was unchanged from `5937264`
+despite two commits claiming to fix it, and the new eval sandboxes still sat
+under a shared, label-bearing parent directory without `--restricted`; the
+memory-grader P2 **partially closed** (diffs now retained, but the graders
+still count regex matches rather than validating structure). Confirmed
+sound: the Immutable-section byte-identity claim, and that every cited fix
+commit is a real ancestor of the reviewed head. **The PR moved again before
+this failsafe**, to head `c78f8c8` (5 more commits), whose body now claims
+all three still-open findings are fixed there too — the identical
+claim-then-drift pattern the first review already showed once. Not
+re-verified tonight; a third review against `c78f8c8` is the open item
+[cite:2026-09-25].
+
+**PR #21 — third review, 2026-09-26, still block on one finding.**
+`2026-09-26-ivy-playbookretune-review-03` reviewed head `c78f8c8` (7
+commits past `e2d21c3`) and, reading the commits' own diffs directly
+(this repo is not access-scoped away), closed two of the three
+carried-forward findings: the green-decision P1 and the blind-comparison
+P2. The memory-grader P2 stayed open — the graders still accept an
+appended restatement worded in calendar days rather than the two exact
+phrasings they measured. Immutable byte-identity re-confirmed (5,951
+bytes, same SHA-256 on `main` and the head). **The PR moved twice more
+the same morning** (`cdd97b2`, `e466bb3`, ~40 minutes after the review
+finished) whose commit messages claim to fix exactly this remaining
+finding — the same claim-then-drift pattern as the first and second
+reviews, now three reviews running. Not re-verified against the new head
+tonight [cite:2026-09-26].
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -159,6 +222,32 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-26 (failsafe) — recorded PR #21's third review (block on one
+  finding: the memory-grader P2; green-decision P1 and blind-comparison
+  P2 closed); noted the PR moved twice more the same morning claiming to
+  fix that finding too, not yet re-verified. Recorded the local-WIP
+  scanner's third consecutive scheduled-window publish (09-24, 09-25,
+  09-26) as the strongest recovery signal yet, still short of the
+  playbook's full-week bar. Verified all four of today's dispatch
+  contracts (three `talent-radar` reviews + this PR's third review);
+  today itself grey (zero connected-author commits/PRs/issues
+  org-wide), streak secured at 34 by journal entry.
+- 2026-09-25 (failsafe) — recorded PR #21's second review (block, one P1 +
+  one P2 not closed, one P2 partially closed, #18-coverage claim closed);
+  noted the PR moved to a new head same evening claiming the remaining
+  findings fixed there too, not yet re-verified.
+- 2026-09-24 (failsafe) — **PR #22 and #23 merged** 08:42 CEST, both
+  reviewed and verified done tonight (four findings on #22, three on #23,
+  all tied to file:line, none blocking). **The scanner outage shows its
+  first scheduled-window publish since going dark**: `local-wip.json`
+  landed at 17:45:07 CEST, inside today's window, the first in 16
+  calendar days / 32 missed windows — see the dedicated section above.
+  **PR #21 reviewed and verdict block** (one P1: its own rewritten
+  cloud-green fallback can misclassify an already-green day as grey when
+  a same-day PR is missed by search and reviews aren't checked at all;
+  three P2s on eval rigor) — still open, unmerged. Today's real-work green
+  spread across three repos (`ivy`, `tomgreen.ai`, `talent-radar`) for the
+  first time since 09-10.
 - 2026-09-23 (failsafe) — recorded three draft PRs opened on `ivy` itself
   after the 18:00 check (#21 playbook/routine re-tune, #22 local-WIP
   scanner publication fix, #23 dispatch harness-effort wiring), making

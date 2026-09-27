@@ -73,3 +73,15 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-24-ivy-scannerfix-review-01.md
+
+verified: true
+verified_note: >
+  Report exists on main of ivy (commit c2e80d5, confirmed matching
+  origin/main), non-empty (18418 bytes), four findings (F1-F4) each tied
+  to file:line in scripts/local-wip.py and setup/SETUP.md, plus a scope
+  note distinguishing the reviewed head 173a9e6 from the merged head
+  2524ad9. This session's GitHub access covers ivy directly, so the
+  reviewed paths were spot-checked against the local clone rather than
+  falling back to PR-body corroboration. Report's F1 claim (bot-authored
+  HEADs on worktrees misreport last_commit_email_ok: false) is consistent
+  with what local-wip.json actually shows today. No contradiction found.
