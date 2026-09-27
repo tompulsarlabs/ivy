@@ -191,6 +191,16 @@ to execution lanes. Non-negotiables:
   worker session. Work that needs more than one slice is published as a
   chain — later contracts carry `blocked_by` with the earlier ids — never as
   one oversized contract. Write contracts in `CONTEXT.md` vocabulary.
+  **A finding re-confirmed unfixed across 3 review cycles is promoted to a
+  `build` contract the morning the threshold crosses**, scoped to exactly
+  that fix and citing the confirming reports — never re-reviewed a fourth
+  time on the same evidence. Review's job is to find; a finding review
+  keeps finding is a supply gap for `build`, not a reason to keep asking.
+  Evidence: `talent-radar`'s CSV-dedupe P1 (`src/lib/market/import.ts:44`)
+  was re-confirmed unfixed by four separate review contracts (09-17,
+  09-23, 09-25, 09-26) and shipped to `main` on 09-24 without ever
+  becoming a fix, while `build` itself has queued no new contract since
+  2026-09-02 (`memory/models.md`).
   Anything learned along the way — a repo that has gone quiet, a new access
   limit, a candidate that keeps resurfacing — goes in the journal entry, not
   into `memory/`. The failsafe folds it in tonight; the scout never edits
@@ -310,7 +320,7 @@ the last 7–30 days of `state.json` for the numbers. Answer: how often did the
 failsafe fire? Did nudges convert to real activity within 4 hours? Which repos
 produced shipped work?
 
-The retro then has two jobs.
+The retro then has four jobs.
 
 **Tune behavior.** At most two adjustments (nudge time, wording, ranking,
 excludes) by editing the Tunable sections of this file and/or `config.yml`.

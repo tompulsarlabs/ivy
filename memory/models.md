@@ -42,6 +42,10 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-24-ivy-harnesseffort-review-01 | review | workhorse / anthropic | yes | 9.3 | `ivy` PR #23 (merged same day); three findings (F1-F3) on `scripts/dispatch-runner.py` effort-leak/malformed-config/provenance-raise gaps, none blocking; verified directly against the local clone [cite:2026-09-24] |
 | 2026-09-24-ivy-playbookretune-review-01 | review | frontier / openai | yes | 16.9 | `ivy` PR #21 (still open, unmerged); **verdict block** — one P1 (rewritten cloud green-path fallback can misclassify an already-green day as grey), three P2 (eval-rigor gaps); Immutable byte-identity and eval arithmetic both confirmed sound; verified directly against the local clone [cite:2026-09-24] |
 | 2026-09-25-ivy-playbookretune-review-02 | review | workhorse / openai | yes | 9.3 | `ivy` PR #21 follow-up at head `e2d21c3` (still open, unmerged); **verdict block again** — the 09-24 P1 and one P2 not closed despite two commits claiming to fix them, one P2 partially closed, the #18-coverage claim closed by narrowing; every cited commit sha and referenced path confirmed present on the branch [cite:2026-09-25] |
+| 2026-09-26-ivy-playbookretune-review-03 | review | workhorse / openai | yes | n/a | `ivy` PR #21 third review at head `c78f8c8`; **verdict block on one finding** — the green-decision P1 and blind-comparison P2 closed, the memory-grader P2 still open (accepts an appended restatement, not an in-place rewrite); Immutable byte-identity re-confirmed; verified directly against the local clone [cite:2026-09-26] |
+| 2026-09-26-talentradar-productionpromo-review-02 | review | workhorse / openai | yes | 7.0 | `talent-radar` PR #4 at its post-rewrite head `8a66eda` (Google sign-in recovery); sign-in fix passes source review, but the CSV-dedupe P1 (`src/lib/market/import.ts:44`) is still unacknowledged in the inherited promotion claim — **the same finding unfixed across four review cycles now** (09-17, 09-23, 09-25, 09-26); verified via PR-body corroboration [cite:2026-09-26] |
+| 2026-09-26-talentradar-interviewprep-review-01 | review | workhorse / openai | yes | n/a | First review of `talent-radar` PR #5; database lease is real but doesn't fence external Notion effects against a genuine concurrent conflict, and the "not deployed" release claim has no enforcing flag; verified via PR-body corroboration [cite:2026-09-26] |
+| 2026-09-26-talentradar-personalworkspace-review-01 | review | workhorse / openai | yes | n/a | First review of `talent-radar` PR #6; new voice-intake route skips the verified-Google check every other admission-gated route requires; profile-extraction and call-ID-privacy claims both pass; verified via PR-body corroboration [cite:2026-09-26] |
 
 ## Pool health
 
@@ -56,6 +60,7 @@ No throttle or refusal events recorded on either pool yet [cite:2026-08-27].
 | 2026-09-06 | 7 | 1 / 45 | 1 | 0 | D2 runner live all week: 7 new verified (5 review, 2 build), all first-pass; `review` class cleared the ≥3-verified-outcomes Pareto bar (5 straight frontier/openai first-pass) — retro stepped its default lane to `workhorse` [cite:2026-09-06]; `build` still n=2, short of the bar. First real waste (`layout-02`, 45 wall-min, no output) and first expired-unexecuted contract (`photo-02`), both `tomgreen.ai` build [cite:2026-09-04] |
 | 2026-09-13 | 4 | 0 / 0 | 0 | 0 | All 4 new-verified this week are `review`, all first-pass, all at the `workhorse` default (2 on 09-07, 1 each 09-10/09-11); zero waste, zero expired. No new `build` or `chore` contracts ran — `build` stays at n=2, unmoved since 09-02. Fleet total now n=19 (1 chore, 16 review, 2 build) |
 | 2026-09-20 | 1 | 0 / 0 | 0 | 0 | `talentradar-execbeta-review-02` (09-17) is the only new-verified outcome this week; `dispatch/queue/` has sat empty every day since (09-14→09-20) — every open PR is already reviewed and awaiting a human merge decision, so no fresh candidate needed a contract. Zero waste, zero expired; a supply gap, not a routing problem, same read as `build`'s since 09-02 |
+| 2026-09-27 (retro) | 11 | 0 / 0 | 0 | 0 | Queue supply resumed hard after last week's lull: 11 new-verified (all review, all first-pass) across 09-22, 09-23 (×2), 09-24 (×3, first `ivy`-self reviews), 09-25 (×1), 09-26 (×4). One verification miss, not waste: `talentradar-productionpromo-review-01` (09-25) stamped `verified: false` after its PR was retitled/rewritten past the review same day — the work and the finding were both real, re-reviewed clean the next cycle (`...review-02`). `build` still 0 new since 09-02, but the CSV-dedupe P1 surviving four straight review cycles unfixed (09-17→09-26, `talent-radar`) is this retro's evidence for a `playbook.md` change: findings unfixed past 3 review cycles now promote directly to a `build` contract instead of a fifth review |
 
 ## Reading
 
@@ -107,6 +112,19 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-27 (retro) — backfilled 4 contracts verified 09-26
+  (`ivy-playbookretune-review-03`, `talentradar-productionpromo-review-02`,
+  `talentradar-interviewprep-review-01`, `talentradar-personalworkspace-review-01`);
+  n=27→31. Added the week's fleet-metrics row (11 new-verified, 0 waste, 0
+  expired, one non-waste verification miss). **Adjustment:** `talent-radar`'s
+  CSV-dedupe P1 (`src/lib/market/import.ts:44`) has now been re-confirmed
+  unfixed by four separate review contracts (09-17, 09-23, 09-25, 09-26)
+  and shipped to `main` unfixed on 09-24 — `review` keeps finding it,
+  nothing converts it into a fix, and `build` has had no new contract
+  since 09-02. `playbook.md`'s scout section now promotes a finding to a
+  `build` contract once it survives 3 review cycles unfixed, rather than
+  spending a fourth review re-confirming what's already known. See
+  `CHANGELOG.md` v10.
 - 2026-09-25 (failsafe) — recorded `ivy-playbookretune-review-02`
   (workhorse/openai, verified true, block verdict again); n=26→27, `review`
   now 24. `talentradar-productionpromo-review-01` verified **false**

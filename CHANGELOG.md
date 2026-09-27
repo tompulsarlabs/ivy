@@ -1,5 +1,82 @@
 # Changelog
 
+## v10 — 2026-09-27
+
+**Retro: one adjustment — unfixed review findings now promote to `build`
+contracts instead of a fourth (or fifth) re-review.** Reviewed
+`state.json` 2026-09-01→09-26 (26 recorded days, with close attention to
+09-20→09-26 since last retro) plus `memory/patterns.md`, `memory/models.md`,
+`memory/repos/ivy.md`, `memory/repos/talent-radar.md`, and the week's
+journals (09-21→09-27). Failsafe fire rate: 9 of 15 days since 09-12
+(was 8/9 at the last retro) — six real-work days followed the 09-23
+local-WIP-scanner fix (09-18, 09-21 through 09-25), supporting last
+retro's causal read, but the ninth fire landed 09-26, *after* the scanner
+had already logged three consecutive scheduled-window publishes and
+surfaced that day's own nudge candidate — a live scanner still didn't
+convert same-day, so the outage explains part of the step, not all of
+it. Nudge→conversion: n=10 (was 9), still 0 converted; the new row is the
+first candidate-class (non-blocker) nudge since the scanner recovered,
+scored on the ordinary GitHub metric with no measurement gap to explain
+the miss — a new, still-thin (n=1) sub-case, not grounds to touch nudge
+timing or wording (`memory/patterns.md`). Shipped work: `talent-radar`
+absorbed four consecutive nights of real work (PR #1/#2 merged 09-24,
+PR #4/#5/#6 opened and iterated 09-24→09-27), `tomgreen.ai` and `ivy`
+carried the rest. Dispatch fleet: 11 new-verified contracts this week
+(all `review`, all first-pass), one non-waste verification miss
+(`talentradar-productionpromo-review-01`, re-reviewed clean the next
+cycle) — `review` supply fully recovered from the 09-14→09-20 lull.
+
+**The adjustment.** `talent-radar`'s CSV-dedupe P1
+(`src/lib/market/import.ts:44`, same-company funding rows silently
+collapsing) was re-confirmed unfixed by four separate review contracts
+running 09-17 through 09-26 (`memory/repos/talent-radar.md`), shipped to
+`main` unfixed when PR #2 merged 09-24, and is still unacknowledged in
+every successor PR that folds the promotion record in. Meanwhile `build`
+has queued no new contract since 2026-09-02 (`memory/models.md`) — the
+same supply gap every retro since 09-06 has flagged as infrastructure,
+not policy, but this is a case a policy tune *can* fix: `review` is doing
+its job (finding the defect, repeatedly, precisely) and nothing routes
+that finding into work that would close it. `playbook.md`'s scout section
+now promotes a finding to a `build` contract, scoped to exactly that fix,
+the morning it crosses 3 unfixed review cycles — never a fourth review on
+the same evidence. This is the same shape as the 09-20 blocker-nudge-decay
+change (persistent-but-unconverted signal stops repeating the same ask
+and gets escalated instead), applied to dispatch findings rather than
+check nudges. Tomorrow's scout is where the CSV-dedupe finding's own
+`build` contract should first appear, since the threshold already crossed
+today.
+
+**Free-of-cap fixes (no behavior change).** `playbook.md`'s retro section
+opened with "the retro then has two jobs" while four are actually listed
+(Tune behavior, Curate memory, Prune the steering files, Run the fleet) —
+corrected to "four jobs," a stale count from before the 08-27 and 09-02
+additions, not a wording restatement. Reviewed both `playbook.md` and
+`CLAUDE.md` against `writing-for-agents`; the cloud-verification-path ops
+note overlaps `memory/ops.md`'s environment facts but is in-file *step*
+material the check/failsafe execute every night (the actual green/grey
+decision procedure), not disclosable reference — restructuring it is
+deferred rather than risked in the same pass that also touched behavior,
+especially given `ivy` PR #21's own three-cycle struggle to safely re-tune
+this exact section. No other no-ops or restatements found. No
+`## Vocabulary gaps` entries in any journal since the last retro, so no
+`CONTEXT.md` change and no ADR this week.
+
+**Memory curation.** `memory/patterns.md`'s fire-rate and nudge-conversion
+sections rewritten against the full 09-12→09-26 window (see the retro's
+two readings above); `memory/models.md` gained the week's fleet-metrics
+row and four backfilled 09-26 verified contracts (n=27→31);
+`memory/repos/talent-radar.md` cross-referenced the new `build`-promotion
+rule at its trigger finding. Spot-checked `memory/repos/c2-client-matrix.md`
+against its citations — still current, still correctly parked, no
+reactivation signal, no correction needed. `scripts/memory-lint.sh` clean,
+21 pages, no pages added or removed.
+
+**Tag gap unchanged.** `git ls-remote --tags origin` still shows only
+`v1` and `v2`; `v3`–`v9` remain documented here but untagged on the
+remote, per the standing 2026-09-06 finding (cloud sessions can push
+commits to `main` but a tag-ref push 403s every time). This entry
+advances the count to `v10` on the same basis.
+
 ## v9 — 2026-09-20
 
 **Retro: two adjustments — a repeat cap on unconverted blocker nudges, and

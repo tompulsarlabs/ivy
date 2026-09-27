@@ -213,6 +213,13 @@ only a documented claim) [cite:2026-09-26].
 
 ## Changelog
 
+- 2026-09-27 (retro) — the CSV-dedupe P1 (`src/lib/market/import.ts:44`)
+  is this retro's evidence for a `playbook.md` change: having survived
+  four review cycles unfixed (09-17, 09-23, 09-25, 09-26) with `build`
+  otherwise idle since 09-02, a finding unfixed past 3 review cycles now
+  promotes directly to a `build` contract instead of a fifth review
+  [[models]]. This finding is the trigger case; tomorrow's scout is where
+  the resulting contract should first appear.
 - 2026-09-26 (failsafe) — recorded three fresh reviews: PR #4's rewritten
   scope (sign-in fix passes, inherited CSV-dedupe P1 still unacknowledged
   — now three review cycles unfixed), PR #5's first review (lease sound
