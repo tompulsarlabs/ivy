@@ -1,7 +1,7 @@
 ---
 id: 2026-09-27-talentradar-personalworkspace-review-02
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-28T16:19:54+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
@@ -72,3 +72,24 @@ The report file exists on main of ivy, is non-empty, and its claims
 about PR #6's body text match the PR body as fetched via
 `search_pull_requests` (`repo:tompulsarlabs/talent-radar` in the query
 string, per `memory/ops.md`'s cross-repo workaround).
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: 90751fb605db871391d01d14bc59d0ca6d5eeeb2
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 33bca535cbc9a319dd4b06d76a58566947b9ba8f60a96b455b518178d1465b4c
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-28T16:19:54+02:00
+  finished_at: 2026-09-28T16:28:55+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 8.9
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-27-talentradar-personalworkspace-review-02.md
