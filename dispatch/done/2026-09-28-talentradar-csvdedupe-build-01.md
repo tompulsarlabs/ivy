@@ -82,3 +82,13 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-28-talentradar-csvdedupe-build-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-28T22:30+02:00 (failsafe): confirmed
+    a draft PR by `tompulsarlabs` on `tompulsarlabs/talent-radar` (PR #7),
+    created 2026-09-28T15:01:04Z, on or after the contract's creation date.
+    Its body names this contract id verbatim ("Ivy dispatch contract
+    `2026-09-28-talentradar-csvdedupe-build-01`"), cites
+    `src/lib/market/import.ts:44` repeatedly, and names all four prior review
+    contract ids this closes. This PR is also today's green-by signal (see
+    state.json).

@@ -97,3 +97,15 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-27-ivy-playbookretune-review-04.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-28T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-27-ivy-playbookretune-review-04.md, non-empty.
+    All three cited commit shas (c78f8c8, cdd97b2, e466bb3) confirmed present
+    on PR #21's branch (claude/skills-playbooks-refresh-784cgk) via
+    `list_commits`; the branch has since advanced to afdfefe as the report
+    itself notes. Every file path the report cites (scripts/eval-routines.py,
+    scripts/eval-routines-test.py, evals/routines/results/2026-09-25.md,
+    playbook.md, CLAUDE.md) confirmed present at the branch's current head via
+    `git ls-tree`.

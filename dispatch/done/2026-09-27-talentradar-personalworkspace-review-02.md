@@ -93,3 +93,17 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-27-talentradar-personalworkspace-review-02.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-28T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-27-talentradar-personalworkspace-review-02.md,
+    non-empty. Re-fetched PR #6's body via `search_pull_requests
+    repo:tompulsarlabs/talent-radar` — every quoted passage the report relies
+    on (the shared-microphone claim, the device-ID-in-browser claim, the
+    eleven-checks list including "switching while paused", the profile-
+    extraction and call-ID-privacy claims, the INTAKE_VOICE_ENABLED preview
+    scoping, "455 deterministic tests, typecheck, lint and production build
+    pass", and the two unverified-limitation disclaimers) matches the current
+    body verbatim; `updated_at` unchanged (2026-09-26T20:20:01Z) since the
+    report's claimed head.
