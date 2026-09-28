@@ -1,7 +1,8 @@
 ---
 id: 2026-09-28-talentradar-csvdedupe-build-01
 type: build
-state: open
+state: claimed
+claimed_at: 2026-09-28T16:59:02+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: anthropic
