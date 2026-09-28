@@ -1,7 +1,7 @@
 ---
 id: 2026-09-28-talentradar-csvdedupe-build-01
 type: build
-state: claimed
+state: done
 claimed_at: 2026-09-28T16:59:02+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
@@ -61,3 +61,24 @@ prior review contract ids above (PR-body corroboration per `memory/ops.md`
 Attribution gate: `talent-radar`'s tracked local checkouts all show
 `author_email_ok: true` in `local-wip.json` as of 2026-09-26 — no
 attribution block expected.
+
+outcome:
+  requested_model: claude-opus-5
+  requested_effort: medium
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 2.1.277
+  source_revision: 90751fb605db871391d01d14bc59d0ca6d5eeeb2
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 58f1f618cb0dc34045f3abc9161f47af209053275b0369f1fcb880f1a8fe9fb7
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-28T16:59:02+02:00
+  finished_at: 2026-09-28T17:04:29+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 5.4
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-28-talentradar-csvdedupe-build-01.md
