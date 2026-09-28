@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-25
+updated: 2026-09-28
 ---
 
 # Models: lane × task-class outcomes
@@ -46,6 +46,9 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-26-talentradar-productionpromo-review-02 | review | workhorse / openai | yes | 7.0 | `talent-radar` PR #4 at its post-rewrite head `8a66eda` (Google sign-in recovery); sign-in fix passes source review, but the CSV-dedupe P1 (`src/lib/market/import.ts:44`) is still unacknowledged in the inherited promotion claim — **the same finding unfixed across four review cycles now** (09-17, 09-23, 09-25, 09-26); verified via PR-body corroboration [cite:2026-09-26] |
 | 2026-09-26-talentradar-interviewprep-review-01 | review | workhorse / openai | yes | n/a | First review of `talent-radar` PR #5; database lease is real but doesn't fence external Notion effects against a genuine concurrent conflict, and the "not deployed" release claim has no enforcing flag; verified via PR-body corroboration [cite:2026-09-26] |
 | 2026-09-26-talentradar-personalworkspace-review-01 | review | workhorse / openai | yes | n/a | First review of `talent-radar` PR #6; new voice-intake route skips the verified-Google check every other admission-gated route requires; profile-extraction and call-ID-privacy claims both pass; verified via PR-body corroboration [cite:2026-09-26] |
+| 2026-09-27-ivy-playbookretune-review-04 | review | workhorse / openai | yes | 14.8 | `ivy` PR #21 fourth review at head `e466bb3`; **first `pass` verdict after three straight `block`s** — closes the memory-grader P2 that survived reviews 2 and 3; `grade` rebuild-from-diff claim replayed clean against all 55 stored diffs; Immutable byte-identity re-confirmed; verified directly against the local clone [cite:2026-09-28] |
+| 2026-09-27-talentradar-personalworkspace-review-02 | review | workhorse / openai | yes | 8.9 | `talent-radar` PR #6 second review, covering the new shared-microphone control; new medium finding — a pause/stop race during `replaceTrack()` can leave a replacement input briefly live; the four review-01 claims re-confirmed sound at the new head; verified via PR-body corroboration [cite:2026-09-28] |
+| 2026-09-28-talentradar-csvdedupe-build-01 | build | workhorse / anthropic | yes | 5.4 | **First `build` contract on `talent-radar`**, and the first fleet outcome from the 09-27 retro's 3-cycle promotion rule: fixes the CSV-dedupe P1 (`src/lib/market/import.ts:44`) four review cycles had re-confirmed unfixed; draft PR #7, red-before/green-after test, clean typecheck/lint; verified via PR-body corroboration (contract id, file:line, and prior review ids all named) [cite:2026-09-28] |
 
 ## Pool health
 
@@ -112,6 +115,14 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-28 (failsafe) — recorded 3 contracts verified tonight:
+  `ivy-playbookretune-review-04` (workhorse/openai, first `pass` on PR #21
+  after three straight `block`s), `talentradar-personalworkspace-review-02`
+  (workhorse/openai, new paused-mic race finding), and
+  `talentradar-csvdedupe-build-01` (workhorse/anthropic, **first verified
+  `build` outcome on `talent-radar` and the first fleet result of the
+  09-27 retro's 3-cycle promotion rule**); n=31→34, `review` now 26,
+  `build` now 3.
 - 2026-09-27 (retro) — backfilled 4 contracts verified 09-26
   (`ivy-playbookretune-review-03`, `talentradar-productionpromo-review-02`,
   `talentradar-interviewprep-review-01`, `talentradar-personalworkspace-review-01`);

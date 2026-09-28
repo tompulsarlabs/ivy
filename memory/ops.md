@@ -1,7 +1,7 @@
 ---
 subject: Ivy's runtime environment
 type: ops
-updated: 2026-09-10
+updated: 2026-09-28
 ---
 
 # Ops: how the environment actually behaves
@@ -83,6 +83,18 @@ filename:orbit-portal.tsx`, which additionally returns the owning repo).
 All 9 files cited by that report resolved this way. `get_file_contents`
 still refuses cross-repo outright ("not configured for this session") in
 every session tested so far, including this one [cite:2026-09-10].
+
+## A fresh container's local `main` ref can be stale from clone time
+
+Three sessions running in a row (2026-09-26, 09-27, 09-28) found their
+checkout's cached `origin/main` pointing behind the real remote at session
+start — one day's own prior failsafe commit missing from the local ref each
+time. `git fetch origin main` plus `git checkout -B main origin/main`
+re-points the branch cleanly with no data loss every time it's been tried;
+the risk is a session pushing on top of a stale base without noticing, not
+losing work. Treat "local `main` looks one commit short of what the prior
+day's journal claims" as this artifact, not a real regression, and re-fetch
+before trusting the discrepancy [cite:2026-09-28].
 
 ## The default clone is shallow, and memory-lint needs full history
 
@@ -205,6 +217,10 @@ explicitly [cite:ada1982].
 
 ## Changelog
 
+- 2026-09-28 (failsafe) — recorded that a fresh container's cached
+  `origin/main` can start a session one commit behind the real remote,
+  observed three sessions running (09-26, 09-27, 09-28); `git fetch` +
+  `git checkout -B main origin/main` is the fix, not a sign of lost work.
 - 2026-09-10 — recorded that `search_code`'s `path:` qualifier is a
   directory-prefix match, not exact-file, so it silently misses a real file
   the same way a missing one would; `filename:` is the exact-match

@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-26
+updated: 2026-09-28
 ---
 
 # ivy
@@ -196,6 +196,43 @@ finding — the same claim-then-drift pattern as the first and second
 reviews, now three reviews running. Not re-verified against the new head
 tonight [cite:2026-09-26].
 
+## PR #21 — fourth review, 2026-09-28, pass
+
+`2026-09-27-ivy-playbookretune-review-04` reviewed head `e466bb3` (2
+commits past the third review's `c78f8c8`: `cdd97b2` claimed to close the
+memory-grader P2, `e466bb3` claimed two narrative corrections only). **All
+four requested checks hold — first pass verdict on this PR after three
+straight `block`s.** The memory-grader fix genuinely exercises review-03's
+appended-restatement case (10 mismatched expectations under `cdd97b2^`, 0
+under `e466bb3`); the `grade` rebuild-from-diff claim replays clean against
+all 55 stored memory diffs with no pass/fail change beyond the three
+already-disclosed 09-25 scout corrections; Immutable bytes re-confirmed
+identical (5,951 bytes, same SHA-256) at the new head; and both narrative
+corrections (baseline ran `main`'s playbook, not the head's; the retro case
+had four wrong-edit variants at review time, a fifth added since) check out
+against the diff. The PR branch has since advanced again to `afdfefe`
+[cite:2026-09-28].
+
+## Local-WIP scanner and dispatch runner: fresh outage, 2026-09-28
+
+**This is a new recurrence, not a continuation of the 09-08→09-24 outage
+already marked recovered above.** After three consecutive clean
+scheduled-window publishes (09-24, 09-25, 09-26) confirmed PR #22's fix,
+`local-wip.json` went dark again: no publish since 2026-09-26T15:46:39Z,
+missing the 09-27 08:45 and 17:45 windows and the 09-28 08:45 window (three
+straight misses) as of the 09-28 scout read [cite:2026-09-28]. Same day,
+`dispatch/runner-status.json`'s `last_tick` also stalled at
+2026-09-26T20:21:18+02:00 — the runner's 09-27 window (09:15-21:00 CEST)
+produced zero ticks, the first full miss. Both signals point at the same
+machine going quiet at the same time, same read as the original outage's
+diagnosis [cite:2026-09-28]. **Recovered same day**: the runner resumed
+ticking inside the 09-28 window (claimed and finished three contracts
+between 13:34 and 17:04 CEST — the two carried-over reviews plus the new
+CSV-dedupe build), and `local-wip.json` published again at 17:45:06Z, back
+inside its scheduled window. One clean window is not yet the three-window
+bar the original recovery used — worth confirming on 09-29 before calling
+this instance closed [cite:2026-09-28].
+
 ## Activity
 
 7 non-bot commits on 2026-08-24 (the ladder build) [cite:2026-08-24]; 4 on
@@ -222,6 +259,15 @@ focus over cheapest ship [cite:e7e918b].
 
 ## Changelog
 
+- 2026-09-28 (failsafe) — recorded PR #21's fourth review: first `pass`
+  verdict after three straight `block`s, closing the memory-grader P2 that
+  survived reviews 2 and 3. Recorded a fresh (not continued) local-WIP
+  scanner + dispatch runner outage instance, dark since 09-26 evening,
+  recovered same day (09-28) with a clean scheduled-window publish and the
+  runner completing three contracts. Verified all three of today's open
+  dispatch contracts (this PR's fourth review, `talent-radar` PR #6's
+  fresh review, and the CSV-dedupe build contract); today itself green by
+  real work (`talent-radar` PR #7), streak secured at 36.
 - 2026-09-26 (failsafe) — recorded PR #21's third review (block on one
   finding: the memory-grader P2; green-decision P1 and blind-comparison
   P2 closed); noted the PR moved twice more the same morning claiming to

@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-26
+updated: 2026-09-28
 ---
 
 # talent-radar
@@ -211,8 +211,53 @@ Profile-extraction and call-ID-privacy claims both pass. The
 confirmed from a static diff (no branch/environment predicate in code,
 only a documented claim) [cite:2026-09-26].
 
+## PR #7 — the CSV-dedupe fix, 2026-09-28, first `build` contract on this repo
+
+`2026-09-28-talentradar-csvdedupe-build-01`, promoted under the 09-27
+retro's 3-cycle rule off the P1 that survived four straight review cycles
+unfixed (09-17, 09-23, 09-25, 09-26), shipped as draft PR #7 the same
+morning it was queued (opened 15:01:04 CEST, ~5.5 wall-minutes). The
+de-dupe key at `src/lib/market/import.ts:44` (now `:46`) widened from
+`[domain, sourceUrl, eventDate]` to also include `round`, `amount`,
+`currency`, `investors` — rows differing in any of those four no longer
+collapse; rows matching on all seven still do. A new `tests/market-signals.test.ts`
+case exercises exactly the scenario the four reviews found (verified red
+before the fix, green after); `npm test`/`typecheck`/`lint` all clean. One
+adjacent gap left deliberately unfixed and disclosed in the PR body:
+undated rows with *blank* round/amount/currency/investors that differ only
+in `announcementUrl` still collapse last-wins — the contract's own spec
+defines those as genuine duplicates, so fixing it would have been scope
+creep, not a bug fix. This closes the finding that had been the sole
+evidence, per [[models]], of `build`'s idle stretch since 09-02
+[cite:2026-09-28].
+
+## PR #6 — second fresh review, 2026-09-28: paused-mic race
+
+`2026-09-27-talentradar-personalworkspace-review-02` reviewed the head that
+gained the shared-microphone control after review-01 (which had covered
+only voice-intake gating, profile-extraction inertness, call-ID privacy,
+and the `INTAKE_VOICE_ENABLED` scope — all four re-confirmed still sound at
+this new head). **New medium finding**: `selectMicrophone()` enables the
+replacement track and awaits `replaceTrack()` before reapplying paused
+state, while `pause()` only disables the *current* stream reference — so a
+Pause, Finish, or hidden-tab suspension landing mid-switch can leave the
+replacement input briefly live despite the paused UI. The PR's own
+paused-switch test resolves its replacement mock immediately, so it cannot
+exercise this interleaving. Device-switch claims otherwise hold: no new
+model/session call, no duplicate-sender path, device IDs stay out of the
+intake request body (though RLS-scoped `SELECT` on `pilot_records` does let
+an authenticated owner retrieve their own stored call ID via direct REST —
+worth not describing IDs as flatly browser-inaccessible). Overall verdict:
+request changes [cite:2026-09-28] [[models]].
+
 ## Changelog
 
+- 2026-09-28 (failsafe) — recorded PR #7, the first `build` contract on
+  this repo, closing the CSV-dedupe P1 that had survived four straight
+  review cycles unfixed; this is today's green-by signal. Recorded PR #6's
+  second review: a new medium paused-mic race finding on the shared
+  microphone control, the four review-01 claims re-confirmed sound. Both
+  contracts verified per their Verification sections tonight.
 - 2026-09-27 (retro) — the CSV-dedupe P1 (`src/lib/market/import.ts:44`)
   is this retro's evidence for a `playbook.md` change: having survived
   four review cycles unfixed (09-17, 09-23, 09-25, 09-26) with `build`

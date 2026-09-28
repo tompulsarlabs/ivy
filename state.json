@@ -1,7 +1,7 @@
 {
   "streak": 36,
   "last_green": "2026-09-28",
-  "memory_last_synthesized": "2026-09-27",
+  "memory_last_synthesized": "2026-09-28",
   "days": {
     "2026-09-28": {
       "green_by": "tompulsarlabs/talent-radar PR #7 (opened 17:01:04 CEST, draft, \"fix: widen CSV funding-row de-duplication key so distinct rounds survive\" — build contract 2026-09-28-talentradar-csvdedupe-build-01)",
