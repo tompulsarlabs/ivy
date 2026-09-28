@@ -1,7 +1,8 @@
 ---
 id: 2026-09-27-talentradar-personalworkspace-review-02
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-28T16:19:54+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
