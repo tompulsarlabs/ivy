@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-26T15:46:39Z",
+  "generated_at": "2026-09-28T15:45:05Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -222,39 +222,6 @@
       "last_commit_email_ok": true
     },
     {
-      "name": "ivy-builder-20260923",
-      "remote": "tompulsarlabs/ivy",
-      "branch": "codex/ivy-scanner-reliability",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "ivy-harness-20260923",
-      "remote": "tompulsarlabs/ivy",
-      "branch": "codex/ivy-harness-settings",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "ivy-paperclip-release",
-      "remote": "tompulsarlabs/ivy",
-      "branch": "codex/ivy-acceptance-scaffold",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-25",
-      "author_email_ok": true,
-      "last_commit_email_ok": false
-    },
-    {
       "name": "radar-production-recovery-20260925",
       "remote": "tompulsarlabs/talent-radar",
       "branch": "(detached)",
@@ -271,28 +238,6 @@
       "branch": "(detached)",
       "dirty_files": 0,
       "unpushed_commits": 2,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "tomgreen-colours-audibene-20260922",
-      "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/ivy-green-scout-blue",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-22",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "tomgreen-homepage-context-20260924",
-      "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/homepage-company-context",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-24",
       "author_email_ok": true,
