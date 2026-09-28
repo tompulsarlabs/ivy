@@ -1,7 +1,7 @@
 ---
 id: 2026-09-27-ivy-playbookretune-review-04
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-28T15:34:51+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
@@ -76,3 +76,24 @@ it cites (`c78f8c8`, `cdd97b2`, `e466bb3`, and any earlier shas it
 re-confirms) is present on PR #21's branch via `list_commits`, and every
 file path it cites exists at the branch's current head via
 `get_file_contents`.
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: b51e2bb41c1c03222fd1c4e040609aba6579a5b4
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: db95d77fbf00a586267b1952d5c4a662dfcfb92bea6f4d1ce540a6f633ef8419
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-28T15:34:51+02:00
+  finished_at: 2026-09-28T15:49:47+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 14.8
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-27-ivy-playbookretune-review-04.md
