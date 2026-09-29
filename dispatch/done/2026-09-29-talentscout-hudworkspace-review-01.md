@@ -1,7 +1,7 @@
 ---
 id: 2026-09-29-talentscout-hudworkspace-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-09-29T14:18:51+02:00
 repo: tompulsarlabs/talent-scout
 lane: workhorse
@@ -39,3 +39,24 @@ The report file exists on `main` of `ivy`, is non-empty, and every
 file:line it cites is corroborated against PR #3's own body text
 (`search_pull_requests repo:tompulsarlabs/talent-scout` — this repo sits
 outside this session's direct file access per `memory/ops.md`).
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: 52122c2885b22d1e55a623b87caafa7adcc41ef8
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 9347682364a4b4d89375a8ff4e11592ca3d5460d5a5aba64a59bde3558c57f19
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-09-29T14:18:51+02:00
+  finished_at: 2026-09-29T14:29:22+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 10.4
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-09-29-talentscout-hudworkspace-review-01.md
