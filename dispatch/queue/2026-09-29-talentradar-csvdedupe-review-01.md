@@ -1,7 +1,8 @@
 ---
 id: 2026-09-29-talentradar-csvdedupe-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-29T13:38:26+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
