@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T15:45:05Z",
+  "generated_at": "2026-09-29T06:47:36Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -229,39 +229,6 @@
       "unpushed_commits": 2,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-25",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "radar-production-release-20260924",
-      "remote": "tompulsarlabs/talent-radar",
-      "branch": "(detached)",
-      "dirty_files": 0,
-      "unpushed_commits": 2,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "tomgreen-lab-route-20260924",
-      "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/lab-canonical-route",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "tomgreen-latest-substack-20260924",
-      "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/latest-substack",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
