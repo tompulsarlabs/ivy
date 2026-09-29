@@ -3,6 +3,14 @@
   "last_green": "2026-09-28",
   "memory_last_synthesized": "2026-09-28",
   "days": {
+    "2026-09-29": {
+      "nudge_sent": true,
+      "nudge_sent_at": "2026-09-29T18:03:00+02:00",
+      "nudge_channel": "push",
+      "nudge_candidate": "talent-radar PR #7 — merge (CSV-dedupe fix, review passed clean today)",
+      "nudge_converted": null,
+      "check_signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-29 + search_pull_requests(created/merged):2026-09-29 + search_issues(created):2026-09-29 (18:03 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — 9 commits on ivy today, all ivy-bot-authored (scout, dispatch open/claim/done/runner-status x2 review contracts, local-scan wip), correctly excluded; zero connected-author commits org-wide today; zero PRs opened/merged today; zero issues opened today; both of today's dispatch review contracts (talent-radar PR #7 CSV-dedupe, talent-scout PR #3 HUD workspace) only wrote read-only findings reports into ivy per their Verification sections — no GitHub PR review was submitted, so neither is a countable event; talent-radar PR #7's review passed clean (no findings, verdict PASS), making it a fresh, unnudged, ready-to-merge candidate — see journal ## Check"
+    },
     "2026-09-28": {
       "green_by": "tompulsarlabs/talent-radar PR #7 (opened 17:01:04 CEST, draft, \"fix: widen CSV funding-row de-duplication key so distinct rounds survive\" — build contract 2026-09-28-talentradar-csvdedupe-build-01)",
       "method": "real-work",
