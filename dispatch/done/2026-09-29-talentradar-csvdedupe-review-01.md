@@ -70,3 +70,16 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-09-29-talentradar-csvdedupe-review-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-09-29T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-09-29-talentradar-csvdedupe-review-01.md,
+    non-empty. Re-fetched PR #7's body via `search_pull_requests
+    repo:tompulsarlabs/talent-radar` — the report's file:line citation
+    (`src/lib/market/import.ts:46`) matches the body's own statement that
+    "after the two explanatory comment lines the key now sits at
+    import.ts:46"; the report's out-of-scope framing of the disclosed
+    announcementUrl-only gap matches the body's own "Known adjacent gap,
+    deliberately left open" section verbatim in substance. No contradiction
+    found; PR still draft/open at verification time.
