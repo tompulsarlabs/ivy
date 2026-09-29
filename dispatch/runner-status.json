@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-09-29T13:38:26+02:00",
+  "last_tick": "2026-09-29T14:18:51+02:00",
   "lint_ok": true,
-  "result": "finished 2026-09-29-talentradar-csvdedupe-review-01",
-  "runner_sha": "697c71d",
-  "since": "2026-09-29T13:38:26+02:00",
+  "result": "finished 2026-09-29-talentscout-hudworkspace-review-01",
+  "runner_sha": "721ebd5",
+  "since": "2026-09-29T14:18:51+02:00",
   "skipped": []
 }
