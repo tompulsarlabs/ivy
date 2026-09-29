@@ -1,7 +1,8 @@
 ---
 id: 2026-09-29-talentscout-hudworkspace-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-09-29T14:18:51+02:00
 repo: tompulsarlabs/talent-scout
 lane: workhorse
 pool: openai
