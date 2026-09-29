@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 # talent-radar
@@ -250,8 +250,29 @@ an authenticated owner retrieve their own stored call ID via direct REST —
 worth not describing IDs as flatly browser-inaccessible). Overall verdict:
 request changes [cite:2026-09-28] [[models]].
 
+## PR #7 — first review, 2026-09-29: verdict PASS, no findings
+
+`2026-09-29-talentradar-csvdedupe-review-01` reviewed the fix itself
+adversarially: the widened seven-part key at `src/lib/market/import.ts:46`
+stops the four-review-confirmed collapse (distinct undated rows differing
+in round/amount/currency, or in investors alone, both now survive) without
+breaking genuine-duplicate collapsing on rows matching all seven fields.
+The extended `tests/market-signals.test.ts:16` case is a genuine
+regression test, not a happy-path assertion. Missing-field normalisation,
+JSON-key serialization, and investor whitespace/case handling all checked
+sound. The disclosed `announcementUrl`-only gap is confirmed correctly
+scoped as out-of-spec rather than a missed instance of the original bug.
+This closes the loop this page has tracked since 09-17: a finding that
+survived four review cycles unfixed is now independently confirmed fixed,
+not just shipped [cite:2026-09-29] [[models]].
+
 ## Changelog
 
+- 2026-09-29 (failsafe) — recorded PR #7's first review: verdict PASS, no
+  findings, closing the CSV-dedupe finding this page has tracked since
+  09-17 (four review cycles unfixed, one `build` contract, now one clean
+  review). Nudged to merge; unconverted by 22:30. Verified per its
+  Verification section tonight.
 - 2026-09-28 (failsafe) — recorded PR #7, the first `build` contract on
   this repo, closing the CSV-dedupe P1 that had survived four straight
   review cycles unfixed; this is today's green-by signal. Recorded PR #6's

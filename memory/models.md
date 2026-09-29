@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-28
+updated: 2026-09-29
 ---
 
 # Models: lane × task-class outcomes
@@ -49,6 +49,8 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-27-ivy-playbookretune-review-04 | review | workhorse / openai | yes | 14.8 | `ivy` PR #21 fourth review at head `e466bb3`; **first `pass` verdict after three straight `block`s** — closes the memory-grader P2 that survived reviews 2 and 3; `grade` rebuild-from-diff claim replayed clean against all 55 stored diffs; Immutable byte-identity re-confirmed; verified directly against the local clone [cite:2026-09-28] |
 | 2026-09-27-talentradar-personalworkspace-review-02 | review | workhorse / openai | yes | 8.9 | `talent-radar` PR #6 second review, covering the new shared-microphone control; new medium finding — a pause/stop race during `replaceTrack()` can leave a replacement input briefly live; the four review-01 claims re-confirmed sound at the new head; verified via PR-body corroboration [cite:2026-09-28] |
 | 2026-09-28-talentradar-csvdedupe-build-01 | build | workhorse / anthropic | yes | 5.4 | **First `build` contract on `talent-radar`**, and the first fleet outcome from the 09-27 retro's 3-cycle promotion rule: fixes the CSV-dedupe P1 (`src/lib/market/import.ts:44`) four review cycles had re-confirmed unfixed; draft PR #7, red-before/green-after test, clean typecheck/lint; verified via PR-body corroboration (contract id, file:line, and prior review ids all named) [cite:2026-09-28] |
+| 2026-09-29-talentradar-csvdedupe-review-01 | review | workhorse / openai | yes | 10.2 | First review of PR #7's fix itself: **verdict PASS, no findings** — the widened seven-field de-dupe key stops the four-review-confirmed collapse without breaking genuine-duplicate collapsing, the extended test case is a genuine regression test, the disclosed unfixed gap correctly scoped out-of-spec; closes the loop on `talent-radar`'s longest-running open finding; verified via PR-body corroboration [cite:2026-09-29] |
+| 2026-09-29-talentscout-hudworkspace-review-01 | review | workhorse / openai | yes | 10.4 | First review of `talent-scout` PR #3 (second product surface); no count overstatement found (the pattern this contract specifically checked for), but two new P1s — unproven identity citations (registry-only, author-directory unused), per-profile feasibility/decision fields prepared but never rendered — plus two P2s; verified via PR-body corroboration [cite:2026-09-29] |
 
 ## Pool health
 
@@ -115,6 +117,12 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-09-29 (failsafe) — recorded 2 contracts verified tonight, both
+  `review`/workhorse/openai: `talentradar-csvdedupe-review-01` (first
+  review of PR #7's fix itself, verdict PASS, closes the CSV-dedupe
+  finding's four-cycle saga) and `talentscout-hudworkspace-review-01`
+  (first review of `talent-scout`'s second product surface, two new P1s);
+  n=34→36, `review` now 28.
 - 2026-09-28 (failsafe) — recorded 3 contracts verified tonight:
   `ivy-playbookretune-review-04` (workhorse/openai, first `pass` on PR #21
   after three straight `block`s), `talentradar-personalworkspace-review-02`

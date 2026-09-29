@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-scout
 type: repo
-updated: 2026-09-23
+updated: 2026-09-29
 ---
 
 # talent-scout
@@ -96,8 +96,34 @@ artifacts/prompts/model APIs/backend/outreach; the "shared public-source
 equality check" claim) with no contradiction found [cite:2026-09-23]
 [[models]].
 
+## Second product surface: PR #3, first review 2026-09-29
+
+PR #3 ("Scout: 40-profile HUD hiring workspace with evidence and operating
+maps"), opened 2026-09-25, sat unreviewed 4 days. `2026-09-29-talentscout-hudworkspace-review-01`
+found no count overstatement this time (the PR #1 pattern this contract was
+specifically written to check for), but two new P1s make the workspace
+unsuitable as a reliable hiring packet as shipped: three OpenAI profile
+identities cite only the Cookbook registry, not the author-directory
+mapping that actually names the person (`demos/hud-search/research.ts:54,359,368,377`)
+— `u.authors` is declared but never rendered; and per-profile feasibility/
+decision-change fields (`selected.location`, `.wouldChange`, `.next`) are
+prepared in the data model but never rendered in either the drawer
+(`SearchWorkbench.tsx:86-93`) or the Markdown shortlist export. Two P2s:
+the README names a different deployment ID than the PR body and both
+verification artifacts, and the 14-pool/51-link aggregate claims have no
+regression coverage (only a 40-person/20-per-role assertion). Confirmed
+sound: the underlying counts (40 people, 14-pool union, 51 links) are not
+disputed, the HUD makes no live model/Notion/backend call (static export,
+local-storage-only state), and `verification/source-links.json`'s
+reachability numbers support the PR's own arithmetic. Verified via PR-body
+corroboration [cite:2026-09-29] [[models]].
+
 ## Changelog
 
+- 2026-09-29 (failsafe) — recorded PR #3's first review: no count
+  overstatement, but two new P1s (unproven identity citations, hidden
+  feasibility/decision fields) plus two P2s. Verified per its Verification
+  section tonight.
 - 2026-09-23 (failsafe) — recorded PR #2's first review, verified done: no
   actionable findings, five confirmations including isolation and the
   six-file public-mirror blob-ID equality check; noted the report's own

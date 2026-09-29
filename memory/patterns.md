@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-25
+updated: 2026-09-29
 ---
 
 # Patterns: how the work actually happens
@@ -85,13 +85,17 @@ recorded `nudge_converted: false`: 2026-08-24 (`c2-client-matrix #1`)
 [cite:2026-09-14][cite:2026-09-15][cite:2026-09-16][cite:2026-09-17];
 2026-09-19 and 2026-09-20 (both `talent-radar` PR #2's two open review
 findings, a fresh candidate, sent verbatim a second day)
-[cite:2026-09-19][cite:2026-09-20]; and 2026-09-26 (`talent-radar-pilot`
+[cite:2026-09-19][cite:2026-09-20]; 2026-09-26 (`talent-radar-pilot`
 `codex/naboo-first-meeting`, a same-day local push surfaced by the
-now-recovered scanner) [cite:2026-09-26]. Every other day through 09-11,
-and 09-18 and 09-21 through 09-25, was green before the 18:00 check, so
-no grey-check nudge fired on those days.
+now-recovered scanner) [cite:2026-09-26]; 2026-09-27 (`talent-radar-pilot`
+`codex/production-release-record`, same class, second local-push nudge)
+[cite:2026-09-27]; and 2026-09-29 (`talent-radar` PR #7 — merge, a fresh
+never-before-nudged candidate whose review had just come back verdict
+PASS the same afternoon) [cite:2026-09-29]. Every other day through
+09-11, and 09-18 and 09-21 through 09-25, was green before the 18:00
+check, so no grey-check nudge fired on those days.
 
-n=10 is enough to stop reading this as "too thin," but not to conclude
+n=12 is enough to stop reading this as "too thin," but not to conclude
 "nudging doesn't work" — 6 of the 10 rows are the *same* blocker, and
 `nudge_converted` is scored against GitHub contributions, which a Mac
 `launchd` fix would never produce even if Tom acted on every single one.
@@ -169,6 +173,13 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-09-29 (failsafe) — extended the nudge-conversion note: n=12 (was
+  n=10), backfilling the missed 09-27 row (`talent-radar-pilot`
+  `codex/production-release-record`) and adding today's (`talent-radar`
+  PR #7 — merge, a fresh candidate whose review had just come back
+  verdict PASS the same afternoon). Both unconverted by 22:30 — the
+  n=10 count on this page had gone one day stale without a correction,
+  same synthesis-gap class as the 09-13 retro fix below.
 - 2026-09-27 (retro) — rewrote both sections against 09-21→09-26: fire
   rate now 9/15 since 09-12 (was 8/9 read from the 09-20 retro), with six
   real-work days (09-18, 09-21→09-25) then a ninth fire on 09-26 *after*
