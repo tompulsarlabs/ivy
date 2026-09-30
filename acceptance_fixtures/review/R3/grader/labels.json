@@ -1,0 +1,51 @@
+{
+  "status": "draft_requires_owner_review",
+  "acceptance_owner": null,
+  "schema_version": 1,
+  "review_status": "DRAFT_REQUIRES_OWNER_REVIEW",
+  "case_id": "R3",
+  "ground_truth": {
+    "expected_material_defect": false,
+    "source": "head/subtotal.py",
+    "explanation": "For the specified list of nonnegative integer pairs, sum preserves the multiplication and accumulation behavior, including an empty list.",
+    "behavior_checks": [
+      [
+        [],
+        0
+      ],
+      [
+        [
+          [
+            250,
+            2
+          ],
+          [
+            75,
+            3
+          ]
+        ],
+        725
+      ],
+      [
+        [
+          [
+            0,
+            5
+          ],
+          [
+            999,
+            0
+          ]
+        ],
+        0
+      ]
+    ]
+  },
+  "criteria": [
+    {
+      "id": "material_findings",
+      "critical": false,
+      "description": "No material defect is currently expected. Tests are finite evidence, not proof of correctness. Any additional finding requires human adjudication; this control has not been owner-approved."
+    }
+  ]
+}

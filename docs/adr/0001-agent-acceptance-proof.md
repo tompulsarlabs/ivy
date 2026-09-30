@@ -1,6 +1,7 @@
 # 0001 — Prove one agent acceptance workflow before expanding Ivy
 
-Status: proposed for Tom's review. Date: 2026-09-05.
+Status: accepted by Tom for the bounded proof, 2026-09-05. Architecture/scaffolding
+is the Ultra stage; implementation proceeds at Extra High and debugging at High.
 
 ## Context
 

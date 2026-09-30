@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "scope": "isolated Paperclip process API integration; production agents unchanged",
+  "provenance": "real localhost Paperclip with deterministic fixture processes; separate software controls",
+  "model_quality": "unverified",
+  "cases": [
+    {"id": "PC01", "case": "valid", "expectation": "fixture accepted only through separate review"},
+    {"id": "PC02", "case": "false_completion", "expectation": "successful process with empty findings remains in review"},
+    {"id": "PC03", "case": "tampered", "expectation": "rehashed changed delivery rejected against sealed original"},
+    {"id": "PC04", "case": "duplicate_delivery", "expectation": "one worker process; replayed review does not add a decision"},
+    {"id": "PC05", "case": "interrupted", "expectation": "cancel plus pause; PID absent, completion refused, retry record retained without second process"}
+  ],
+  "software_controls": "tests/test_paperclip_bridge.py",
+  "observations": "docs/next-phase/evidence/paperclip-integration-20260910/report.json"
+}

@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "id": "ivy-offline-evidence-resources-v1",
+  "scope": "Fixed infrastructure probe assessor, resource accounting and offline report. These do not evaluate operational-agent or model quality.",
+  "run_command": "python3 -B -m unittest discover -s tests -v",
+  "cases": [
+    {
+      "id": "EQ01",
+      "expected": "Complete recognized probe: valid bindings and every prescribed observation produce completion/control pass; benchmark unavailable",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq01_complete_known_probe"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ02",
+      "expected": "Cancellation and deadline: each matched control passes with stopped evidence; natural completion never passes and capture stays partial",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq02_interruption_controls_do_not_complete"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ03",
+      "expected": "Empty, irrelevant or missing observation stream: no control pass; explicit missing-coverage reasons",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq03_empty_irrelevant_missing"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ04",
+      "expected": "Known violation plus another missing observation: failure remains visible and outranks unverified",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq04_known_failure_outweighs_missing",
+        "EvidenceQualityTests.test_eq04_missing_later_metadata_preserves_failure"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ05",
+      "expected": "Bad artifact hash, runtime/image mismatch or ownership mismatch: no trusted pass; originals still verify",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq05_tampering_and_wrong_owner",
+        "ReportQualityTests.test_eq05_symlink_metadata_rejected"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ06",
+      "expected": "Legacy recognized program normalizes; missing/unknown program or unknown policy version stays unverified; explicit descriptor disagreement cannot pass",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq06_legacy_unknown_and_descriptor"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ07",
+      "expected": "Chunk boundaries split JSON/UTF-8 and interleave stderr: equivalent valid stdout yields identical assertions; stderr cannot spoof observations",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq07_split_json_unicode_and_stderr"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ08",
+      "expected": "Invalid base64/JSON, duplicate keys/events, sequence gaps, trailing fragments or configured bound exceeded: bounded incomplete result, no crash or pass",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq08_invalid_nested_metadata_is_unverified",
+        "EvidenceQualityTests.test_eq08_unhashable_event_fields_are_unverified",
+        "EvidenceQualityTests.test_eq08_malformed_stream_limits_and_duplicates",
+        "ReportQualityTests.test_eq08_nested_json_and_oversize_manifest"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ09",
+      "expected": "Nonzero exit, false stopped flag, wrong control reason and different write exception: fail/unverified according to the declared rules, never completion pass",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq09_exit_stop_reason_and_exception"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ10",
+      "expected": "Resource zero versus unknown, reported versus estimated, invalid numbers/units/currency, duplicate scope and inclusive parent: exact subtotals or explicit rejection; no double counting",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "ResourceQualityTests.test_eq10_unknown_zero_estimates_and_missing_scope",
+        "ResourceQualityTests.test_eq10_unhashable_stage_rejected",
+        "ResourceQualityTests.test_eq10_invalid_numbers_units_currency_duplicates",
+        "ReportQualityTests.test_eq10_report_validates_duration_source_not_just_claim"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ11",
+      "expected": "CLI/report semantics: integrity-only partial verification can exit 0; assess exits 0/1/2 correctly; Markdown and JSON share results; no model-cost ratio",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "EvidenceQualityTests.test_eq11_cli_exits_and_no_runtime_on_invalid_options",
+        "ReportQualityTests.test_eq11_report_renders_same_result_and_refuses_overwrite_overlap"
+      ],
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "EQ12",
+      "expected": "Replay the three existing real receipts with matching reported durations: originals and ledger unchanged, separate report inspectable and deterministically reproducible",
+      "test_file": "tests/test_evidence_quality.py",
+      "test_methods": [
+        "ReportQualityTests.test_eq12_replay_is_reproducible_with_no_external_effects"
+      ],
+      "evidence_kind": "synthetic_CI_control_and_separately_recorded_actual_offline_replay",
+      "model_quality_claim": false,
+      "actual_evidence": "docs/next-phase/evidence/offline-report-20260906/replay-controls.json"
+    }
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "schema": "ivy-contract-readiness/v1",
+  "observed_at": "2026-09-22T09:16:39.304050+00:00",
+  "kind": "present_day_read_only_source_reassessment",
+  "contract_id": "2026-09-10-tomgreenai-planetarymap-review-01",
+  "ivy_main_observed_commit": "59b6eac9c6185ab5aca40c88f091410b00c899cb",
+  "report_path": "dispatch/reports/2026-09-10-tomgreenai-planetarymap-review-01.md",
+  "report_sha256": "befb3b5f5c8a3fa4e9a14850e57cf8a0a339c2a6e48bf55d220318645e805f80",
+  "contract_sha256": "601b7f535f7c7ffaee9a0bd7f3d5dd7164b4489c6927fce5188af7ede9cbeb74",
+  "report_nonempty_on_github": true,
+  "source_repo": "tompulsarlabs/tomgreen.ai",
+  "source_pr": 54,
+  "source_commit": "ebeeb079eddfdcf3718abf7b16e5b6ef53b99e29",
+  "source_commit_is_original_review_head": "unverified",
+  "paths": [
+    {
+      "path": "docs/FABLE-DESIGN-HANDOFF.md",
+      "cited_lines": [
+        55
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "a0b34498781d8c9019c62d991d9103731debe94f",
+      "sha256": "e146b96c5efc23c55f8ebcf28a9712f996ea7bca4e1ef143e7954f945f30e799",
+      "line_count": 497,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "e2e/capture-engine.spec.ts",
+      "cited_lines": [
+        52
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "0ba2fced147dbeb81878d84b731e5324b1136c71",
+      "sha256": "b7c629ccf08d212b1e467e6e51db60220c5718ae2f515a77972bc7cfe1420ada",
+      "line_count": 301,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "e2e/golden-path.spec.ts",
+      "cited_lines": [
+        113
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "3f0bc3b6edacb8d238bc322d9bfc63d275cae5b0",
+      "sha256": "494820d1da8e1a9eea8a9095087b2aaab8350a6af1041016a760d73413a2ed0e",
+      "line_count": 248,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "e2e/planetary-fidelity.spec.ts",
+      "cited_lines": [
+        113,
+        176
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "65f0486c94221067f904e9b0a07d429532d0d242",
+      "sha256": "bd24b78c709ba565154051fafaeb570dc6b9180bac47fccf1d8adf76dfa4e148",
+      "line_count": 577,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "src/components/golden-path-layer.tsx",
+      "cited_lines": [
+        34
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "8548e5c423884ad35f9f20dbf6f82cc298b9e543",
+      "sha256": "146adf1b4b7919318ef96ddbd16f57b4743a43a90f74dd9646e218ae747e09f4",
+      "line_count": 51,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "src/components/operating-orbit-live.tsx",
+      "cited_lines": [
+        49,
+        114
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "b4cb44b9d64d934d98742150147edd5d246a20e3",
+      "sha256": "8160cd4a8a4702d2f4e4ac317354e7b6ecd7232dfe25f3881b761f329781844a",
+      "line_count": 198,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "src/components/orbit-portal.tsx",
+      "cited_lines": [
+        221,
+        535
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "568e6bbf5cb02065e68ba17f96fb842a7f2d327e",
+      "sha256": "f7905744aedf00e2034d7728d98ed3e35758be57d39ac385e47ec99631d188f3",
+      "line_count": 816,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "src/lib/capture-timing.test.ts",
+      "cited_lines": [
+        22,
+        62
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "ad3d5a0b971f1f1d9dafadbb67d8d5e970866a15",
+      "sha256": "95829d3faa8879bb1dd799a1c6d3bc9f9ff8f0928356978c76488580eeced994",
+      "line_count": 117,
+      "cited_lines_in_bounds": true
+    },
+    {
+      "path": "src/lib/capture-timing.ts",
+      "cited_lines": [
+        18,
+        37
+      ],
+      "exists_at_source_commit": true,
+      "blob_sha": "b83881dfe0bc28f52cbedfdb35b353aef4efb9bb",
+      "sha256": "10c5c7f045b4aa9499e527b864205af7a16a73ef136e607abc6f1ed8428d7148",
+      "line_count": 114,
+      "cited_lines_in_bounds": true
+    }
+  ],
+  "source_checks": [
+    {
+      "completed_at": "2026-09-10T08:14:25Z",
+      "conclusion": "success",
+      "head_sha": "ebeeb079eddfdcf3718abf7b16e5b6ef53b99e29",
+      "html_url": "https://github.com/tompulsarlabs/tomgreen.ai/runs/102796305023",
+      "name": "Vercel Preview Comments",
+      "status": "completed"
+    },
+    {
+      "completed_at": "2026-09-10T08:41:31Z",
+      "conclusion": "success",
+      "head_sha": "ebeeb079eddfdcf3718abf7b16e5b6ef53b99e29",
+      "html_url": "https://github.com/tompulsarlabs/tomgreen.ai/actions/runs/34454053737/job/102796188179",
+      "name": "ci",
+      "status": "completed"
+    }
+  ],
+  "path_existence_status": "pass",
+  "line_bounds_status": "pass",
+  "semantic_review_status": "unverified",
+  "original_review_acceptance": "unverified_unpinned_review_head",
+  "paperclip_replay": "not_run",
+  "model_calls": 0,
+  "judge_calls": 0,
+  "production_writes": 0
+}
