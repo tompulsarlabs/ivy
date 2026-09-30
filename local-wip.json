@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-29T15:56:09Z",
+  "generated_at": "2026-09-30T06:54:42Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -218,28 +218,6 @@
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-07",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "radar-production-recovery-20260925",
-      "remote": "tompulsarlabs/talent-radar",
-      "branch": "(detached)",
-      "dirty_files": 0,
-      "unpushed_commits": 2,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-25",
-      "author_email_ok": true,
-      "last_commit_email_ok": true
-    },
-    {
-      "name": "tomgreen-nabu-20260925",
-      "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/rename-scout-nabu",
-      "dirty_files": 0,
-      "unpushed_commits": 0,
-      "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-25",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
