@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-30T06:54:42Z",
+  "generated_at": "2026-09-30T15:45:06Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -19,7 +19,7 @@
       "dirty_files": 0,
       "unpushed_commits": 2,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-26",
+      "last_commit": "2026-09-30",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -107,9 +107,9 @@
       "dirty_files": 6,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-09-24",
+      "last_commit": "2026-09-30",
       "author_email_ok": true,
-      "last_commit_email_ok": true
+      "last_commit_email_ok": false
     },
     {
       "name": "ivy-cockpit",
@@ -218,6 +218,39 @@
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-07",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-acceptance-20260930",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "(detached)",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-30",
+      "author_email_ok": true,
+      "last_commit_email_ok": false
+    },
+    {
+      "name": "ivy-runtime-controls-20260930",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "codex/ivy-runtime-controls",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-30",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "tomgreen-radar-20260930",
+      "remote": "tompulsarlabs/tomgreen.ai",
+      "branch": "codex/radar-visual-correction",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-09-30",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
