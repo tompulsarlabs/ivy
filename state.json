@@ -3,6 +3,16 @@
   "last_green": "2026-09-29",
   "memory_last_synthesized": "2026-09-29",
   "days": {
+    "2026-09-30": {
+      "green_by": "tompulsarlabs/talent-radar PR #4 (merged 16:06:28 CEST, recover expired Google sign-ins) + PR #5 (merged 16:18:04 CEST, automatic interview preparation, default-off) + PR #6 (merged 16:26:25 CEST, personal Radar coach + native workspace) + PR #8 (merged 16:37:17 CEST, record reviewed Radar release) + PR #9 (opened 16:38:42 CEST, draft, remove visible motion toggle) + tompulsarlabs/tomgreen.ai PR #70 (merged 16:08:06 CEST, refresh Radar public demo/sharing URL) + PR #71 (merged 17:06:06 CEST, correct Radar demo visual identity) + tompulsarlabs/ivy PR #24 (opened 16:05:51 CEST, draft, dispatch preflight/effort-isolation fix)",
+      "method": "real-work",
+      "contributions": 27,
+      "signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-30 + search_pull_requests(created/merged):2026-09-30 + search_issues(created):2026-09-30, 18:0x CEST check (check.sh exit 2, no github.com egress in cloud sandbox) — search_commits returns 31 hits today org-wide, 4 correctly excluded as ivy-bot-authored (scout + 2x runner-status + local-scan wip), leaving 27 connected-author commits (tom@pulsarlabsai.com / the connected noreply address, resolving author.login tompulsarlabs), all on default branches (talent-radar main, tomgreen.ai main), non-fork — includes 6 merged PRs (talent-radar #4/#5/#6/#8, tomgreen.ai #70/#71) plus 2 further draft PRs opened today (talent-radar #9, ivy #24); zero issues opened; this is today's 18:00 check pass, so-far outcome only — failsafe re-checks before 22:30",
+      "cite": "journal/2026-09-30.md",
+      "nudge_sent": false,
+      "nudge_converted": null,
+      "failsafe_fired": false
+    },
     "2026-09-29": {
       "green_by": "failsafe journal entry (commit 2c563ad)",
       "method": "journal",
