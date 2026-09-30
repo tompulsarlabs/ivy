@@ -1,3 +1,104 @@
+# Current build — release audit and dispatch controls, 30 September 2026
+
+Tom asked to land today's real work before continuing Ivy and explicitly
+allowed coordinating the two already-active release chats. The audit found
+13 pre-existing human-authored commits today: 11 in Radar and two in the public
+website. Both verified Tom addresses resolve to `tompulsarlabs`; no attribution
+rewrite is needed. The account-wide push inventory shows only those projects
+and Ivy today. The existing checkouts contained no uncommitted files with today's
+modification date. Radar's two repository-wide unpushed commits are old
+3 September Cowork-history commits, duplicated across scanner rows; they are
+not today's missing work and were not published or rewritten.
+
+Website PR #70 is merged as `a5776aa`, preserving both original commits.
+GitHub CI passed; the live `/demos/radar` page responds with the correct title
+and canonical link. Radar PR #4 merged as `5b189fa`, #5 as `d155db8` and #6 as
+`2eda898`. All checks on #6 head `098e930` passed. GitHub comparisons establish
+that original Radar head `cb4f44f` and website head `0908019` are ancestors of
+main, preserving all 13 original commits.
+
+Radar's release chat twice hit model capacity. Its saved code, tests and review
+were recovered; after it acknowledged the handoff and stopped mutations, this
+chat completed the normal #6 merge and alias verification. No override was used.
+Production alias points to Ready deployment `dpl_BrZwKGc9DfwGbGFPqFH7gCjU37NF`
+from `2eda898`. The existing invited beta alias points to Ready deployment
+`dpl_7tfmEutiyUkbZGeLNG3RCfwEtLDw` from `098e930` on `codex/rad-current-beta`.
+Its protection/bypass fingerprint is unchanged. Fresh HTTP checks verify current
+heading/font, removed subtitle absent, closed general admission and anonymous
+private-API rejection. The owner chat retains the private share URL and is doing
+read-only hosted UI closeout; recipient login and real microphone audio remain
+unverified. No share token, private URL parameter or credential is recorded here.
+
+Live environment metadata confirms no production preparation or intake-voice
+flag; intake-voice entries are scoped to the two intended preview branches.
+Preparation and Notion publication require separate explicit off-by-default
+gates. Publication concurrency defects remain open behind that gate. Radar's
+older CSV-dedupe PR #7 remains separate and is not claimed fixed.
+
+## Ivy implementation
+
+[PR #24](https://github.com/tompulsarlabs/ivy/pull/24), head `fbfb4ca`, fixes
+three reproduced runner defects against main `1305117`:
+
+- Unset Claude effort removes an inherited `CLAUDE_CODE_EFFORT_LEVEL` rather
+  than accidentally inheriting `max`. Explicit effort and parent state are retained.
+- Invalid/unreadable routing configuration or missing commit identity reports
+  `config_invalid` / `lint_ok: false` before task claim. Strict whole-config
+  rejection remains intentional; no partial fallback is introduced.
+- A pre-claim provenance read failure leaves that task open with
+  `provenance_unavailable` and permits a later eligible task to run.
+
+The new HS20–HS22 cases were observed failing before the fix; all **23 harness
+control tests** pass afterward, including HS23 missing-file/identity and dry-run
+cases. Existing dispatch-runner checks, route preview, dispatch lint, memory
+lint and diff checks pass. GitHub run `36726523691` passed on Python 3.11 and
+3.14. Every inventory entry maps to a test method. Model-quality evaluation and
+real-provider execution were not performed. Current models, effort choices,
+permissions and budgets are unchanged.
+
+GitHub confirms the implementation author/committer is `tom@pulsarlabsai.com`
+and author login is `tompulsarlabs`. PR #24 remains draft pending the separate
+review required by ruleset 22775130. Tom was asked for an administrator override
+specific to #24; no answer or override is assumed. Earlier #22/#23 overrides
+remain scoped to those PRs. No runtime rollout is claimed.
+
+## Review triage and next work
+
+Harness review F1 and F3 are repaired; F2's false-healthy reporting is repaired
+while whole-config refusal is retained. F5's tests now use fixture values,
+with the live preview checking invariant validity rather than a fixed lane count.
+F4's checkout-vs-synchronized-config distinction is documented; richer preview
+source/hash reporting remains future work. The vocabulary follow-up is open.
+
+Scanner review F3/F7 were already closed by `dc236fc`. F1 (unknown/bot/unborn
+attribution), F2 (repository counts repeated across checkouts), F4 (one read
+failure suppresses all results), F5 (clock recovery), F6 (worktree-label privacy)
+and the lower-priority documentation/hook items remain open. Today's audit and
+journal corroborate the repeated-count problem. These are not repaired by #24.
+Next: finish these scanner controls, then build the disabled versioned profiles
+and pure policy preview proposed on 25 September. The 16 routing scenarios
+remain proposed and unexecuted; no model lineup is promoted.
+
+Stable `~/Build/ivy` main was fast-forwarded to `1305117`; all six pre-existing
+untracked files were preserved byte-for-byte. The prior temporary acceptance
+checkout was absent, so the pushed `dbf4588` revision was restored into a new
+detached temporary checkout without overwriting local work. PRs #18/#19/#20/#21
+retain their existing boundaries; no hosting, connector, runtime grant or
+paid API activation occurred.
+
+Ivy's current-day GraphQL check reports **2 contributions** on 30 September
+(Berlin), both pull requests at final readback. The full-year calendar reports
+light green (`FIRST_QUARTILE`); newly merged commits have not yet indexed. September's record includes restricted contributions, so
+private contribution visibility is enabled. This does not claim an exact final
+count or promise the darkest graph shade.
+
+A conservative 1,200-second Ivy implementation/triage/closeout allocation brings
+the engineering ledger to **31,200 seconds**. This is estimated bookkeeping,
+not measured provider billing; other projects' release implementation remains
+with their existing chats. Earlier runtime grants are not renewed.
+
+## Previous checkpoint — retained
+
 # Current direction — Ivy owns outcomes, roles select execution, 25 September 2026
 
 Tom supplied reasoning-effort guidance and a role-based model lineup, and asked
