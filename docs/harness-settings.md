@@ -3,14 +3,19 @@
 The runner now sends configured effort to native CLI arguments: Claude Code's
 `--effort` and Codex's `-c model_reasoning_effort=…`. An explicit Claude effort
 also replaces an inherited `CLAUDE_CODE_EFFORT_LEVEL` in the child environment;
-the parent environment is unchanged. Model IDs and lane selection are unchanged.
+when Claude effort is unset, that inherited override is removed. This does not
+override other native harness defaults or establish effective backend effort.
+The parent environment is unchanged. Model IDs and lane selection are unchanged.
 The unsupported `effort: low` field is removed from Haiku 4.5's configuration.
 
-Inspect current configuration without network, clones, locks or harness calls:
+Inspect this checkout's configuration without network, clones, locks or harness
+calls. It may differ from the synchronized configuration used by live dispatch;
+pass the synchronized file explicitly to inspect that copy:
 
 ```sh
 python3 -B scripts/dispatch-runner.py --preview-routes
 python3 -B scripts/dispatch-runner.py --preview-routes --config /path/to/config.yml
+python3 -B scripts/dispatch-runner.py --preview-routes --config ~/.ivy-dispatch/ivy/config.yml
 ```
 
 This is distinct from the historical `--dry-run`, which syncs runner/project
@@ -26,6 +31,11 @@ pool maps. Blank lines and comments are allowed. Empty lanes, duplicate lane or
 pool names, incomplete maps, missing harness/model fields and unrecognized lines
 fail configuration loading. Preview cannot report success for a partially read
 configuration. A malformed live configuration stops that tick before task claim.
+Missing/unreadable configuration or a missing commit identity does the same.
+The heartbeat reports `result: config_invalid` and `lint_ok: false`: routing
+validation is part of the preflight gate, so a fresh heartbeat cannot imply the
+queue is executable. Strict parsing still rejects the whole configuration;
+there is no partial fallback. Dry runs report the error without publishing status.
 
 Completed and failed started attempts record requested model/effort, a bounded
 CLI version probe, source revision and SHA-256 identities for the runner,
@@ -33,6 +43,10 @@ configuration and constructed prompt. No raw prompt, environment, auth or CLI
 diagnostic output is added to those fields. Unknown version output stays unknown.
 Effective model and effort remain **unknown**: flags, provider fallback, managed
 caps and harness settings do not prove what the backend actually used.
+If required provenance cannot be read before claim, the affected task stays open
+with `provenance_unavailable` in the heartbeat. The runner can try the next
+eligible contract instead of abandoning the entire tick. No worker is launched
+without its required input identities.
 
 `context_capture: runner_prompt_only` explicitly excludes auto-loaded repository
 instructions, skills, hooks, tool configuration and other harness context.

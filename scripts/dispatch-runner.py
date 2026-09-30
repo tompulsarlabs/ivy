@@ -103,7 +103,10 @@ def parse_frontmatter(text):
 
 def load_config(config_path=None):
     cfg = (config_path or IVY / "config.yml").read_text()
-    commit_email = re.search(r"^commit_email:\s*(\S+)", cfg, re.M).group(1)
+    identity = re.search(r"^commit_email:[ \t]*(\S+)[ \t]*$", cfg, re.M)
+    if identity is None:
+        raise ValueError("commit_email is required")
+    commit_email = identity.group(1)
     block = re.search(r"^connected_emails:[^\n]*\n((?:[ \t]+-[^\n]*\n?)*)", cfg, re.M)
     connected = re.findall(r"-\s*(\S+)", block.group(1)) if block else []
     connected = connected or [commit_email]
@@ -273,10 +276,12 @@ def harness_argv(entry, prompt, ctype):
 
 
 def harness_environment(entry, environ=None):
-    """Pin Claude's explicit effort against inherited effort overrides only."""
+    """Keep a Claude lane's unset effort free of a parent's effort override."""
     env = dict(os.environ if environ is None else environ)
-    if entry["harness"] == "claude-code" and entry.get("effort") is not None:
-        env["CLAUDE_CODE_EFFORT_LEVEL"] = entry["effort"]
+    if entry["harness"] == "claude-code":
+        env.pop("CLAUDE_CODE_EFFORT_LEVEL", None)
+        if entry.get("effort") is not None:
+            env["CLAUDE_CODE_EFFORT_LEVEL"] = entry["effort"]
     return env
 
 
@@ -396,7 +401,15 @@ def main():
         if not dry:
             publish_status("lint_failed", [], False, now)
         return 1
-    commit_email, connected, lanes = load_config()
+    try:
+        commit_email, connected, lanes = load_config()
+    except (ValueError, OSError) as error:
+        log(f"configuration preflight failed: {type(error).__name__}")
+        if not dry:
+            # Routing is part of the preflight gate. A fresh heartbeat must
+            # not claim lint_ok when no contract can safely be dispatched.
+            publish_status("config_invalid", [], False, now)
+        return 1
     done_ids = {p.stem for p in (IVY / "dispatch" / "done").glob("*.md")}
     skipped = []
 
@@ -446,7 +459,12 @@ def main():
             log("  " + " ".join(shlex.quote(a if len(a) < 120 else a[:117] + "...") for a in argv))
             return 0
 
-        metadata = execution_metadata(entry, prompt, clone, argv[0])
+        try:
+            metadata = execution_metadata(entry, prompt, clone, argv[0])
+        except (RuntimeError, OSError) as error:
+            log(f"{cid}: provenance unavailable ({type(error).__name__}); leaving open")
+            skipped.append({"id": cid, "reason": "provenance_unavailable"})
+            continue
         set_state(qpath, "claimed", f"claimed_at: {now.isoformat(timespec='seconds')}")
         if not bot_commit_push(f"dispatch: claim {cid}", [qpath]):
             log(f"{cid}: claim push lost a race; next tick retries")

@@ -137,6 +137,34 @@
       "test_name": "test_malformed_preview_never_reports_partial_routes_as_valid",
       "evidence_kind": "deterministic_software_controls",
       "model_quality_claim": false
+    },
+    {
+      "id": "HS20",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_unset_claude_effort_removes_inherited_override",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS21",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_invalid_live_config_reports_failed_preflight_without_claim",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS22",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_provenance_failure_leaves_task_open_and_runs_next_contract",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
+    },
+    {
+      "id": "HS23",
+      "test_file": "scripts/harness-settings-test.py",
+      "test_name": "test_missing_config_or_identity_cannot_report_healthy_preflight",
+      "evidence_kind": "deterministic_software_controls",
+      "model_quality_claim": false
     }
   ],
   "live_integration": {
@@ -146,5 +174,14 @@
     "real_model_execution": "not_run",
     "effective_model_and_effort": "unknown",
     "production_rollout": "not_run"
+  },
+  "regression_evidence_20260930": {
+    "base_revision": "1305117",
+    "red_before_fix": [
+      "HS20: inherited max reached both unset Claude models",
+      "HS21: malformed config published lint_ok true",
+      "HS22: both simulated provenance errors aborted the tick"
+    ],
+    "scope": "Software controls only. HS23 adds missing-file/identity and dry-run cases. No model execution, model-quality assessment or production rollout."
   }
 }
