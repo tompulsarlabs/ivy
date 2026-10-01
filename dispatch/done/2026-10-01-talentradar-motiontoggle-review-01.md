@@ -64,3 +64,17 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-10-01-talentradar-motiontoggle-review-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-10-01T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-10-01-talentradar-motiontoggle-review-01.md,
+    non-empty, verdict PASS. Re-fetched PR #9's body via
+    `search_pull_requests repo:tompulsarlabs/talent-radar` — the body
+    reads verbatim: "Remove the visible Motion on/off control from the
+    welcome and coach header. Keep the sound control, system
+    reduced-motion support, saved motion-off preferences and hidden-tab
+    suspension. Typecheck, lint and whitespace checks pass. No audio,
+    model, access or feature activation settings change." This matches
+    the report's restated scope and all five claims point for point; no
+    contradiction found. PR still draft/open at verification time.

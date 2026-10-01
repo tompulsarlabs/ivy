@@ -70,3 +70,35 @@ outcome:
   exit: 0
   artifacts:
     - dispatch/reports/2026-10-01-ivy-effortisolation-review-01.md
+  verified: true
+  verified_note: >
+    Verification section executed 2026-10-01T22:30+02:00 (failsafe): the
+    report exists on main of ivy at
+    dispatch/reports/2026-10-01-ivy-effortisolation-review-01.md,
+    non-empty, verdict request-changes (F1 medium). This repo is directly
+    readable, so fetched PR #24's head (fbfb4ca5f33196922e78a3396e958751ee20a3d5,
+    confirmed via pull_request_read) and checked every cited file:line
+    against it: harness_environment at dispatch-runner.py:278-285 (pops
+    CLAUDE_CODE_EFFORT_LEVEL), the lint-before-load_config ordering at
+    :398-412, the provenance RuntimeError/OSError handling at :462-467,
+    dispatch-lint.sh:20/24/128 (authoritative lanes from config.yml, cap
+    check, final ok line), harness-settings.md:34-35 (verbatim: "Missing/
+    unreadable configuration or a missing commit identity does the same.
+    The heartbeat reports result: config_invalid"), the four new tests
+    HS20-23 in harness-settings-test.py (test_unset_claude_effort_removes
+    _inherited_override:93-100, test_invalid_live_config_reports_failed
+    _preflight_without_claim:249-268, test_missing_config_or_identity
+    _cannot_report_healthy_preflight:270-299, test_provenance_failure
+    _leaves_task_open_and_runs_next_contract:301-337), the CONFIG fixture
+    used by command-construction/routing-parser tests at :19-48/134-152,
+    and the HS20-23 registrations at evals/harness-settings.json:142-168.
+    Every citation resolves to real code matching the report's claims; F1
+    is a legitimate finding (dispatch-lint.sh fails before load_config is
+    reached, so a missing/unreadable config.yml actually reports
+    lint_failed, not the config_invalid the docs promise — not yet fixed
+    on this head). No fabricated or misattributed citation found. The
+    report's closing line ("I did not create, commit, or push the
+    requested report file") is worker self-report noise contradicted by
+    the actual commit (f0a9d4277c449e539f3993face7401dbe8744f6d, on main)
+    — disregarded per the playbook's "workers are untrusted" rule; the
+    external check (this verification) is what counts, not the claim.
