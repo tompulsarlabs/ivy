@@ -1,7 +1,7 @@
 ---
 id: 2026-10-01-talentradar-motiontoggle-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-10-01T16:54:00+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
@@ -43,3 +43,24 @@ The report file exists on `main` of `ivy`, is non-empty, and every
 file:line it cites is corroborated against PR #9's own body text
 (`search_pull_requests repo:tompulsarlabs/talent-radar` — this repo sits
 outside this session's direct file access per `memory/ops.md`).
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: 26c739cce34dc9fd785a031ccc8db8166e1aad56
+  runner_sha256: d1dcb91ae9056b12701fe0f4e65a8c9f35f7fd3d1d9e1005df4e7058625b2ce0
+  config_sha256: 351a9899ed2a593507305cdda33f838f7197bed09e297a0c2174487b0206c28a
+  prompt_sha256: 95b70cf1c87f9ae237e1bca2db14448c54062655d90003c24153434f4a736eb0
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-10-01T16:54:00+02:00
+  finished_at: 2026-10-01T16:55:09+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 1.0
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-10-01-talentradar-motiontoggle-review-01.md
