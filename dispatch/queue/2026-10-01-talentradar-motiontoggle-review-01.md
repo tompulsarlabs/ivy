@@ -1,7 +1,8 @@
 ---
 id: 2026-10-01-talentradar-motiontoggle-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-10-01T16:54:00+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: openai
