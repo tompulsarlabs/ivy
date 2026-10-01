@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-09-28
+updated: 2026-10-01
 ---
 
 # ivy
@@ -257,8 +257,41 @@ Paired same day with PR #16, parking `c2-client-matrix`
 [[repos/c2-client-matrix]] and teaching the scout to rank by revealed
 focus over cheapest ship [cite:e7e918b].
 
+## PR #24 — first review, 2026-10-01: one real finding (F1)
+
+`2026-10-01-ivy-effortisolation-review-01` reviewed PR #24 ("Keep unset
+effort isolated and expose dispatch preflight failures," head `fbfb4ca5`)
+directly against the diff (this repo is not access-scoped away). Three of
+the four claimed fixes hold: an unset Claude lane no longer inherits an
+ambient `CLAUDE_CODE_EFFORT_LEVEL` (`harness_environment`,
+`dispatch-runner.py:278-285`, red on base `1305117`, green at this head);
+a malformed routing entry now fails preflight with `config_invalid`
+before any contract claim; a provenance `RuntimeError`/`OSError` leaves
+the affected contract open with `provenance_unavailable` and the next
+eligible contract still runs. **F1 (medium, unfixed):** `dispatch-lint.sh`
+runs and can fail *before* `load_config()` is ever reached
+(`dispatch-runner.py:398-412`), so a missing or unreadable `config.yml`
+actually reports `lint_failed`, not the `config_invalid` the PR's own
+`harness-settings.md:34-35` doc update promises — still fail-safe
+(`lint_ok: false`, nothing claimed), but contradicts the documented
+guarantee, and the new HS23 test stubs every `run()` call successful
+(including the real linter), masking the ordering. The four new tests
+(HS20-23) genuinely exercise red-before/green-after against base
+`1305117`, and command-construction/routing-parser tests now use the
+inline `CONFIG` fixture rather than live `config.yml`. Verified directly
+against the PR's head (every cited file:line checked, not just the PR
+body) [cite:2026-10-01] [[models]].
+
 ## Changelog
 
+- 2026-10-01 (failsafe) — recorded PR #24's first review: three of four
+  claimed fixes hold (effort-leak isolation, malformed-config preflight,
+  provenance-failure isolation), one real finding still open (F1 —
+  `dispatch-lint.sh` can fail before `load_config` is reached, so a
+  missing/unreadable config reports `lint_failed` rather than the
+  `config_invalid` the PR's own doc update promises). Verified directly
+  against the PR's head tonight (every cited file:line, not PR-body
+  corroboration — this repo stays directly readable).
 - 2026-09-28 (failsafe) — recorded PR #21's fourth review: first `pass`
   verdict after three straight `block`s, closing the memory-grader P2 that
   survived reviews 2 and 3. Recorded a fresh (not continued) local-WIP

@@ -1,7 +1,7 @@
 ---
 subject: observed working rhythm
 type: patterns
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Patterns: how the work actually happens
@@ -89,13 +89,14 @@ findings, a fresh candidate, sent verbatim a second day)
 `codex/naboo-first-meeting`, a same-day local push surfaced by the
 now-recovered scanner) [cite:2026-09-26]; 2026-09-27 (`talent-radar-pilot`
 `codex/production-release-record`, same class, second local-push nudge)
-[cite:2026-09-27]; and 2026-09-29 (`talent-radar` PR #7 — merge, a fresh
+[cite:2026-09-27]; 2026-09-29 (`talent-radar` PR #7 — merge, a fresh
 never-before-nudged candidate whose review had just come back verdict
-PASS the same afternoon) [cite:2026-09-29]. Every other day through
-09-11, and 09-18 and 09-21 through 09-25, was green before the 18:00
-check, so no grey-check nudge fired on those days.
+PASS the same afternoon) [cite:2026-09-29]; and 2026-10-01 (`talent-radar`
+PR #7 — merge, same candidate, second nudge) [cite:2026-10-01]. Every
+other day through 09-11, and 09-18 and 09-21 through 09-25, was green
+before the 18:00 check, so no grey-check nudge fired on those days.
 
-n=12 is enough to stop reading this as "too thin," but not to conclude
+n=13 is enough to stop reading this as "too thin," but not to conclude
 "nudging doesn't work" — 6 of the 10 rows are the *same* blocker, and
 `nudge_converted` is scored against GitHub contributions, which a Mac
 `launchd` fix would never produce even if Tom acted on every single one.
@@ -173,6 +174,11 @@ demand" when it is actually "no runner."
 
 ## Changelog
 
+- 2026-10-01 (failsafe) — extended the nudge-conversion note: n=13 (was
+  n=12), adding today's row (`talent-radar` PR #7 — merge, a repeat of
+  09-29's candidate, second nudge, still unconverted). No fire-rate change
+  this entry — 10-01 was a failsafe-fired journal day, already read as
+  part of the existing pattern, not a new occurrence worth its own note.
 - 2026-09-29 (failsafe) — extended the nudge-conversion note: n=12 (was
   n=10), backfilling the missed 09-27 row (`talent-radar-pilot`
   `codex/production-release-record`) and adding today's (`talent-radar`

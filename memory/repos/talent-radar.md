@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/talent-radar
 type: repo
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # talent-radar
@@ -266,8 +266,36 @@ This closes the loop this page has tracked since 09-17: a finding that
 survived four review cycles unfixed is now independently confirmed fixed,
 not just shipped [cite:2026-09-29] [[models]].
 
+## PR #9 — first review, 2026-10-01: verdict PASS, no findings
+
+`2026-10-01-talentradar-motiontoggle-review-01` reviewed PR #9 ("Remove
+the visible motion toggle") against its own body claims: the visible
+Motion on/off control is removed from the shared welcome/coach header
+while the sound control remains; an existing user's saved
+`radar-ambient-motion=off` preference stays effective even though a new
+user can no longer set it through the UI; no orphaned motion state (the
+root `data-motion` attribute, canvas component, and motion-off CSS
+branches all stay live); system reduced-motion detection and hidden-tab
+suspension are both unmodified by the diff; no audio/model/access/
+feature-activation code path was touched — the full diff is confined to
+`RadarWelcome.tsx`, `WelcomeUniverse.tsx`, welcome CSS, and
+`docs/HANDOFF.md`. Verified via PR-body corroboration (`talent-radar`
+sits outside this session's direct repo access [[ops]]) [cite:2026-10-01]
+[[models]].
+
+## PR #7 — fourth day open/draft, second nudge unconverted
+
+Still open/draft at the 2026-10-01 failsafe, `updated_at` unchanged since
+the review landed (2026-09-28T15:04:17Z) — zero open findings, verdict
+PASS, needing only a human merge. Nudged a second time today (first
+09-29); unconverted both times [cite:2026-10-01] [[patterns]].
+
 ## Changelog
 
+- 2026-10-01 (failsafe) — recorded PR #9's first review (verdict PASS, no
+  findings, the motion-toggle removal holds under adversarial review) and
+  PR #7's fourth day open/draft with a second unconverted nudge. Verified
+  per its Verification section tonight.
 - 2026-09-29 (failsafe) — recorded PR #7's first review: verdict PASS, no
   findings, closing the CSV-dedupe finding this page has tracked since
   09-17 (four review cycles unfixed, one `build` contract, now one clean

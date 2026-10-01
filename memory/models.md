@@ -1,7 +1,7 @@
 ---
 subject: execution-lane routing evidence
 type: evidence
-updated: 2026-09-29
+updated: 2026-10-01
 ---
 
 # Models: lane × task-class outcomes
@@ -51,6 +51,8 @@ policy lives in `playbook.md` and `config.yml`, never here). One row per
 | 2026-09-28-talentradar-csvdedupe-build-01 | build | workhorse / anthropic | yes | 5.4 | **First `build` contract on `talent-radar`**, and the first fleet outcome from the 09-27 retro's 3-cycle promotion rule: fixes the CSV-dedupe P1 (`src/lib/market/import.ts:44`) four review cycles had re-confirmed unfixed; draft PR #7, red-before/green-after test, clean typecheck/lint; verified via PR-body corroboration (contract id, file:line, and prior review ids all named) [cite:2026-09-28] |
 | 2026-09-29-talentradar-csvdedupe-review-01 | review | workhorse / openai | yes | 10.2 | First review of PR #7's fix itself: **verdict PASS, no findings** — the widened seven-field de-dupe key stops the four-review-confirmed collapse without breaking genuine-duplicate collapsing, the extended test case is a genuine regression test, the disclosed unfixed gap correctly scoped out-of-spec; closes the loop on `talent-radar`'s longest-running open finding; verified via PR-body corroboration [cite:2026-09-29] |
 | 2026-09-29-talentscout-hudworkspace-review-01 | review | workhorse / openai | yes | 10.4 | First review of `talent-scout` PR #3 (second product surface); no count overstatement found (the pattern this contract specifically checked for), but two new P1s — unproven identity citations (registry-only, author-directory unused), per-profile feasibility/decision fields prepared but never rendered — plus two P2s; verified via PR-body corroboration [cite:2026-09-29] |
+| 2026-10-01-talentradar-motiontoggle-review-01 | review | workhorse / openai | yes | 1.0 | First review of `talent-radar` PR #9 ("remove the visible motion toggle"): **verdict PASS, no findings** — saved motion-off preferences persist, no orphaned state, system reduced-motion and hidden-tab suspension unmodified, no audio/model/access/feature-activation path touched; verified via PR-body corroboration [cite:2026-10-01] |
+| 2026-10-01-ivy-effortisolation-review-01 | review | workhorse / openai | yes | 1.5 | First review of `ivy` PR #24 ("keep unset effort isolated, expose dispatch preflight failures"); three of four claimed fixes hold (effort-leak isolation, malformed-config preflight, provenance-failure isolation), one real finding still open (F1 — `dispatch-lint.sh` can fail before `load_config` is reached, so missing/unreadable config reports `lint_failed` not the `config_invalid` the PR's own doc promises); verified directly against the PR's head, every cited file:line checked [cite:2026-10-01] |
 
 ## Pool health
 
@@ -117,6 +119,13 @@ the stale-checkout/PATH root causes, fixed same day [cite:2026-09-02].
 
 ## Changelog
 
+- 2026-10-01 (failsafe) — recorded 2 contracts verified tonight, both
+  `review`/workhorse/openai: `talentradar-motiontoggle-review-01` (first
+  review of PR #9, verdict PASS, no findings) and
+  `ivy-effortisolation-review-01` (first review of PR #24, three of four
+  claimed fixes hold, one real finding (F1) still open — verified
+  directly against the PR's head since `ivy` stays readable); n=36→38,
+  `review` now 30.
 - 2026-09-29 (failsafe) — recorded 2 contracts verified tonight, both
   `review`/workhorse/openai: `talentradar-csvdedupe-review-01` (first
   review of PR #7's fix itself, verdict PASS, closes the CSV-dedupe
