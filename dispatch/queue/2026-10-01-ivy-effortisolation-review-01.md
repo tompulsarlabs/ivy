@@ -1,7 +1,8 @@
 ---
 id: 2026-10-01-ivy-effortisolation-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-10-01T16:22:19+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
 pool: openai
