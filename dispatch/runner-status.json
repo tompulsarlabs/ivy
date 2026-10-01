@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-10-01T16:22:19+02:00",
+  "last_tick": "2026-10-01T16:54:00+02:00",
   "lint_ok": true,
-  "result": "finished 2026-10-01-ivy-effortisolation-review-01",
-  "runner_sha": "f0a9d42",
-  "since": "2026-10-01T16:22:19+02:00",
+  "result": "finished 2026-10-01-talentradar-motiontoggle-review-01",
+  "runner_sha": "431fd77",
+  "since": "2026-10-01T16:54:00+02:00",
   "skipped": []
 }
