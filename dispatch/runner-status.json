@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-10-01T16:54:00+02:00",
+  "last_tick": "2026-10-01T17:25:15+02:00",
   "lint_ok": true,
-  "result": "finished 2026-10-01-talentradar-motiontoggle-review-01",
-  "runner_sha": "431fd77",
-  "since": "2026-10-01T16:54:00+02:00",
+  "result": "idle",
+  "runner_sha": "a40431a",
+  "since": "2026-10-01T17:25:15+02:00",
   "skipped": []
 }
