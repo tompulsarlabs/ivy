@@ -7,7 +7,8 @@
     "bunx vitest run",
     "python3 -m unittest discover -s tests -p '*_test.py'",
     "bunx tsc --noEmit",
-    "bun run build"
+    "bun run build",
+    "bun run build:standalone"
   ],
   "cases": [
     {
@@ -177,6 +178,78 @@
       "evidence_kind": "deterministic_software_controls",
       "status": "passed_2026-10-02",
       "model_quality_claim": false
+    },
+    {
+      "id": "PB22",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "never promotes a worker claim or missing check evidence into an acceptance decision",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB23",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "shows missing and malformed run measurements as unrecorded without inventing tokens or cost",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB24",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "compares only linked private work and never equates matching context with better model quality",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB25",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "blocks private mutations and admission decisions before sending them for unapproved or non-owner users",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB26",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "sends worker token hashes only to the guarded pairing RPC and returns the capability once to the caller",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB27",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "keeps backend error details out of private-workspace errors",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB28",
+      "test_file": "src/lib/beta/browser-config.test.ts",
+      "test_name": "refuses secret and service-role keys before the independent browser bundle is built",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB29",
+      "test_file": "src/lib/beta/google-auth.browser.test.ts",
+      "test_name": "does not offer or call standalone Google auth before the independent provider is configured",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB30",
+      "test_file": "src/lib/beta/google-auth.browser.test.ts",
+      "test_name": "keeps configured standalone Google auth on the current Ivy origin",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
     }
   ],
   "actual_model_case": {
@@ -222,13 +295,23 @@
     "PGlite verifies PostgreSQL RLS/functions but not live concurrent transactions.",
     "Fixed process fixtures are not model-quality evaluations.",
     "One actual model fixture does not establish general model quality.",
-    "No hosted auth journey or real Supabase worker trace yet.",
+    "Google owner sign-in reaches the published app; no approved hosted workspace journey or real Supabase worker trace yet.",
     "No paid API key or fallback provider was activated."
   ],
   "google_sign_in_checkpoint": {
     "managed_provider_enabled": true,
     "loopback_callback": "rejected by real Lovable broker: redirect_uri is not allowed",
     "fix": "Local preview uses the fixed hosted broker and callback, keeping the session on the hosted app",
-    "complete_owner_sign_in": "not_verified"
+    "complete_owner_sign_in": "passed_2026-10-02: selected verified owner account, returned to published Ivy; workspace admission remains blocked by pending database activation",
+    "source_merge": "d97cc4b1cf17c2be58d227a739b375af2fe2dd3e",
+    "published_app": "https://pixel-perfect-showcase-8458.lovable.app"
+  },
+  "portable_html_checkpoint": {
+    "build": "passed_2026-10-02",
+    "target_domain": "ivy.tomgreen.ai",
+    "deployed": false,
+    "google_auth": "disabled until an independently configured Supabase Google client is verified; managed Lovable provider is not transplanted",
+    "database": "same approval/RLS/guarded RPC contract; migration activation pending",
+    "model_quality_claim": false
   }
 }
