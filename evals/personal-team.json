@@ -256,5 +256,6 @@
     "full_producer_or_scheduled_run": "not_run",
     "private_context_storage": "per-account known-context.json outside source control; explicit user facts only",
     "model_quality_generalization": false
-  }
+  },
+  "personal_team_runtime": "evals/personal-team-runtime.json"
 }
