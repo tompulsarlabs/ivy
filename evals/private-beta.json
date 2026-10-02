@@ -253,7 +253,7 @@
     {
       "id": "PB-independent-endpoint",
       "test_file": "src/lib/beta/browser-config.test.ts",
-      "test_name": "refuses the former managed backend and ambiguous endpoint configuration",
+      "test_name": "accepts explicitly configured existing databases and refuses unsafe endpoint configuration",
       "evidence_kind": "deterministic_software_controls",
       "status": "passed_2026-10-02",
       "model_quality_claim": false
@@ -334,9 +334,34 @@
     "hosting_account": "tompulsarlabs-projects",
     "hosting_project": "ivy-app",
     "default_build": "standalone",
-    "database_ownership": "dedicated project pending user creation",
+    "database_ownership": "existing owned gllfeuhmxjkzaamphczk; no new project or subscription",
     "production_cutover": "not_done",
-    "live_auth_and_admission": "not_run",
-    "note": "The former managed endpoint is refused. CI uses explicit format-only public inputs and is not deployment evidence."
+    "live_auth_and_admission": "Google provider initiation passed; Ivy return URL and activation pending",
+    "note": "The existing Ivy endpoint is explicitly configured; unsafe endpoint URLs and secret browser keys are refused. CI uses explicit format-only public inputs and is not deployment evidence.",
+    "live_preview": "passed_2026-10-02: Vercel deployment Ready; root and deep route 200 private,no-store; worker downloads are actual scripts",
+    "tested_source_revision": "501f14c603f175d4d9dcebb8fd6b414c5e994dec",
+    "controls": "91 deterministic cases and 15 Python checks passed; no model-quality claim"
+  },
+  "independent_hosting_correction": {
+    "requested_at": "2026-10-02",
+    "backend": "existing owned gllfeuhmxjkzaamphczk",
+    "new_paid_project": "declined; not created",
+    "frontend": "Vercel ivy-app",
+    "auth": "direct Google initiation returns 302 to Google; Ivy exact return pending",
+    "cutover": "pending",
+    "limits": "existing managed data retained for recovery; no user/session migration; action-time activation approval pending"
+  },
+  "existing_project_activation": {
+    "test_file": "tests/existing-project.test.ts",
+    "test_name": "activates only Ivy objects while preserving an existing application's data and policies",
+    "local_postgresql": "passed_2026-10-02",
+    "live_preflight": {
+      "ivy_objects": 0,
+      "ivy_functions": 0,
+      "radar_tables": 21,
+      "confirmed_owner_already_present": false
+    },
+    "live_activation": "pending_confirmation",
+    "model_quality_claim": false
   }
 }
