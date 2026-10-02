@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "ivy-personal-team-v1",
-  "source_repository": "tompulsarlabs/pixel-perfect-showcase-8458",
+  "source_repository": "tompulsarlabs/ivy-app",
   "scope": "Per-person sourced briefs, explicit priorities, deposit capability and unsent recommendation/draft triage",
   "cases": [
     {

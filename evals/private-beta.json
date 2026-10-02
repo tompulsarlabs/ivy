@@ -1,14 +1,13 @@
 {
   "schema_version": 1,
   "id": "ivy-private-beta-v1",
-  "source_repository": "tompulsarlabs/pixel-perfect-showcase-8458",
+  "source_repository": "tompulsarlabs/ivy-app",
   "scope": "Owner admission, per-person projects, paired personal workers, real task lifecycle and separate human checking/acceptance.",
   "commands": [
     "bunx vitest run",
     "python3 -m unittest discover -s tests -p '*_test.py'",
     "bunx tsc --noEmit",
-    "bun run build",
-    "bun run build:standalone"
+    "bun run build"
   ],
   "cases": [
     {
@@ -250,6 +249,14 @@
       "evidence_kind": "deterministic_software_controls",
       "status": "passed_2026-10-02",
       "model_quality_claim": false
+    },
+    {
+      "id": "PB-independent-endpoint",
+      "test_file": "src/lib/beta/browser-config.test.ts",
+      "test_name": "refuses the former managed backend and ambiguous endpoint configuration",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
     }
   ],
   "actual_model_case": {
@@ -319,5 +326,17 @@
     "google_auth": "disabled until an independently configured Supabase Google client is verified; managed Lovable provider is not transplanted",
     "database": "same approval/RLS/guarded RPC contract; migration activation pending",
     "model_quality_claim": false
+  },
+  "independent_hosting_checkpoint": {
+    "date": "2026-10-02",
+    "source_repository": "tompulsarlabs/ivy-app",
+    "repository_visibility": "private",
+    "hosting_account": "tompulsarlabs-projects",
+    "hosting_project": "ivy-app",
+    "default_build": "standalone",
+    "database_ownership": "dedicated project pending user creation",
+    "production_cutover": "not_done",
+    "live_auth_and_admission": "not_run",
+    "note": "The former managed endpoint is refused. CI uses explicit format-only public inputs and is not deployment evidence."
   }
 }
