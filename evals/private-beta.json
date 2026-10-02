@@ -153,6 +153,30 @@
       "evidence_kind": "fixed_process_or_transport_fixture",
       "status": "passed_2026-10-02",
       "model_quality_claim": false
+    },
+    {
+      "id": "PB19",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "uses the fixed hosted broker and callback for loopback, without returning a local session",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB20",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "keeps hosted sign-in on its own origin and does not treat lookalike hosts as loopback",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB21",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "refuses unexpected token delivery to a local preview and preserves broker errors",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
     }
   ],
   "actual_model_case": {
@@ -200,5 +224,11 @@
     "One actual model fixture does not establish general model quality.",
     "No hosted auth journey or real Supabase worker trace yet.",
     "No paid API key or fallback provider was activated."
-  ]
+  ],
+  "google_sign_in_checkpoint": {
+    "managed_provider_enabled": true,
+    "loopback_callback": "rejected by real Lovable broker: redirect_uri is not allowed",
+    "fix": "Local preview uses the fixed hosted broker and callback, keeping the session on the hosted app",
+    "complete_owner_sign_in": "not_verified"
+  }
 }
