@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-02T06:45:07Z",
+  "generated_at": "2026-10-02T15:45:07Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -104,12 +104,34 @@
       "name": "ivy",
       "remote": "tompulsarlabs/ivy",
       "branch": "main",
-      "dirty_files": 6,
+      "dirty_files": 8,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-30",
       "author_email_ok": true,
       "last_commit_email_ok": false
+    },
+    {
+      "name": "ivy-app",
+      "remote": "tompulsarlabs/ivy-app",
+      "branch": "main",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-02",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-beta",
+      "remote": "tompulsarlabs/pixel-perfect-showcase-8458",
+      "branch": "codex/ivy-domain-sign-in-evidence",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-02",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
     },
     {
       "name": "ivy-cockpit",
@@ -158,11 +180,11 @@
     {
       "name": "sybil",
       "remote": "tompulsarlabs/ai-capability-app",
-      "branch": "main",
+      "branch": "codex/private-beta",
       "dirty_files": 0,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-06-23",
+      "last_commit": "2026-10-02",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -181,7 +203,7 @@
       "name": "talent-radar-pilot",
       "remote": "tompulsarlabs/talent-radar",
       "branch": "codex/production-release-record",
-      "dirty_files": 0,
+      "dirty_files": 1,
       "unpushed_commits": 2,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-26",
@@ -222,6 +244,28 @@
       "last_commit_email_ok": true
     },
     {
+      "name": "radar-beta-request-profiles",
+      "remote": "tompulsarlabs/talent-radar",
+      "branch": "codex/beta-request-profiles",
+      "dirty_files": 0,
+      "unpushed_commits": 2,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-02",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
+      "name": "ivy-pr1a",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "claude/pile-up-pr1a",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-02",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
       "name": "ivy-acceptance-20260930",
       "remote": "tompulsarlabs/ivy",
       "branch": "(detached)",
@@ -229,6 +273,17 @@
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-30",
+      "author_email_ok": true,
+      "last_commit_email_ok": false
+    },
+    {
+      "name": "ivy-private-beta-evals-20261002",
+      "remote": "tompulsarlabs/ivy",
+      "branch": "codex/ivy-private-beta-evals",
+      "dirty_files": 1,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-02",
       "author_email_ok": true,
       "last_commit_email_ok": false
     },
