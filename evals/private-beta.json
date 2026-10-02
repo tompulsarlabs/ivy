@@ -337,10 +337,7 @@
     "database_ownership": "existing owned gllfeuhmxjkzaamphczk; no new project or subscription",
     "production_cutover": "not_done",
     "live_auth_and_admission": "Google provider initiation passed; Ivy return URL and activation pending",
-    "note": "The existing Ivy endpoint is explicitly configured; unsafe endpoint URLs and secret browser keys are refused. CI uses explicit format-only public inputs and is not deployment evidence.",
-    "live_preview": "passed_2026-10-02: Vercel deployment Ready; root and deep route 200 private,no-store; worker downloads are actual scripts",
-    "tested_source_revision": "501f14c603f175d4d9dcebb8fd6b414c5e994dec",
-    "controls": "91 deterministic cases and 15 Python checks passed; no model-quality claim"
+    "note": "The existing Ivy endpoint is explicitly configured; unsafe endpoint URLs and secret browser keys are refused. CI uses explicit format-only public inputs and is not deployment evidence."
   },
   "independent_hosting_correction": {
     "requested_at": "2026-10-02",
@@ -363,5 +360,12 @@
     },
     "live_activation": "pending_confirmation",
     "model_quality_claim": false
+  },
+  "personal_context_regression": {
+    "inventory": "evals/personal-team.json",
+    "cases": "evals/personal-context-cases.json",
+    "evidence": "evals/personal-context-result-2026-10-02.json",
+    "bounded_behavioral_cases": 4,
+    "scope": "Supplied-context behavior only, not full mailbox retrieval or a quality score"
   }
 }

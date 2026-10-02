@@ -218,7 +218,7 @@
     "unsent_drafts": 2,
     "schema_validation": "passed",
     "isolated_postgresql_delivery": "passed",
-    "source_reconciliation": "manual comparison against connector reads; not an independent quality score",
+    "source_reconciliation": "Original pilot failed introduction direction and produced an unnecessary draft; corrected after direct user feedback and a targeted full-thread/Sent reread.",
     "model_settings": "unverified thread default; explicitly labelled",
     "hosted_delivery": false,
     "quality_generalization": false
@@ -247,5 +247,14 @@
     "Local scheduled runs require an awake computer and running Codex app.",
     "No broad trend scan, full-Drive ingestion, always-on host or outbound authority.",
     "No private inbox/body/credential fixtures in this inventory."
-  ]
+  ],
+  "relationship_regression": {
+    "cases": "evals/personal-context-cases.json",
+    "results": "evals/personal-context-result-2026-10-02.json",
+    "synthetic_cases_passed": 4,
+    "scope": "introduction direction, explicit correction over missing email, unknown relationship and draft necessity",
+    "full_producer_or_scheduled_run": "not_run",
+    "private_context_storage": "per-account known-context.json outside source control; explicit user facts only",
+    "model_quality_generalization": false
+  }
 }
