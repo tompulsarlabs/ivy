@@ -1,0 +1,187 @@
+{
+  "schema_version": 1,
+  "id": "ivy-private-beta-v1",
+  "source_repository": "tompulsarlabs/pixel-perfect-showcase-8458",
+  "scope": "Owner admission, per-person projects, paired personal workers, real task lifecycle and separate human checking/acceptance.",
+  "commands": [
+    "bunx vitest run",
+    "python3 -m unittest discover -s tests -p '*_test.py'",
+    "bunx tsc --noEmit",
+    "bun run build"
+  ],
+  "cases": [
+    {
+      "id": "PB01",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "requires owner approval; requests cannot self-approve or reset a decline",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB02",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "keeps projects, tasks, worker keys and original planning records isolated",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB03",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "does not grant anonymous identity, admission or result-forgery access",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB04",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "queues one immutable task, records a worker claim, and requires human checks plus acceptance",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB05",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "revocation denies both browser data and already-paired worker operations",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB06",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "does not turn cancellation into a completed result or requeue a disconnected run",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB07",
+      "test_file": "src/lib/beta/presentation.test.ts",
+      "test_name": "distinguishes an offline worker, pending stop and unverified reported result",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB08",
+      "test_file": "src/lib/beta/privacy.test.ts",
+      "test_name": "does not serialize task text, credentials, stacks or arbitrary context into error telemetry",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB09",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_actual_process_runs_in_separate_checkout_and_credentials_do_not_leak",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB10",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_cancel_stops_real_process_without_submitting_success",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB11",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_lost_connection_retains_marker_and_never_reports_success",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB12",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_wrong_repository_dirty_checkout_and_foreign_task_are_refused",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB13",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_config_is_private_and_transport_and_timeout_cannot_expand",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB14",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_unicode_result_size_is_bounded_before_upload",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB15",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_transport_does_not_redirect_a_worker_capability",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB16",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_git_ignores_inherited_context_and_local_executable_hooks",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    }
+  ],
+  "actual_model_case": {
+    "status": "passed_2026-10-02",
+    "model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "elapsed_seconds": 52.8,
+    "expected": "Exact fixture file bytes in an isolated checkout; original checkout unchanged; result remains human_checks_pending",
+    "independent_artifact_check": true,
+    "transport": "fake RPC; actual authenticated Codex CLI",
+    "hosted_execution": false,
+    "quality_generalization": false
+  },
+  "hosted_cases": [
+    {
+      "id": "PH01",
+      "expected": "Verified owner can enter workspace and see access requests",
+      "status": "not_run"
+    },
+    {
+      "id": "PH02",
+      "expected": "Unapproved verified user requests access but cannot read or dispatch",
+      "status": "not_run"
+    },
+    {
+      "id": "PH03",
+      "expected": "Two approved users cannot read or mutate each other's projects, tasks or workers",
+      "status": "not_run"
+    },
+    {
+      "id": "PH04",
+      "expected": "Real paired worker claims a private queued task and returns a reviewable result",
+      "status": "not_run"
+    },
+    {
+      "id": "PH05",
+      "expected": "Revocation denies new reads and worker checks; interrupted work is never retried automatically",
+      "status": "not_run"
+    }
+  ],
+  "limits": [
+    "PGlite verifies PostgreSQL RLS/functions but not live concurrent transactions.",
+    "Fixed process fixtures are not model-quality evaluations.",
+    "One actual model fixture does not establish general model quality.",
+    "No hosted auth journey or real Supabase worker trace yet.",
+    "No paid API key or fallback provider was activated."
+  ]
+}
