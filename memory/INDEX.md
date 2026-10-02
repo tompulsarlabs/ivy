@@ -1,7 +1,7 @@
 ---
 subject: memory index
 type: index
-updated: 2026-09-24
+updated: 2026-10-02
 ---
 
 # Memory index
@@ -24,7 +24,7 @@ behavior lives in `playbook.md` and only the retro changes it.
 - [[repos/yeva]] — private; setup-guide work, two sessions 09-01/09-02
 - [[repos/tompulsarlabs]] — org profile repo; first signal 2026-09-02
 - [[repos/writing-voice-skill]] — first signal 2026-09-05 (PR #2)
-- [[repos/pixel-perfect-showcase-8458]] — `ivy-cockpit`; write-credential finding 09-08
+- [[repos/pixel-perfect-showcase-8458]] — `ivy-cockpit`, and [[repos/ivy-app]] (new 10-02, not yet watchlisted) — share 10-02 commits
 - [[repos/sybil-showcase]] / [[repos/safari-harness]] / [[repos/ivy-showcase]] — first signal 09-07/09-08
 - [[repos/opencode-job-search-starter]] — private; first signal 09-11
 - [[repos/gstack-security-patches]] — private; first signal 09-21, not yet on watchlist

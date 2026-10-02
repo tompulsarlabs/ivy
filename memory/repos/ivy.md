@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/ivy
 type: repo
-updated: 2026-10-01
+updated: 2026-10-02
 ---
 
 # ivy
@@ -282,8 +282,29 @@ inline `CONFIG` fixture rather than live `config.yml`. Verified directly
 against the PR's head (every cited file:line checked, not just the PR
 body) [cite:2026-10-01] [[models]].
 
+## PR #21 — merged 2026-10-02, nine days after opening
+
+Merged 11:36:21 CEST (commit `8dae9d3`, `tom@pulsarlabsai.com`, direct to
+`main`, not a squash merge button on GitHub's side per the commit's own
+shape) — nine days after opening (09-23) and five review cycles after the
+first (four `block` verdicts, the fourth passing clean on 09-28). This is
+today's primary green-by signal and the strongest evidence yet that the
+claim-then-drift pattern this page tracked across reviews 1–3 does
+eventually resolve rather than recur indefinitely. Three more PRs opened
+same day, all draft, unreviewed: **#25** ("Publish PR heads from the
+scanner; warn on memory budgets"), **#26** ("Record private beta and
+personal-team evaluation inventories"), **#27** ("Say who pastes routine
+prompts into the triggers") [cite:2026-10-02].
+
 ## Changelog
 
+- 2026-10-02 (failsafe) — recorded PR #21's merge (9 days open, 5 review
+  cycles, today's green-by signal) and three new draft PRs opened same day
+  (#25, #26, #27), none yet reviewed. Nothing in `dispatch/` needed
+  verification tonight (queue empty all day, both of yesterday's done
+  contracts already verified, `dispatch/failed/`'s one `exit: timeout` entry
+  reconfirmed unchanged per the 09-27 precedent, no new re-run). Today green
+  by a wide margin of real work org-wide; streak secured at 40.
 - 2026-10-01 (failsafe) — recorded PR #24's first review: three of four
   claimed fixes hold (effort-leak isolation, malformed-config preflight,
   provenance-failure isolation), one real finding still open (F1 —

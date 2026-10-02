@@ -1,7 +1,7 @@
 ---
 subject: tompulsarlabs/pixel-perfect-showcase-8458
 type: repo
-updated: 2026-09-08
+updated: 2026-10-02
 ---
 
 # pixel-perfect-showcase-8458
@@ -55,7 +55,20 @@ to Ivy's dispatch queue and could write to Ivy `main`. An unconfirmed
 an ordinary product bug — worth weighting above the usual review-finding
 bar until a default-deny gate or split read/write token actually lands.
 
+## Shares today's commits with the new [[repos/ivy-app]]
+
+2026-10-02: 24 commits landed on this repo, all with SHAs identical to
+commits on the brand-new `tompulsarlabs/ivy-app` (created same day,
+"independently hosted" Ivy personal-agent workspace) — every commit this
+repo made today. Both report `fork: false`, so this is not an ordinary
+fork relationship; unconfirmed whether `ivy-app` is a migration off this
+product or a kept-in-sync duplicate. See [[repos/ivy-app]] for the full
+count and the open question [cite:2026-10-02].
+
 ## Changelog
 
+- 2026-10-02 (failsafe) — recorded today's commit volume (24 commits,
+  shared 1:1 with the new `ivy-app` repo's SHAs) and the open
+  migration-vs-duplicate question for a future scout/retro look.
 - 2026-09-08 — page created from journals 2026-09-07→08, the two review
   contracts, and the F1 credential finding.
