@@ -106,6 +106,13 @@ unknown, never clean.
 The two kinds of playbook section. The retro edits tunables; an immutable
 changes only by a human commit.
 
+**Routine eval**:
+`evals/routines/`: real days replayed against a routine's prompt and the
+steering files, each with one change (a stale scan, a failed contract), and
+graded on the decisions the routine reports. The regression check for a
+change to how a routine decides.
+_Avoid_: test suite, benchmark
+
 ### Memory
 
 **Journal**:
@@ -174,7 +181,8 @@ six hours in the window. The cloud's only view of the Mac runner.
 The harness session executing one contract in a fresh clone of the target
 repository. Untrusted: it pushes branches and opens draft PRs, never writes
 to a default branch.
-_Avoid_: agent, sub-agent
+_Avoid_: agent, sub-agent (in the skills, a sub-agent is a helper inside one
+session, never a worker)
 
 **Claimed done** / **Verified done**:
 Claimed done: the runner moved the contract to `dispatch/done/` with an

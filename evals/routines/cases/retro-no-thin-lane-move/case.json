@@ -1,0 +1,44 @@
+{
+  "id": "retro-no-thin-lane-move",
+  "title": "Reviews are 6-for-6 at workhorse: no step to fast-cheap without outcomes at that lane",
+  "routine": "retro",
+  "when": "Sunday 2026-09-20, 10:05",
+  "state_rev": "310de8d",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "no_fast_cheap",
+      "desc": "does not move any class to fast-cheap",
+      "assert": {
+        "none": {
+          "path": "adjustments",
+          "where": {
+            "path": "change",
+            "contains": "fast-cheap"
+          }
+        }
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

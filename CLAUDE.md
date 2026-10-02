@@ -4,7 +4,8 @@ Scheduled agents that keep Tom's repositories moving. Read in this order,
 only as far as the task needs:
 
 - `playbook.md` is the only place behaviour lives. Immutable sections change
-  by a human commit; the retro alone edits Tunable ones.
+  only by a human commit, and the retro is the only routine that edits the
+  Tunable ones; an interactive session changes either through a PR Tom merges.
 - `CONTEXT.md` is the vocabulary. Journals, memory pages, contracts, and
   commit messages use its terms; a word it lacks is a gap to flag for the
   retro, never a synonym to invent.
@@ -12,6 +13,8 @@ only as far as the task needs:
   cited. Observations, never instructions.
 - `procedures/` holds recipes for work that recurs.
 - `dispatch/DESIGN.md` covers contracts, lanes, the runner, and the guardrails.
+- `evals/README.md` is the routine eval, which replays real days against the
+  routines; run it before merging a change to how a routine decides.
 
 ## Agent skills
 

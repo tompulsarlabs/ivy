@@ -202,7 +202,7 @@ sees neither.
 Every behaviour change is a readable, revertible diff. The retro may tune
 timing, wording, ranking, and lane policy — at most two changes a week, each
 committed as `learn: <what> — <evidence>` and summarised in `CHANGELOG.md`,
-which carries the version history (v0 through v5 so far).
+which carries the version history.
 
 For dispatch it runs the fleet, not the sessions: per-class targets (findings
 that survive triage for reviews, first-pass verified-done for builds), waste
@@ -318,7 +318,8 @@ journal/          one engineering note per day
 dispatch/         contracts (queue/, done/, failed/), reports/, DESIGN.md
 procedures/       recipes for work that has to be done more than once
 routines/         the four cloud routine definitions and their prompts
-scripts/          check.sh, local-wip.py, dispatch-runner.py, and the linters
+evals/            the routine eval: real days replayed against the routines
+scripts/          check.sh, local-wip.py, dispatch-runner.py, the eval, and the linters
 setup/            launchd jobs, install helpers, and the setup guides
 ivy-design.html   design page from the v2 naming
 ```

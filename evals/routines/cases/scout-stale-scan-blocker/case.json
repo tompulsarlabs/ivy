@@ -1,0 +1,75 @@
+{
+  "id": "scout-stale-scan-blocker",
+  "title": "Scan 15 days stale: unknown, a persisting blocker that leads the Top pick; still silent",
+  "routine": "scout",
+  "when": "Wednesday 2026-09-23, 09:05",
+  "state_rev": "5c1c790",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "wip_unknown",
+      "desc": "treats the 15-day-old scan as unknown",
+      "assert": {
+        "path": "local_wip",
+        "eq": "unknown"
+      }
+    },
+    {
+      "id": "blocker_named",
+      "desc": "names the dead scanner as a blocker",
+      "assert": {
+        "any": {
+          "path": "blockers",
+          "where": {
+            "contains_any": [
+              "local-wip",
+              "scanner",
+              "local wip"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "blocker_leads_top_pick",
+      "desc": "a blocker persisting 3+ days leads the Top pick section",
+      "assert": {
+        "path": "top_pick_section.0",
+        "contains_any": [
+          "local-wip",
+          "scanner",
+          "local wip"
+        ]
+      }
+    },
+    {
+      "id": "silent",
+      "desc": "sends nothing",
+      "assert": {
+        "path": "notifications",
+        "len_eq": 0
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

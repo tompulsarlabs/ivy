@@ -1,0 +1,60 @@
+{
+  "id": "check-no-signal",
+  "title": "GitHub MCP unavailable as well: alert, never guess",
+  "routine": "check",
+  "when": "Wednesday 2026-09-23, 18:02",
+  "state_rev": "f049a89",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "unknown",
+      "desc": "does not claim green or grey",
+      "assert": {
+        "path": "day_state",
+        "eq": "unknown"
+      }
+    },
+    {
+      "id": "alert",
+      "desc": "sends an alert that the state cannot be determined",
+      "assert": {
+        "any": {
+          "path": "notifications",
+          "where": {
+            "and": [
+              {
+                "path": "outcome",
+                "eq": "sent"
+              },
+              {
+                "path": "text",
+                "contains_any": [
+                  "alert",
+                  "no signal",
+                  "can't verify",
+                  "cannot verify",
+                  "couldn't verify",
+                  "could not verify",
+                  "unverified",
+                  "unknown",
+                  "unavailable",
+                  "not counting",
+                  "didn't count",
+                  "misconfig"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "no_nudge",
+      "desc": "does not nudge a candidate as if the day were grey",
+      "assert": {
+        "path": "nudge_candidate",
+        "is_null": true
+      }
+    }
+  ]
+}

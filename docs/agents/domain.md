@@ -18,6 +18,13 @@ How the engineering skills consume this repository's domain documentation.
 
 If a file is missing, proceed silently.
 
+`CONTEXT.md` keeps two sections beyond the glossary format on purpose:
+`## Relationships`, and `## Flagged ambiguities`, which records the ambiguities
+that already cost a contract and how each was resolved. Keep both.
+
+Research notes (`/research`) go to `.scratch/research/<slug>.md`. `memory/` is
+not a notes folder: only the failsafe and the retro write it.
+
 ## Use the glossary's vocabulary
 
 When output names an Ivy concept (a contract's Task, a journal heading, a

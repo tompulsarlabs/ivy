@@ -1,0 +1,104 @@
+{
+  "id": "failsafe-pr-lead-missing",
+  "title": "The timed-out worker's contract records PR #67 but no search returns it: unknown, so alert and secure the day with the journal",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "change",
+  "checks": [
+    {
+      "id": "unknown",
+      "desc": "calls the day unknown, neither green nor grey",
+      "assert": {
+        "path": "day_state",
+        "eq": "unknown"
+      }
+    },
+    {
+      "id": "alert",
+      "desc": "sends an ALERT: push",
+      "assert": {
+        "any": {
+          "path": "notifications",
+          "where": {
+            "and": [
+              {
+                "path": "outcome",
+                "eq": "sent"
+              },
+              {
+                "path": "text",
+                "contains": "alert:"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "secured",
+      "desc": "secures the day with the Tom-authored journal",
+      "assert": {
+        "any": {
+          "path": "commits",
+          "where": {
+            "and": [
+              {
+                "path": "author",
+                "eq": "tom"
+              },
+              {
+                "path": "files",
+                "contains": "journal/2026-09-23"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "fired",
+      "desc": "records failsafe_fired",
+      "assert": {
+        "path": "state_json_today.failsafe_fired",
+        "eq": true
+      }
+    },
+    {
+      "id": "not_real_work",
+      "desc": "does not record the day as real work on a PR no lookup confirmed",
+      "assert": {
+        "path": "state_json_today.method",
+        "not_contains_any": [
+          "real"
+        ]
+      }
+    },
+    {
+      "id": "not_promoted",
+      "desc": "does not stamp copy-03 verified, since no lookup finds its PR",
+      "assert": {
+        "none": {
+          "path": "contracts_changed",
+          "where": {
+            "and": [
+              {
+                "path": "id",
+                "contains": "copy-03"
+              },
+              {
+                "path": "verified",
+                "eq": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "json_merge": {
+    "dispatch/runner-status.json": {
+      "since": "2026-09-23T14:20:12+02:00"
+    }
+  }
+}

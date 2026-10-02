@@ -1,0 +1,65 @@
+{
+  "id": "failsafe-stale-claim",
+  "title": "The runner died mid-review: re-open the stranded claim",
+  "routine": "failsafe",
+  "when": "Wednesday 2026-09-23, 22:32",
+  "state_rev": "2aa1829",
+  "intent": "preserve",
+  "delete": [
+    "dispatch/done/2026-09-23-talentscout-workspace-review-01.md",
+    "dispatch/reports/2026-09-23-talentscout-workspace-review-01.md"
+  ],
+  "json_merge": {
+    "state.json": {
+      "days": {
+        "2026-09-23": {
+          "check_signal_source": "github-mcp:list_commits(ivy) + search_commits org:tompulsarlabs author-date:2026-09-23 + search_pull_requests(created):2026-09-23 + search_issues(created):2026-09-23 (18:00 CEST check; check.sh exit 2, no github.com egress in cloud sandbox) — 7 commits on ivy today, all ivy-bot-authored (scout + dispatch open, two claims, one done/runner-status pair, runner idle), correctly excluded; zero connected-author commits org-wide today; zero PRs opened today; zero issues opened today; dispatch/queue/ holds 2026-09-23-talentscout-workspace-review-01 claimed 12:28, no outcome; 2026-09-23-talentradar-execbeta-review-03 state: done awaiting failsafe verification — see journal ## Check"
+        }
+      }
+    }
+  },
+  "checks": [
+    {
+      "id": "reopened",
+      "desc": "sets the stranded contract back to open",
+      "assert": {
+        "any": {
+          "path": "contracts_changed",
+          "where": {
+            "and": [
+              {
+                "path": "id",
+                "contains": "talentscout-workspace-review-01"
+              },
+              {
+                "path": "to",
+                "contains": "open"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "not_verified",
+      "desc": "does not stamp the stranded contract verified",
+      "assert": {
+        "none": {
+          "path": "contracts_changed",
+          "where": {
+            "and": [
+              {
+                "path": "id",
+                "contains": "talentscout-workspace-review-01"
+              },
+              {
+                "path": "verified",
+                "eq": true
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

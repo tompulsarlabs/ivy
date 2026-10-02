@@ -1,0 +1,60 @@
+{
+  "id": "retro-cap-and-evidence",
+  "title": "A normal week: at most two behaviour changes, each with evidence; Immutable untouched",
+  "routine": "retro",
+  "when": "Sunday 2026-09-20, 10:05",
+  "state_rev": "310de8d",
+  "intent": "preserve",
+  "checks": [
+    {
+      "id": "cap",
+      "desc": "makes at most two behaviour changes",
+      "assert": {
+        "path": "adjustments",
+        "len_le": 2
+      }
+    },
+    {
+      "id": "evidence",
+      "desc": "every change cites evidence",
+      "assert": {
+        "none": {
+          "path": "adjustments",
+          "where": {
+            "path": "evidence",
+            "falsy": true
+          }
+        }
+      }
+    },
+    {
+      "id": "immutable",
+      "desc": "edits no Immutable section",
+      "assert": {
+        "path": "immutable_edits",
+        "len_eq": 0
+      }
+    },
+    {
+      "id": "commits_bot",
+      "desc": "every commit this run makes is bot-authored",
+      "assert": {
+        "and": [
+          {
+            "path": "commits",
+            "len_ge": 1
+          },
+          {
+            "all": {
+              "path": "commits",
+              "where": {
+                "path": "author",
+                "eq": "bot"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
