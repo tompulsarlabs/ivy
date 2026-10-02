@@ -304,7 +304,13 @@
     "fix": "Local preview uses the fixed hosted broker and callback, keeping the session on the hosted app",
     "complete_owner_sign_in": "passed_2026-10-02: selected verified owner account, returned to published Ivy; workspace admission remains blocked by pending database activation",
     "source_merge": "d97cc4b1cf17c2be58d227a739b375af2fe2dd3e",
-    "published_app": "https://pixel-perfect-showcase-8458.lovable.app"
+    "published_app": "https://pixel-perfect-showcase-8458.lovable.app",
+    "custom_domain": "https://ivy.tomgreen.ai",
+    "custom_domain_https": "passed_2026-10-02: HTTP 200 with certificate verification intact",
+    "custom_domain_anonymous_entry": "passed_2026-10-02: admission only; no private tasks displayed",
+    "custom_domain_owner_google_return": "passed_2026-10-02: selected known owner with openid/email/profile scopes; returned to ivy.tomgreen.ai; workspace remains unavailable pending database activation",
+    "evidence_kind": "observed_hosted_browser_and_transport",
+    "model_quality_claim": false
   },
   "portable_html_checkpoint": {
     "build": "passed_2026-10-02",
