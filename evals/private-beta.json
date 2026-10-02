@@ -137,18 +137,35 @@
       "evidence_kind": "fixed_process_or_transport_fixture",
       "status": "passed_2026-10-02",
       "model_quality_claim": false
+    },
+    {
+      "id": "PB17",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_deadline_stops_a_real_process_even_if_it_never_reads_a_large_prompt",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB18",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_completed_parent_does_not_leave_its_background_child_running",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
     }
   ],
   "actual_model_case": {
     "status": "passed_2026-10-02",
     "model": "gpt-6-sol",
     "requested_effort": "medium",
-    "elapsed_seconds": 52.8,
+    "elapsed_seconds": 39.5,
     "expected": "Exact fixture file bytes in an isolated checkout; original checkout unchanged; result remains human_checks_pending",
     "independent_artifact_check": true,
     "transport": "fake RPC; actual authenticated Codex CLI",
     "hosted_execution": false,
-    "quality_generalization": false
+    "quality_generalization": false,
+    "final_cleanup_adapter_rechecked": true
   },
   "hosted_cases": [
     {
