@@ -6,6 +6,11 @@
 # exists, that no page is unreachable from the index, and that the index stays
 # small enough to read on every run.
 #
+# Pages are read at the start of every run, so each has a word budget. Budgets
+# only warn (exit status unchanged) unless IVY_MEMORY_BUDGET=fail: the
+# failsafe runs this lint after securing the day, and an over-long page must
+# never be what stops its memory commit.
+#
 # Semantic checks — is this synthesis still supported by its evidence? — are
 # the retro's job, not this script's. Exit 0 clean, 1 on any violation.
 set -uo pipefail
@@ -14,12 +19,28 @@ cd "$(dirname "$0")/.." || exit 1
 
 INDEX="memory/INDEX.md"
 INDEX_MAX_LINES="${IVY_INDEX_MAX_LINES:-40}"
+REPO_PAGE_MAX_WORDS="${IVY_REPO_PAGE_MAX_WORDS:-1200}"
+SUBJECT_PAGE_MAX_WORDS="${IVY_SUBJECT_PAGE_MAX_WORDS:-1800}"
+BUDGET_MODE="${IVY_MEMORY_BUDGET:-warn}"
 # Real calendar shape, not just four-two-two: month 01-12, day 01-31.
 ISO_DATE='^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$'
 fail=0
 count=0
+over=0
 
 err() { printf 'memory-lint: %s\n' "$1" >&2; fail=1; }
+
+case "$BUDGET_MODE" in warn|fail) ;; *) err "IVY_MEMORY_BUDGET '$BUDGET_MODE' not warn|fail"; BUDGET_MODE=warn;; esac
+
+# A page over its word budget: a warning by default, a violation in fail mode.
+over_budget() {
+  over=$((over + 1))
+  if [ "$BUDGET_MODE" = "fail" ]; then
+    err "$1"
+  else
+    printf 'memory-lint: warning: %s\n' "$1" >&2
+  fi
+}
 
 # Links inside code spans or fenced blocks are documentation of the syntax,
 # not edges — strip both before extracting anything.
@@ -70,6 +91,17 @@ while IFS= read -r page; do
     fi
   done < <(printf '%s\n' "$body" | grep -Eo '\[cite:[^]]+\]' | sed 's/^\[cite://; s/\]$//' | sort -u)
 
+  # --- word budget: repo pages are smaller than cross-cutting subject pages ---
+  if [ "$page" != "$INDEX" ]; then
+    case "$page" in
+      memory/repos/*) budget=$REPO_PAGE_MAX_WORDS ;;
+      *) budget=$SUBJECT_PAGE_MAX_WORDS ;;
+    esac
+    words=$(wc -w < "$page" | tr -d ' ')
+    [ "$words" -le "$budget" ] \
+      || over_budget "$page is $words words, over its $budget-word budget"
+  fi
+
   # --- no orphans: every page must be reachable from the index ---
   if [ "$page" != "$INDEX" ]; then
     rel=${page#memory/}
@@ -84,5 +116,9 @@ lines=$(wc -l < "$INDEX" | tr -d ' ')
 [ "$lines" -le "$INDEX_MAX_LINES" ] \
   || err "$INDEX is $lines lines, over the $INDEX_MAX_LINES-line budget"
 
-[ "$fail" -eq 0 ] && echo "memory-lint: ok — $count pages, all links and citations resolve"
+if [ "$fail" -eq 0 ]; then
+  note=""
+  [ "$over" -eq 0 ] || note="; $over over word budget (warning)"
+  echo "memory-lint: ok — $count pages, all links and citations resolve$note"
+fi
 exit "$fail"
