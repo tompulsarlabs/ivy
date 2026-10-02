@@ -1,6 +1,6 @@
 # Routine: retro
 
-- **Trigger:** `trig_015JhFyeg4kGtrjHFwAi7hbU` (`ivy-retro`), cron `0 8 * * 0` in UTC: Sunday 10:00 in Berlin
+- **Trigger:** [`trig_015JhFyeg4kGtrjHFwAi7hbU`](https://claude.ai/code/routines/trig_015JhFyeg4kGtrjHFwAi7hbU) (`ivy-retro`), cron `0 8 * * 0` in UTC: Sunday 10:00 in Berlin
   in summer, Sunday 09:00 after the late-October change to CET
 - **Model:** `claude-sonnet-5`, set by Tom on the trigger; Ivy never changes
   its own routines' models
@@ -16,9 +16,9 @@ Read playbook.md: "Tunable: retro" is your instruction set, and every Immutable 
 Finish with one or two lines: what changed and the evidence for it, or why nothing changed.
 ```
 
-The block above is the prompt the trigger should run: paste it into the
-trigger whenever this file changes (a Claude session with the
-Claude_Code_Remote tools can update it). `evals/routines/live-prompts/` keeps
-the prompts the triggers ran before this version, as the eval's baseline.
+The block above is the prompt the trigger should run. Whenever this file
+changes, Tom pastes it into the trigger, linked above: it was created through
+the API, so only he can edit it. `evals/routines/live-prompts/` keeps the
+prompts the triggers ran before this version, as the eval's baseline.
 Everything else the routine needs lives in `playbook.md`, which is the point:
 the retro tunes behaviour there without touching cloud configuration.
