@@ -3,7 +3,8 @@
 Ivy is a set of scheduled agents that keep my software projects moving, and
 that remember what they learn while doing it.
 
-It runs three times a day in the cloud (plus a weekly retro), watches 15 repositories, and writes
+It runs three times a day in the cloud (plus a weekly retro), watches every
+non-fork, non-archived repository on my account, and writes
 everything it knows back into this repo as plain files. Nothing is hidden in
 a database or a vendor's memory store — the whole system is markdown, JSON,
 and git history you can read top to bottom.
@@ -18,8 +19,8 @@ and git history you can read top to bottom.
 | Retro | Sun 10:00 | Reads a week of outcomes, changes at most two things, cites the evidence for each change. |
 
 The failsafe is the floor: if a day would otherwise be empty, Ivy writes a
-genuine journal entry rather than faking activity. It has not been needed
-once in ten recorded days.
+genuine journal entry rather than faking activity. It was not needed for the
+first twenty recorded days; it first fired on 12 September 2026.
 
 ## The layers of state
 
@@ -31,7 +32,7 @@ Each layer answers a different question, and they stay in their own lanes.
   whether a nudge was sent and whether it converted. Terse; it cites the
   journal for detail. `tomgreen.ai` reads this file live, so the schema is
   append-only.
-- **`memory/`** — 12 pages, one per subject: each repo, the environment,
+- **`memory/`** — one page per subject: each repo, the environment,
   observed working patterns, routing evidence. Every claim carries a
   citation to a journal date or a commit. Pages link to each other with
   `[[wikilinks]]`. This is the layer that makes run number fifty smarter
@@ -118,9 +119,11 @@ human commit.
 
 ## What it has done
 
-Ten recorded days (23 August–1 September), 142 contributions, all from real
-work — the failsafe has never had to fire. Volume is uneven by nature: 46
-contributions one day, 1 the next, and both days cleared the bar.
+Forty recorded days (23 August–1 October 2026), every one green, 311
+contributions. The first twenty were all real work; from 12 September the
+failsafe secured twelve of the next twenty. Volume is uneven by nature: 46
+contributions one day, 1 the next, and both days cleared the bar. Live
+numbers are in `state.json`.
 
 The clearest thing it has caught: on 27 August, six real commits on
 `tomgreen.ai` were authored with an email GitHub didn't recognise, so none
@@ -135,22 +138,22 @@ recovered. All of it is on the `ops` memory page with citations.
 
 ## What isn't working yet
 
-The Mac dispatch runner went live on 1 September, after the queue had sat
-unclaimed since 27–28 August — a gap the 30 August retro correctly logged as
-infrastructure rather than policy, declining to retune routing when nothing
-had run. Its first contract, a cross-family review executed by the OpenAI
-lane, produced a findings report and awaits the failsafe's verification
-stamp. The same afternoon its attribution gate refused three `tomgreen.ai`
-build contracts because the check compared against a single address while
-the account has two connected ones — a false positive, fixed by making the
-check membership over `connected_emails`. The gate did its job; the test
-under it was too narrow. The runner's own copy of that test was fixed on
-2 September, with a unit test, and the three contracts were re-queued.
+As of 1 October 2026. The failsafe went from never firing to securing twelve
+of twenty days. The retros first read that as a Mac outage (the local-WIP
+scanner was dark from 9 to 24 September), but the floor kept firing after the
+scanner recovered, so the outage explains part of it, not all.
 
-Two other things are honestly thin. Exactly one nudge has ever been sent
-and it didn't convert, which is far too little data to tune notification
-timing on. And the dispatch fleet has one verified outcome, well short of
-the three the retro requires before moving any lane.
+Nudges have not worked: fourteen sent, none converted. And dispatch produces
+reviews faster than pull requests get merged. Thirty-four of the first
+thirty-eight finished contracts were reviews, and at least 21 of them went to
+pull requests that are still drafts, although `dispatch/DESIGN.md` §6 says to
+review only non-draft PRs whose head changed.
+The one review finding routed into a build (`talent-radar` #7) passed its own
+review and is still unmerged.
+
+The next change follows from that: review only what changed or what I ask
+for, count merges, and move the nudge to the morning with a link to the pull
+request.
 
 ## Layout
 
