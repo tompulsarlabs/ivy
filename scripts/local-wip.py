@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Scan local project roots for git repos and publish their WIP state to
 local-wip.json so the cloud scout sees local truth (dirty trees, unpushed
-commits, repos with no remote at all, misconfigured commit attribution).
+commits, repos with no remote at all, misconfigured commit attribution), plus
+the head commit of every pull request on the watchlist, which the cloud
+sandbox cannot read for itself.
 
 Privacy: the published file identifies repos by directory basename and
 remote slug only — no hostname, no filesystem paths. Those are public
@@ -9,7 +11,10 @@ identifiers already (or at worst a folder name); the machine itself stays
 out of the public repo. Commit identity is therefore published as a
 verdict (`author_email_ok`) rather than an address: git's invented
 fallback identity is literally `user@hostname.local`, so echoing it would
-leak the machine name this file is careful never to carry.
+leak the machine name this file is careful never to carry. Pull-request
+heads are PR numbers and commit SHAs: journals already name private PR
+numbers, and a SHA is inert without read access to the repository.
+Failures are published as a fixed code (`scanner_error`), never a message.
 
 Robustness (replaces the original shell version):
 - JSON is generated with the json module, never string interpolation.
@@ -18,9 +23,12 @@ Robustness (replaces the original shell version):
 - A six-hour publication heartbeat distinguishes unchanged work from no scan.
 - Publication uses a temporary clone; it never stages, rebases or pushes the
   operator's checkout. Failed publication exits nonzero and the next run rescans.
+- A failed scan republishes the previous snapshot unchanged except for
+  `scanner_error`, so `generated_at` keeps meaning "last good scan".
 """
 
 import argparse
+import concurrent.futures
 import fcntl
 import json
 import os
@@ -28,6 +36,7 @@ import re
 import subprocess
 import sys
 import tempfile
+import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
@@ -35,6 +44,14 @@ IVY = Path(os.environ.get("IVY_DIR", Path.home() / "Build" / "ivy"))
 LOCK = IVY / ".local-wip.lock"
 HEARTBEAT = timedelta(hours=6)
 BOT = ["-c", "user.name=ivy-bot", "-c", "user.email=bot@ivy.invalid"]
+# Pull-request heads: one ls-remote per watchlist repo. The scan feeds a
+# routine 15 minutes later, so each call and the whole pass are bounded.
+PR_REMOTE = "https://github.com/{repo}.git"
+PR_CALL_TIMEOUT = 15
+PR_PASS_BUDGET = 120
+PR_WORKERS = 6
+REPO_SLUG = re.compile(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+")
+PULL_REF = re.compile(r"([0-9a-f]{40}|[0-9a-f]{64})\trefs/pull/([1-9][0-9]*)/head")
 # Repository-scoped environment (git rev-parse --local-env-vars), plus the
 # namespace override. `git -C` alone cannot isolate an inherited Git context.
 GIT_LOCAL_ENV = {
@@ -44,6 +61,14 @@ GIT_LOCAL_ENV = {
     "GIT_NO_REPLACE_OBJECTS", "GIT_REPLACE_REF_BASE", "GIT_PREFIX",
     "GIT_SHALLOW_FILE", "GIT_COMMON_DIR", "GIT_NAMESPACE",
 }
+
+
+class ScanError(RuntimeError):
+    """A failure with a fixed, publishable code. The message stays local."""
+
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
 
 
 def git_environment(publishing=False):
@@ -81,7 +106,7 @@ def required_git(repo, *args, publishing=False):
     result = git(repo, *args, publishing=publishing)
     if result is None:
         # Do not log arguments, remote URLs or stderr: they can contain secrets.
-        raise RuntimeError(f"git {args[0]} failed; snapshot not published")
+        raise ScanError("git_failed", f"git {args[0]} failed; snapshot not published")
     return result
 
 
@@ -90,7 +115,7 @@ def discover_repos(roots):
     found = set()
     for root in roots:
         if not root.is_dir():
-            raise RuntimeError("configured scan root unavailable; snapshot not published")
+            raise ScanError("root_unavailable", "configured scan root unavailable; snapshot not published")
         markers = list(root.glob("*/.git")) + list(root.glob("*/*/.git"))
         if (root / ".git").exists():
             markers.append(root / ".git")
@@ -143,6 +168,84 @@ def read_roots(config_path):
               "config.yml shape changed?", file=sys.stderr)
         sys.exit(1)
     return roots or [Path.home() / "Build"]
+
+
+def read_watchlist(config_path):
+    """Read watchlist.repos from config.yml: `owner/name` slugs, in order.
+
+    Same one-shape parsing as read_roots. Returns None when the list cannot
+    be found, so the snapshot omits `pr_heads` (unknown) rather than
+    publishing an empty map (which would read as "no pull requests").
+    """
+    try:
+        lines = config_path.read_text().splitlines()
+    except OSError:
+        return None
+    repos, in_watchlist, in_repos = [], False, False
+    for line in lines:
+        if re.match(r"^watchlist:", line):
+            in_watchlist, in_repos = True, False
+            continue
+        if in_watchlist and re.match(r"^\S", line):
+            break
+        if in_watchlist and re.match(r"^  repos:", line):
+            in_repos = True
+            continue
+        if in_repos:
+            m = re.match(r"^\s+-\s+(\S+)", line)
+            if m and REPO_SLUG.fullmatch(m.group(1)):
+                repos.append(m.group(1))
+            elif re.match(r"^  \S", line):
+                in_repos = False
+    return repos or None
+
+
+def pull_request_heads(repo):
+    """{pr_number: head_sha} for one repo, or None when it cannot be read.
+
+    An empty dict is a real answer (no pull requests); None is unknown. Git
+    must never prompt: under launchd a credential prompt would hang the scan.
+    """
+    env = git_environment()
+    env["GIT_TERMINAL_PROMPT"] = "0"
+    env["GCM_INTERACTIVE"] = "never"
+    try:
+        r = subprocess.run(
+            ["git", "ls-remote", "--", PR_REMOTE.format(repo=repo), "refs/pull/*/head"],
+            capture_output=True, text=True, timeout=PR_CALL_TIMEOUT, env=env,
+            stdin=subprocess.DEVNULL, cwd=tempfile.gettempdir(),
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if r.returncode != 0:
+        return None
+    heads = {}
+    for line in r.stdout.splitlines():
+        m = PULL_REF.fullmatch(line)
+        if m:
+            heads[m.group(2)] = m.group(1)
+    return heads
+
+
+def collect_pr_heads(repos):
+    """Heads for every repo that answered inside the pass budget.
+
+    A repo that failed or timed out is absent, never empty.
+    """
+    heads = {}
+    pool = concurrent.futures.ThreadPoolExecutor(max_workers=PR_WORKERS)
+    try:
+        futures = {pool.submit(pull_request_heads, repo): repo for repo in repos}
+        try:
+            for future in concurrent.futures.as_completed(futures, timeout=PR_PASS_BUDGET):
+                result = future.result()
+                if result is not None:
+                    heads[futures[future]] = result
+        except concurrent.futures.TimeoutError:
+            pass
+    finally:
+        pool.shutdown(wait=False, cancel_futures=True)
+    return dict(sorted(heads.items()))
 
 
 def next_author_email(repo):
@@ -239,21 +342,47 @@ def timestamp(payload):
         return None
 
 
+def utc_now():
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def should_publish(previous, payload):
     new = timestamp(payload)
     if new is None:
-        raise RuntimeError("scan timestamp invalid; snapshot not published")
+        raise ScanError("timestamp_invalid", "scan timestamp invalid; snapshot not published")
     if not isinstance(previous, dict):
         return True
     old = timestamp(previous)
     if old and new and old > new:
-        raise RuntimeError("published snapshot is newer than this scan; rescan required")
-    return (previous.get("repos") != payload["repos"] or old is None
-            or new - old >= HEARTBEAT)
+        raise ScanError("remote_newer", "published snapshot is newer than this scan; rescan required")
+    # Any content change publishes: repos, pull-request heads, or clearing a
+    # previously published scanner_error. Only the timestamp is excluded.
+    content = lambda snapshot: {k: v for k, v in snapshot.items() if k != "generated_at"}
+    return content(previous) != content(payload) or old is None or new - old >= HEARTBEAT
 
 
-def publish_snapshot(payload, remote):
-    """Publish only this snapshot, retrying branch races without force pushes."""
+def with_scanner_error(previous, code, now):
+    """The previous snapshot annotated with a failure, or None to skip.
+
+    `generated_at` and every scanned field stay exactly as last published, so
+    the cloud's 36-hour staleness rule still measures the last good scan. The
+    same code is republished at most once per heartbeat.
+    """
+    if not isinstance(previous, dict) or timestamp(previous) is None:
+        return None
+    if previous.get("scanner_error") == code:
+        try:
+            last = datetime.fromisoformat(previous["scanner_error_at"].replace("Z", "+00:00"))
+            if datetime.fromisoformat(now.replace("Z", "+00:00")) - last < HEARTBEAT:
+                return None
+        except (KeyError, TypeError, ValueError, AttributeError):
+            pass
+    return {**previous, "scanner_error": code, "scanner_error_at": now}
+
+
+def publish(remote, build, message):
+    """Publish build(previous) as local-wip.json, retrying branch races
+    without force pushes. build returns the new payload, or None to skip."""
     with tempfile.TemporaryDirectory(prefix="ivy-wip-publish-") as temp:
         clone = Path(temp) / "ivy"
         required_git(Path(temp), "clone", "--quiet", "--single-branch", "--branch", "main", "--", remote, str(clone), publishing=True)
@@ -264,41 +393,66 @@ def publish_snapshot(payload, remote):
                 required_git(clone, "reset", "--hard", "--quiet", "origin/main", publishing=True)
             target = clone / "local-wip.json"
             if target.is_symlink():
-                raise RuntimeError("snapshot target is a symbolic link; publication refused")
+                raise ScanError("publish_refused", "snapshot target is a symbolic link; publication refused")
             try:
                 previous = json.loads(target.read_text())
             except (OSError, ValueError):
                 previous = None
-            if not should_publish(previous, payload):
+            payload = build(previous)
+            if payload is None:
                 return False
             target.write_text(json.dumps(payload, indent=2) + "\n")
             required_git(clone, "add", "--", "local-wip.json", publishing=True)
             required_git(clone, *BOT, "-c", "commit.gpgsign=false", "commit", "--quiet", "-m",
-                         f"wip: local scan — {len(payload['repos'])} checkouts",
+                         message(payload),
                          "--author=ivy-bot <bot@ivy.invalid>", "--", "local-wip.json", publishing=True)
             if git(clone, "push", "--quiet", "origin", "HEAD:refs/heads/main", publishing=True) is not None:
                 return True
-        raise RuntimeError("snapshot publication failed after 3 attempts; next run will rescan")
+        raise ScanError("publish_failed", "snapshot publication failed after 3 attempts; next run will rescan")
 
 
-def collect_snapshot():
+def publish_snapshot(payload, remote):
+    """Publish only this snapshot, retrying branch races without force pushes."""
+    return publish(remote, lambda previous: payload if should_publish(previous, payload) else None,
+                   lambda p: f"wip: local scan — {len(p['repos'])} checkouts")
+
+
+def publish_scan_error(code, remote, now=None):
+    """Record a failed scan on the last published snapshot."""
+    now = now or utc_now()
+    return publish(remote, lambda previous: with_scanner_error(previous, code, now),
+                   lambda p: f"wip: local scan failed — {code}")
+
+
+def collect_snapshot(with_pr_heads=False):
     config = IVY / "config.yml"
     if not config.is_file():
-        raise RuntimeError("scanner configuration missing; snapshot not published")
+        raise ScanError("config_missing", "scanner configuration missing; snapshot not published")
     connected = read_connected_emails(config)
     if not connected:
-        raise RuntimeError("connected identities missing; snapshot not published")
+        raise ScanError("identities_missing", "connected identities missing; snapshot not published")
     repos = [scan_repo(repo, connected) for repo in discover_repos(read_roots(config))]
-    return {"generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "repos": repos}
+    payload = {"generated_at": utc_now(), "repos": repos}
+    if with_pr_heads:
+        watchlist = read_watchlist(config)
+        if watchlist is None:
+            print("local-wip: no watchlist.repos in config.yml; pr_heads omitted", file=sys.stderr)
+        else:
+            payload["pr_heads"] = collect_pr_heads(watchlist)
+    return payload
 
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="print a local snapshot; no lock, writes or network")
+    parser.add_argument("--pr-heads", action="store_true",
+                        help="with --dry-run, also read pull-request heads (network, read-only)")
     args = parser.parse_args(argv)
     if args.dry_run:
-        print(json.dumps(collect_snapshot(), indent=2))
+        started = time.monotonic()
+        print(json.dumps(collect_snapshot(with_pr_heads=args.pr_heads), indent=2))
+        if args.pr_heads:
+            print(f"local-wip: dry run took {time.monotonic() - started:.1f}s", file=sys.stderr)
         return 0
     with LOCK.open("a") as lock:
         try:
@@ -306,8 +460,17 @@ def main(argv=None):
         except BlockingIOError:
             print("local-wip: another scan is running")
             return 0
-        payload = collect_snapshot()
         remote = required_git(IVY, "remote", "get-url", "origin")
+        try:
+            payload = collect_snapshot(with_pr_heads=True)
+        except (ScanError, OSError) as error:
+            # Tell the cloud the scan failed; if that cannot publish either,
+            # the original failure is still what the exit status reports.
+            try:
+                publish_scan_error(getattr(error, "code", "os_error"), remote)
+            except (ScanError, OSError):
+                pass
+            raise
         published = publish_snapshot(payload, remote)
         print(f"local-wip: {'published' if published else 'current'} — {len(payload['repos'])} checkouts")
     return 0
