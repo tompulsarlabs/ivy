@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-10-03T11:05:17+02:00",
+  "last_tick": "2026-10-03T11:35:31+02:00",
   "lint_ok": true,
-  "result": "finished 2026-10-03-talentradar-betarequests-review-01",
-  "runner_sha": "3348bba",
-  "since": "2026-10-03T11:05:17+02:00",
+  "result": "idle",
+  "runner_sha": "43b4da1",
+  "since": "2026-10-03T11:35:31+02:00",
   "skipped": []
 }
