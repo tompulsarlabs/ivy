@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "date": "2026-10-03",
+  "scope": "Two fictional fixed-specialist synthesis comparisons, not fresh team runs or owner acceptance.",
+  "model": "gpt-6-sol",
+  "effort": "medium",
+  "actual_model_calls": 4,
+  "cases": [
+    {
+      "id": "BU-01",
+      "baseline_items": 1,
+      "candidate_items": 1,
+      "baseline_selection_correct": true,
+      "candidate_selection_correct": true,
+      "candidate_quote_support_review": "Root inspected fictional source passages: attribution, dates, numbers and remaining obligations preserved.",
+      "candidate_runtime_hash": "8023dadf9eb14f931a9196f97ca7f5e1072986ab194042e6eea1bdb359f3fde0",
+      "output_hash": "432a7dac6569fe48bcfb980a3a5ce712e9a22ba3a5e45bcaf9f3f2f694f58cfd",
+      "draft_preserved": true,
+      "evidence_change": "Unrelated source prefix replaced by exact request passage.",
+      "final_guard_revalidation": "Passed on exact saved model output; schema/role contract unchanged; no new model call."
+    },
+    {
+      "id": "BU-02",
+      "baseline_items": 3,
+      "candidate_items": 3,
+      "baseline_selection_correct": true,
+      "candidate_selection_correct": true,
+      "candidate_quote_support_review": "Root inspected fictional source passages: attribution, dates, numbers and remaining obligations preserved.",
+      "candidate_runtime_hash": "8023dadf9eb14f931a9196f97ca7f5e1072986ab194042e6eea1bdb359f3fde0",
+      "output_hash": "1849dc1e38563cfd27195f07538a87c8c8c6c7412a31c4549f46e945c7dcaf87",
+      "draft_preserved": true,
+      "evidence_change": "Both private-source prefixes replaced by exact obligation passage; public essay attribution preserved.",
+      "final_guard_revalidation": "Passed on exact saved model output; schema/role contract unchanged; no new model call."
+    }
+  ],
+  "final_runtime_hash": "490e5fddeef275b2c19aa913fccde39d5e0f1cf085b7a38f62ab27265eab424a",
+  "limits": [
+    "Baseline already removed duplicates in these cases: no measured deduplication improvement.",
+    "No real owner edit-burden or usefulness outcomes collected.",
+    "Exact substring checks establish copying fidelity, not entailment or truth.",
+    "Model probes ran the recorded candidate hash; final evidence-required enforcement and duplicate-Chief guard were added afterward and tested deterministically.",
+    "No scheduled run, hosted delivery, UI visual check or automatic sending/posting tested.",
+    "Four calls only: candidate used 12,678 reported tokens versus 11,529 baseline; this is a probe observation, not a stable cost estimate or token-saving claim."
+  ],
+  "checks": {
+    "vitest": {
+      "files": 22,
+      "tests": 133,
+      "passed": true
+    },
+    "python": {
+      "tests": 73,
+      "passed": true
+    },
+    "typescript": "passed",
+    "standalone_build": "passed_with_explicit_synthetic_public_key; compile/artifact check only, not hosted auth or production deployment",
+    "existing_bundle_notice": true
+  },
+  "probe_total_tokens": {
+    "baseline": 11529,
+    "candidate": 12678
+  }
+}
