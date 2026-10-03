@@ -16,6 +16,17 @@ spec = importlib.util.spec_from_file_location("runner", Path(__file__).with_name
 runner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(runner)
 
+CONFIG = """commit_email: fixture@example.invalid
+lanes:
+  frontier:
+    anthropic: { harness: claude-code, model: claude-opus-5, effort: xhigh }
+    openai: { harness: codex, model: gpt-5.6-sol }
+  workhorse:
+    anthropic: { harness: claude-code, model: claude-opus-5, effort: medium }
+  fast-cheap:
+    anthropic: { harness: claude-code, model: claude-haiku-4-5 }
+"""
+
 
 class HarnessSettingsTests(unittest.TestCase):
     def claude(self, effort="medium"):
@@ -25,7 +36,10 @@ class HarnessSettingsTests(unittest.TestCase):
         return {"harness": "codex", "model": "gpt-5.6-sol", "effort": effort}
 
     def test_config_to_claude_commands_preserves_distinct_lane_efforts(self):
-        _, _, lanes = runner.load_config(Path(__file__).resolve().parent.parent / "config.yml")
+        with tempfile.TemporaryDirectory() as temp:
+            config = Path(temp) / "config.yml"
+            config.write_text(CONFIG)
+            _, _, lanes = runner.load_config(config)
         frontier = runner.harness_argv(lanes["frontier"]["anthropic"], "task", "review")
         workhorse = runner.harness_argv(lanes["workhorse"]["anthropic"], "task", "review")
         self.assertIn("--effort", frontier)
@@ -76,6 +90,15 @@ class HarnessSettingsTests(unittest.TestCase):
         self.assertEqual(parent["CLAUDE_CODE_EFFORT_LEVEL"], "low")
         self.assertEqual(runner.harness_environment(self.codex(), parent), parent)
 
+    def test_unset_claude_effort_removes_inherited_override(self):
+        parent = {"CLAUDE_CODE_EFFORT_LEVEL": "max", "UNRELATED": "keep"}
+        for model in ("claude-haiku-4-5", "claude-opus-5"):
+            with self.subTest(model=model):
+                child = runner.harness_environment({"harness": "claude-code", "model": model}, parent)
+                self.assertNotIn("CLAUDE_CODE_EFFORT_LEVEL", child)
+                self.assertEqual(child["UNRELATED"], "keep")
+                self.assertEqual(parent["CLAUDE_CODE_EFFORT_LEVEL"], "max")
+
     def test_route_preview_does_not_execute_or_touch_runner_workspace(self):
         config = Path(__file__).resolve().parent.parent / "config.yml"
         with patch.object(runner.subprocess, "run") as run, patch.object(runner, "ensure_clone") as clone, \
@@ -87,7 +110,8 @@ class HarnessSettingsTests(unittest.TestCase):
         clone.assert_not_called()
         publish.assert_not_called()
         profiles = json.loads(output.getvalue())
-        self.assertEqual(len(profiles), 5)
+        _, _, lanes = runner.load_config(config)
+        self.assertEqual(len(profiles), sum(len(pools) for pools in lanes.values()))
         self.assertTrue(all(p["status"] == "valid_configuration" for p in profiles))
         self.assertTrue(all(p["availability"] == "not_checked" for p in profiles))
 
@@ -108,7 +132,7 @@ class HarnessSettingsTests(unittest.TestCase):
         publish.assert_not_called()
 
     def test_empty_and_duplicate_effort_cannot_silently_use_defaults(self):
-        original = (Path(__file__).resolve().parent.parent / "config.yml").read_text()
+        original = CONFIG
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp) / "config.yml"
             for replacement in ("effort:", "effort: high, effort: medium"):
@@ -117,7 +141,7 @@ class HarnessSettingsTests(unittest.TestCase):
                     runner.load_config(config)
 
     def test_routing_comments_and_blank_lines_do_not_hide_later_lanes(self):
-        original = (Path(__file__).resolve().parent.parent / "config.yml").read_text()
+        original = CONFIG
         with tempfile.TemporaryDirectory() as temp:
             config = Path(temp) / "config.yml"
             config.write_text(original.replace("  workhorse:\n", "\n# Workhorse routing\n  workhorse: # balanced tasks\n"))
@@ -221,6 +245,96 @@ class HarnessSettingsTests(unittest.TestCase):
             clone.assert_called_once_with(root, runner.IVY_REMOTE)
             self.assertEqual(status.call_args.args[1][0]["reason"], "invalid_harness_config")
             self.assertEqual(contract.read_text(), "unchanged contract")
+
+    def test_invalid_live_config_reports_failed_preflight_without_claim(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            (root / "config.yml").write_text(CONFIG.replace("effort: xhigh", "effort:"))
+            with (root / "test-lock").open("w") as lock, \
+                 patch.object(runner, "WORKROOT", root), patch.object(runner, "IVY", root), \
+                 patch("builtins.open", return_value=lock), \
+                 patch.object(runner, "ensure_clone") as clone, \
+                 patch.object(runner, "synced_runner", return_value=None), \
+                 patch.object(runner, "run", return_value=Mock(returncode=0)), \
+                 patch.object(runner, "set_state") as claim, \
+                 patch.object(runner, "publish_status") as status, \
+                 patch.object(runner.subprocess, "Popen") as worker, \
+                 patch.object(sys, "argv", ["runner", "--once"]), \
+                 contextlib.redirect_stdout(io.StringIO()):
+                self.assertEqual(runner.guarded_main(), 1)
+            claim.assert_not_called()
+            worker.assert_not_called()
+            clone.assert_called_once_with(root, runner.IVY_REMOTE)
+            self.assertEqual(status.call_args.args[:3], ("config_invalid", [], False))
+
+    def test_missing_config_or_identity_cannot_report_healthy_preflight(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            config = root / "config.yml"
+            for contents in (None, CONFIG.replace("commit_email: fixture@example.invalid\n", ""),
+                             CONFIG.replace("fixture@example.invalid", "")):
+                if contents is None:
+                    config.unlink(missing_ok=True)
+                else:
+                    config.write_text(contents)
+                for dry in (False, True):
+                    with self.subTest(contents=contents, dry=dry), \
+                         (root / "test-lock").open("w") as lock, \
+                         patch.object(runner, "WORKROOT", root), patch.object(runner, "IVY", root), \
+                         patch("builtins.open", return_value=lock), \
+                         patch.object(runner, "ensure_clone"), \
+                         patch.object(runner, "synced_runner", return_value=None), \
+                         patch.object(runner, "run", return_value=Mock(returncode=0)), \
+                         patch.object(runner, "set_state") as claim, \
+                         patch.object(runner, "publish_status") as status, \
+                         patch.object(runner.subprocess, "Popen") as worker, \
+                         patch.object(sys, "argv", ["runner", "--once"] + (["--dry-run"] if dry else [])), \
+                         contextlib.redirect_stdout(io.StringIO()):
+                        self.assertEqual(runner.guarded_main(), 1)
+                    claim.assert_not_called()
+                    worker.assert_not_called()
+                    if dry:
+                        status.assert_not_called()
+                    else:
+                        self.assertEqual(status.call_args.args[:3], ("config_invalid", [], False))
+
+    def test_provenance_failure_leaves_task_open_and_runs_next_contract(self):
+        for error in (RuntimeError("source revision unavailable"), OSError("read failed")):
+            with self.subTest(error=type(error).__name__), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                queue = root / "dispatch/queue"
+                queue.mkdir(parents=True)
+                (root / "dispatch/reports").mkdir()
+                for name in ("a-broken", "b-ready"):
+                    (queue / f"{name}.md").write_text(
+                        f"---\nid: {name}\nstate: open\nrepo: owner/{name}\ntype: review\n"
+                        "lane: workhorse\npool: openai\nexpires: 2099-01-01T00:00:00+00:00\n---\ntask\n")
+                before = (queue / "a-broken.md").read_bytes()
+                worker = Mock(returncode=0)
+                worker.communicate.return_value = ("BEGIN_REPORT\nfixture report\nEND_REPORT", None)
+                with (root / "test-lock").open("w") as lock, \
+                     patch.object(runner, "WORKROOT", root), patch.object(runner, "IVY", root), \
+                     patch.object(runner, "WORK", root / "work"), \
+                     patch("builtins.open", return_value=lock), \
+                     patch.object(runner, "ensure_clone"), \
+                     patch.object(runner, "synced_runner", return_value=None), \
+                     patch.object(runner, "run", return_value=Mock(returncode=0)), \
+                     patch.object(runner, "load_config", return_value=("", [], {"workhorse": {"openai": self.codex()}})), \
+                     patch.object(runner, "resolve_harness", side_effect=lambda argv: argv), \
+                     patch.object(runner, "execution_metadata", side_effect=[error, ["effective_model: unknown"]]), \
+                     patch.object(runner, "bot_commit_push", return_value=True), \
+                     patch.object(runner, "finalize") as finalize, \
+                     patch.object(runner, "publish_status") as status, \
+                     patch.object(runner.subprocess, "Popen", return_value=worker) as start, \
+                     patch.object(sys, "argv", ["runner", "--once"]), \
+                     contextlib.redirect_stdout(io.StringIO()):
+                    self.assertEqual(runner.main(), 0)
+                self.assertEqual((queue / "a-broken.md").read_bytes(), before)
+                self.assertIn("state: claimed", (queue / "b-ready.md").read_text())
+                start.assert_called_once()
+                self.assertEqual(start.call_args.kwargs["cwd"], root / "work/b-ready")
+                self.assertEqual(finalize.call_args.args[1:4], ("b-ready", "done", "done"))
+                self.assertEqual(status.call_args.args[1], [{"id": "a-broken", "reason": "provenance_unavailable"}])
 
     def test_fixed_worker_receives_effort_and_completion_retains_unknowns(self):
         with tempfile.TemporaryDirectory() as temp:
