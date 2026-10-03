@@ -1,0 +1,202 @@
+{
+  "version": 1,
+  "date": "2026-10-02",
+  "evidence_kind": "actual_bounded_private_source_execution",
+  "runId": "137fd729-a8ea-4a9f-ab80-ce1bd846c2ee",
+  "sourceCoverage": {
+    "selectedFullMailThreads": 1,
+    "mailMessagesIncludingSent": 3,
+    "publicOwnerEssays": 2,
+    "calendarQueried": false,
+    "privateDocuments": 0,
+    "completeInboxOrArchive": false
+  },
+  "actualSessionCount": 4,
+  "actualAttemptCount": 4,
+  "elapsedActiveSeconds": 79.73,
+  "steps": [
+    {
+      "runtimeCodeHash": "dde6520de236266f87fbfdca0d82a54efdc7df40fdd56c4ad139da1efa691614",
+      "requestedModel": "gpt-6-sol",
+      "resolvedModel": "gpt-6-sol",
+      "effort": "medium",
+      "sessionId": "01a0fe28-b276-76b1-8593-1ebec11d5b03",
+      "inputHash": "f6d97c86992a55992f1b78e8b42e120811b2440030dd075599435cecf0bcfe3b",
+      "outputHash": "6396210dcc87dca7c63e1be42c0266958ff5b850f64fd45fdb60198c07071886",
+      "completedAt": "2026-10-02T19:48:04.200023Z",
+      "cliVersion": "codex-cli 0.155.1",
+      "isolationGate": "empty_mcp_tool_inventory",
+      "itemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "usage": {
+        "last": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 8256,
+          "outputTokens": 259,
+          "reasoningOutputTokens": 71,
+          "totalTokens": 8515
+        },
+        "modelContextWindow": 258400,
+        "total": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 8256,
+          "outputTokens": 259,
+          "reasoningOutputTokens": 71,
+          "totalTokens": 8515
+        }
+      },
+      "role": "chief",
+      "phase": "plan",
+      "sourceCount": 3
+    },
+    {
+      "runtimeCodeHash": "dde6520de236266f87fbfdca0d82a54efdc7df40fdd56c4ad139da1efa691614",
+      "requestedModel": "gpt-6-sol",
+      "resolvedModel": "gpt-6-sol",
+      "effort": "medium",
+      "sessionId": "01a0fe28-d6b0-7171-b2b6-eadbe4e06fd9",
+      "inputHash": "9bc5c60be3566f5a4c4172c7c46da6be0079bc54c9c9290bcb86b9c3d3aec900",
+      "outputHash": "be0a32a7200edb2be35b98667e46fdcaac72589bc206b3ecad0efaa7dda7aa6f",
+      "completedAt": "2026-10-02T19:48:22.483083Z",
+      "cliVersion": "codex-cli 0.155.1",
+      "isolationGate": "empty_mcp_tool_inventory",
+      "itemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "usage": {
+        "last": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 5722,
+          "outputTokens": 660,
+          "reasoningOutputTokens": 292,
+          "totalTokens": 6382
+        },
+        "modelContextWindow": 258400,
+        "total": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 5722,
+          "outputTokens": 660,
+          "reasoningOutputTokens": 292,
+          "totalTokens": 6382
+        }
+      },
+      "role": "inbox",
+      "phase": "specialist",
+      "sourceCount": 1
+    },
+    {
+      "runtimeCodeHash": "dde6520de236266f87fbfdca0d82a54efdc7df40fdd56c4ad139da1efa691614",
+      "requestedModel": "gpt-6-sol",
+      "resolvedModel": "gpt-6-sol",
+      "effort": "medium",
+      "sessionId": "01a0fe29-1dfb-7733-80c2-5d8dc649c4a9",
+      "inputHash": "f7765be44cab32f745f44b8d91086f115065e7838d67be88c65db8b9c2004f8a",
+      "outputHash": "acd7c30212de9b8a5842ce594f319426b8d9a3d8332a5c28eadc8b386bad2352",
+      "completedAt": "2026-10-02T19:49:02.478830Z",
+      "cliVersion": "codex-cli 0.155.1",
+      "isolationGate": "empty_mcp_tool_inventory",
+      "itemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "usage": {
+        "last": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 9531,
+          "outputTokens": 1571,
+          "reasoningOutputTokens": 516,
+          "totalTokens": 11102
+        },
+        "modelContextWindow": 258400,
+        "total": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 9531,
+          "outputTokens": 1571,
+          "reasoningOutputTokens": 516,
+          "totalTokens": 11102
+        }
+      },
+      "role": "editor",
+      "phase": "specialist",
+      "sourceCount": 2
+    },
+    {
+      "runtimeCodeHash": "dde6520de236266f87fbfdca0d82a54efdc7df40fdd56c4ad139da1efa691614",
+      "requestedModel": "gpt-6-sol",
+      "resolvedModel": "gpt-6-sol",
+      "effort": "medium",
+      "sessionId": "01a0fe29-ba65-71d0-a040-af12ed975d0d",
+      "inputHash": "a0bc11987953ec69506ca225fc50e9e7041685354884236860e163e2eb4c3656",
+      "outputHash": "0dc6af0552df0adb3f150e6521e89b86b372098b015cf60ed5feeb9ac2488642",
+      "completedAt": "2026-10-02T19:49:14.346549Z",
+      "cliVersion": "codex-cli 0.155.1",
+      "isolationGate": "empty_mcp_tool_inventory",
+      "itemTypes": [
+        "userMessage",
+        "reasoning",
+        "agentMessage"
+      ],
+      "usage": {
+        "last": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 9528,
+          "outputTokens": 390,
+          "reasoningOutputTokens": 199,
+          "totalTokens": 9918
+        },
+        "modelContextWindow": 258400,
+        "total": {
+          "cacheWriteInputTokens": 0,
+          "cachedInputTokens": 0,
+          "inputTokens": 9528,
+          "outputTokens": 390,
+          "reasoningOutputTokens": 199,
+          "totalTokens": 9918
+        }
+      },
+      "role": "chief",
+      "phase": "synthesis",
+      "sourceCount": 3
+    }
+  ],
+  "briefHash": "ab22c74a2aa24626a2c3368acd0a7e1dbb204c069d27a71d7809b0b31b65b4ec",
+  "draftCount": 2,
+  "hostedDelivery": false,
+  "outboundActions": 0,
+  "rootReview": {
+    "method": "Root independently read original input chronology, direct owner correction, both published essays, original specialist outputs and final projection. Model did not grade itself.",
+    "passed": [
+      "Confirmed introducer direction preserved",
+      "Already answered request and future promise reconciled; no redundant email draft",
+      "Content used only the selected published essays and trusted owner writing guidance",
+      "Audience/purpose/angle/channel matched owner-confirmed brand goals",
+      "No invented personal achievement, performance metric, posting motive or advisory sales pitch",
+      "LinkedIn adaptation and distinct Substack angle grounded in the supplied essays",
+      "Exact specialist drafts retained; uncertainty survived into compatible final brief",
+      "Limited coverage retained; no complete inbox, calendar or archive claim"
+    ],
+    "notEstablished": [
+      "Tom has not accepted the drafts as his final voice or chosen either for publication",
+      "No broad model quality score",
+      "People/Signals/Research specialists not invoked on this deliberately narrow packet",
+      "No hosted account/pairing/delivery/revocation journey",
+      "Next scheduled run unobserved",
+      "No always-on service"
+    ]
+  },
+  "sourcePrivacy": "No correspondence, relationship facts, private source identifiers, source excerpts or draft text committed in this record. Raw evidence remains in owner-only local storage.",
+  "codeVersionNote": "Actual model trace used dde6520de236266f87fbfdca0d82a54efdc7df40fdd56c4ad139da1efa691614. Final reviewed runtime is 67e30dabd0a7b8701b66b431f864c7dbb0c12ccb612f11be3dfd53b1b77c24b0. Subsequent claim/context race, retry reconciliation, incomplete-finding projection and private context-export fixes have explicit deterministic regressions; those failure paths were not part of the real-source trace. Completed-role model contracts are unchanged. No same-version full hosted or scheduled trace is claimed."
+}

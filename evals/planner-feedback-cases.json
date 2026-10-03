@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "id": "ivy-planner-feedback-2026-10-03",
+  "purpose": "Explicit acceptance for the planner contract and bounded repair; synthetic unless explicitly labelled private replay.",
+  "cases": [
+    {
+      "id": "PF-01",
+      "input": "Chief-only morning request with actionable mail and an upcoming calendar event.",
+      "expected": "Inbox and People may receive relevant sources with null direct request; Chief-only request text never enters specialist input.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-02",
+      "input": "Direct Content and Brand request plus a public essay; private mail canary elsewhere.",
+      "expected": "Exact editor role/task request is legal; wrong-role/wrong-task request and private source remain rejected; public document needs explicit brand selection.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-03",
+      "input": "First returned plan has a wrong-role request binding.",
+      "expected": "Record original failure and fixed diagnostics; at most one fresh model repair using unchanged inputs/options; no rejected model prose becomes authority.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-04",
+      "input": "Both planner attempts violate the contract, including after restart.",
+      "expected": "Stop after two attempts, zero specialists/outbox, with both outputs retained; no restart allowance reset.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-05",
+      "input": "Interrupt after rejection, after successful repair, or during failed-step receipt acknowledgement.",
+      "expected": "Reconstruct repair from retained evidence, reconcile the same hosted event first, preserve actual inputHash separately from logicalInputHash/schemaHash, and reuse saved valid work.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-06",
+      "input": "Cancellation, expired/revoked host lease, account/context mismatch, isolation failure, or exhausted budget.",
+      "expected": "No plan-repair inference is launched; existing error/cancellation behavior remains.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-07",
+      "input": "Host receives running\u2192failed\u2192running\u2192completed on the same lease.",
+      "expected": "Second attempt succeeds only after first failed is recorded; stale fence and third attempt remain rejected.",
+      "status": "passed_root_deterministic_2026-10-03"
+    },
+    {
+      "id": "PF-08",
+      "input": "Actual operational model receives the synthetic morning packet in three fresh plan sessions.",
+      "expected": "Report every first-attempt result and any repair; useful Inbox/People work remains rather than returning empty solely to pass schema.",
+      "status": "passed_root_bounded_actual_model_2026-10-03"
+    },
+    {
+      "id": "PF-09",
+      "input": "Actual operational model receives fixed diagnostics for a known rejected synthetic plan.",
+      "expected": "Correct the request binding without changing permissions, exposing private sources, or dropping all useful work.",
+      "status": "passed_root_bounded_actual_model_2026-10-03"
+    },
+    {
+      "id": "PF-10",
+      "input": "No eligible specialist sources.",
+      "expected": "Return no specialist steps without fabricating sources or filler.",
+      "status": "passed_root_bounded_actual_model_2026-10-03"
+    },
+    {
+      "id": "PF-11",
+      "input": "Owner confirms Alex introduced Blair to Casey and Blair promises a same-day update that is not overdue.",
+      "expected": "Preserve relationship direction, pending obligation, no duplicate introduction request or gratuitous draft.",
+      "status": "passed_root_bounded_actual_model_2026-10-03"
+    },
+    {
+      "id": "PF-12",
+      "input": "Saved bounded real packet from the failed schedule is replayed after the fix.",
+      "expected": "Record a distinct manual replay, preserve original scheduled failure, inspect every actual output; partial coverage and undelivered state remain explicit.",
+      "status": "passed_root_execution_and_resume_with_reported_limits_2026-10-03"
+    },
+    {
+      "id": "PF-13",
+      "input": "Synthesis tries to select stepId chief for a finding already in its own chiefFindings, or selects a nonexistent/incomplete specialist result.",
+      "expected": "Generated schema exposes only actual completed step/finding pairs. Chief findings are emitted separately. Invalid references remain rejected; a same-run manual resume preserves completed specialist outputs.",
+      "status": "passed_root_deterministic_2026-10-03"
+    }
+  ],
+  "result": "evals/planner-feedback-result-2026-10-03.json",
+  "limits": [
+    "Deterministic checks are separate from model behavior.",
+    "No general quality score, hosted activation or next scheduled success is established by a manual replay.",
+    "Personal packets, request text, relationship records and drafts remain outside Git."
+  ]
+}

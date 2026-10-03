@@ -1,0 +1,373 @@
+{
+  "schema_version": 1,
+  "id": "ivy-private-beta-v1",
+  "source_repository": "tompulsarlabs/ivy-app",
+  "scope": "Owner admission, per-person projects, paired personal workers, real task lifecycle and separate human checking/acceptance.",
+  "commands": [
+    "bunx vitest run",
+    "python3 -m unittest discover -s tests -p '*_test.py'",
+    "bunx tsc --noEmit",
+    "bun run build"
+  ],
+  "cases": [
+    {
+      "id": "PB01",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "requires owner approval; requests cannot self-approve or reset a decline",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB02",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "keeps projects, tasks, worker keys and original planning records isolated",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB03",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "does not grant anonymous identity, admission or result-forgery access",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB04",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "queues one immutable task, records a worker claim, and requires human checks plus acceptance",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB05",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "revocation denies both browser data and already-paired worker operations",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB06",
+      "test_file": "tests/beta-database.test.ts",
+      "test_name": "does not turn cancellation into a completed result or requeue a disconnected run",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB07",
+      "test_file": "src/lib/beta/presentation.test.ts",
+      "test_name": "distinguishes an offline worker, pending stop and unverified reported result",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB08",
+      "test_file": "src/lib/beta/privacy.test.ts",
+      "test_name": "does not serialize task text, credentials, stacks or arbitrary context into error telemetry",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB09",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_actual_process_runs_in_separate_checkout_and_credentials_do_not_leak",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB10",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_cancel_stops_real_process_without_submitting_success",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB11",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_lost_connection_retains_marker_and_never_reports_success",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB12",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_wrong_repository_dirty_checkout_and_foreign_task_are_refused",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB13",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_config_is_private_and_transport_and_timeout_cannot_expand",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB14",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_unicode_result_size_is_bounded_before_upload",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB15",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_transport_does_not_redirect_a_worker_capability",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB16",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_git_ignores_inherited_context_and_local_executable_hooks",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB17",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_deadline_stops_a_real_process_even_if_it_never_reads_a_large_prompt",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB18",
+      "test_file": "tests/worker_test.py",
+      "test_name": "test_completed_parent_does_not_leave_its_background_child_running",
+      "evidence_kind": "fixed_process_or_transport_fixture",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB19",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "uses the fixed hosted broker and callback for loopback, without returning a local session",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB20",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "keeps hosted sign-in on its own origin and does not treat lookalike hosts as loopback",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB21",
+      "test_file": "src/lib/beta/google-auth.test.ts",
+      "test_name": "refuses unexpected token delivery to a local preview and preserves broker errors",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB22",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "never promotes a worker claim or missing check evidence into an acceptance decision",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB23",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "shows missing and malformed run measurements as unrecorded without inventing tokens or cost",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB24",
+      "test_file": "src/lib/beta/evidence.test.ts",
+      "test_name": "compares only linked private work and never equates matching context with better model quality",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB25",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "blocks private mutations and admission decisions before sending them for unapproved or non-owner users",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB26",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "sends worker token hashes only to the guarded pairing RPC and returns the capability once to the caller",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB27",
+      "test_file": "src/lib/beta/api.browser.test.ts",
+      "test_name": "keeps backend error details out of private-workspace errors",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB28",
+      "test_file": "src/lib/beta/browser-config.test.ts",
+      "test_name": "refuses secret and service-role keys before the independent browser bundle is built",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB29",
+      "test_file": "src/lib/beta/google-auth.browser.test.ts",
+      "test_name": "does not offer or call standalone Google auth before the independent provider is configured",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB30",
+      "test_file": "src/lib/beta/google-auth.browser.test.ts",
+      "test_name": "keeps configured standalone Google auth on the current Ivy origin",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    },
+    {
+      "id": "PB-independent-endpoint",
+      "test_file": "src/lib/beta/browser-config.test.ts",
+      "test_name": "accepts explicitly configured existing databases and refuses unsafe endpoint configuration",
+      "evidence_kind": "deterministic_software_controls",
+      "status": "passed_2026-10-02",
+      "model_quality_claim": false
+    }
+  ],
+  "actual_model_case": {
+    "status": "passed_2026-10-02",
+    "model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "elapsed_seconds": 39.5,
+    "expected": "Exact fixture file bytes in an isolated checkout; original checkout unchanged; result remains human_checks_pending",
+    "independent_artifact_check": true,
+    "transport": "fake RPC; actual authenticated Codex CLI",
+    "hosted_execution": false,
+    "quality_generalization": false,
+    "final_cleanup_adapter_rechecked": true
+  },
+  "hosted_cases": [
+    {
+      "id": "PH01",
+      "expected": "Verified owner can enter workspace and see access requests",
+      "status": "not_run"
+    },
+    {
+      "id": "PH02",
+      "expected": "Unapproved verified user requests access but cannot read or dispatch",
+      "status": "not_run"
+    },
+    {
+      "id": "PH03",
+      "expected": "Two approved users cannot read or mutate each other's projects, tasks or workers",
+      "status": "not_run"
+    },
+    {
+      "id": "PH04",
+      "expected": "Real paired worker claims a private queued task and returns a reviewable result",
+      "status": "not_run"
+    },
+    {
+      "id": "PH05",
+      "expected": "Revocation denies new reads and worker checks; interrupted work is never retried automatically",
+      "status": "not_run"
+    }
+  ],
+  "limits": [
+    "PGlite verifies PostgreSQL RLS/functions but not live concurrent transactions.",
+    "Fixed process fixtures are not model-quality evaluations.",
+    "One actual model fixture does not establish general model quality.",
+    "Google owner sign-in reaches the published app; no approved hosted workspace journey or real Supabase worker trace yet.",
+    "No paid API key or fallback provider was activated."
+  ],
+  "google_sign_in_checkpoint": {
+    "managed_provider_enabled": true,
+    "loopback_callback": "rejected by real Lovable broker: redirect_uri is not allowed",
+    "fix": "Local preview uses the fixed hosted broker and callback, keeping the session on the hosted app",
+    "complete_owner_sign_in": "passed_2026-10-02: selected verified owner account, returned to published Ivy; workspace admission remains blocked by pending database activation",
+    "source_merge": "d97cc4b1cf17c2be58d227a739b375af2fe2dd3e",
+    "published_app": "https://pixel-perfect-showcase-8458.lovable.app",
+    "custom_domain": "https://ivy.tomgreen.ai",
+    "custom_domain_https": "passed_2026-10-02: HTTP 200 with certificate verification intact",
+    "custom_domain_anonymous_entry": "passed_2026-10-02: admission only; no private tasks displayed",
+    "custom_domain_owner_google_return": "passed_2026-10-02: selected known owner with openid/email/profile scopes; returned to ivy.tomgreen.ai; workspace remains unavailable pending database activation",
+    "evidence_kind": "observed_hosted_browser_and_transport",
+    "model_quality_claim": false
+  },
+  "portable_html_checkpoint": {
+    "build": "passed_2026-10-02",
+    "target_domain": "ivy.tomgreen.ai",
+    "deployed": false,
+    "google_auth": "disabled until an independently configured Supabase Google client is verified; managed Lovable provider is not transplanted",
+    "database": "same approval/RLS/guarded RPC contract; migration activation pending",
+    "model_quality_claim": false
+  },
+  "independent_hosting_checkpoint": {
+    "date": "2026-10-02",
+    "source_repository": "tompulsarlabs/ivy-app",
+    "repository_visibility": "private",
+    "hosting_account": "tompulsarlabs-projects",
+    "hosting_project": "ivy-app",
+    "default_build": "standalone",
+    "database_ownership": "existing owned gllfeuhmxjkzaamphczk; no new project or subscription",
+    "production_cutover": "not_done",
+    "live_auth_and_admission": "Google provider initiation passed; Ivy return URL and activation pending",
+    "note": "The existing Ivy endpoint is explicitly configured; unsafe endpoint URLs and secret browser keys are refused. CI uses explicit format-only public inputs and is not deployment evidence."
+  },
+  "independent_hosting_correction": {
+    "requested_at": "2026-10-02",
+    "backend": "existing owned gllfeuhmxjkzaamphczk",
+    "new_paid_project": "declined; not created",
+    "frontend": "Vercel ivy-app",
+    "auth": "direct Google initiation returns 302 to Google; Ivy exact return pending",
+    "cutover": "pending",
+    "limits": "existing managed data retained for recovery; no user/session migration; action-time activation approval pending"
+  },
+  "existing_project_activation": {
+    "test_file": "tests/existing-project.test.ts",
+    "test_name": "activates only Ivy objects while preserving an existing application's data and policies",
+    "local_postgresql": "passed_2026-10-02",
+    "live_preflight": {
+      "ivy_objects": 0,
+      "ivy_functions": 0,
+      "radar_tables": 21,
+      "confirmed_owner_already_present": false
+    },
+    "live_activation": "pending_confirmation",
+    "model_quality_claim": false
+  },
+  "personal_context_regression": {
+    "inventory": "evals/personal-team.json",
+    "cases": "evals/personal-context-cases.json",
+    "evidence": "evals/personal-context-result-2026-10-02.json",
+    "bounded_behavioral_cases": 4,
+    "scope": "Supplied-context behavior only, not full mailbox retrieval or a quality score"
+  },
+  "personal_team_runtime": "evals/personal-team-runtime.json",
+  "planner_feedback": "evals/planner-feedback-cases.json"
+}

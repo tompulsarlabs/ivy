@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "case_file": "evals/personal-context-cases.json",
+  "run": {
+    "requested_model": "gpt-6-sol",
+    "requested_effort": "medium",
+    "selector": "authenticated Codex CLI; user config excluded; no API key added",
+    "elapsed_seconds": 25.46,
+    "exit_code": 0,
+    "cases": 4,
+    "checked_at": "2026-10-02T15:43:40.398889+00:00",
+    "graded_by_model": false
+  },
+  "prompt_sha256": "c344aa62f4041d70e1fc14e5d53d1e5cb4ee5e0c72a86b37b93d2993c68c1384",
+  "evidence_kind": "actual_model_responses_from_authenticated_Codex_CLI",
+  "tools_observed": false,
+  "reviewer": "Parent assistant compared saved outputs with the explicit case expectations; the tested model did not grade itself.",
+  "case_results": [
+    {
+      "id": "PC01",
+      "status": "passed",
+      "basis": "Correct introducer, supplied notes recognized, waits for explanation, no draft."
+    },
+    {
+      "id": "PC02",
+      "status": "passed",
+      "basis": "Direct user confirmation retained despite no matching email; no invented introduction or gratuitous draft."
+    },
+    {
+      "id": "PC03",
+      "status": "passed",
+      "basis": "Relationship/product left unknown; no buyer or Ivy attribution invented; no outreach draft."
+    },
+    {
+      "id": "PC04",
+      "status": "passed",
+      "basis": "Genuine unanswered request gets an unsent draft with exactly the selected public guide."
+    }
+  ],
+  "outputs": [
+    {
+      "id": "PC01",
+      "relationship_summary": "Owner introduced Alex to Blair. Alex met Blair, supplied the requested notes, and plans to explain QA after code remediation in writing. Source: undated PC01 input; no link provided.",
+      "next_step": "Review Alex\u2019s explanation when it arrives. No further request is currently open.",
+      "draft": null
+    },
+    {
+      "id": "PC02",
+      "relationship_summary": "Owner already knew Blair and introduced Alex to Blair. Alex later suggested that Owner speak with Blair for feedback. The absent introduction email does not override Owner\u2019s confirmation. Source: undated PC02 input; no link provided.",
+      "next_step": "Keep Blair in mind for a feedback conversation if Owner chooses one; no immediate outreach is needed.",
+      "draft": null
+    },
+    {
+      "id": "PC03",
+      "relationship_summary": "Alex reported that Blair asked about QA in a product and said Alex would write an explanation. Blair\u2019s role and the product\u2019s identity are unconfirmed. Source: undated PC03 input; no link provided.",
+      "next_step": "Await Alex\u2019s explanation. Verify Blair\u2019s role and the product identity before recommending relationship-dependent outreach.",
+      "draft": null
+    },
+    {
+      "id": "PC04",
+      "relationship_summary": "Owner introduced Alex to Blair. Alex has asked Owner for the public QA guide link, and Owner has confirmed that the guide is releasable. Source: undated PC04 input; guide: https://example.com/public-qa.",
+      "next_step": "Owner can reply to Alex with the requested link.",
+      "draft": "Hi Alex \u2014 here\u2019s the public QA guide: https://example.com/public-qa"
+    }
+  ],
+  "first_replay_observation": {
+    "run": {
+      "requested_model": "gpt-6-sol",
+      "requested_effort": "medium",
+      "selector": "authenticated Codex CLI; ignore-user-config; no paid API key added",
+      "elapsed_seconds": 24.73,
+      "exit_code": 0,
+      "cases": 3,
+      "checked_at": "2026-10-02T15:40:30.641879+00:00",
+      "graded_by_model": false
+    },
+    "issue": "PC02 preserved the relationship but drafted a needless clarification message. Tightened draft-necessity rule before the four-case replay.",
+    "output": {
+      "id": "PC02",
+      "relationship_summary": "Owner already knows Blair and introduced Alex to Blair. Alex met Blair and suggested speaking with Blair for feedback. The missing introduction email does not negate the confirmed history; the subject of the feedback is unspecified.",
+      "next_step": "Ask Alex what specific feedback he means before approaching Blair. No introduction request is needed.",
+      "draft": "Thanks, Alex. I know Blair and introduced you two. What specific feedback do you suggest I ask Blair about?"
+    }
+  },
+  "limits": [
+    "Four synthetic cases with supplied context, one replay batch; not a general model-quality score.",
+    "This tests recommendation behavior after context is supplied, not live mailbox retrieval or reliable context loading.",
+    "Actual introduction email was not located; the real correction is grounded in direct user confirmation.",
+    "No full brief regeneration, first scheduled run, hosted delivery or outbound send is proved.",
+    "The private corrected preview preserves earlier source coverage for other cards."
+  ]
+}

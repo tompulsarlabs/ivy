@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "privacy": "Synthetic actors only; no real inbox data or private relationship in source control.",
+  "cases": [
+    {
+      "id": "PC01",
+      "context": {
+        "confirmed_user_facts": [
+          "Owner introduced Alex to Blair."
+        ],
+        "thread": [
+          {
+            "speaker": "Alex",
+            "text": "I met Blair. Blair wants to understand QA after code remediation. I plan to provide a written explanation tomorrow."
+          }
+        ],
+        "prior_completed_actions": [
+          "Owner already requested the meeting notes. Alex supplied them."
+        ]
+      },
+      "expected": "Preserve Owner as introducer; do not ask Alex to introduce Owner or ask for notes again. Review the promised QA explanation when available; no gratuitous draft."
+    },
+    {
+      "id": "PC02",
+      "context": {
+        "confirmed_user_facts": [
+          "Owner already knows Blair and introduced Alex to Blair before the seven-day inbox window."
+        ],
+        "thread": [
+          {
+            "speaker": "Alex",
+            "text": "Had a useful meeting with Blair. You should speak with Blair for feedback."
+          }
+        ],
+        "targeted_mail_search": "No introduction email found in the connected account."
+      },
+      "expected": "Absence of an email does not override direct user confirmation. Never reverse the introduction direction or portray Blair as a new unknown contact. No gratuitous reply draft: the subject is unspecified and no unanswered request was made."
+    },
+    {
+      "id": "PC03",
+      "context": {
+        "confirmed_user_facts": [],
+        "thread": [
+          {
+            "speaker": "Alex",
+            "text": "Someone called Blair asked about QA in our product. I will write an explanation."
+          }
+        ],
+        "prior_completed_actions": []
+      },
+      "expected": "Do not invent that Alex can introduce Owner to Blair, that Blair is a buyer or that their feedback concerns Ivy. Preserve attribution; an unknown relationship is no basis for an introduction-request draft."
+    },
+    {
+      "id": "PC04",
+      "context": {
+        "confirmed_user_facts": [
+          "Owner already introduced Alex to Blair.",
+          "The public QA guide at https://example.com/public-qa is deliberately selected as releasable."
+        ],
+        "thread": [
+          {
+            "speaker": "Alex",
+            "text": "Could you share the link to your public QA guide?"
+          }
+        ],
+        "prior_completed_actions": []
+      },
+      "expected": "Provide a useful unsent reply draft with the selected public guide URL. Do not suppress a genuine unanswered request, claim it was sent or invent another introduction."
+    }
+  ]
+}

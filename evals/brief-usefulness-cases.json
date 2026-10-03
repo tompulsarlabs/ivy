@@ -1,0 +1,119 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "BU-01",
+      "purpose": "Duplicate recommendation, resolved meeting and support after an unrelated thread prefix.",
+      "sources": [
+        {
+          "sourceId": "mail-1",
+          "text": "Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. Historical unrelated exchange. \n3 October, Blake to Alex: Please choose remote or in-person for Tuesday by Monday noon. Alex has not answered.\n3 October, Casey to Alex: Friday is accepted. No further reply or preparation is needed.\nJoin https://meet.example/join?token=FICTIONAL"
+        }
+      ],
+      "outputs": {
+        "inbox": {
+          "role": "inbox",
+          "result": {
+            "status": "completed",
+            "findings": [
+              {
+                "findingId": "choose",
+                "claim": "Blake needs a remote or in-person choice for Tuesday by Monday noon.",
+                "suggestedAction": "Choose remote or in-person by Monday noon.",
+                "sourceIds": ["mail-1"],
+                "uncertainty": "",
+                "draft": null
+              },
+              {
+                "findingId": "accepted",
+                "claim": "Casey accepted Friday; no action remains.",
+                "suggestedAction": "No action required.",
+                "sourceIds": ["mail-1"],
+                "uncertainty": "",
+                "draft": null
+              }
+            ]
+          }
+        },
+        "people": {
+          "role": "people",
+          "result": {
+            "status": "completed",
+            "findings": [
+              {
+                "findingId": "meeting-choice",
+                "claim": "The Tuesday meeting needs Alex to choose remote or in-person.",
+                "suggestedAction": "Choose remote or in-person by Monday noon.",
+                "sourceIds": ["mail-1"],
+                "uncertainty": "",
+                "draft": null
+              }
+            ]
+          }
+        }
+      },
+      "expected": "Exactly one Tuesday decision; no accepted-only meeting card, no duplicate Chief item; excerpt supports the unanswered choice without joining link."
+    },
+    {
+      "id": "BU-02",
+      "purpose": "Holdout: independent obligations sharing a source, plus an exact Editor draft.",
+      "sources": [
+        {
+          "sourceId": "mail-1",
+          "text": "Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. Archived lunch chat. \n3 October, Devon to Alex: Please provide the dataset export by Monday at 09:00. We also need your separate approval of the 200 euro budget by Tuesday at 12:00. Neither action has been completed.\nContact tel:+0000000"
+        },
+        {
+          "sourceId": "web-1",
+          "text": "Published by Alex: I test changes against explicit checks before trusting a shorter instruction file. These are my practices, not measured performance gains."
+        }
+      ],
+      "outputs": {
+        "inbox": {
+          "role": "inbox",
+          "result": {
+            "status": "completed",
+            "findings": [
+              {
+                "findingId": "export",
+                "claim": "Devon needs the dataset export by Monday at 09:00.",
+                "suggestedAction": "Provide the dataset export by Monday at 09:00.",
+                "sourceIds": ["mail-1"],
+                "uncertainty": "",
+                "draft": null
+              },
+              {
+                "findingId": "budget",
+                "claim": "Devon needs separate approval of the 200 euro budget by Tuesday at 12:00.",
+                "suggestedAction": "Review the 200 euro budget and decide by Tuesday at 12:00.",
+                "sourceIds": ["mail-1"],
+                "uncertainty": "",
+                "draft": null
+              }
+            ]
+          }
+        },
+        "editor": {
+          "role": "editor",
+          "result": {
+            "status": "completed",
+            "findings": [
+              {
+                "findingId": "essay",
+                "claim": "Alex has selected an essay about checks before trusting shorter instructions.",
+                "suggestedAction": "Review this chosen LinkedIn draft.",
+                "sourceIds": ["web-1"],
+                "uncertainty": "",
+                "draft": {
+                  "recipient": "AI operators",
+                  "channel": "linkedin",
+                  "text": "Before trusting a shorter instruction file, I test the change against explicit checks. This is my practice, not a measured performance claim."
+                }
+              }
+            ]
+          }
+        }
+      },
+      "expected": "Keep both separate obligations despite shared source, and retain the chosen draft exactly; source passages preserve dates, numbers and author attribution."
+    }
+  ]
+}
