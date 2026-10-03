@@ -1,7 +1,7 @@
 ---
 id: 2026-10-03-ivy-prheadsscan-review-01
 type: review
-state: claimed
+state: done
 claimed_at: 2026-10-03T10:03:12+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
@@ -68,3 +68,24 @@ The report file exists on `main` of `ivy`, is non-empty, and every cited
 file:line resolves against PR #25's head
 (`c59a4c4f5c6537e37eb8ce785ca329f35d6e01d3`) — directly readable, this
 repo is not access-scoped away.
+
+outcome:
+  requested_model: gpt-5.6-terra
+  requested_effort: unset
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 0.155.1
+  source_revision: e50dac1aeec9d47ca218454ddbc8b8e43d744a74
+  runner_sha256: 7ede0aa04bc2fd57f673ca2a9729714a5d9c5e65f8a111c4ecf1cfa9d6e708c4
+  config_sha256: c553d88a23c95b73c2b43c8fc0443b15bd72db73823cb01408e32a5fffa6e5c5
+  prompt_sha256: e3ba6fc5cb09ac18282d0d05bee7ce585837375c4aea926e9cd7b89072a737d6
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-10-03T10:03:12+02:00
+  finished_at: 2026-10-03T10:04:56+02:00
+  harness: codex (dispatch-runner)
+  model: gpt-5.6-terra
+  wall_minutes: 1.6
+  exit: 0
+  artifacts:
+    - dispatch/reports/2026-10-03-ivy-prheadsscan-review-01.md
