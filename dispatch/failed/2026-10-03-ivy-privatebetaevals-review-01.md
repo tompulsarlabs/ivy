@@ -1,7 +1,7 @@
 ---
 id: 2026-10-03-ivy-privatebetaevals-review-01
 type: review
-state: claimed
+state: failed
 claimed_at: 2026-10-03T10:35:03+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
@@ -64,3 +64,25 @@ The report file exists on `main` of `ivy`, is non-empty, and every cited
 file:line resolves against PR #26's head
 (`2f7b5ea2c38d0929bdc0c85b2bb6f4febaafb12f`) — directly readable, this
 repo is not access-scoped away.
+
+outcome:
+  requested_model: claude-opus-5
+  requested_effort: medium
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 2.1.277
+  source_revision: 802d1a766feb122a1301b01776c0f490c275e0d8
+  runner_sha256: 7ede0aa04bc2fd57f673ca2a9729714a5d9c5e65f8a111c4ecf1cfa9d6e708c4
+  config_sha256: c553d88a23c95b73c2b43c8fc0443b15bd72db73823cb01408e32a5fffa6e5c5
+  prompt_sha256: d6f544db8096f42db6d4e70becd4a70fb075d45d32a7988ebd4b25ac2898ab16
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-10-03T10:35:03+02:00
+  finished_at: 2026-10-03T10:35:10+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 0.0
+  exit: 1
+  note: harness_error; last output lines follow
+  output_tail: |
+      Failed to authenticate: OAuth session expired and could not be refreshed
