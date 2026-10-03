@@ -1,0 +1,15 @@
+diff --git a/procedures/recover-attribution.md b/procedures/recover-attribution.md
+index b7fea41..1f911d3 100644
+--- a/procedures/recover-attribution.md
++++ b/procedures/recover-attribution.md
+@@ -119,10 +119,3 @@ rather than re-pushing.
+ Before the force-push: `git reset --hard backup-pre-rewrite`.
+ After: the backup branch still holds the original history locally, so the
+ same reset plus another force-push restores it.
+-
+-## Known pending uses
+-
+-`ai-capability-app`'s last local commit (2026-06-23) carries
+-`last_commit_email_ok: false` and stays uncountable until this runs
+-[cite:2026-08-29]. It sits below the same-morning nudge bar because
+-nothing is queued behind it — a deliberate call, not an oversight.

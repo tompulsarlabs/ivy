@@ -1,0 +1,21 @@
+diff --git a/CLAUDE.md b/CLAUDE.md
+index 4791ea1..066dfd5 100644
+--- a/CLAUDE.md
++++ b/CLAUDE.md
+@@ -21,10 +21,12 @@ only as far as the task needs:
+ The promoted set from `mattpocock/skills` is vendored under `.claude/skills/`
+ (pinned in `skills-lock.json`; `npx skills update` pulls newer). `/ask-matt`
+ routes between them. `writing-for-agents` is the reference for editing this
+-file, `playbook.md`, `routines/*.md`, and `procedures/`. gstack is Mac-only
+-and its section lives in `~/.claude/CLAUDE.md`, never here: cloud routines
+-cannot run it, and its `/ship`, `/retro`, and `/learn` write state this repo
+-does not want (`setup/AGENTIC-STACK.md`, "Which one for what").
++file, `playbook.md`, `routines/*.md`, and `procedures/`; where it says to fix
++a weak word with a stronger one, delete the word or state the target plainly
++instead, since intensity words over-apply on current models. gstack is
++Mac-only and its section lives in `~/.claude/CLAUDE.md`, never here: cloud
++routines cannot run it, and its `/ship`, `/retro`, and `/learn` write state
++this repo does not want (`setup/AGENTIC-STACK.md`, "Which one for what").
+ 
+ ### Issue tracker
+ 
