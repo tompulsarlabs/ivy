@@ -1,7 +1,8 @@
 ---
 id: 2026-10-03-ivy-privatebetaevals-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-10-03T10:35:03+02:00
 repo: tompulsarlabs/ivy
 lane: workhorse
 pool: anthropic
