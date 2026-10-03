@@ -368,5 +368,6 @@
     "bounded_behavioral_cases": 4,
     "scope": "Supplied-context behavior only, not full mailbox retrieval or a quality score"
   },
-  "personal_team_runtime": "evals/personal-team-runtime.json"
+  "personal_team_runtime": "evals/personal-team-runtime.json",
+  "planner_feedback": "evals/planner-feedback-cases.json"
 }

@@ -115,7 +115,7 @@
     {
       "id": "TR-H05",
       "expected": "Next actual scheduled collector and runtime invocation produces a dated receipt or useful failure notification",
-      "status": "not_run"
+      "status": "observed_local_failure_2026-10-03; hosted_not_run; next_schedule_unobserved"
     }
   ],
   "runtime_boundary_evidence": "evals/team-runtime-boundary-result-2026-10-02.json",
@@ -147,15 +147,16 @@
   "actual_trace_result": "evals/team-runtime-result-2026-10-02.json",
   "deterministic_verification": {
     "vitestFiles": 22,
-    "vitestTestsPassed": 132,
-    "pythonTestsPassed": 54,
-    "newRuntimePythonTests": 39,
+    "vitestTestsPassed": 133,
+    "pythonTestsPassed": 69,
+    "newRuntimePythonTests": 54,
     "typescript": "passed",
     "changedTypescriptLint": "passed",
     "productionBuild": "passed_with_existing_chunk_size_notice",
     "visualBrowserQA": "blocked_by_browser_permission_denial; pending_user_reply",
     "graded_by_tested_model": false,
-    "runtimeCodeHash": "67e30dabd0a7b8701b66b431f864c7dbb0c12ccb612f11be3dfd53b1b77c24b0"
+    "runtimeCodeHash": "f0c85765a09f6083748d5ea0a7c64a2c7eb42aff8abc8c6bc195402b22760e08",
+    "verifiedAt": "2026-10-03"
   },
   "real_source_acceptance_result": "evals/team-private-acceptance-result-2026-10-02.json",
   "release_regressions": [
@@ -189,5 +190,15 @@
       "expected": "Context export requires the matching account and private output outside Git, with no model authority.",
       "status": "passed_root_deterministic_2026-10-02"
     }
-  ]
+  ],
+  "planner_feedback_cases": "evals/planner-feedback-cases.json",
+  "planner_feedback_result": "evals/planner-feedback-result-2026-10-03.json",
+  "first_scheduled_run": {
+    "state": "failed",
+    "error": "request_outside_role",
+    "actualCalls": 1,
+    "briefProduced": false,
+    "date": "2026-10-03",
+    "separateManualRecovery": "evals/planner-feedback-result-2026-10-03.json"
+  }
 }

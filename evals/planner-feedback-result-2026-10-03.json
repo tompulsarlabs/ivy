@@ -1,0 +1,368 @@
+{
+  "version": 1,
+  "date": "2026-10-03",
+  "kind": "redacted-release-evidence",
+  "source_repository": "tompulsarlabs/ivy-app",
+  "runtimeCodeHash": "f0c85765a09f6083748d5ea0a7c64a2c7eb42aff8abc8c6bc195402b22760e08",
+  "designModel": "gpt-6-astra/ultra",
+  "implementationModel": "gpt-6.1-sol",
+  "deterministic": {
+    "vitestFiles": 22,
+    "vitestTests": 133,
+    "pythonTests": 69,
+    "runtimePythonTests": 54,
+    "typescript": "passed",
+    "focusedLint": "passed",
+    "standaloneBuild": "passed_existing_large_chunk_notice",
+    "distRuntimeHashMatches": true,
+    "independentReview": "no_unresolved_material_findings"
+  },
+  "originalScheduledFailure": {
+    "runId": "dd2e5b2a-45f6-452a-b19c-ca90e4f5a59f",
+    "code": "request_outside_role",
+    "actualModelCalls": 1,
+    "specialists": 0,
+    "briefProduced": false,
+    "retained": true
+  },
+  "actualModel": {
+    "model": "gpt-6-sol",
+    "effort": "medium",
+    "plannerProbes": [
+      {
+        "case": "plan-1",
+        "outputHash": "4304b35ca8e7e6524dbb666a1f3c7992415e0a037a67f94346fb9dcb027a4ff2",
+        "inputHash": "b72c27a28756d5a4fa7d8c0fb60f8568115a611a5160b5295e514de0e56b0b17",
+        "schemaHash": "173151d244700bfab1bc4de4e1f91728260ef287f051baf6b4010ac704a9b925",
+        "runtimeCodeHash": "d968313fee5df3fc539879cf0ba0a90be83f04e9e35a061a5c5be807ce1776cc",
+        "sessionId": "01a100d9-189f-72d2-b9cc-de7646b969f6",
+        "requestedModel": "gpt-6-sol",
+        "resolvedModel": "gpt-6-sol",
+        "effort": "medium",
+        "isolationGate": "empty_mcp_tool_inventory",
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "steps": [
+          {
+            "role": "inbox",
+            "taskKind": "reconcile_threads",
+            "ownerRequestId": null
+          },
+          {
+            "role": "people",
+            "taskKind": "meeting_prep",
+            "ownerRequestId": null
+          },
+          {
+            "role": "editor",
+            "taskKind": "content_strategy",
+            "ownerRequestId": "content-request"
+          }
+        ],
+        "rootReview": "pass: valid useful source-scoped choices and correct bindings"
+      },
+      {
+        "case": "plan-2",
+        "outputHash": "363a72c3ee164c88b48ee129f12f5eb3c7a61e33cac81dd4cf0342417068de02",
+        "inputHash": "288065042b20db3546a05695ae78052e6e947b6cf645dbf23503d0460f1c9ab8",
+        "schemaHash": "11ce4c07185d906c7d4c9579f9e5d7088afc25ab595cb19d832a85fcef83b044",
+        "runtimeCodeHash": "d968313fee5df3fc539879cf0ba0a90be83f04e9e35a061a5c5be807ce1776cc",
+        "sessionId": "01a100d9-6659-7320-9c8c-05b2f7e977ab",
+        "requestedModel": "gpt-6-sol",
+        "resolvedModel": "gpt-6-sol",
+        "effort": "medium",
+        "isolationGate": "empty_mcp_tool_inventory",
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "steps": [
+          {
+            "role": "inbox",
+            "taskKind": "reconcile_threads",
+            "ownerRequestId": null
+          },
+          {
+            "role": "people",
+            "taskKind": "meeting_prep",
+            "ownerRequestId": null
+          },
+          {
+            "role": "editor",
+            "taskKind": "content_strategy",
+            "ownerRequestId": "content-request"
+          }
+        ],
+        "rootReview": "pass: valid useful source-scoped choices and correct bindings"
+      },
+      {
+        "case": "plan-3",
+        "outputHash": "3bf80086dd79968d09efa7f77b73a1b0d14afedbf102b92ef2136737b981630f",
+        "inputHash": "6262c487ebd6cccccbdc71fd2f8015146ad9dde29f53c219ed716c9c4415efbd",
+        "schemaHash": "6f5d6e4ea4b323b9ed81a2c538608980386d6285640d4ab896c890af08a16c62",
+        "runtimeCodeHash": "dad419b0d56ba5081e995d42e7ffa83ade7edb79199f06e302441cdda209f38e",
+        "sessionId": "01a100d9-d06f-7fd0-b34f-b499dba2e74f",
+        "requestedModel": "gpt-6-sol",
+        "resolvedModel": "gpt-6-sol",
+        "effort": "medium",
+        "isolationGate": "empty_mcp_tool_inventory",
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "steps": [
+          {
+            "role": "inbox",
+            "taskKind": "reconcile_threads",
+            "ownerRequestId": null
+          },
+          {
+            "role": "people",
+            "taskKind": "meeting_prep",
+            "ownerRequestId": null
+          },
+          {
+            "role": "editor",
+            "taskKind": "content_strategy",
+            "ownerRequestId": "content-request"
+          }
+        ],
+        "rootReview": "pass: valid useful source-scoped choices and correct bindings"
+      },
+      {
+        "case": "empty",
+        "outputHash": "878c3b10dfe5f81efe8c98169d44878e03403abd38d20ef2fa36a4044dead68e",
+        "inputHash": "124d6c9dd952947248ff17a543f3de115df3b206ba4f75b7b1e55a9325133545",
+        "schemaHash": "5c25a0c83abd3cb3330e7aea93d67a79175f4610bce22b1be9962c4dcf6b3931",
+        "runtimeCodeHash": "dad419b0d56ba5081e995d42e7ffa83ade7edb79199f06e302441cdda209f38e",
+        "sessionId": "01a100d9-d06f-7e60-b4cb-ca56cc9fc433",
+        "requestedModel": "gpt-6-sol",
+        "resolvedModel": "gpt-6-sol",
+        "effort": "medium",
+        "isolationGate": "empty_mcp_tool_inventory",
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ],
+        "steps": [],
+        "rootReview": "pass: no invented specialist work without eligible sources"
+      }
+    ],
+    "injectedRepair": {
+      "runId": "7da64785-eeb7-42b8-8e0b-7eea3dc08564",
+      "syntheticInjectedRejections": 1,
+      "actualModelCalls": 4,
+      "specialists": [
+        "inbox",
+        "people"
+      ],
+      "state": "ready_to_deliver",
+      "rootReviewed": true,
+      "firstAttemptValid": false,
+      "repairSucceeded": true,
+      "runtimeCodeHashes": [
+        "ffc0d120970f689071f87bd58b38159d7cd67375d575626a88261e0f975bb44b"
+      ],
+      "limits": [
+        "Prototype repair run before subsequent crash-recovery fix; final recovery code receives separate deterministic evidence.",
+        "Chief included both a meeting finding and a related coordination item about the same scheduling question; valid output still needs usefulness review.",
+        "Content specialist was not selected in this repair trace; a separate content holdout is required.",
+        "One injected rejection is a test fixture, not an observed model failure."
+      ]
+    },
+    "contentHoldout": {
+      "version": 1,
+      "reviewer": "root independently read exact prompt and original output",
+      "status": "passed_bounded_synthetic_holdout",
+      "checks": {
+        "privateMailCalendarPrioritiesAbsentFromInput": true,
+        "meaningfulAudiencePurposeAngleAndFormat": true,
+        "noInventedAchievementsMetricsOrStories": true,
+        "cadenceAndChannelsRemainUnconfirmed": true,
+        "sourceArgumentPreserved": true,
+        "draftsUnsentAndUnapproved": true
+      },
+      "receipt": {
+        "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+        "requestedModel": "gpt-6-sol",
+        "resolvedModel": "gpt-6-sol",
+        "effort": "medium",
+        "sessionId": "01a100e2-b6e2-7133-8fe1-21343147dad2",
+        "inputHash": "c7e723940f6f7f411c786a4987e09650ab1f7068d61a73b0b42231f61ebb7524",
+        "outputHash": "82b3f9502b8be6ef0316cda17488dc72141d3f4bac2759ea57ab4e82caf7220a",
+        "isolationGate": "empty_mcp_tool_inventory",
+        "itemTypes": [
+          "userMessage",
+          "reasoning",
+          "agentMessage"
+        ]
+      },
+      "limits": [
+        "One fictional public passage; not a general content-quality score or owner acceptance."
+      ]
+    },
+    "privateReplay": {
+      "runId": "b332ec15-9a8b-482c-bb05-26421a40e9dc",
+      "actualModelCalls": 6,
+      "specialists": [
+        "inbox",
+        "people",
+        "editor"
+      ],
+      "initialSynthesisFailure": "unknown_step",
+      "failedOutputRetained": true,
+      "manualSameRunResume": true,
+      "additionalCallsAfterFix": 1,
+      "completedOutputsReused": true,
+      "state": "ready_to_deliver",
+      "items": 6,
+      "unsentDrafts": 1,
+      "rootReviewed": true,
+      "hostedDelivery": false,
+      "attempts": [
+        {
+          "rolePhase": "chief-plan",
+          "state": "completed",
+          "error": null,
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e2-b6e0-7062-9f7f-e2d005b0df5d",
+            "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+            "inputHash": "4e1bd7645f4764da613df1bb5cf9c902e5e1e36bd71d54d62f5d6dcaab1ade38",
+            "outputHash": "da179922d9aa45406a594f2ef0a5da2d9a81637594fec06df216d8a52ffd7b79",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        },
+        {
+          "rolePhase": "specialist",
+          "state": "completed",
+          "error": null,
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e2-fa2b-79d0-b83a-a4f0d16d5f54",
+            "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+            "inputHash": "9e8024356aa3cd77335f01df6fd68af5d2644bd86d3e1ad0fcde4ccd029d3a9b",
+            "outputHash": "da615f26e3223464178000a1af8f3f8dcf976ef1f80b437c46977e470c9c4eb0",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        },
+        {
+          "rolePhase": "specialist",
+          "state": "completed",
+          "error": null,
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e3-5103-7381-a673-52d2e0f81772",
+            "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+            "inputHash": "42cda7c5bcc757ccc6d871944a29f75f49d4bd4ee1c52df30ea51ebfd9f762af",
+            "outputHash": "7089b4927f95e6426f77b4bd22872c07a0c577654068b554c721db431be96c51",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        },
+        {
+          "rolePhase": "specialist",
+          "state": "completed",
+          "error": null,
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e3-b410-7500-bcfd-0d07ed6a2f57",
+            "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+            "inputHash": "9f31429173868a17f893c14209b6f58c16c073bd4cc790611da8a0bfa6d29190",
+            "outputHash": "63db7071bab947469231525f489335eb26be69b67eccb433c9d678b212102aab",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        },
+        {
+          "rolePhase": "chief-synthesis",
+          "state": "failed",
+          "error": "unknown_step",
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e4-0c69-7f02-b367-dd9d0a3cc7e2",
+            "runtimeCodeHash": "b7af0fc538486ce946039c0ab671ba86b2bb6fd739961a9398769a78575b9e84",
+            "inputHash": "af8b70b88b9720fbbc01ab377834e23ba446fe69b4b27f123fbff243ada10d28",
+            "outputHash": "4315facf92300aa8734183142449860a7b0157fc5351fdb51d9039da548f3176",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        },
+        {
+          "rolePhase": "chief-synthesis",
+          "state": "completed",
+          "error": null,
+          "receipt": {
+            "requestedModel": "gpt-6-sol",
+            "resolvedModel": "gpt-6-sol",
+            "effort": "medium",
+            "sessionId": "01a100e8-ba8e-73c1-81ff-dfb84822e6c0",
+            "runtimeCodeHash": "f0c85765a09f6083748d5ea0a7c64a2c7eb42aff8abc8c6bc195402b22760e08",
+            "inputHash": "058dc6b8da7e00f1af6917eb2d359ca8f3ae0b6b03790be5a459b32f5e84b7cf",
+            "outputHash": "9efc5b8320ed036a4612e7d5ea8749b71dc8c39faa8230f3aa5af7b74e8999c9",
+            "isolationGate": "empty_mcp_tool_inventory",
+            "itemTypes": [
+              "userMessage",
+              "reasoning",
+              "agentMessage"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "generalModelQualityClaim": false,
+  "scopeLimits": [
+    "Actual planner probes preceded persistence-only hardening; their exact receipt/schema hashes are retained.",
+    "Real Chief and three specialists ran on b7af0fc; final synthesis on the release runtime. Cached original outputs were reused, not relabelled.",
+    "The recovered manual replay is not a successful scheduled run. Tomorrow's actual schedule remains unobserved.",
+    "Private source text, correspondence, relationships, drafts and capabilities are excluded from this shared evidence.",
+    "Evidence excerpt selection, collector minimization and brief usefulness remain separate follow-up work; successful execution is not blanket content acceptance.",
+    "No automatic instruction editing, broad transcript scan, sending/posting, hosted activation or always-on service was added."
+  ],
+  "referenceReview": {
+    "repository": "https://github.com/kunchenguid/backpass",
+    "commit": "0268201c3896f45d3002de0d439b6cefccb39063",
+    "note": "https://substack.com/@kunchenguid/note/c-347169285",
+    "installedOrExecuted": false,
+    "adopted": "Selected evidence \u2192 classified defect \u2192 bounded patch \u2192 independent regression evidence \u2192 reviewed promotion; authority and owner facts remain separate."
+  }
+}
