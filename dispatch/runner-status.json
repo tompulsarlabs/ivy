@@ -3,10 +3,10 @@
     "claude": true,
     "codex": true
   },
-  "last_tick": "2026-10-03T09:32:56+02:00",
+  "last_tick": "2026-10-03T10:03:12+02:00",
   "lint_ok": true,
-  "result": "finished 2026-10-03-aicapabilityapp-sybilrestore-review-01",
-  "runner_sha": "135c8d9",
-  "since": "2026-10-03T09:32:56+02:00",
+  "result": "finished 2026-10-03-ivy-prheadsscan-review-01",
+  "runner_sha": "465a63f",
+  "since": "2026-10-03T10:03:12+02:00",
   "skipped": []
 }
