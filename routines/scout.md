@@ -1,6 +1,6 @@
 # Routine: scout
 
-- **Trigger:** `trig_01P42rzh3kFT9yVTW1E6WoXW` (`ivy-scout`), cron `0 7 * * *` in UTC: 09:00 in Berlin
+- **Trigger:** [`trig_01P42rzh3kFT9yVTW1E6WoXW`](https://claude.ai/code/routines/trig_01P42rzh3kFT9yVTW1E6WoXW) (`ivy-scout`), cron `0 7 * * *` in UTC: 09:00 in Berlin
   in summer, 08:00 after the late-October change to CET
 - **Model:** `claude-sonnet-5`, set by Tom on the trigger; Ivy never changes
   its own routines' models
@@ -16,9 +16,9 @@ Read playbook.md: "Rules every run follows" and "Scout" under "Tunable: the dail
 Finish with one line: how many candidates, the top pick, and any blocker or nudge.
 ```
 
-The block above is the prompt the trigger should run: paste it into the
-trigger whenever this file changes (a Claude session with the
-Claude_Code_Remote tools can update it). `evals/routines/live-prompts/` keeps
-the prompts the triggers ran before this version, as the eval's baseline.
+The block above is the prompt the trigger should run. Whenever this file
+changes, Tom pastes it into the trigger, linked above: it was created through
+the API, so only he can edit it. `evals/routines/live-prompts/` keeps the
+prompts the triggers ran before this version, as the eval's baseline.
 Everything else the routine needs lives in `playbook.md`, which is the point:
 the retro tunes behaviour there without touching cloud configuration.
