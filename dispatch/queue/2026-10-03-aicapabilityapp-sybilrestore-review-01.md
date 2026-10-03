@@ -1,7 +1,8 @@
 ---
 id: 2026-10-03-aicapabilityapp-sybilrestore-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-10-03T09:32:56+02:00
 repo: tompulsarlabs/ai-capability-app
 lane: workhorse
 pool: anthropic
