@@ -1,0 +1,82 @@
+diff --git a/OVERVIEW.md b/OVERVIEW.md
+index d5c72d8..0f0a4bd 100644
+--- a/OVERVIEW.md
++++ b/OVERVIEW.md
+@@ -88,9 +88,9 @@ The routines, the workers, and my own sessions share one working discipline:
+ `.claude/skills/`. Design happens as a grilling interview that writes
+ decisions into `CONTEXT.md` and `docs/adr/`; a spec breaks into
+ tracer-bullet tickets that publish as a chain of contracts (`blocked_by`
+-links them); review workers run `code-review`, build workers `tdd` then
+-`code-review`; and the retro applies `writing-for-agents` to the playbook
+-itself once a week, because every line of it costs on every run.
++links them); review workers run `code-review`, build workers `tdd`; and the
++retro applies `writing-for-agents` to the playbook itself once a week,
++because every line of it costs on every run.
+ `docs/agents/` holds the three files that tell the skills where Ivy keeps
+ its tickets, its labels, and its decisions.
+ 
+diff --git a/README.md b/README.md
+index fe6d07d..c31f550 100644
+--- a/README.md
++++ b/README.md
+@@ -184,8 +184,8 @@ under `.claude/skills/` so the cloud routines load them from the checkout.
+   under `.scratch/` and a chain of dispatch contracts, later ones carrying
+   `blocked_by` (`docs/agents/issue-tracker.md` is the mapping).
+ - **Workers.** The runner's prompt names `code-review` for review contracts
+-  and `tdd` plus `code-review` for builds, conditionally, so a harness
+-  without them still executes.
++  and `tdd` for builds, conditionally, so a harness without them still
++  executes.
+ - **The retro.** A weekly pass applies `writing-for-agents` to the steering
+   files, since every line of `playbook.md` costs on every run, and
+   `domain-modeling` to the glossary.
+diff --git a/dispatch/DESIGN.md b/dispatch/DESIGN.md
+index e9025dc..23a5213 100644
+--- a/dispatch/DESIGN.md
++++ b/dispatch/DESIGN.md
+@@ -108,9 +108,10 @@ into tracer-bullet tickets (`/to-tickets`) publish as a chain of contracts
+ rather than one contract per day.
+ 
+ **Skills in the worker prompt:** the runner names the discipline the worker
+-should use — `code-review` for review contracts, `tdd` + `code-review` for
+-build contracts — conditionally, so a harness without those skills still
+-executes. The skills themselves are installed on the Mac (Claude Code plugin
++should use — `code-review` for review contracts, `tdd` for build contracts —
++conditionally, so a harness without those skills still executes. Review of
++a build's PR belongs to a cross-family review contract, not to the worker.
++The skills themselves are installed on the Mac (Claude Code plugin
+ `mattpocock-skills`; `npx skills add mattpocock/skills -g` for Codex), never
+ carried by the contract.
+ 
+diff --git a/scripts/dispatch-runner-test.py b/scripts/dispatch-runner-test.py
+index d09213a..71a53fa 100644
+--- a/scripts/dispatch-runner-test.py
++++ b/scripts/dispatch-runner-test.py
+@@ -172,7 +172,8 @@ with tempfile.TemporaryDirectory() as tmp:
+     review = runner.build_prompt("c1", "o/r", "review", "## Task\nx\n")
+     build = runner.build_prompt("c2", "o/r", "build", "## Task\nx\n")
+     check("review prompt names the code-review skill", "code-review" in review)
+-    check("build prompt names tdd and code-review", "tdd" in build and "code-review" in build)
++    check("build prompt names tdd and leaves review to a review contract",
++          "tdd" in build and "code-review" not in build)
+     check("review prompt stays read-only", "read-only" in review)
+     check("review prompt sets a concrete bar with severity and confidence",
+           "every finding" in review and "severity" in review and "confidence" in review)
+diff --git a/scripts/dispatch-runner.py b/scripts/dispatch-runner.py
+index 59d863e..33bde48 100755
+--- a/scripts/dispatch-runner.py
++++ b/scripts/dispatch-runner.py
+@@ -357,10 +357,9 @@ def build_prompt(cid, repo, ctype, body):
+                 "(already a connected address, so leave user.name and user.email as they are), "
+                 "push that branch, and open a draft pull request. The default branch is Tom's: "
+                 "never push to it.\n"
+-                "Skills: if `tdd` and `code-review` skills are installed in this harness, build "
+-                "test-first at the seams the Task names (if it names none, choose them yourself and "
+-                "list them in your summary) and review the diff against the Task before opening the "
+-                "PR; otherwise proceed without them.\n"
++                "Skills: if a `tdd` skill is installed in this harness, build test-first at the "
++                "seams the Task names (if it names none, choose them yourself and list them in your "
++                "summary); otherwise proceed without it.\n"
+                 "Output: when finished, print a short summary of what you did and what you "
+                 "verified (the tests you ran and their result, anything skipped and why) between "
+                 f"two lines containing exactly {MARK_BEGIN} and {MARK_END}.")

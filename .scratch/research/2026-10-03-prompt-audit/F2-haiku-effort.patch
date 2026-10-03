@@ -1,0 +1,13 @@
+diff --git a/dispatch/DESIGN.md b/dispatch/DESIGN.md
+index e9025dc..06b89ca 100644
+--- a/dispatch/DESIGN.md
++++ b/dispatch/DESIGN.md
+@@ -127,7 +127,7 @@ lanes:
+     anthropic: { harness: claude-code, model: claude-opus-5, effort: medium }
+     openai:    { harness: codex, model: VERIFY }
+   fast-cheap:
+-    anthropic: { harness: claude-code, model: claude-haiku-4-5, effort: low }
++    anthropic: { harness: claude-code, model: claude-haiku-4-5 }   # model does not support effort
+ pools:
+   anthropic: { auth: mac-local }    # subscription logins live on the Mac only,
+   openai:    { auth: mac-local }    # never in the cloud sandbox (Codex CLI, flat-rate)

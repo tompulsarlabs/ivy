@@ -1,0 +1,15 @@
+diff --git a/docs/agents/issue-tracker.md b/docs/agents/issue-tracker.md
+index 24b96fe..c26179e 100644
+--- a/docs/agents/issue-tracker.md
++++ b/docs/agents/issue-tracker.md
+@@ -21,8 +21,8 @@ under `.scratch/<effort>/`, per the local-markdown convention.
+   contract until every id is in `dispatch/done/`; the lint refuses ids that
+   are not contracts.
+ - The daily cap (`config.yml` `dispatch.daily_cap`, counted by `created`
+-  date) applies to contracts published from a session too. Check
+-  `dispatch/queue/` and `dispatch/done/` for today's count first.
++  date across `dispatch/queue/`, `done/`, and `failed/`) applies to
++  contracts published from a session too. Count today's first.
+ - `scripts/dispatch-lint.sh` must pass before committing. Commit
+   bot-authored as `dispatch: open <id>`.
+ - A build contract's Task says which branch to start from and states that
