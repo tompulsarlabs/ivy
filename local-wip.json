@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-03T06:45:06Z",
+  "generated_at": "2026-10-03T15:45:07Z",
   "repos": [
     {
       "name": "talent-radar-pilot",
@@ -104,7 +104,7 @@
       "name": "ivy",
       "remote": "tompulsarlabs/ivy",
       "branch": "main",
-      "dirty_files": 14,
+      "dirty_files": 18,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
       "last_commit": "2026-09-30",
@@ -118,7 +118,7 @@
       "dirty_files": 0,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-10-02",
+      "last_commit": "2026-10-03",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -184,7 +184,7 @@
       "dirty_files": 0,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-10-02",
+      "last_commit": "2026-10-03",
       "author_email_ok": true,
       "last_commit_email_ok": true
     },
@@ -277,6 +277,17 @@
       "last_commit_email_ok": false
     },
     {
+      "name": "ivy-planner-feedback-20261003",
+      "remote": "tompulsarlabs/ivy-app",
+      "branch": "codex/ivy-brief-usefulness",
+      "dirty_files": 0,
+      "unpushed_commits": 0,
+      "checkout_unpushed_commits": 0,
+      "last_commit": "2026-10-03",
+      "author_email_ok": true,
+      "last_commit_email_ok": true
+    },
+    {
       "name": "ivy-private-beta-evals-20261002",
       "remote": "tompulsarlabs/ivy",
       "branch": "codex/ivy-private-beta-evals",
@@ -301,11 +312,11 @@
     {
       "name": "tomgreen-radar-20260930",
       "remote": "tompulsarlabs/tomgreen.ai",
-      "branch": "codex/radar-demo-dock-spacing",
+      "branch": "codex/radar-ios-audio",
       "dirty_files": 0,
       "unpushed_commits": 0,
       "checkout_unpushed_commits": 0,
-      "last_commit": "2026-10-02",
+      "last_commit": "2026-10-03",
       "author_email_ok": true,
       "last_commit_email_ok": true
     }
