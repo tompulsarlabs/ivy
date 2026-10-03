@@ -1,7 +1,7 @@
 ---
 id: 2026-10-03-talentradar-betarequests-review-01
 type: review
-state: claimed
+state: failed
 claimed_at: 2026-10-03T11:05:17+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
@@ -62,3 +62,25 @@ The report file exists on `main` of `ivy`, is non-empty, and every
 file:line it cites is corroborated against PR #10's own body text
 (`search_pull_requests repo:tompulsarlabs/talent-radar` — this repo sits
 outside this session's direct file access per `memory/ops.md`).
+
+outcome:
+  requested_model: claude-opus-5
+  requested_effort: medium
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 2.1.277
+  source_revision: 26c739cce34dc9fd785a031ccc8db8166e1aad56
+  runner_sha256: 7ede0aa04bc2fd57f673ca2a9729714a5d9c5e65f8a111c4ecf1cfa9d6e708c4
+  config_sha256: c553d88a23c95b73c2b43c8fc0443b15bd72db73823cb01408e32a5fffa6e5c5
+  prompt_sha256: 0b4d77d263925e45a2a2c7487d165b942694d00d4cd4ee7063362a5c72fb4d67
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-10-03T11:05:17+02:00
+  finished_at: 2026-10-03T11:05:24+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 0.0
+  exit: 1
+  note: harness_error; last output lines follow
+  output_tail: |
+      Failed to authenticate: OAuth session expired and could not be refreshed
