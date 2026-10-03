@@ -1,7 +1,7 @@
 ---
 id: 2026-10-03-aicapabilityapp-sybilrestore-review-01
 type: review
-state: claimed
+state: failed
 claimed_at: 2026-10-03T09:32:56+02:00
 repo: tompulsarlabs/ai-capability-app
 lane: workhorse
@@ -61,3 +61,25 @@ The report file exists on `main` of `ivy`, is non-empty, and every
 file:line it cites is corroborated against PR #9's own body text
 (`search_pull_requests repo:tompulsarlabs/ai-capability-app` — this repo
 sits outside this session's direct file access per `memory/ops.md`).
+
+outcome:
+  requested_model: claude-opus-5
+  requested_effort: medium
+  effective_model: unknown
+  effective_effort: unknown
+  harness_version: 2.1.277
+  source_revision: b39bb2627d8765237b5e94a2a908d2bd09b7b079
+  runner_sha256: 7ede0aa04bc2fd57f673ca2a9729714a5d9c5e65f8a111c4ecf1cfa9d6e708c4
+  config_sha256: c553d88a23c95b73c2b43c8fc0443b15bd72db73823cb01408e32a5fffa6e5c5
+  prompt_sha256: 0b09d72c986caff2aeea80c80750308cffec81ba3c0577fc8c2aa645bae1d825
+  context_capture: runner_prompt_only
+  usage_capture: unavailable
+  claimed_at: 2026-10-03T09:32:56+02:00
+  finished_at: 2026-10-03T09:33:05+02:00
+  harness: claude-code (dispatch-runner)
+  model: claude-opus-5
+  wall_minutes: 0.0
+  exit: 1
+  note: harness_error; last output lines follow
+  output_tail: |
+      Failed to authenticate: OAuth session expired and could not be refreshed
