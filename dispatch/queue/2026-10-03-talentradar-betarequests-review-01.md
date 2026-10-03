@@ -1,7 +1,8 @@
 ---
 id: 2026-10-03-talentradar-betarequests-review-01
 type: review
-state: open
+state: claimed
+claimed_at: 2026-10-03T11:05:17+02:00
 repo: tompulsarlabs/talent-radar
 lane: workhorse
 pool: anthropic
