@@ -279,5 +279,194 @@ class ScannerTests(unittest.TestCase):
         self.assertEqual(outside.read_text(), "preserve")
 
 
+class PullRequestHeadTests(unittest.TestCase):
+    """Pull-request heads come from refs/pull/N/head on local bare fixtures."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="ivy-wip-heads-")
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name).resolve()
+        self.environment = patch.dict(os.environ, {
+            "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
+            "GIT_AUTHOR_NAME": "Fixture", "GIT_AUTHOR_EMAIL": IDENTITY,
+            "GIT_COMMITTER_NAME": "Fixture", "GIT_COMMITTER_EMAIL": IDENTITY,
+        })
+        self.environment.start()
+        self.addCleanup(self.environment.stop)
+        remotes = self.base / "remotes"
+        self.template = patch.object(wip, "PR_REMOTE", f"file://{remotes}/{{repo}}.git")
+        self.template.start()
+        self.addCleanup(self.template.stop)
+
+    def hosted(self, slug, pulls=()):
+        """A bare repo standing in for github.com/<slug>, with PR head refs."""
+        bare = self.base / "remotes" / f"{slug}.git"
+        bare.parent.mkdir(parents=True, exist_ok=True)
+        git(self.base, "init", "--quiet", "--bare", str(bare))
+        work = self.base / "work" / slug
+        work.mkdir(parents=True)
+        git(work, "init", "--quiet", "-b", "main")
+        heads = {}
+        for number in pulls:
+            (work / "file.txt").write_text(f"pull {number}\n")
+            git(work, "add", "file.txt")
+            git(work, "commit", "--quiet", "-m", f"pull {number}")
+            git(work, "push", "--quiet", str(bare), f"HEAD:refs/pull/{number}/head")
+            heads[str(number)] = git(work, "rev-parse", "HEAD")
+        return heads
+
+    def test_pull_request_heads_are_read_from_pull_refs(self):
+        expected = self.hosted("owner/app", pulls=(1, 7))
+        self.assertEqual(wip.pull_request_heads("owner/app"), expected)
+
+    def test_repo_without_pull_requests_is_empty_not_absent(self):
+        self.hosted("owner/quiet")
+        self.assertEqual(wip.collect_pr_heads(["owner/quiet"]), {"owner/quiet": {}})
+
+    def test_unreachable_repo_is_absent_not_empty(self):
+        self.hosted("owner/app", pulls=(2,))
+        heads = wip.collect_pr_heads(["owner/app", "owner/missing"])
+        self.assertIn("owner/app", heads)
+        self.assertNotIn("owner/missing", heads)
+
+    def test_slow_repo_past_the_pass_budget_is_absent(self):
+        def answer(repo):
+            if repo == "owner/slow":
+                import time
+                time.sleep(1)
+            return {"1": "a" * 40}
+        with patch.object(wip, "pull_request_heads", side_effect=answer), \
+             patch.object(wip, "PR_PASS_BUDGET", 0.3):
+            heads = wip.collect_pr_heads(["owner/fast", "owner/slow"])
+        self.assertEqual(heads, {"owner/fast": {"1": "a" * 40}})
+
+    def test_only_well_formed_pull_head_lines_are_kept(self):
+        output = "\n".join([
+            "a" * 40 + "\trefs/pull/3/head",
+            "b" * 40 + "\trefs/pull/0/head",
+            "not-a-sha\trefs/pull/4/head",
+            "c" * 40 + "\trefs/pull/5/merge",
+            "d" * 40 + "\trefs/pull/6/head; rm -rf /",
+        ])
+        done = subprocess.CompletedProcess([], 0, stdout=output, stderr="")
+        with patch.object(wip.subprocess, "run", return_value=done):
+            self.assertEqual(wip.pull_request_heads("owner/app"), {"3": "a" * 40})
+
+    def test_git_is_never_allowed_to_prompt(self):
+        done = subprocess.CompletedProcess([], 0, stdout="", stderr="")
+        with patch.object(wip.subprocess, "run", return_value=done) as run:
+            wip.pull_request_heads("owner/app")
+        env = run.call_args.kwargs["env"]
+        self.assertEqual((env["GIT_TERMINAL_PROMPT"], env["GCM_INTERACTIVE"]), ("0", "never"))
+        self.assertIs(run.call_args.kwargs["stdin"], subprocess.DEVNULL)
+
+    def config(self, watchlist=True):
+        root = self.base / "Build"
+        root.mkdir(exist_ok=True)
+        text = (f"connected_emails:\n  - {IDENTITY}\n\n"
+                f"local_wip:\n  roots:\n    - {root}\n")
+        if watchlist:
+            text += ("\nwatchlist:\n  source: auto\n  parked:\n    - owner/parked\n"
+                     "  repos:\n    - owner/app\n    - owner/quiet\n    - not a slug\n\nlanes:\n")
+        (self.base / "config.yml").write_text(text)
+        return self.base / "config.yml"
+
+    def test_watchlist_repos_are_read_without_parked_or_invalid_entries(self):
+        self.assertEqual(wip.read_watchlist(self.config()), ["owner/app", "owner/quiet"])
+        self.assertIsNone(wip.read_watchlist(self.config(watchlist=False)))
+
+    def test_snapshot_carries_heads_only_when_asked(self):
+        self.config()
+        expected = self.hosted("owner/app", pulls=(4,))
+        self.hosted("owner/quiet")
+        with patch.object(wip, "IVY", self.base):
+            self.assertNotIn("pr_heads", wip.collect_snapshot())
+            heads = wip.collect_snapshot(with_pr_heads=True)["pr_heads"]
+        self.assertEqual(heads, {"owner/app": expected, "owner/quiet": {}})
+
+    def test_missing_watchlist_omits_heads_instead_of_publishing_none(self):
+        self.config(watchlist=False)
+        with patch.object(wip, "IVY", self.base), contextlib.redirect_stderr(io.StringIO()):
+            self.assertNotIn("pr_heads", wip.collect_snapshot(with_pr_heads=True))
+
+
+class ScanErrorTests(unittest.TestCase):
+    """A failed scan reaches the cloud as a code on the last good snapshot."""
+
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory(prefix="ivy-wip-error-")
+        self.addCleanup(self.temp.cleanup)
+        self.base = Path(self.temp.name).resolve()
+        self.environment = patch.dict(os.environ, {
+            "GIT_CONFIG_GLOBAL": os.devnull, "GIT_CONFIG_NOSYSTEM": "1",
+            "GIT_AUTHOR_NAME": "Fixture", "GIT_AUTHOR_EMAIL": IDENTITY,
+            "GIT_COMMITTER_NAME": "Fixture", "GIT_COMMITTER_EMAIL": IDENTITY,
+        })
+        self.environment.start()
+        self.addCleanup(self.environment.stop)
+        source = self.base / "ivy"
+        source.mkdir()
+        git(source, "init", "--quiet", "-b", "main")
+        (source / "README.md").write_text("ivy\n")
+        git(source, "add", "README.md")
+        git(source, "commit", "--quiet", "-m", "initial")
+        self.remote = self.base / "origin.git"
+        git(self.base, "clone", "--quiet", "--bare", str(source), str(self.remote))
+
+    def good(self):
+        return {"generated_at": "2026-10-01T06:45:00Z", "repos": [{"name": "app"}],
+                "pr_heads": {"owner/app": {"1": "a" * 40}}}
+
+    def published(self):
+        return json.loads(git(self.remote, "show", "main:local-wip.json"))
+
+    def test_failed_scan_keeps_the_last_good_snapshot_and_timestamp(self):
+        self.assertTrue(wip.publish_snapshot(self.good(), str(self.remote)))
+        self.assertTrue(wip.publish_scan_error("root_unavailable", str(self.remote), now="2026-10-01T15:45:00Z"))
+        self.assertEqual(self.published(), {**self.good(), "scanner_error": "root_unavailable",
+                                            "scanner_error_at": "2026-10-01T15:45:00Z"})
+        self.assertEqual(git(self.remote, "log", "-1", "--format=%ae|%s"),
+                         "bot@ivy.invalid|wip: local scan failed — root_unavailable")
+
+    def test_failed_scan_without_a_previous_snapshot_publishes_nothing(self):
+        head = git(self.remote, "rev-parse", "main")
+        self.assertFalse(wip.publish_scan_error("config_missing", str(self.remote)))
+        self.assertEqual(head, git(self.remote, "rev-parse", "main"))
+
+    def test_same_error_is_republished_only_after_the_heartbeat(self):
+        previous = {**self.good(), "scanner_error": "git_failed", "scanner_error_at": "2026-10-01T09:00:00Z"}
+        self.assertIsNone(wip.with_scanner_error(previous, "git_failed", "2026-10-01T14:59:59Z"))
+        self.assertIsNotNone(wip.with_scanner_error(previous, "git_failed", "2026-10-01T15:00:00Z"))
+        self.assertIsNotNone(wip.with_scanner_error(previous, "root_unavailable", "2026-10-01T10:00:00Z"))
+
+    def test_successful_scan_clears_a_published_error(self):
+        previous = {**self.good(), "scanner_error": "git_failed", "scanner_error_at": "2026-10-01T09:00:00Z"}
+        self.assertTrue(wip.should_publish(previous, {**self.good(), "generated_at": "2026-10-01T09:30:00Z"}))
+
+    def test_heads_only_change_publishes_and_unchanged_heads_do_not(self):
+        later = {**self.good(), "generated_at": "2026-10-01T07:00:00Z"}
+        moved = {**later, "pr_heads": {"owner/app": {"1": "b" * 40}}}
+        self.assertFalse(wip.should_publish(self.good(), later))
+        self.assertTrue(wip.should_publish(self.good(), moved))
+
+    def test_collection_failure_publishes_its_code_and_still_fails(self):
+        lock = self.base / "lock"
+        failure = wip.ScanError("root_unavailable", "configured scan root unavailable; snapshot not published")
+        with patch.object(wip, "LOCK", lock), patch.object(wip, "required_git", return_value="fixture"), \
+             patch.object(wip, "collect_snapshot", side_effect=failure), \
+             patch.object(wip, "publish_scan_error") as report:
+            with self.assertRaises(wip.ScanError):
+                wip.main([])
+        report.assert_called_once_with("root_unavailable", "fixture")
+
+    def test_dry_run_reads_no_pull_requests_unless_asked(self):
+        with patch.object(wip, "collect_snapshot", return_value=self.good()) as collect, \
+             contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            wip.main(["--dry-run"])
+            wip.main(["--dry-run", "--pr-heads"])
+        self.assertEqual([c.kwargs for c in collect.call_args_list],
+                         [{"with_pr_heads": False}, {"with_pr_heads": True}])
+
+
 if __name__ == "__main__":
     unittest.main()
